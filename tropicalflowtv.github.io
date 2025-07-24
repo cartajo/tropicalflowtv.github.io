@@ -14,7 +14,7 @@
             text-align: center;
         }
         header {
-            background: rgba(0,0,0,0.6);
+            background: rgba(0,0,0,0.65);
             padding: 1rem;
         }
         nav a {
