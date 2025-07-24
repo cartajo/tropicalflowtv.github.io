@@ -108,8 +108,79 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tropical Flow TVRadio</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-image: url('background.jpg');
+      background-size: cover;
+      background-attachment: fixed;
+      color: white;
+      text-align: center;
+    }
+    header {
+      background: rgba(0,0,0,0.6);
+      padding: 1em;
+    }
+    nav a {
+      margin: 0 1em;
+      color: #ffcc00;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    section {
+      background: rgba(0,0,0,0.6);
+      margin: 2em auto;
+      padding: 2em;
+      max-width: 900px;
+      border-radius: 10px;
+    }
+   .btn {
+      background-color: #ffcc00;
+      color: #000;
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+    footer {
+      background: rgba(0,0,0,0.6);
+      padding: 1em;
+      margin-top: 2em;
+    }
+    iframe {
+      border-radius: 10px;
+      width: 100%;
+      height: 120px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo Tropical Flow TVRadio" width="150" />
+    <h1>Tropical Flow TVRadio</h1>
+    <nav>
+      <a href="#radio">Radio en Vivo</a>
+      <a href="#videos">Videos</a>
+      <a href="#dj">Zona DJ</a>
+      <a href="#tienda">Tienda</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </header>
 
-  
+  <section id="radio">
+    <h2>🎧 Radio en Vivo</h2>
+    <iframe src="https://zeno.fm/player/tropical-flow-tvradio" allow="autoplay"></iframe>
+    <p><a class="btn" href="https://zeno.fm/radio/tropical-flow-tvradio/" target="_blank">Escuchar en Zeno</a></p>
+  </section>
   
 
   
