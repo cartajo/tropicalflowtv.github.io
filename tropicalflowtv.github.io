@@ -15,7 +15,7 @@
       text-align: center;
     }
     header {
-      background: rgba(0,0,0,0.6);
+      background: rgba(0,0,0,0.65);
       padding: 1em;
     }
     nav a {
@@ -25,7 +25,7 @@
       font-weight: bold;
     }
     section {
-      background: rgba(0,0,0,0.6);
+      background: rgba(0,0,0,0.65);
       margin: 2em auto;
       padding: 2em;
       max-width: 900px;
@@ -42,7 +42,7 @@
       border-radius: 5px;
     }
     footer {
-      background: rgba(0,0,0,0.6);
+      background: rgba(0,0,0,0.65);
       padding: 1em;
       margin-top: 2em;
     }
