@@ -4,32 +4,74 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tropical Flow TV📺Radio</title>
-  <link rel="stylesheet" href="styles.css">
-  <script defer src="script.js"></script>
   <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-image: url('https://i.imgur.com/43YkTX2.jpg'); /* Imagen de playa tropical */
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+
+    header, footer {
+      background-color: rgba(0, 0, 0, 0.6);
+      text-align: center;
+      padding: 20px;
+    }
+
+    nav a {
+      margin: 10px;
+      color: #00f0ff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    section {
+      background-color: rgba(0, 0, 0, 0.6);
+      margin: 30px auto;
+      padding: 20px;
+      max-width: 800px;
+      border-radius: 12px;
+    }
+
+    h1, h2 {
+      text-align: center;
+    }
+
     .media-container {
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
-      margin-top: 10px;
+      justify-content: center;
     }
+
     .media-container video,
     .media-container audio {
       width: 100%;
       max-width: 400px;
     }
-    .section-title {
-      color: white;
+
+    form input, form textarea, form button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 5px;
     }
-    body {
-      background-color: #000;
-      color: #fff;
-      font-family: Arial, sans-serif;
+
+    form button {
+      background-color: #00f0ff;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
     }
-    nav a {
-      margin-right: 10px;
-      color: #00f0ff;
-      text-decoration: none;
+
+    ul {
+      list-style: none;
+      padding: 0;
     }
   </style>
 </head>
@@ -47,7 +89,7 @@
   </header>
 
   <section id="radio">
-    <h2 class="section-title">🎧 Escucha Nuestra Radio</h2>
+    <h2>🎧 Escucha Nuestra Radio</h2>
     <audio controls>
       <source src="https://tropicalflowradio.ismyradio.com/listen.pls" type="audio/mpeg">
       Tu navegador no soporta el elemento de audio.
@@ -55,7 +97,7 @@
   </section>
 
   <section id="videos">
-    <h2 class="section-title">🎥 Videos Recientes</h2>
+    <h2>🎥 Videos Recientes</h2>
     <input type="file" accept="video/*" multiple><br><br>
     <div class="media-container">
       <video controls>
@@ -66,7 +108,7 @@
   </section>
 
   <section id="djs">
-    <h2 class="section-title">🎧 Zona de DJs</h2>
+    <h2>🎧 Zona de DJs</h2>
     <p>¿Eres DJ? ¡Contáctanos y sube tus mezclas!</p>
     <input type="file" accept="audio/*" multiple><br><br>
     <div class="media-container">
@@ -78,14 +120,14 @@
   </section>
 
   <section id="descargas">
-    <h2 class="section-title">⬇️ Descarga Música Exclusiva</h2>
+    <h2>⬇️ Descarga Música Exclusiva</h2>
     <p>Accede al contenido exclusivo (requiere pago)</p>
-    <a href="https://www.paypal.com/paypalme/cartajo1970">Pagar con PayPal</a><br>
-    <a href="music/exclusiva.mp3" download>Descargar después de pagar</a>
+    <a href="https://www.paypal.com/paypalme/cartajo1970" style="color:#00f0ff;">Pagar con PayPal</a><br>
+    <a href="music/exclusiva.mp3" download style="color:#00f0ff;">Descargar después de pagar</a>
   </section>
 
   <section id="tienda">
-    <h2 class="section-title">🛒 Tienda Oficial</h2>
+    <h2>🛒 Tienda Oficial</h2>
     <ul>
       <li><strong>Gorra</strong> - $15</li>
       <li><strong>Camiseta</strong> - $20</li>
@@ -99,11 +141,11 @@
   </section>
 
   <section id="contacto">
-    <h2 class="section-title">📞 Contáctanos</h2>
+    <h2>📞 Contáctanos</h2>
     <form action="https://formspree.io/f/xwkgrlpl" method="POST">
-      <input type="text" name="name" placeholder="Tu nombre" required><br>
-      <input type="email" name="email" placeholder="Tu correo" required><br>
-      <textarea name="message" placeholder="Mensaje" required></textarea><br>
+      <input type="text" name="name" placeholder="Tu nombre" required>
+      <input type="email" name="email" placeholder="Tu correo" required>
+      <textarea name="message" placeholder="Mensaje" required></textarea>
       <button type="submit">Enviar</button>
     </form>
   </section>
