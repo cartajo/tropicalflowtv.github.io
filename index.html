@@ -1,11 +1,64 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Tropical Flow TV📺Radio</title>
-  <link rel="stylesheet" href="styles.css">
-  <script defer src="script.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('https://cartajo.github.io/tropicalflowtv.github.io/img/fondo-playa.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+    }
+    header, footer {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      text-align: center;
+    }
+    nav a {
+      color: #00f0ff;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    section {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 12px;
+    }
+    h1, h2 {
+      color: #00f0ff;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 6px;
+    }
+    button {
+      background-color: #00f0ff;
+      color: #000;
+      font-weight: bold;
+    }
+    .media-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 10px;
+    }
+    .media-container video,
+    .media-container audio {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 10px;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -30,27 +83,31 @@
 
   <section id="videos">
     <h2>🎥 Videos Recientes</h2>
-    <input type="file" accept="video/*" multiple><br><br>
-    <video width="320" height="240" controls>
-      <source src="videos/demo.mp4" type="video/mp4">
-      Tu navegador no soporta el video.
-    </video>
+    <input type="file" accept="video/*" multiple><br>
+    <div class="media-container">
+      <video controls>
+        <source src="videos/demo.mp4" type="video/mp4">
+        Tu navegador no soporta el video.
+      </video>
+    </div>
   </section>
 
   <section id="djs">
-    <h2 style="color: white;">🎧 Zona de DJs</h2>
+    <h2>🎧 Zona de DJs</h2>
     <p>¿Eres DJ? ¡Contáctanos y sube tus mezclas!</p>
-    <input type="file" accept="audio/*" multiple><br><br>
-    <audio controls>
-      <source src="music/dj-mix.mp3" type="audio/mpeg">
-      Tu navegador no soporta el audio.
-    </audio>
+    <input type="file" accept="audio/*" multiple><br>
+    <div class="media-container">
+      <audio controls>
+        <source src="music/dj-mix.mp3" type="audio/mpeg">
+        Tu navegador no soporta el audio.
+      </audio>
+    </div>
   </section>
 
   <section id="descargas">
-    <h2 style="color: white;">⬇️ Descarga Música Exclusiva</h2>
+    <h2>⬇️ Descarga Música Exclusiva</h2>
     <p>Accede al contenido exclusivo (requiere pago)</p>
-    <a href="https://www.paypal.com/paypalme/cartajo1970">Pagar con PayPal</a><br>
+    <a href="https://www.paypal.com/paypalme/cartajo1970" target="_blank">Pagar con PayPal</a><br>
     <a href="music/exclusiva.mp3" download>Descargar después de pagar</a>
   </section>
 
@@ -83,10 +140,3 @@
   </footer>
 </body>
 </html>
-
- 
-
- 
-
- 
-  
