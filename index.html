@@ -25,11 +25,6 @@
       margin-bottom: 60px;
     }
 
-    section {
-      padding-bottom: 40px;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-    }
-
     nav {
       margin: 20px 0;
       text-align: center;
@@ -94,6 +89,11 @@
       font-size: 14px;
       color: #ccc;
     }
+
+    section {
+      padding-top: 30px;
+      border-top: 2px solid #ffffff30;
+    }
   </style>
 </head>
 <body>
@@ -111,16 +111,11 @@
     </header>
 
     <section id="radio">
-  <h2>🎧 Escucha Nuestra Radio</h2>
-  <div style="display: flex; justify-content: center; margin-top: 20px;">
-    <div data-type="newStreamPlayer" data-publicToken="173d1740-5216-4cbe-8e2b-cb45338d9e19" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false" class="cstrEmbed">
-      <a href="https://www.caster.fm">Shoutcast Hosting</a>
-      <a href="https://www.caster.fm">Stream Hosting</a>
-      <a href="https://www.caster.fm">Radio Server Hosting</a>
-    </div>
-  </div>
-  <script src="//cdn.cloud.caster.fm//widgets/embed.js"></script>
-</section>
+      <h2>🎧 Escucha Nuestra Radio</h2>
+      <div class="center-audio">
+        <iframe src="https://your-azuracast-url.com/public/tropicalflow/embed" frameborder="0" allowtransparency="true" style="width:100%; max-width:500px; height:150px;"></iframe>
+      </div>
+    </section>
 
     <section id="videos">
       <h2>🎥 Videos Recientes</h2>
@@ -182,20 +177,3 @@
   </div>
 </body>
 </html>
-<div id="playlist"></div>
-
-<script>
-  const canciones = [
-    { titulo: "Canción 1", artista: "Artista 1", url: "enlace_al_audio_1" },
-    { titulo: "Canción 2", artista: "Artista 2", url: "enlace_al_audio_2" },
-    // ... más canciones
-  ];
-
-  let playlistHTML = "<ul>";
-  canciones.forEach(cancion => {
-    playlistHTML += `<li><a href="${cancion.url}">${cancion.titulo} - ${cancion.artista}</a></li>`;
-  });
-  playlistHTML += "</ul>";
-
-  document.getElementById("playlist").innerHTML = playlistHTML;
-</script>
