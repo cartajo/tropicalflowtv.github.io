@@ -182,3 +182,20 @@
   </div>
 </body>
 </html>
+<div id="playlist"></div>
+
+<script>
+  const canciones = [
+    { titulo: "Canción 1", artista: "Artista 1", url: "enlace_al_audio_1" },
+    { titulo: "Canción 2", artista: "Artista 2", url: "enlace_al_audio_2" },
+    // ... más canciones
+  ];
+
+  let playlistHTML = "<ul>";
+  canciones.forEach(cancion => {
+    playlistHTML += `<li><a href="${cancion.url}">${cancion.titulo} - ${cancion.artista}</a></li>`;
+  });
+  playlistHTML += "</ul>";
+
+  document.getElementById("playlist").innerHTML = playlistHTML;
+</script>
