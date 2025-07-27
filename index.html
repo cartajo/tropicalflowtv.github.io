@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -10,89 +11,90 @@
       color: white;
       background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') no-repeat center center fixed;
       background-size: cover;
-    }.container {
-  max-width: 900px;
-  margin: auto;
-  padding: 20px;
-  background-color: rgba(0, 0, 0, 0.6);
-  border-radius: 15px;
-}
+    }
 
-header, section, footer {
-  margin-bottom: 60px;
-}
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 15px;
+    }
 
-nav {
-  margin: 20px 0;
-  text-align: center;
-}
+    header, section, footer {
+      margin-bottom: 60px;
+    }
 
-nav a {
-  color: #00e0ff;
-  margin: 0 10px;
-  text-decoration: none;
-  font-weight: bold;
-}
+    nav {
+      margin: 20px 0;
+      text-align: center;
+    }
 
-h1, h2 {
-  text-align: center;
-  color: #fff;
-}
+    nav a {
+      color: #00e0ff;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
 
-.media-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-}
+    h1, h2 {
+      text-align: center;
+      color: #fff;
+    }
 
-.center-audio {
-  display: flex;
-  justify-content: center;
-}
+    .media-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
 
-video, audio, iframe {
-  width: 100%;
-  max-width: 500px;
-}
+    .center-audio {
+      display: flex;
+      justify-content: center;
+    }
 
-input, textarea, button {
-  display: block;
-  width: 100%;
-  margin: 10px 0;
-  padding: 10px;
-}
+    video, audio, iframe {
+      width: 100%;
+      max-width: 500px;
+    }
 
-ul {
-  list-style: none;
-  padding: 0;
-}
+    input, textarea, button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+    }
 
-ul li {
-  margin: 8px 0;
-}
+    ul {
+      list-style: none;
+      padding: 0;
+    }
 
-a.download {
-  background: #00e0ff;
-  color: #000;
-  padding: 10px;
-  text-decoration: none;
-  border-radius: 5px;
-  display: inline-block;
-}
+    ul li {
+      margin: 8px 0;
+    }
 
-footer {
-  text-align: center;
-  font-size: 14px;
-  color: #ccc;
-}
+    a.download {
+      background: #00e0ff;
+      color: #000;
+      padding: 10px;
+      text-decoration: none;
+      border-radius: 5px;
+      display: inline-block;
+    }
 
-section {
-  padding-top: 30px;
-  border-top: 2px solid #ffffff30;
-  margin-top: 60px;
-}
+    footer {
+      text-align: center;
+      font-size: 14px;
+      color: #ccc;
+    }
 
+    section {
+      padding-top: 30px;
+      border-top: 2px solid #ffffff30;
+      margin-top: 60px;
+    }
   </style>
 </head>
 <body>
@@ -107,71 +109,72 @@ section {
         <a href="#tienda">Tienda</a>
         <a href="#contacto">Contacto</a>
       </nav>
-    </header><section id="radio">
-  <h2>🎧 Escucha Nuestra Radio</h2>
-  <div class="center-audio">
-    <iframe src="https://tropicalflow-radio.stream.laut.fm/tropicalflow-radio" frameborder="0" allow="autoplay" allowtransparency="true" style="width:100%; max-width:500px; height:150px;"></iframe>
-  </div>
-</section>
+    </header>
 
-<section id="videos">
-  <h2>🎥 Videos Recientes</h2>
-  <input type="file" accept="video/*" multiple>
-  <div class="media-container">
-    <video controls>
-      <source src="videos/demo.mp4" type="video/mp4">
-      Tu navegador no soporta el video.
-    </video>
-  </div>
-</section>
+    <section id="radio">
+      <h2>🎧 Escucha Nuestra Radio</h2>
+      <div class="center-audio">
+        <iframe src="https://tropicalflow-radio.stream.laut.fm/tropicalflow-radio" frameborder="0" allow="autoplay" allowtransparency="true" style="width:100%; max-width:500px; height:150px;"></iframe>
+      </div>
+    </section>
 
-<section id="djs">
-  <h2>🎧 Zona de DJs</h2>
-  <p>¿Eres DJ? ¡Contáctanos y sube tus mezclas!</p>
-  <input type="file" accept="audio/*" multiple>
-  <div class="center-audio">
-    <audio controls>
-      <source src="music/dj-mix.mp3" type="audio/mpeg">
-      Tu navegador no soporta el audio.
-    </audio>
-  </div>
-</section>
+    <section id="videos">
+      <h2>🎥 Videos Recientes</h2>
+      <input type="file" accept="video/*" multiple>
+      <div class="media-container">
+        <video controls>
+          <source src="videos/demo.mp4" type="video/mp4">
+          Tu navegador no soporta el video.
+        </video>
+      </div>
+    </section>
 
-<section id="descargas">
-  <h2>⬇ Descarga Música Exclusiva</h2>
-  <p>Accede al contenido exclusivo (requiere pago)</p>
-  <a class="download" href="https://www.paypal.com/paypalme/cartajo1970" target="_blank">Pagar con PayPal</a><br><br>
-  <a class="download" href="music/exclusiva.mp3" download>Descargar después de pagar</a>
-</section>
+    <section id="djs">
+      <h2>🎧 Zona de DJs</h2>
+      <p>¿Eres DJ? ¡Contáctanos y sube tus mezclas!</p>
+      <input type="file" accept="audio/*" multiple>
+      <div class="center-audio">
+        <audio controls>
+          <source src="music/dj-mix.mp3" type="audio/mpeg">
+          Tu navegador no soporta el audio.
+        </audio>
+      </div>
+    </section>
 
-<section id="tienda">
-  <h2>🛒 Tienda Oficial</h2>
-  <ul>
-    <li><strong>Gorra</strong> - $15</li>
-    <li><strong>Camiseta</strong> - $20</li>
-    <li><strong>Bocina Bluetooth</strong> - $30</li>
-  </ul>
-  <p>Pagos vía:</p>
-  <ul>
-    <li>PayPal: cartajo1970@gmail.com</li>
-    <li>ATH Móvil: 939-902-9695</li>
-  </ul>
-</section>
+    <section id="descargas">
+      <h2>⬇️ Descarga Música Exclusiva</h2>
+      <p>Accede al contenido exclusivo (requiere pago)</p>
+      <a class="download" href="https://www.paypal.com/paypalme/cartajo1970" target="_blank">Pagar con PayPal</a><br><br>
+      <a class="download" href="music/exclusiva.mp3" download>Descargar después de pagar</a>
+    </section>
 
-<section id="contacto">
-  <h2>📞 Contáctanos</h2>
-  <form action="https://formspree.io/f/xwkgrlpl" method="POST">
-    <input type="text" name="name" placeholder="Tu nombre" required>
-    <input type="email" name="email" placeholder="Tu correo" required>
-    <textarea name="message" placeholder="Mensaje" required></textarea>
-    <button type="submit">Enviar</button>
-  </form>
-</section>
+    <section id="tienda">
+      <h2>🛒 Tienda Oficial</h2>
+      <ul>
+        <li><strong>Gorra</strong> - $15</li>
+        <li><strong>Camiseta</strong> - $20</li>
+        <li><strong>Bocina Bluetooth</strong> - $30</li>
+      </ul>
+      <p>Pagos vía:</p>
+      <ul>
+        <li>PayPal: cartajo1970@gmail.com</li>
+        <li>ATH Móvil: 939-902-9695</li>
+      </ul>
+    </section>
 
-<footer>
-  <p>&copy; 2025 Tropical Flow TV📺Radio - Todos los derechos reservados</p>
-</footer>
+    <section id="contacto">
+      <h2>📞 Contáctanos</h2>
+      <form action="https://formspree.io/f/xwkgrlpl" method="POST">
+        <input type="text" name="name" placeholder="Tu nombre" required>
+        <input type="email" name="email" placeholder="Tu correo" required>
+        <textarea name="message" placeholder="Mensaje" required></textarea>
+        <button type="submit">Enviar</button>
+      </form>
+    </section>
 
+    <footer>
+      <p>&copy; 2025 Tropical Flow TV📺Radio - Todos los derechos reservados</p>
+    </footer>
   </div>
 </body>
 </html>
