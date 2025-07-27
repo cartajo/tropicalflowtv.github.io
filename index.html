@@ -1,177 +1,80 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tropical Flow TV📺Radio</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      color: white;
-      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') no-repeat center center fixed;
-      background-size: cover;
-    }.container {
-  max-width: 900px;
-  margin: auto;
-  padding: 20px;
-  background-color: rgba(0, 0, 0, 0.6);
-  border-radius: 15px;
-}
-
-header, section, footer {
-  margin-bottom: 60px;
-}
-
-nav {
-  margin: 20px 0;
-  text-align: center;
-}
-
-nav a {
-  color: #00e0ff;
-  margin: 0 10px;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-h1, h2 {
-  text-align: center;
-  color: #fff;
-}
-
-.media-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-}
-
-.center-audio {
-  display: flex;
-  justify-content: center;
-}
-
-video, audio {
-  width: 100%;
-  max-width: 400px;
-}
-
-input, textarea, button {
-  display: block;
-  width: 100%;
-  margin: 10px 0;
-  padding: 10px;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-ul li {
-  margin: 8px 0;
-}
-
-a.download {
-  background: #00e0ff;
-  color: #000;
-  padding: 10px;
-  text-decoration: none;
-  border-radius: 5px;
-  display: inline-block;
-}
-
-footer {
-  text-align: center;
-  font-size: 14px;
-  color: #ccc;
-}
-
-section {
-  padding-top: 30px;
-  border-top: 2px solid #ffffff30;
-  margin-top: 60px;
-}
-
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Tropical Flow TV📺Radio</h1>
-      <nav>
-        <a href="#radio">Radio en Vivo</a>
-        <a href="#videos">Videos</a>
-        <a href="#djs">Zona de DJs</a>
-        <a href="#descargas">Descargas</a>
-        <a href="#tienda">Tienda</a>
-        <a href="#contacto">Contacto</a>
-      </nav>
-    </header><section id="radio">
-  <h2>🎧 Escucha Nuestra Radio</h2>
-  <div class="center-audio">
-    <iframe src="https://radio.tropicalflowtv.com/public/tropicalflowtv/embed" frameborder="0" allowtransparency="true" style="width:100%; max-width:500px; height:150px;"></iframe>
-  </div>
-</section>
+  <header>
+    <h1>Tropical Flow TV📺Radio</h1>
+    <nav>
+      <ul>
+        <li><a href="#radio">🎧 Escucha Nuestra Radio</a></li>
+        <li><a href="#videos">🎥 Videos Recientes</a></li>
+        <li><a href="#djs">Zona de DJs</a></li>
+        <li><a href="#descargas">Descargas</a></li>
+        <li><a href="#tienda">Tienda</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
 
-<section id="videos">
-  <h2>🎥 Videos Recientes</h2>
-  <input type="file" accept="video/*" multiple>
-  <div class="media-container">
-    <video controls>
-      <source src="videos/demo.mp4" type="video/mp4">
-      Tu navegador no soporta el video.
-    </video>
-  </div>
-</section>
+  <main>
+    <section id="radio">
+      <h2>🎧 Escucha Nuestra Radio</h2>
+      <audio controls autoplay>
+        <source src="http://radio.tropicalflowtv.stream/radio.mp3" type="audio/mpeg">
+        Tu navegador no soporta audio HTML5.
+      </audio>
+    </section>
 
-<section id="djs">
-  <h2>🎧 Zona de DJs</h2>
-  <p>¿Eres DJ? ¡Contáctanos y sube tus mezclas!</p>
-  <input type="file" accept="audio/*" multiple>
-  <div class="center-audio">
-    <audio controls>
-      <source src="music/dj-mix.mp3" type="audio/mpeg">
-      Tu navegador no soporta el audio.
-    </audio>
-  </div>
-</section>
+    <section id="videos">
+      <h2>🎥 Videos Recientes</h2>
+      <input type="file" />
+    </section>
 
-<section id="descargas">
-  <h2>⬇ Descarga Música Exclusiva</h2>
-  <p>Accede al contenido exclusivo (requiere pago)</p>
-  <a class="download" href="https://www.paypal.com/paypalme/cartajo1970" target="_blank">Pagar con PayPal</a><br><br>
-  <a class="download" href="music/exclusiva.mp3" download>Descargar después de pagar</a>
-</section>
+    <section id="djs">
+      <h2>🎧 Zona de DJs</h2>
+      <p>¿Eres DJ? ¡Contáctanos y sube tus mezclas!</p>
+      <button>Solicita tu espacio</button>
+      <input type="file" />
+    </section>
 
-<section id="tienda">
-  <h2>🛒 Tienda Oficial</h2>
-  <ul>
-    <li><strong>Gorra</strong> - $15</li>
-    <li><strong>Camiseta</strong> - $20</li>
-    <li><strong>Bocina Bluetooth</strong> - $30</li>
-  </ul>
-  <p>Pagos vía:</p>
-  <ul>
-    <li>PayPal: cartajo1970@gmail.com</li>
-    <li>ATH Móvil: 939-902-9695</li>
-  </ul>
-</section>
+    <section id="descargas">
+      <h2>⬇ Descarga Música Exclusiva</h2>
+      <p>Accede al contenido exclusivo (requiere pago)</p>
+      <button>Solicita acceso</button>
+      <button>Pagar y Descargar</button>
+    </section>
 
-<section id="contacto">
-  <h2>📞 Contáctanos</h2>
-  <form action="https://formspree.io/f/xwkgrlpl" method="POST">
-    <input type="text" name="name" placeholder="Tu nombre" required>
-    <input type="email" name="email" placeholder="Tu correo" required>
-    <textarea name="message" placeholder="Mensaje" required></textarea>
-    <button type="submit">Enviar</button>
-  </form>
-</section>
+    <section id="tienda">
+      <h2>🛒 Tienda Oficial</h2>
+      <ul>
+        <li>Gorra - $15</li>
+        <li>Camiseta - $20</li>
+        <li>Bocina Bluetooth - $30</li>
+      </ul>
+      <p><strong>Pagos vía:</strong></p>
+      <p>PayPal: cartajo1970@gmail.com</p>
+      <p>ATH Móvil: 939-902-9695</p>
+      <p><em>Próximamente tienda online disponible.</em></p>
+    </section>
 
-<footer>
-  <p>&copy; 2025 Tropical Flow TV📺Radio - Todos los derechos reservados</p>
-</footer>
+    <section id="contacto">
+      <h2>📞 Contáctanos</h2>
+      <form>
+        <input type="text" placeholder="Tu nombre" required />
+        <input type="email" placeholder="Tu correo" required />
+        <textarea placeholder="Mensaje" required></textarea>
+        <button type="submit">Enviar</button>
+      </form>
+    </section>
+  </main>
 
-  </div>
+  <footer>
+    <p>© 2025 Tropical Flow TV📺Radio - Todos los derechos reservados</p>
+  </footer>
 </body>
 </html>
