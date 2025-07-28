@@ -20,10 +20,7 @@
     </nav>
   </header>
   <main>
-    <section>
-      <h2>¡Música Tropical 24/7!</h2>
-      <p>Reggaetón, Salsa, Merengue, Bachata y más en una sola emisora.</p>
-    </section>
+    
   </main>
   <footer>
     <p>© 2025 Tropical Flow TV📺Radio - Todos los derechos reservados</p>
