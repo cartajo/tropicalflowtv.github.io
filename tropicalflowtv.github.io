@@ -29,37 +29,7 @@
 </head>
 <body>
   <header>
-    <h1>Bienvenido a Tropical Flow TV📺Radio</h1>
-    <nav>
-      <ul>
-        <li><a href="index.html">Inicio</a></li>
-        <li><a href="radio.html">🎧 Escucha Nuestra Radio</a></li>
-        <li><a href="#">🎥 Videos Recientes</a></li>
-        <li><a href="#">🎛 Zona de DJs</a></li>
-        <li><a href="#">🛒 Tienda</a></li>
-        <li><a href="#">📞 Contacto</a></li>
-      </ul>
-    </nav>
-  </header>
-  <main>
-    <section>
-      <h2>¡Música Tropical 24/7!</h2>
-      <p>Reggaetón, Salsa, Merengue, Bachata y más en una sola emisora.</p>
-    </section>
-  </main>
-  <footer>
-    <p>© 2025 Tropical Flow TV📺Radio - Todos los derechos reservados</p>
-  </footer>
-</body>
-</html>
-body {
-  background-color: #000;
-  color: #fff;
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
+    
 header {
   background-color: #111;
   padding: 20px;
