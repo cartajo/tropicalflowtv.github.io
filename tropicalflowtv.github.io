@@ -11,15 +11,7 @@
       text-align: center;
       padding: 40px;
     }
-
-    .radio-box {
-      background-color: #111;
-      border-radius: 15px;
-      padding: 20px;
-      display: inline-block;
-      width: 90%;
-      max-width: 600px;
-      box-shadow: 0 0 10px #00ffcc;
+  
     }
 
     audio {
