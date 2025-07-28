@@ -11,29 +11,7 @@
       text-align: center;
       padding: 40px;
     }
-  
-    }
-
-    audio {
-      width: 100%;
-      margin-top: 20px;
-    }
-
-    h1 {
-      margin-bottom: 10px;
-    }
-
-    p {
-      font-size: 14px;
-      color: #ccc;
-    }
-  </style>
-</head>
-<body>
-  <h1>🎧 Tropical Flow TV📺Radio</h1>
-  <div class="radio-box">
-    <p>Disfruta salsa, merengue, reggaetón, bachata y más — ¡24/7 música tropical en vivo!</p>
-    
+        
     <!-- Reproductor funcional con botón de Play -->
     <audio controls autoplay>
       <source src="http://uk16freenew.listen2myradio.com:13319/;" type="audio/mpeg">
