@@ -2,6 +2,58 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <title>Tropical Flow TV📺Radio - Escúchanos</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .radio-box {
+      background-color: #111;
+      border-radius: 15px;
+      padding: 20px;
+      display: inline-block;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 0 10px #00ffcc;
+    }
+
+    audio {
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 14px;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎧 Tropical Flow TV📺Radio</h1>
+  <div class="radio-box">
+    <p>Disfruta salsa, merengue, reggaetón, bachata y más — ¡24/7 música tropical en vivo!</p>
+    
+    <!-- Reproductor funcional con botón de Play -->
+    <audio controls autoplay>
+      <source src="http://uk16freenew.listen2myradio.com:13319/;" type="audio/mpeg">
+      Tu navegador no soporta el reproductor de audio.
+    </audio>
+  </div>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
   <title>Tropical Flow TV📺Radio</title>
   <link rel="stylesheet" href="estilos.css">
 </head>
