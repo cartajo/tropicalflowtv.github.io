@@ -71,16 +71,4 @@ footer {
   font-size: 14px;
   color: #888;
 }
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Tropical Flow TV📺Radio</title>
-  <style>
-    body {
-      background-color: #000;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 40px;
-   
+
