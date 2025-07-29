@@ -35,11 +35,11 @@
     section {
       padding: 2em;
     }
-    .music-player {
+    .music-player, .upload-section, .playlist-section {
       background: #fff;
       padding: 1em;
       border-radius: 10px;
-      max-width: 600px;
+      max-width: 700px;
       margin: 2em auto;
       box-shadow: 0 0 10px rgba(0,0,0,0.2);
     }
@@ -48,6 +48,13 @@
       color: #fff;
       text-align: center;
       padding: 1em;
+    }
+    input, textarea, button {
+      width: 100%;
+      margin: 0.5em 0;
+      padding: 0.5em;
+      border-radius: 5px;
+      border: 1px solid #ccc;
     }
   </style>
 </head>
@@ -58,8 +65,8 @@
   </header>  <nav>
     <a href="#inicio">Inicio</a>
     <a href="#radio">Radio</a>
-    <a href="#videos">Videos</a>
-    <a href="#djs">DJs</a>
+    <a href="#playlist">Playlist</a>
+    <a href="#subir">Subir Música</a>
     <a href="#tienda">Tienda</a>
     <a href="#contacto">Contacto</a>
   </nav>  <section id="inicio">
@@ -68,14 +75,31 @@
   </section>  <section id="radio">
     <h2>Escucha Nuestra Radio</h2>
     <div class="music-player">
-      <iframe src="https://your-audio-stream-url-here.com" width="100%" height="150" frameborder="0" allow="autoplay"></iframe>
+      <audio controls>
+        <source src="https://your-stream-url-here.com/stream.mp3" type="audio/mpeg">
+        Tu navegador no soporta la reproducción de audio.
+      </audio>
     </div>
-  </section>  <section id="videos">
-    <h2>Últimos Videos</h2>
-    <p>Próximamente: galería de videos musicales y estrenos exclusivos.</p>
-  </section>  <section id="djs">
-    <h2>Zona de DJs</h2>
-    <p>Promociona tu música o mezcla. ¡Contáctanos para más información!</p>
+  </section>  <section id="playlist">
+    <h2>Playlist</h2>
+    <div class="playlist-section">
+      <p>Escoge tu canción favorita:</p>
+      <ul>
+        <li><audio controls src="musica/cancion1.mp3"></audio></li>
+        <li><audio controls src="musica/cancion2.mp3"></audio></li>
+        <li><audio controls src="musica/cancion3.mp3"></audio></li>
+      </ul>
+    </div>
+  </section>  <section id="subir">
+    <h2>Sube tu Música</h2>
+    <div class="upload-section">
+      <form action="#" method="post" enctype="multipart/form-data">
+        <label for="archivo">Selecciona tu archivo MP3:</label>
+        <input type="file" id="archivo" name="archivo" accept="audio/mp3" required>
+        <button type="submit">Subir Canción</button>
+      </form>
+      <p><strong>Nota:</strong> La funcionalidad real de subida requiere backend (PHP, Node.js, etc.).</p>
+    </div>
   </section>  <section id="tienda">
     <h2>Nuestra Tienda</h2>
     <p>Compra productos oficiales: camisetas, gorras, y más.</p>
@@ -94,4 +118,4 @@
     <p>&copy; 2025 Tropical Flow Music. Todos los derechos reservados.</p>
   </footer>
 </body>
-</html>   
+</html>
