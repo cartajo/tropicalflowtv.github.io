@@ -1,263 +1,97 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Tropical Flow TV📺Radio</title>
-  <style>
-    body {
-      background-color: #000;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 40px;
-    }
-
-    .radio-box {
-      background-color: #111;
-      border-radius: 15px;
-      padding: 20px;
-      display: inline-block;
-      width: 90%;
-      max-width: 600px;
-    }
-
-    iframe {
-      width: 100%;
-      height: 150px;
-      border: none;
-    }
-
-    h1 {
-      margin-bottom: 10px;
-    }
-
-    p {
-      font-size: 14px;
-      color: #ccc;
-    }
-  </style>
-</head>
-<body>
-  <h1>🎧 Tropical Flow TV📺Radio</h1>
-  <div class="radio-box">
-    <iframe src="http://tropicalflowtv.radiostream123.com/"></iframe>
-    <p>Disfruta salsa, merengue, reggaetón, bachata y más — ¡24/7 música tropical en vivo!</p>
-  </div>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Tropical Flow TV📺Radio</title>
-  <style>
-    body {
-      background-color: #000;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 50px;
-    }
-    .player-container {
-      background: #111;
-      padding: 20px;
-      border-radius: 10px;
-      display: inline-block;
-    }
-    iframe {
-      border: none;
-    }
-  </style>
-</head>
-<body>
-  <h1>🎧 Tropical Flow TV📺Radio</h1>
-  <div class="player-container">
-    <iframe src="http://tropicalflowtv.radiostream123.com/" width="100%" height="150"></iframe>
-    <p>Música tropical 24/7: reggaetón, salsa, merengue, bachata y más.</p>
-  </div>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tropical Flow TV📺Radio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tropical Flow Music</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      color: white;
-      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') no-repeat center center fixed;
-      background-size: cover;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(to bottom, #ffe259, #ffa751);
+      color: #111;
     }
-
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 20px;
-      background-color: rgba(0, 0, 0, 0.6);
-      border-radius: 15px;
-    }
-
-    header, section, footer {
-      margin-bottom: 60px;
-    }
-
-    section {
-      padding-bottom: 40px;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-    }
-
-    nav {
-      margin: 20px 0;
+    header {
+      background: #111;
+      color: #fff;
+      padding: 1em;
       text-align: center;
     }
-
+    nav {
+      background: #333;
+      display: flex;
+      justify-content: center;
+      padding: 0.5em 0;
+    }
     nav a {
-      color: #00e0ff;
-      margin: 0 10px;
+      color: #fff;
+      margin: 0 1em;
       text-decoration: none;
       font-weight: bold;
     }
-
-    h1, h2 {
-      text-align: center;
+    nav a:hover {
+      text-decoration: underline;
+    }
+    section {
+      padding: 2em;
+    }
+    .music-player {
+      background: #fff;
+      padding: 1em;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: 2em auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    .footer {
+      background: #111;
       color: #fff;
-    }
-
-    .media-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-    }
-
-    .center-audio {
-      display: flex;
-      justify-content: center;
-    }
-
-    video, audio {
-      width: 100%;
-      max-width: 400px;
-    }
-
-    input, textarea, button {
-      display: block;
-      width: 100%;
-      margin: 10px 0;
-      padding: 10px;
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    ul li {
-      margin: 8px 0;
-    }
-
-    a.download {
-      background: #00e0ff;
-      color: #000;
-      padding: 10px;
-      text-decoration: none;
-      border-radius: 5px;
-      display: inline-block;
-    }
-
-    footer {
       text-align: center;
-      font-size: 14px;
-      color: #ccc;
+      padding: 1em;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Tropical Flow TV📺Radio</h1>
-      <nav>
-        <a href="#radio">Radio en Vivo</a>
-        <a href="#videos">Videos</a>
-        <a href="#djs">Zona de DJs</a>
-        <a href="#descargas">Descargas</a>
-        <a href="#tienda">Tienda</a>
-        <a href="#contacto">Contacto</a>
-      </nav>
-    </header>
-
-    <section id="radio">
-  <h2>🎧 Escucha Nuestra Radio</h2>
-  <div style="display: flex; justify-content: center; margin-top: 20px;">
-    <div data-type="newStreamPlayer" data-publicToken="173d1740-5216-4cbe-8e2b-cb45338d9e19" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false" class="cstrEmbed">
-      <a href="https://www.caster.fm">Shoutcast Hosting</a>
-      <a href="https://www.caster.fm">Stream Hosting</a>
-      <a href="https://www.caster.fm">Radio Server Hosting</a>
+  <header>
+    <h1>Tropical Flow Music 🎶</h1>
+    <p>Tu lugar para disfrutar música tropical 24/7</p>
+  </header>  <nav>
+    <a href="#inicio">Inicio</a>
+    <a href="#radio">Radio</a>
+    <a href="#videos">Videos</a>
+    <a href="#djs">DJs</a>
+    <a href="#tienda">Tienda</a>
+    <a href="#contacto">Contacto</a>
+  </nav>  <section id="inicio">
+    <h2>Bienvenido a Tropical Flow Music</h2>
+    <p>Disfruta música tropical, reggaetón, salsa, y mucho más.</p>
+  </section>  <section id="radio">
+    <h2>Escucha Nuestra Radio</h2>
+    <div class="music-player">
+      <iframe src="https://your-audio-stream-url-here.com" width="100%" height="150" frameborder="0" allow="autoplay"></iframe>
     </div>
-  </div>
-  <script src="//cdn.cloud.caster.fm//widgets/embed.js"></script>
-</section>
-
-    <section id="videos">
-      <h2>🎥 Videos Recientes</h2>
-      <input type="file" accept="video/*" multiple>
-      <div class="media-container">
-        <video controls>
-          <source src="videos/demo.mp4" type="video/mp4">
-          Tu navegador no soporta el video.
-        </video>
-      </div>
-    </section>
-
-    <section id="djs">
-      <h2>🎧 Zona de DJs</h2>
-      <p>¿Eres DJ? ¡Contáctanos y sube tus mezclas!</p>
-      <input type="file" accept="audio/*" multiple>
-      <div class="center-audio">
-        <audio controls>
-          <source src="music/dj-mix.mp3" type="audio/mpeg">
-          Tu navegador no soporta el audio.
-        </audio>
-      </div>
-    </section>
-
-    <section id="descargas">
-      <h2>⬇ Descarga Música Exclusiva</h2>
-      <p>Accede al contenido exclusivo (requiere pago)</p>
-      <a class="download" href="https://www.paypal.com/paypalme/cartajo1970" target="_blank">Pagar con PayPal</a><br><br>
-      <a class="download" href="music/exclusiva.mp3" download>Descargar después de pagar</a>
-    </section>
-
-    <section id="tienda">
-      <h2>🛒 Tienda Oficial</h2>
-      <ul>
-        <li><strong>Gorra</strong> - $15</li>
-        <li><strong>Camiseta</strong> - $20</li>
-        <li><strong>Bocina Bluetooth</strong> - $30</li>
-      </ul>
-      <p>Pagos vía:</p>
-      <ul>
-        <li>PayPal: cartajo1970@gmail.com</li>
-        <li>ATH Móvil: 939-902-9695</li>
-      </ul>
-    </section>
-
-    <section id="contacto">
-      <h2>📞 Contáctanos</h2>
-      <form action="https://formspree.io/f/xwkgrlpl" method="POST">
-        <input type="text" name="name" placeholder="Tu nombre" required>
-        <input type="email" name="email" placeholder="Tu correo" required>
-        <textarea name="message" placeholder="Mensaje" required></textarea>
-        <button type="submit">Enviar</button>
-      </form>
-    </section>
-
-    <footer>
-      <p>&copy; 2025 Tropical Flow TV📺Radio - Todos los derechos reservados</p>
-    </footer>
-  </div>
+  </section>  <section id="videos">
+    <h2>Últimos Videos</h2>
+    <p>Próximamente: galería de videos musicales y estrenos exclusivos.</p>
+  </section>  <section id="djs">
+    <h2>Zona de DJs</h2>
+    <p>Promociona tu música o mezcla. ¡Contáctanos para más información!</p>
+  </section>  <section id="tienda">
+    <h2>Nuestra Tienda</h2>
+    <p>Compra productos oficiales: camisetas, gorras, y más.</p>
+  </section>  <section id="contacto">
+    <h2>Contacto</h2>
+    <form>
+      <label for="nombre">Nombre:</label><br />
+      <input type="text" id="nombre" name="nombre" required /><br />
+      <label for="email">Email:</label><br />
+      <input type="email" id="email" name="email" required /><br />
+      <label for="mensaje">Mensaje:</label><br />
+      <textarea id="mensaje" name="mensaje" rows="4" required></textarea><br />
+      <button type="submit">Enviar</button>
+    </form>
+  </section>  <footer class="footer">
+    <p>&copy; 2025 Tropical Flow Music. Todos los derechos reservados.</p>
+  </footer>
 </body>
-</html>
+</html>   
