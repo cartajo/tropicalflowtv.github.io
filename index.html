@@ -35,7 +35,27 @@
     section {
       padding: 2em;
     }
-    .music-player, .upload-section, .playlist-section {
+    <?php
+$target_dir = "musica/";
+$target_file = $target_dir . basename($_FILES["archivo"]["name"]);
+$uploadOk = 1;
+$fileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+// Verifica que sea un archivo MP3
+if($fileType != "mp3") {
+  echo "Solo se permiten archivos MP3.";
+  $uploadOk = 0;
+}
+
+// Si todo está bien, intenta subirlo
+if ($uploadOk == 1) {
+  if (move_uploaded_file($_FILES["archivo"]["tmp_name"], $target_file)) {
+    echo "La canción ". htmlspecialchars(basename($_FILES["archivo"]["name"])) . " fue subida correctamente.";
+  } else {
+    echo "Error al subir el archivo.";
+  }
+}
+?>.music-player, .upload-section, .playlist-section {
       background: #fff;
       padding: 1em;
       border-radius: 10px;
