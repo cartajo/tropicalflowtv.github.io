@@ -1,105 +1,176 @@
-<!DOCTYPE html>
-<html lang="es"><?php
-$target_dir = "musica/";
-$target_file = $target_dir . basename($_FILES["archivo"]["name"]);
-$uploadOk = 1;
-$fileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-// Verifica si es MP3
-if($fileType != "mp3") {
-  echo "Solo se permiten archivos MP3.";
-  $uploadOk = 0;
-}
-
-// Verifica si ya existe
-if (file_exists($target_file)) {
-  echo "El archivo ya existe.";
-  $uploadOk = 0;
-}
-
-// Subir el archivo
-if ($uploadOk == 1) {
-  if (move_uploaded_file($_FILES["archivo"]["tmp_name"], $target_file)) {
-    echo "La canción ". htmlspecialchars(basename($_FILES["archivo"]["name"])) . " fue subida correctamente.";
-  } else {
-    echo "Error al subir el archivo.";
-  }
-}
-?>
-
+<!DOCTYPE html><html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tropical Flow Upload Center</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tropical Flow TV📺Radio</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      background: #fdf6e3;
-      color: #333;
-    }
-    header {
-      background: #1a1a1a;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-    }
-    main {
-      max-width: 800px;
-      margin: 30px auto;
-      padding: 20px;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    h2 {
-      color: #e67e22;
-    }
-    form input[type="file"], form button {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      font-size: 16px;
-    }
-    audio {
-      width: 100%;
-      margin: 10px 0;
-    }
-    .playlist {
-      margin-top: 30px;
-    }
-    footer {
-      text-align: center;
-      background: #1a1a1a;
+      font-family: Arial, sans-serif;
       color: white;
-      padding: 10px;
-    }
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') no-repeat center center fixed;
+      background-size: cover;
+    }.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 15px;
+}
+
+header, section, footer {
+  margin-bottom: 60px;
+}
+
+nav {
+  margin: 20px 0;
+  text-align: center;
+}
+
+nav a {
+  color: #00e0ff;
+  margin: 0 10px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+h1, h2 {
+  text-align: center;
+  color: #fff;
+}
+
+.media-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.center-audio {
+  display: flex;
+  justify-content: center;
+}
+
+video, audio {
+  width: 100%;
+  max-width: 400px;
+}
+
+input, textarea, button {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul li {
+  margin: 8px 0;
+}
+
+a.download {
+  background: #00e0ff;
+  color: #000;
+  padding: 10px;
+  text-decoration: none;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+footer {
+  text-align: center;
+  font-size: 14px;
+  color: #ccc;
+}
+
+section {
+  padding-top: 30px;
+  border-top: 2px solid #ffffff30;
+}
+
   </style>
 </head>
 <body>
-  <header>
-    <h1>Tropical Flow 🎶 Subida y Reproducción</h1>
-  </header>
-  <main>
-    <section>
-      <h2>Subir tu Música (MP3)</h2>
-      <form action="upload.php" method="post" enctype="multipart/form-data">
-        <input type="file" name="archivo" accept="audio/mp3" required>
-        <button type="submit">Subir canción</button>
-      </form>
-    </section>
+  <div class="container">
+    <header>
+      <h1>Tropical Flow TV📺Radio</h1>
+      <nav>
+        <a href="#radio">Radio en Vivo</a>
+        <a href="#videos">Videos</a>
+        <a href="#djs">Zona de DJs</a>
+        <a href="#descargas">Descargas</a>
+        <a href="#tienda">Tienda</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+    </header><section id="radio">
+  <h2>🎧 Escucha Nuestra Radio</h2>
+  <div class="center-audio">
+    <iframe src="https://your-azuracast-url.com/public/tropicalflow/embed" frameborder="0" allowtransparency="true" style="width:100%; max-width:500px; height:150px;"></iframe>
+  </div>
+</section>
 
-    <section class="playlist">
-      <h2>Playlist</h2>
-      <p>Escucha lo que ya está disponible:</p>
-      <audio controls src="musica/cancion1.mp3"></audio>
-      <audio controls src="musica/cancion2.mp3"></audio>
-      <audio controls src="musica/cancion3.mp3"></audio>
-    </section>
-  </main>
-  <footer>
-    <p>&copy; 2025 Tropical Flow Music. Todos los derechos reservados.</p>
-  </footer>
+<section id="videos">
+  <h2>🎥 Videos Recientes</h2>
+  <input type="file" accept="video/*" multiple>
+  <div class="media-container">
+    <video controls>
+      <source src="videos/demo.mp4" type="video/mp4">
+      Tu navegador no soporta el video.
+    </video>
+  </div>
+</section>
+
+<section id="djs">
+  <h2>🎧 Zona de DJs</h2>
+  <p>¿Eres DJ? ¡Contáctanos y sube tus mezclas!</p>
+  <input type="file" accept="audio/*" multiple>
+  <div class="center-audio">
+    <audio controls>
+      <source src="music/dj-mix.mp3" type="audio/mpeg">
+      Tu navegador no soporta el audio.
+    </audio>
+  </div>
+</section>
+
+<section id="descargas">
+  <h2>⬇ Descarga Música Exclusiva</h2>
+  <p>Accede al contenido exclusivo (requiere pago)</p>
+  <a class="download" href="https://www.paypal.com/paypalme/cartajo1970" target="_blank">Pagar con PayPal</a><br><br>
+  <a class="download" href="music/exclusiva.mp3" download>Descargar después de pagar</a>
+</section>
+
+<section id="tienda">
+  <h2>🛒 Tienda Oficial</h2>
+  <ul>
+    <li><strong>Gorra</strong> - $15</li>
+    <li><strong>Camiseta</strong> - $20</li>
+    <li><strong>Bocina Bluetooth</strong> - $30</li>
+  </ul>
+  <p>Pagos vía:</p>
+  <ul>
+    <li>PayPal: cartajo1970@gmail.com</li>
+    <li>ATH Móvil: 939-902-9695</li>
+  </ul>
+</section>
+
+<section id="contacto">
+  <h2>📞 Contáctanos</h2>
+  <form action="https://formspree.io/f/xwkgrlpl" method="POST">
+    <input type="text" name="name" placeholder="Tu nombre" required>
+    <input type="email" name="email" placeholder="Tu correo" required>
+    <textarea name="message" placeholder="Mensaje" required></textarea>
+    <button type="submit">Enviar</button>
+  </form>
+</section>
+
+<footer>
+  <p>&copy; 2025 Tropical Flow TV📺Radio - Todos los derechos reservados</p>
+</footer>
+
+  </div>
 </body>
 </html>
-
