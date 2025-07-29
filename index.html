@@ -1,5 +1,32 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es"><?php
+$target_dir = "musica/";
+$target_file = $target_dir . basename($_FILES["archivo"]["name"]);
+$uploadOk = 1;
+$fileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+// Verifica si es MP3
+if($fileType != "mp3") {
+  echo "Solo se permiten archivos MP3.";
+  $uploadOk = 0;
+}
+
+// Verifica si ya existe
+if (file_exists($target_file)) {
+  echo "El archivo ya existe.";
+  $uploadOk = 0;
+}
+
+// Subir el archivo
+if ($uploadOk == 1) {
+  if (move_uploaded_file($_FILES["archivo"]["tmp_name"], $target_file)) {
+    echo "La canción ". htmlspecialchars(basename($_FILES["archivo"]["name"])) . " fue subida correctamente.";
+  } else {
+    echo "Error al subir el archivo.";
+  }
+}
+?>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
