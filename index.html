@@ -128,7 +128,26 @@ section {
   <h2>🎧 Zona de DJs</h2>
   <p>¿Eres DJ? ¡Contáctanos y sube tus mezclas!</p>
   <input type="file" accept="audio/*" multiple>
-  <div class="center-audio">
+  <div class="center-audio"><?php
+$target_dir = "musica/";
+$target_file = $target_dir . basename($_FILES["archivo"]["name"]);
+$uploadOk = 1;
+$fileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+if($fileType != "mp3") {
+  echo "Solo se permiten archivos MP3.";
+  $uploadOk = 0;
+}
+
+if ($uploadOk == 1) {
+  if (move_uploaded_file($_FILES["archivo"]["tmp_name"], $target_file)) {
+    echo "La canción ". htmlspecialchars(basename($_FILES["archivo"]["name"])) . " fue subida correctamente.";
+  } else {
+    echo "Error al subir el archivo.";
+  }
+}
+?>
+
     <audio controls>
       <source src="music/dj-mix.mp3" type="audio/mpeg">
       Tu navegador no soporta el audio.
@@ -173,22 +192,4 @@ section {
 
   </div>
 </body>
-</html><?php
-$target_dir = "musica/";
-$target_file = $target_dir . basename($_FILES["archivo"]["name"]);
-$uploadOk = 1;
-$fileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-if($fileType != "mp3") {
-  echo "Solo se permiten archivos MP3.";
-  $uploadOk = 0;
-}
-
-if ($uploadOk == 1) {
-  if (move_uploaded_file($_FILES["archivo"]["tmp_name"], $target_file)) {
-    echo "La canción ". htmlspecialchars(basename($_FILES["archivo"]["name"])) . " fue subida correctamente.";
-  } else {
-    echo "Error al subir el archivo.";
-  }
-}
-?>
+</html>
