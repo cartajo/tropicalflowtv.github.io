@@ -6,8 +6,8 @@
   <title>Tropical Flow TV📺Radio — En Vivo 24/7</title>
   <meta name="description" content="Tropical Flow TV📺Radio - Música tropical en vivo 24/7. Dale play y disfruta." />
 
-  <!-- ESTILOS (CSS EN EL MISMO ARCHIVO) -->
   <style>
+    /* Fondo de playa */
     body{
       margin:0;
       font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
@@ -18,12 +18,14 @@
       min-height:100vh;
       display:flex; flex-direction:column;
     }
+
+    /* Barra superior */
     .topbar{
       display:flex; align-items:center; justify-content:space-between;
       padding:14px 16px; background:rgba(0,0,0,.25); backdrop-filter: blur(6px);
       border-bottom:1px solid rgba(255,255,255,.2);
     }
-    .brand{display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.2px}
+    .brand{display:flex; align-items:center; gap:12px; font-weight:800}
     .brand-badge{
       width:44px; height:44px; border-radius:12px;
       background: radial-gradient(120% 120% at 10% 10%, #fb923c, #0ea5e9);
@@ -39,6 +41,56 @@
       background: rgba(0,0,0,.15);
     }
     .links a.primary{background:#0ea5e9; color:#001018; border-color:transparent; font-weight:800}
-    main{flex:1; display:grid; place-items:center; padding:24px 16px}
+
+    /* Contenedor principal */
+    main{flex:1; display:grid; place-items:center; padding:22px 16px}
+
+    /* Tarjeta de player (estilo vidrio) */
     .glass{
-      width:min(920px,
+      width:min(920px, 96%); background:rgba(0,0,0,.35); backdrop-filter: blur(8px);
+      border:1px solid rgba(255,255,255,.25); border-radius:18px; padding:18px;
+      box-shadow:0 20px 50px rgba(0,0,0,.45);
+    }
+    .title{display:flex; align-items:center; gap:10px; margin:0 0 6px}
+    .live-dot{width:10px; height:10px; border-radius:50%; background:#ef4444; box-shadow:0 0 0 6px rgba(239,68,68,.18)}
+    h1{font-size:1.4rem; margin:0}
+    .subtitle{margin:6px 0 14px; opacity:.9}
+
+    .player{
+      background:rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.25);
+      border-radius:14px; padding:14px;
+      display:flex; flex-direction:column; gap:12px;
+    }
+    .controls{display:flex; align-items:center; gap:12px; flex-wrap:wrap}
+    .btn{
+      background:#0ea5e9; color:#001018; border:0; border-radius:12px;
+      padding:12px 18px; font-weight:800; cursor:pointer;
+      box-shadow:0 10px 20px rgba(14,165,233,.25);
+    }
+    .status{opacity:.9}
+    .vol{margin-left:auto; display:flex; align-items:center; gap:10px}
+    .vol input[type="range"]{width:170px}
+    .alt-links{display:flex; gap:10px; flex-wrap:wrap}
+    .alt-links a{ color:#fff; text-decoration:none; border:1px solid rgba(255,255,255,.3);
+      padding:8px 12px; border-radius:10px; font-size:.92rem; background:rgba(0,0,0,.2)}
+    .notice{font-size:.9rem; opacity:.9}
+
+    footer{padding:18px 12px; text-align:center; background:rgba(0,0,0,.25); border-top:1px solid rgba(255,255,255,.2)}
+
+    /* Bloque de PRUEBA fijo arriba (para asegurarnos que se vea algo siempre) */
+    .test{
+      width:min(920px,96%); margin:12px auto 0; background:#111;
+      border:1px solid #333; border-radius:12px; padding:12px;
+      box-shadow:0 10px 24px rgba(0,0,0,.4)
+    }
+    .test h3{margin:0 0 8px; font-size:1rem}
+    .test audio{width:100%}
+  </style>
+</head>
+<body>
+  <!-- Barra superior -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-badge">TF</div>
+      <div class="brand-title">
+        Tropical Flow TV📺
