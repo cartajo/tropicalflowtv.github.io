@@ -94,117 +94,21 @@
       font-size: 14px;
       color: #ccc;
     }
-  <style>
-  /* Contenedor del player sobre el fondo de playa */
-  .tf-player {
-    max-width: 760px;
-    margin: 24px auto;
-    padding: 16px;
-    border-radius: 16px;
-    color: #e5e7eb;
-    background: rgba(0,0,0,.35);               /* semi-transparente */
-    backdrop-filter: blur(6px);                 /* efecto vidrio (si el navegador lo soporta) */
-    border: 1px solid rgba(255,255,255,.18);
-    box-shadow: 0 10px 35px rgba(0,0,0,.35);
-    font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
-  }
-  .tf-player h3{margin:0 0 6px 0; font-size:1.25rem}
-  .tf-sub{margin:0 0 14px; opacity:.85}
-  .tf-controls{display:flex; align-items:center; gap:12px; flex-wrap:wrap}
-  .tf-btn{
-    background:#0ea5e9; color:#001018; border:0; border-radius:12px;
-    padding:12px 18px; font-weight:800; cursor:pointer;
-    box-shadow:0 10px 20px rgba(14,165,233,.25);
-  }
-  .tf-status{opacity:.85}
-  .tf-vol{margin-left:auto; display:flex; align-items:center; gap:10px}
-  .tf-vol input[type="range"]{width:160px}
-  .tf-links{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
-  .tf-links a{
-    color:#e5e7eb; text-decoration:none; border:1px solid rgba(255,255,255,.25);
-    padding:8px 12px; border-radius:10px; font-size:.92rem
-  }
-
-  /* (Opcional) Si tu sección de playa es clara, puedes oscurecer un poco para legibilidad */
-  .tf-darken-bg{
-    background: linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,.35));
-    border-radius: 18px;
-    padding: 8px;
-  }
-</style>
-
+  </style>
 </head>
-<body><script>
-  (function(){
-    const audio = document.getElementById('tfAudio');
-    const btn   = document.getElementById('tfPlay');
-    const status= document.getElementById('tfStatus');
-    const vol   = document.getElementById('tfVol');
-
-    // Autoconfig de volumen y autoplay suave
-    document.addEventListener('DOMContentLoaded', () => {
-      try {
-        audio.volume = vol.value;
-        audio.play().then(() => {
-          btn.textContent = '⏸︎ Pausa';
-          status.textContent = 'Reproduciendo…';
-        }).catch(() => {
-          status.textContent = 'Listo — Toca Play para empezar';
-        });
-      } catch(e){
-        status.textContent = 'Listo — Toca Play para empezar';
-      }
-    });
-
-    btn.addEventListener('click', async () => {
-      if (audio.paused) {
-        try {
-          await audio.play();
-          btn.textContent = '⏸︎ Pausa';
-          status.textContent = 'Reproduciendo…';
-        } catch (e) {
-          status.textContent = 'No se pudo reproducir. Intenta de nuevo.';
-        }
-      } else {
-        audio.pause();
-        btn.textContent = '▶︎ Play';
-        status.textContent = 'Pausado';
-      }
-    });
-
-    vol.addEventListener('input', () => { audio.volume = vol.value; });
-
-    audio.addEventListener('error', () => { status.textContent = 'Error de conexión.'; });
-    audio.addEventListener('playing', () => { status.textContent = 'Reproduciendo…'; });
-    audio.addEventListener('pause', () => { status.textContent = 'Pausado'; });
-  })();
-</script>
-
-  <div class="tf-player">
-  <h3>🎧 Tropical Flow TV📺Radio — En vivo 24/7</h3>
-  <p class="tf-sub">Si no inicia solo, toca <b>Play</b>. Funciona en celular y computadora.</p>
-
-  <div class="tf-controls">
-    <button class="tf-btn" id="tfPlay">▶︎ Play</button>
-    <span class="tf-status" id="tfStatus">Listo</span>
-    <div class="tf-vol">
-      <label for="tfVol">Volumen</label>
-      <input id="tfVol" type="range" min="0" max="1" step="0.01" value="0.9">
-    </div>
-  </div>
-
-  <audio id="tfAudio" preload="none" crossorigin="anonymous">
-    <source src="https://stream.zeno.fm/sl8wpcxtjy3uv" type="audio/mpeg">
-    Tu navegador no soporta audio en vivo.
-  </audio>
-
-  <div class="tf-links">
-    <a href="https://stream.zeno.fm/sl8wpcxtjy3uv" target="_blank" rel="noopener">Abrir MP3</a>
-    <a href="https://stream.zeno.fm/sl8wpcxtjy3uv.m3u" target="_blank" rel="noopener">M3U</a>
-    <a href="https://stream.zeno.fm/sl8wpcxtjy3uv.pls" target="_blank" rel="noopener">PLS</a>
-  </div>
-</div>
-<div 
+<body>
+  <div class="container">
+    <header>
+      <h1>Tropical Flow TV📺Radio</h1>
+      <nav>
+        <a href="#radio">Radio en Vivo</a>
+        <a href="#videos">Videos</a>
+        <a href="#djs">Zona de DJs</a>
+        <a href="#descargas">Descargas</a>
+        <a href="#tienda">Tienda</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+    </header>
 
     <section id="radio">
   <h2>🎧 Escucha Nuestra Radio</h2>
