@@ -1,18 +1,64 @@
- <!DOCTYPE html>
+OTRO MAS <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Tropical Flow TV📺Radio — TEST</title>
-</head>
-<body style="margin:0; font-family:Arial, sans-serif; background:#0b1220; color:#e5e7eb;">
-  <div style="max-width:760px; margin:24px auto; padding:16px; background:#101826; border:1px solid #2b3448; border-radius:12px;">
-    <h1 style="margin:0 0 10px;">🎧 Tropical Flow TV📺Radio — TEST</h1>
-    <p style="margin:0 0 12px;">Toca <b>Play</b> si no inicia solo.</p>
-    <audio controls style="width:100%;">
-      <source src="https://stream.zeno.fm/sl8wpcxtjy3uv" type="audio/mpeg">
-      Tu navegador no soporta audio en vivo.
-    </audio>
-  </div>
-</body>
-</html>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Tropical Flow TV📺Radio — En Vivo 24/7</title>
+<meta name="description" content="Tropical Flow TV📺Radio - Música tropical en vivo 24/7. Dale play y disfruta.">
+
+<style>
+  /* ===== Fondo de playa ===== */
+  body{
+    margin:0; color:#fff; font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;
+    background: linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.45)),
+      url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover fixed no-repeat;
+    min-height:100vh; display:flex; flex-direction:column;
+  }
+
+  /* ===== Barra superior ===== */
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 16px; background:rgba(0,0,0,.25);
+    border-bottom:1px solid rgba(255,255,255,.2);
+    backdrop-filter: blur(6px);
+  }
+  .brand{display:flex; align-items:center; gap:12px; font-weight:800}
+  .brand-badge{
+    width:44px; height:44px; border-radius:12px;
+    background: radial-gradient(120% 120% at 10% 10%, #fb923c, #0ea5e9);
+    display:grid; place-items:center; color:#001018; font-weight:900;
+    border:1px solid rgba(255,255,255,.25);
+    box-shadow:0 8px 24px rgba(0,0,0,.35);
+  }
+  .brand-title{line-height:1.05}
+  .brand-title small{display:block; font-weight:600; opacity:.9}
+  .links a{
+    color:#fff; text-decoration:none; font-weight:600;
+    border:1px solid rgba(255,255,255,.35); padding:10px 14px; border-radius:10px;
+    margin-left:8px; background:rgba(0,0,0,.15);
+  }
+  .links a.primary{background:#0ea5e9; color:#001018; border-color:transparent}
+
+  /* ===== Contenido ===== */
+  main{flex:1; display:grid; place-items:center; padding:24px 16px}
+  .card{
+    width:min(920px,96%);
+    background: rgba(0,0,0,.35);
+    border:1px solid rgba(255,255,255,.25);
+    border-radius:18px; padding:18px;
+    backdrop-filter: blur(8px);
+    box-shadow:0 20px 50px rgba(0,0,0,.45);
+  }
+  .title{display:flex; align-items:center; gap:10px; margin:0 0 8px}
+  .live{width:10px; height:10px; border-radius:50%; background:#ef4444; box-shadow:0 0 0 6px rgba(239,68,68,.18)}
+  h1{margin:0; font-size:1.35rem}
+  .sub{margin:6px 0 14px; opacity:.9}
+
+  /* Player nativo (estable en todos los navegadores) */
+  audio{width:100%}
+
+  .alt{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+  .alt a{
+    color:#fff; text-decoration:none;
+    border:1px solid rgba(255,255,255,.3);
+    padding:8px 12px; border
