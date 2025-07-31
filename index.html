@@ -29,7 +29,7 @@
       <p>Si no se reproduce automáticamente, toca <b>Play</b>. Funciona en celular y computadora.</p>
       <div class="player-card">
         <div class="player-controls">
-          <button class="btn" id="btnPlay">▶︎ Play</button>
+          <button class="btn" id="btnPlay">▶ Play</button>
           <span class="status" id="statusTxt">Listo</span>
           <div class="vol">
             <label for="vol">Volumen</label>
@@ -63,43 +63,7 @@
   <script src="player.js"></script>
 </body>
 </html>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Radio — Tropical Flow TV📺Radio</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <main class="solo">
-    <div class="player-card">
-      <div class="player-controls">
-        <button class="btn" id="btnPlay">▶︎ Play</button>
-        <span class="status" id="statusTxt">Listo</span>
-        <div class="vol">
-          <label for="vol">Volumen</label>
-          <input id="vol" type="range" min="0" max="1" step="0.01" value="0.9">
-        </div>
-      </div>
-      <audio id="radio" preload="none" crossorigin="anonymous">
-        <source src="https://stream.zeno.fm/sl8wpcxtjy3uv" type="audio/mpeg">
-        Tu navegador no soporta audio en vivo.
-      </audio>
-      <div class="links">
-        <a href="https://stream.zeno.fm/sl8wpcxtjy3uv" target="_blank" rel="noopener">Abrir stream (MP3)</a>
-        <a href="https://stream.zeno.fm/sl8wpcxtjy3uv.m3u" target="_blank" rel="noopener">M3U</a>
-        <a href="https://stream.zeno.fm/sl8wpcxtjy3uv.pls" target="_blank" rel="noopener">PLS</a>
-      </div>
-    </div>
-  </main>
-  <footer class="site-footer">
-    © <span id="y"></span> Tropical Flow TV📺Radio
-  </footer>
-  <script src="player.js"></script>
-</body>
-</html>
-:root{
+ :root{
   --primary:#0ea5e9; /* azul tropical */
   --accent:#fb923c;  /* naranja tropical */
   --bg:#0b1220;
@@ -172,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
   try {
     audio.volume = vol.value;
     audio.play().then(() => {
-      btn.textContent = '⏸︎ Pausa';
+      btn.textContent = '⏸ Pausa';
       statusTxt.textContent = 'Reproduciendo…';
     }).catch(() => {
       statusTxt.textContent = 'Listo — Toca Play para empezar';
@@ -186,14 +150,14 @@ btn.addEventListener('click', async () => {
   if (audio.paused) {
     try {
       await audio.play();
-      btn.textContent = '⏸︎ Pausa';
+      btn.textContent = '⏸ Pausa';
       statusTxt.textContent = 'Reproduciendo…';
     } catch (e) {
       statusTxt.textContent = 'No se pudo reproducir. Intenta de nuevo.';
     }
   } else {
     audio.pause();
-    btn.textContent = '▶︎ Play';
+    btn.textContent = '▶ Play';
     statusTxt.textContent = 'Pausado';
   }
 });
@@ -223,7 +187,7 @@ audio.addEventListener('pause', () => {
   <main class="solo">
     <div class="player-card">
       <div class="player-controls">
-        <button class="btn" id="btnPlay">▶︎ Play</button>
+        <button class="btn" id="btnPlay">▶ Play</button>
         <span class="status" id="statusTxt">Listo</span>
         <div class="vol">
           <label for="vol">Volumen</label>
@@ -247,4 +211,3 @@ audio.addEventListener('pause', () => {
   <script src="player.js"></script>
 </body>
 </html>
-
