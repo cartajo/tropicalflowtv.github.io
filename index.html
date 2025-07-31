@@ -1,23 +1,280 @@
-body {
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(to bottom right, #009688, #004D40);
-    color: white;
-    text-align: center;
-    padding: 20px;
-}
-header {
-    background-color: rgba(0,0,0,0.5);
-    padding: 20px 0;
-    margin-bottom: 30px;
-}
-audio {
-    margin-top: 20px;
-    width: 80%;
-    max-width: 500px;
-}
-footer {
-    margin-top: 40px;
-    font-size: 0.8em;
-    color: #B2DFDB;
-}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tropical Flow TV📺Radio</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: white;
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 15px;
+    }
+
+    header, section, footer {
+      margin-bottom: 60px;
+    }
+
+    section {
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    nav {
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    nav a {
+      color: #00e0ff;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #fff;
+    }
+
+    .media-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .center-audio {
+      display: flex;
+      justify-content: center;
+    }
+
+    video, audio {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    input, textarea, button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul li {
+      margin: 8px 0;
+    }
+
+    a.download {
+      background: #00e0ff;
+      color: #000;
+      padding: 10px;
+      text-decoration: none;
+      border-radius: 5px;
+      display: inline-block;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 14px;
+      color: #ccc;
+    }
+  <style>
+  /* Contenedor del player sobre el fondo de playa */
+  .tf-player {
+    max-width: 760px;
+    margin: 24px auto;
+    padding: 16px;
+    border-radius: 16px;
+    color: #e5e7eb;
+    background: rgba(0,0,0,.35);               /* semi-transparente */
+    backdrop-filter: blur(6px);                 /* efecto vidrio (si el navegador lo soporta) */
+    border: 1px solid rgba(255,255,255,.18);
+    box-shadow: 0 10px 35px rgba(0,0,0,.35);
+    font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+  }
+  .tf-player h3{margin:0 0 6px 0; font-size:1.25rem}
+  .tf-sub{margin:0 0 14px; opacity:.85}
+  .tf-controls{display:flex; align-items:center; gap:12px; flex-wrap:wrap}
+  .tf-btn{
+    background:#0ea5e9; color:#001018; border:0; border-radius:12px;
+    padding:12px 18px; font-weight:800; cursor:pointer;
+    box-shadow:0 10px 20px rgba(14,165,233,.25);
+  }
+  .tf-status{opacity:.85}
+  .tf-vol{margin-left:auto; display:flex; align-items:center; gap:10px}
+  .tf-vol input[type="range"]{width:160px}
+  .tf-links{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
+  .tf-links a{
+    color:#e5e7eb; text-decoration:none; border:1px solid rgba(255,255,255,.25);
+    padding:8px 12px; border-radius:10px; font-size:.92rem
+  }
+
+  /* (Opcional) Si tu sección de playa es clara, puedes oscurecer un poco para legibilidad */
+  .tf-darken-bg{
+    background: linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,.35));
+    border-radius: 18px;
+    padding: 8px;
+  }
+</style>
+
+</head>
+<body><script>
+  (function(){
+    const audio = document.getElementById('tfAudio');
+    const btn   = document.getElementById('tfPlay');
+    const status= document.getElementById('tfStatus');
+    const vol   = document.getElementById('tfVol');
+
+    // Autoconfig de volumen y autoplay suave
+    document.addEventListener('DOMContentLoaded', () => {
+      try {
+        audio.volume = vol.value;
+        audio.play().then(() => {
+          btn.textContent = '⏸︎ Pausa';
+          status.textContent = 'Reproduciendo…';
+        }).catch(() => {
+          status.textContent = 'Listo — Toca Play para empezar';
+        });
+      } catch(e){
+        status.textContent = 'Listo — Toca Play para empezar';
+      }
+    });
+
+    btn.addEventListener('click', async () => {
+      if (audio.paused) {
+        try {
+          await audio.play();
+          btn.textContent = '⏸︎ Pausa';
+          status.textContent = 'Reproduciendo…';
+        } catch (e) {
+          status.textContent = 'No se pudo reproducir. Intenta de nuevo.';
+        }
+      } else {
+        audio.pause();
+        btn.textContent = '▶︎ Play';
+        status.textContent = 'Pausado';
+      }
+    });
+
+    vol.addEventListener('input', () => { audio.volume = vol.value; });
+
+    audio.addEventListener('error', () => { status.textContent = 'Error de conexión.'; });
+    audio.addEventListener('playing', () => { status.textContent = 'Reproduciendo…'; });
+    audio.addEventListener('pause', () => { status.textContent = 'Pausado'; });
+  })();
+</script>
+
+  <div class="tf-player">
+  <h3>🎧 Tropical Flow TV📺Radio — En vivo 24/7</h3>
+  <p class="tf-sub">Si no inicia solo, toca <b>Play</b>. Funciona en celular y computadora.</p>
+
+  <div class="tf-controls">
+    <button class="tf-btn" id="tfPlay">▶︎ Play</button>
+    <span class="tf-status" id="tfStatus">Listo</span>
+    <div class="tf-vol">
+      <label for="tfVol">Volumen</label>
+      <input id="tfVol" type="range" min="0" max="1" step="0.01" value="0.9">
+    </div>
+  </div>
+
+  <audio id="tfAudio" preload="none" crossorigin="anonymous">
+    <source src="https://stream.zeno.fm/sl8wpcxtjy3uv" type="audio/mpeg">
+    Tu navegador no soporta audio en vivo.
+  </audio>
+
+  <div class="tf-links">
+    <a href="https://stream.zeno.fm/sl8wpcxtjy3uv" target="_blank" rel="noopener">Abrir MP3</a>
+    <a href="https://stream.zeno.fm/sl8wpcxtjy3uv.m3u" target="_blank" rel="noopener">M3U</a>
+    <a href="https://stream.zeno.fm/sl8wpcxtjy3uv.pls" target="_blank" rel="noopener">PLS</a>
+  </div>
+</div>
+<div 
+
+    <section id="radio">
+  <h2>🎧 Escucha Nuestra Radio</h2>
+  <div style="display: flex; justify-content: center; margin-top: 20px;">
+    <div data-type="newStreamPlayer" data-publicToken="173d1740-5216-4cbe-8e2b-cb45338d9e19" data-theme="light" data-color="e81e4d" data-channelId="" data-rendered="false" class="cstrEmbed">
+      <a href="https://www.caster.fm">Shoutcast Hosting</a>
+      <a href="https://www.caster.fm">Stream Hosting</a>
+      <a href="https://www.caster.fm">Radio Server Hosting</a>
+    </div>
+  </div>
+  <script src="//cdn.cloud.caster.fm//widgets/embed.js"></script>
+</section>
+
+    <section id="videos">
+      <h2>🎥 Videos Recientes</h2>
+      <input type="file" accept="video/*" multiple>
+      <div class="media-container">
+        <video controls>
+          <source src="videos/demo.mp4" type="video/mp4">
+          Tu navegador no soporta el video.
+        </video>
+      </div>
+    </section>
+
+    <section id="djs">
+      <h2>🎧 Zona de DJs</h2>
+      <p>¿Eres DJ? ¡Contáctanos y sube tus mezclas!</p>
+      <input type="file" accept="audio/*" multiple>
+      <div class="center-audio">
+        <audio controls>
+          <source src="music/dj-mix.mp3" type="audio/mpeg">
+          Tu navegador no soporta el audio.
+        </audio>
+      </div>
+    </section>
+
+    <section id="descargas">
+      <h2>⬇ Descarga Música Exclusiva</h2>
+      <p>Accede al contenido exclusivo (requiere pago)</p>
+      <a class="download" href="https://www.paypal.com/paypalme/cartajo1970" target="_blank">Pagar con PayPal</a><br><br>
+      <a class="download" href="music/exclusiva.mp3" download>Descargar después de pagar</a>
+    </section>
+
+    <section id="tienda">
+      <h2>🛒 Tienda Oficial</h2>
+      <ul>
+        <li><strong>Gorra</strong> - $15</li>
+        <li><strong>Camiseta</strong> - $20</li>
+        <li><strong>Bocina Bluetooth</strong> - $30</li>
+      </ul>
+      <p>Pagos vía:</p>
+      <ul>
+        <li>PayPal: cartajo1970@gmail.com</li>
+        <li>ATH Móvil: 939-902-9695</li>
+      </ul>
+    </section>
+
+    <section id="contacto">
+      <h2>📞 Contáctanos</h2>
+      <form action="https://formspree.io/f/xwkgrlpl" method="POST">
+        <input type="text" name="name" placeholder="Tu nombre" required>
+        <input type="email" name="email" placeholder="Tu correo" required>
+        <textarea name="message" placeholder="Mensaje" required></textarea>
+        <button type="submit">Enviar</button>
+      </form>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 Tropical Flow TV📺Radio - Todos los derechos reservados</p>
+    </footer>
+  </div>
+</body>
+</html>
