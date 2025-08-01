@@ -51,7 +51,48 @@
       </div>
     </section>
 
-    <!-- ======= TV (canales embebidos) ======= -->
+   <!-- ======= TV (canales embebidos funcionales) ======= -->
+<section style="width:min(980px,96%); margin:0 auto; background:rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.25); border-radius:18px; padding:18px; backdrop-filter:blur(8px); box-shadow:0 20px 50px rgba(0,0,0,.45);">
+  <div style="display:flex; align-items:center; gap:10px; margin:0 0 8px;">
+    <div style="width:10px; height:10px; border-radius:50%; background:#3b82f6; box-shadow:0 0 0 6px rgba(59,130,246,.18);"></div>
+    <h2 style="margin:0; font-size:1.25rem;">📺 TV — Canales en Vivo</h2>
+  </div>
+  <p style="margin:6px 0 14px; opacity:.9;">Toca un canal para verlo en el reproductor.</p>
+
+  <!-- Botones de canales funcionales -->
+  <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
+    <button data-yt="21X5lGlDOfg" style="cursor:pointer; background:#0ea5e9; color:#001018; border:0; padding:10px 14px; border-radius:10px; font-weight:800;">NASA Live</button>
+    <button data-yt="p5rJ9Y-8rEo" style="cursor:pointer; background:#fb923c; color:#001018; border:0; padding:10px 14px; border-radius:10px; font-weight:800;">DW Español</button>
+    <button data-yt="pIkn2C7yJik" style="cursor:pointer; background:#22c55e; color:#001018; border:0; padding:10px 14px; border-radius:10px; font-weight:800;">RT Español</button>
+    <button data-yt="6GzxbrO0vbM" style="cursor:pointer; background:#a78bfa; color:#001018; border:0; padding:10px 14px; border-radius:10px; font-weight:800;">Euronews Español</button>
+    <button data-yt="tc3U6Y8Y2Lk" style="cursor:pointer; background:#f59e0b; color:#001018; border:0; padding:10px 14px; border-radius:10px; font-weight:800;">Bloomberg Originals</button>
+    <button data-yt="mhvP3bJdR9I" style="cursor:pointer; background:#ef4444; color:#001018; border:0; padding:10px 14px; border-radius:10px; font-weight:800;">Cámara Miami</button>
+    <button data-yt="j6wuwf3hzRI" style="cursor:pointer; background:#2dd4bf; color:#001018; border:0; padding:10px 14px; border-radius:10px; font-weight:800;">Cámara NYC</button>
+    <button data-yt="DPFIzHUWU_U" style="cursor:pointer; background:#f472b6; color:#001018; border:0; padding:10px 14px; border-radius:10px; font-weight:800;">Skyline Chicago</button>
+    <button data-yt="ye3sUcSydwA" style="cursor:pointer; background:#facc15; color:#001018; border:0; padding:10px 14px; border-radius:10px; font-weight:800;">Vistas de Tokio</button>
+  </div>
+
+  <!-- Player embebido -->
+  <div style="aspect-ratio:16/9; width:100%; background:#000; border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,.18);">
+    <iframe id="tvframe" src="https://www.youtube.com/embed/21X5lGlDOfg" title="TV Player" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen
+      style="width:100%; height:100%; border:0; display:block;"></iframe>
+  </div>
+
+  <div style="margin-top:10px; font-size:.92rem; opacity:.95; line-height:1.5;">
+    <b>Tip:</b> Puedes agregar más canales copiando un botón y cambiando el ID de YouTube.
+  </div>
+</section>
+
+<!-- Script para cambiar canales -->
+<script>
+  document.querySelectorAll('button[data-yt]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const id = btn.getAttribute('data-yt');
+      document.getElementById('tvframe').src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
+    });
+  });
+</script>
+ <!-- ======= TV (canales embebidos) ======= -->
     <section style="width:min(980px,96%); margin:0 auto; background:rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.25); border-radius:18px; padding:18px; backdrop-filter:blur(8px); box-shadow:0 20px 50px rgba(0,0,0,.45);">
       <div style="display:flex; align-items:center; gap:10px; margin:0 0 8px;">
         <div style="width:10px; height:10px; border-radius:50%; background:#3b82f6; box-shadow:0 0 0 6px rgba(59,130,246,.18);"></div>
