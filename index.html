@@ -123,93 +123,58 @@
       </div>
     </section>
 
-    <!-- ===== TV estilo Netflix (12 canales) ===== -->
-    <section class="card container">
-      <div class="row-title"><span class="dot" style="background:#3b82f6; box-shadow:0 0 0 6px rgba(59,130,246,.18);"></span><h2>📺 TV — Canales en Vivo</h2></div>
-      <p class="lead">Toca un canal para verlo en el reproductor. (Puedes añadir más copiando una tarjeta y cambiando el ID de YouTube.)</p>
+    <!-- ======= TV (canales embebidos con fallback) ======= -->
+<section style="width:min(980px,96%); margin:0 auto; background:rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.25); border-radius:18px; padding:18px; backdrop-filter:blur(8px); box-shadow:0 20px 50px rgba(0,0,0,.45);">
+  <div style="display:flex; align-items:center; gap:10px; margin:0 0 8px;">
+    <div style="width:10px; height:10px; border-radius:50%; background:#3b82f6; box-shadow:0 0 0 6px rgba(59,130,246,.18);"></div>
+    <h2 style="margin:0; font-size:1.25rem;">📺 TV — Canales en Vivo</h2>
+  </div>
+  <p style="margin:6px 0 14px; opacity:.9;">Toca un canal. Si no se puede ver incrustado, usa el botón “Abrir en YouTube”.</p>
 
-      <!-- Carrusel de tarjetas -->
-      <div class="tv-carousel" id="tvCarousel">
+  <!-- Botones de canales (elegidos por alta probabilidad de permitir embed) -->
+  <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
+    <button data-yt="jfKfPfyJRdk" data-url="https://www.youtube.com/watch?v=jfKfPfyJRdk" style="cursor:pointer; background:#0ea5e9; color:#001018; border:0; padding:10px 14px; border-radius:10px; font-weight:800;">Lofi Girl 24/7</button>
+    <button data-yt="5yx6BWlEVcY" data-url="https://www.youtube.com/watch?v=5yx6BWlEVcY" style="cursor:pointer; background:#fb923c; color:#001018; border:0; padding:10px 14px; border-radius:10px; font-weight:800;">Chillhop 24/7</button>
+    <button data-yt="36YnV9STBqc" data-url="https://www.youtube.com/watch?v=36YnV9STBqc" style="cursor:pointer; background:#22c55e; color:#001018; border:0; padding:10px 14px; border-radius:10px; font-weight:800;">Good Life Radio</button>
+    <button data-yt="Dx5qFachd3A" data-url="https://www.youtube.com/watch?v=Dx5qFachd3A" style="cursor:pointer; background:#a78bfa; color:#001018; border:0; padding:10px 14px; border-radius:10px; font-weight:800;">Jazz Piano Radio</button>
+    <button data-yt="21X5lGlDOfg" data-url="https://www.youtube.com/watch?v=21X5lGlDOfg" style="cursor:pointer; background:#f59e0b; color:#001018; border:0; padding:10px 14px; border-radius:10px; font-weight:800;">NASA Live</button>
+    <button data-yt="R1P77xoZ6xQ" data-url="https://www.youtube.com/watch?v=R1P77xoZ6xQ" style="cursor:pointer; background:#ef4444; color:#001018; border:0; padding:10px 14px; border-radius:10px; font-weight:800;">Nature Relax</button>
+  </div>
 
-        <!-- 1 NASA Live -->
-        <div class="tv-card tv-active" data-yt="21X5lGlDOfg">
-          <div class="tv-thumb">🛰</div>
-          <div class="tv-label">NASA Live</div>
-        </div>
+  <!-- Player embebido -->
+  <div style="aspect-ratio:16/9; width:100%; background:#000; border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,.18); position:relative;">
+    <iframe id="tvframe" src="https://www.youtube.com/embed/jfKfPfyJRdk?rel=0" title="TV Player" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen
+      style="width:100%; height:100%; border:0; display:block;"></iframe>
+  </div>
 
-        <!-- 2 DW Español -->
-        <div class="tv-card" data-yt="p5rJ9Y-8rEo">
-          <div class="tv-thumb">🗞</div>
-          <div class="tv-label">DW Español</div>
-        </div>
+  <!-- Fallback: si el canal no se puede embeber -->
+  <div style="margin-top:10px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+    <span id="tvLabel" style="opacity:.9;">Viendo: Lofi Girl 24/7</span>
+    <a id="tvOpen" href="https://www.youtube.com/watch?v=jfKfPfyJRdk" target="_blank" rel="noopener"
+       style="text-decoration:none; border:1px solid rgba(255,255,255,.3); padding:8px 12px; border-radius:10px; color:#fff; background:rgba(0,0,0,.2);">🔗 Abrir en YouTube</a>
+  </div>
+</section>
 
-        <!-- 3 RT Español (puede estar restringido en algunos países) -->
-        <div class="tv-card" data-yt="pIkn2C7yJik">
-          <div class="tv-thumb">🛰</div>
-          <div class="tv-label">RT Español</div>
-        </div>
+<!-- Script para cambiar canales + actualizar enlace de fallback -->
+<script>
+  (function(){
+    const frame  = document.getElementById('tvframe');
+    const openEl = document.getElementById('tvOpen');
+    const label  = document.getElementById('tvLabel');
 
-        <!-- 4 Euronews Español -->
-        <div class="tv-card" data-yt="6GzxbrO0vbM">
-          <div class="tv-thumb">🌍</div>
-          <div class="tv-label">Euronews ES</div>
-        </div>
+    function setChannel(btn){
+      const id  = btn.getAttribute('data-yt');
+      const url = btn.getAttribute('data-url') || ('https://www.youtube.com/watch?v=' + id);
+      frame.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
+      openEl.href = url;
+      label.textContent = 'Viendo: ' + btn.textContent.trim();
+    }
 
-        <!-- 5 Bloomberg Originals (documentales/negocios) -->
-        <div class="tv-card" data-yt="tc3U6Y8Y2Lk">
-          <div class="tv-thumb">💼</div>
-          <div class="tv-label">Bloomberg Originals</div>
-        </div>
-
-        <!-- 6 Cámara Miami -->
-        <div class="tv-card" data-yt="mhvP3bJdR9I">
-          <div class="tv-thumb">🌴</div>
-          <div class="tv-label">Cámara Miami</div>
-        </div>
-
-        <!-- 7 Cámara NYC -->
-        <div class="tv-card" data-yt="j6wuwf3hzRI">
-          <div class="tv-thumb">🗽</div>
-          <div class="tv-label">Cámara NYC</div>
-        </div>
-
-        <!-- 8 Skyline Chicago -->
-        <div class="tv-card" data-yt="DPFIzHUWU_U">
-          <div class="tv-thumb">🌆</div>
-          <div class="tv-label">Skyline Chicago</div>
-        </div>
-
-        <!-- 9 Vistas de Tokio -->
-        <div class="tv-card" data-yt="ye3sUcSydwA">
-          <div class="tv-thumb">🗼</div>
-          <div class="tv-label">Vistas Tokio</div>
-        </div>
-
-        <!-- 10 Lofi Girl (24/7 música) -->
-        <div class="tv-card" data-yt="jfKfPfyJRdk">
-          <div class="tv-thumb">🎧</div>
-          <div class="tv-label">Lofi Girl 24/7</div>
-        </div>
-
-        <!-- 11 Chillhop Radio (24/7 chill) -->
-        <div class="tv-card" data-yt="5yx6BWlEVcY">
-          <div class="tv-thumb">🎵</div>
-          <div class="tv-label">Chillhop 24/7</div>
-        </div>
-
-        <!-- 12 Nature Relax (reemplazable) -->
-        <div class="tv-card" data-yt="R1P77xoZ6xQ">
-          <div class="tv-thumb">🌊</div>
-          <div class="tv-label">Nature Relax</div>
-        </div>
-      </div>
-
-      <!-- Reproductor -->
-      <div class="tv-frame" style="margin-top:12px;">
-        <iframe id="tvframe" src="https://www.youtube.com/embed/21X5lGlDOfg?rel=0" title="TV Player" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
-      </div>
-    </section>
-
+    document.querySelectorAll('button[data-yt]').forEach(btn=>{
+      btn.addEventListener('click', ()=> setChannel(btn));
+    });
+  })();
+</script>
     <!-- ===== Monetización ===== -->
     <section class="card container">
       <div class="row-title"><span class="dot" style="background:#f59e0b; box-shadow:0 0 0 6px rgba(245,158,11,.18);"></span><h2>💸 Apoya & Servicios</h2></div>
