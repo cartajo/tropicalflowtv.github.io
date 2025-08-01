@@ -358,63 +358,34 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tropical Flow TV📺Radio — En Vivo 24/7</title>
-  <meta name="description" content="Tropical Flow TV📺Radio - Música tropical en vivo 24/7. Dale play y disfruta.">
+  <title>Radio — Tropical Flow TV📺Radio</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="brand">
-      <div class="brand-badge">TF</div>
-      <div class="brand-title">
-        <strong>Tropical Flow TV📺Radio</strong>
-        <span>Música, Ritmo y Alegría 24/7</span>
-      </div>
-    </div>
-    <nav class="actions">
-      <a href="https://www.facebook.com/TropicalFlowTVRadio" target="_blank" rel="noopener">Facebook</a>
-      <a href="https://www.youtube.com" target="_blank" rel="noopener">YouTube</a>
-      <a class="primary" href="https://wa.me/19399029695" target="_blank" rel="noopener">WhatsApp</a>
-    </nav>
-  </header>
-
-  <section class="hero">
-    <div class="hero-inner">
-      <h1>¡En vivo ahora mismo!</h1>
-      <p>Si no se reproduce automáticamente, toca <b>Play</b>. Funciona en celular y computadora.</p>
-      <div class="player-card">
-        <div class="player-controls">
-          <button class="btn" id="btnPlay">▶ Play</button>
-          <span class="status" id="statusTxt">Listo</span>
-          <div class="vol">
-            <label for="vol">Volumen</label>
-            <input id="vol" type="range" min="0" max="1" step="0.01" value="0.9">
-          </div>
-        </div>
-        <audio id="radio" preload="none" crossorigin="anonymous">
-          <source src="https://stream.zeno.fm/sl8wpcxtjy3uv" type="audio/mpeg">
-          Tu navegador no soporta audio en vivo.
-        </audio>
-        <div class="links">
-          <a href="https://stream.zeno.fm/sl8wpcxtjy3uv" target="_blank" rel="noopener">Abrir stream (MP3)</a>
-          <a href="https://stream.zeno.fm/sl8wpcxtjy3uv.m3u" target="_blank" rel="noopener">M3U</a>
-          <a href="https://stream.zeno.fm/sl8wpcxtjy3uv.pls" target="_blank" rel="noopener">PLS</a>
+  <main class="solo">
+    <div class="player-card">
+      <div class="player-controls">
+        <button class="btn" id="btnPlay">▶ Play</button>
+        <span class="status" id="statusTxt">Listo</span>
+        <div class="vol">
+          <label for="vol">Volumen</label>
+          <input id="vol" type="range" min="0" max="1" step="0.01" value="0.9">
         </div>
       </div>
+      <audio id="radio" preload="none" crossorigin="anonymous">
+        <source src="https://stream.zeno.fm/sl8wpcxtjy3uv" type="audio/mpeg">
+        Tu navegador no soporta audio en vivo.
+      </audio>
+      <div class="links">
+        <a href="https://stream.zeno.fm/sl8wpcxtjy3uv" target="_blank" rel="noopener">Abrir stream (MP3)</a>
+        <a href="https://stream.zeno.fm/sl8wpcxtjy3uv.m3u" target="_blank" rel="noopener">M3U</a>
+        <a href="https://stream.zeno.fm/sl8wpcxtjy3uv.pls" target="_blank" rel="noopener">PLS</a>
+      </div>
     </div>
-  </section>
-
-  <section class="about">
-    <div class="container">
-      <h2>Sobre Tropical Flow TV📺Radio</h2>
-      <p>Transmitimos música tropical 24/7 con la mejor vibra caribeña. Síguenos en redes, comparte con tus panas y disfruta del ritmo todo el día.</p>
-    </div>
-  </section>
-
+  </main>
   <footer class="site-footer">
-    © <span id="y"></span> Tropical Flow TV📺Radio — Hecho con 💛 desde PR
+    © <span id="y"></span> Tropical Flow TV📺Radio
   </footer>
-
   <script src="player.js"></script>
 </body>
 </html>
