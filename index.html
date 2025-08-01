@@ -1,186 +1,64 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Tropical Flow TV📺Radio — En Vivo 24/7</title>
-<meta name="description" content="Tropical Flow TV📺Radio - Música tropical en vivo 24/7 + canales de TV.">
-</head>
-<body style="margin:0; color:#fff; font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif; background:
-  linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.45)),
-  url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover fixed no-repeat; min-height:100vh; display:flex; flex-direction:column;">
+<meta name="description" content="Tropical Flow TV📺Radio - Música tropical en vivo 24/7. Dale play y disfruta.">
 
-  <!-- Top bar -->
-  <header style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; background:rgba(0,0,0,.25); border-bottom:1px solid rgba(255,255,255,.2); backdrop-filter:blur(6px);">
-    <div style="display:flex; align-items:center; gap:12px; font-weight:800;">
-      <div style="width:44px; height:44px; border-radius:12px; background:radial-gradient(120% 120% at 10% 10%, #fb923c, #0ea5e9); display:grid; place-items:center; color:#001018; font-weight:900; border:1px solid rgba(255,255,255,.25); box-shadow:0 8px 24px rgba(0,0,0,.35);">TF</div>
-      <div>
-        Tropical Flow TV📺Radio
-        <div style="font-weight:600; opacity:.9; font-size:.9rem;">Música, Ritmo y Alegría 24/7</div>
-      </div>
-    </div>
-    <nav>
-      <!-- Facebook: cámbialo cuando tengas tu URL oficial -->
-      <a href="https://www.facebook.com/TropicalFlowTVRadio" target="_blank" rel="noopener" style="color:#fff; text-decoration:none; font-weight:600; border:1px solid rgba(255,255,255,.35); padding:10px 14px; border-radius:10px; margin-left:8px; background:rgba(0,0,0,.15);">Facebook</a>
-      <!-- YouTube: tu canal correcto -->
-      <a href="https://www.youtube.com/@TFTvpoweredbyworldm8780" target="_blank" rel="noopener" style="color:#fff; text-decoration:none; font-weight:600; border:1px solid rgba(255,255,255,.35); padding:10px 14px; border-radius:10px; margin-left:8px; background:rgba(0,0,0,.15);">YouTube</a>
-      <!-- WhatsApp: con mensaje automático -->
-      <a href="https://wa.me/19399029695?text=Hola%20quiero%20informaci%C3%B3n%20sobre%20Tropical%20Flow%20TV%F0%9F%93%BARadio" target="_blank" rel="noopener" style="color:#001018; text-decoration:none; font-weight:800; border:1px solid transparent; padding:10px 14px; border-radius:10px; margin-left:8px; background:#0ea5e9;">WhatsApp</a>
-    </nav>
-  </header>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tropical Flow TV📺Radio — En Vivo 24/7</title>
-  <meta name="description" content="Tropical Flow TV📺Radio - Música tropical en vivo 24/7. Dale play y disfruta." />
+<style>
+  /* ===== Fondo de playa ===== */
+  body{
+    margin:0; color:#fff; font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;
+    background: linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.45)),
+      url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover fixed no-repeat;
+    min-height:100vh; display:flex; flex-direction:column;
+  }
 
-  <!-- ESTILOS (CSS EN EL MISMO ARCHIVO) -->
-  <style>
-    body{
-      margin:0;
-      font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
-      color:#fff;
-      background:
-        linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.45)),
-        url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover fixed no-repeat;
-      min-height:100vh;
-      display:flex; flex-direction:column;
-    }
-    .topbar{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:14px 16px; background:rgba(0,0,0,.25); backdrop-filter: blur(6px);
-      border-bottom:1px solid rgba(255,255,255,.2);
-    }
-    .brand{display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.2px}
-    .brand-badge{
-      width:44px; height:44px; border-radius:12px;
-      background: radial-gradient(120% 120% at 10% 10%, #fb923c, #0ea5e9);
-      display:grid; place-items:center; color:#001018; font-weight:900;
-      border:1px solid rgba(255,255,255,.25); box-shadow:0 8px 24px rgba(0,0,0,.35);
-    }
-    .brand-title{line-height:1.05}
-    .brand-title small{display:block; font-weight:600; opacity:.9}
-    .links a{
-      color:#fff; text-decoration:none; font-weight:600;
-      border:1px solid rgba(255,255,255,.35); padding:10px 14px; border-radius:10px;
-      margin-left:8px; display:inline-flex; align-items:center; gap:8px;
-      background: rgba(0,0,0,.15);
-    }
-    .links a.primary{background:#0ea5e9; color:#001018; border-color:transparent; font-weight:800}
-    main{flex:1; display:grid; place-items:center; padding:24px 16px}
-    .glass{
-      width:min(920px,
-  <main style="flex:1; padding:24px 16px; display:flex; flex-direction:column; gap:16px;">
+  /* ===== Barra superior ===== */
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 16px; background:rgba(0,0,0,.25);
+    border-bottom:1px solid rgba(255,255,255,.2);
+    backdrop-filter: blur(6px);
+  }
+  .brand{display:flex; align-items:center; gap:12px; font-weight:800}
+  .brand-badge{
+    width:44px; height:44px; border-radius:12px;
+    background: radial-gradient(120% 120% at 10% 10%, #fb923c, #0ea5e9);
+    display:grid; place-items:center; color:#001018; font-weight:900;
+    border:1px solid rgba(255,255,255,.25);
+    box-shadow:0 8px 24px rgba(0,0,0,.35);
+  }
+  .brand-title{line-height:1.05}
+  .brand-title small{display:block; font-weight:600; opacity:.9}
+  .links a{
+    color:#fff; text-decoration:none; font-weight:600;
+    border:1px solid rgba(255,255,255,.35); padding:10px 14px; border-radius:10px;
+    margin-left:8px; background:rgba(0,0,0,.15);
+  }
+  .links a.primary{background:#0ea5e9; color:#001018; border-color:transparent}
 
-    <!-- ======= RADIO (estable con audio nativo) ======= -->
-    <section style="width:min(980px,96%); margin:0 auto; background:rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.25); border-radius:18px; padding:18px; backdrop-filter:blur(8px); box-shadow:0 20px 50px rgba(0,0,0,.45);">
-      <div style="display:flex; align-items:center; gap:10px; margin:0 0 8px;">
-        <div style="width:10px; height:10px; border-radius:50%; background:#22c55e; box-shadow:0 0 0 6px rgba(34,197,94,.18);"></div>
-        <h1 style="margin:0; font-size:1.35rem;">🎧 Radio — En vivo 24/7</h1>
-      </div>
-      <p style="margin:6px 0 14px; opacity:.9;">Si no inicia solo, toca <b>Play</b>. Funciona en celular y computadora.</p>
+  /* ===== Contenido ===== */
+  main{flex:1; display:grid; place-items:center; padding:24px 16px}
+  .card{
+    width:min(920px,96%);
+    background: rgba(0,0,0,.35);
+    border:1px solid rgba(255,255,255,.25);
+    border-radius:18px; padding:18px;
+    backdrop-filter: blur(8px);
+    box-shadow:0 20px 50px rgba(0,0,0,.45);
+  }
+  .title{display:flex; align-items:center; gap:10px; margin:0 0 8px}
+  .live{width:10px; height:10px; border-radius:50%; background:#ef4444; box-shadow:0 0 0 6px rgba(239,68,68,.18)}
+  h1{margin:0; font-size:1.35rem}
+  .sub{margin:6px 0 14px; opacity:.9}
 
-      <audio controls preload="none" style="width:100%;">
-        <source src="https://stream.zeno.fm/sl8wpcxtjy3uv" type="audio/mpeg">
-        Tu navegador no soporta audio en vivo.
-      </audio>
+  /* Player nativo (estable en todos los navegadores) */
+  audio{width:100%}
 
-      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
-        <a href="https://stream.zeno.fm/sl8wpcxtjy3uv" target="_blank" rel="noopener" style="color:#fff; text-decoration:none; border:1px solid rgba(255,255,255,.3); padding:8px 12px; border-radius:10px; font-size:.92rem; background:rgba(0,0,0,.2);">Abrir MP3</a>
-        <a href="https://stream.zeno.fm/sl8wpcxtjy3uv.m3u" target="_blank" rel="noopener" style="color:#fff; text-decoration:none; border:1px solid rgba(255,255,255,.3); padding:8px 12px; border-radius:10px; font-size:.92rem; background:rgba(0,0,0,.2);">M3U</a>
-        <a href="https://stream.zeno.fm/sl8wpcxtjy3uv.pls" target="_blank" rel="noopener" style="color:#fff; text-decoration:none; border:1px solid rgba(255,255,255,.3); padding:8px 12px; border-radius:10px; font-size:.92rem; background:rgba(0,0,0,.2);">PLS</a>
-      </div>
-    </section>
-
-    <!-- ======= TV (canales embebidos) ======= -->
-    <section style="width:min(980px,96%); margin:0 auto; background:rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.25); border-radius:18px; padding:18px; backdrop-filter:blur(8px); box-shadow:0 20px 50px rgba(0,0,0,.45);">
-      <div style="display:flex; align-items:center; gap:10px; margin:0 0 8px;">
-        <div style="width:10px; height:10px; border-radius:50%; background:#3b82f6; box-shadow:0 0 0 6px rgba(59,130,246,.18);"></div>
-        <h2 style="margin:0; font-size:1.25rem;">📺 TV — Canales en Vivo</h2>
-      </div>
-      <p style="margin:6px 0 14px; opacity:.9;">Toca un canal para verlo. Puedes reemplazar los canales con tus enlaces (YouTube u otros que permitan <i>embed</i>).</p>
-
-      <!-- Controles de canales -->
-      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
-        <button data-yt="21X5lGlDOfg" style="cursor:pointer; background:#0ea5e9; color:#001018; border:0; padding:10px 14px; border-radius:10px; font-weight:800;">NASA Live</button>
-        <button data-yt="VIDEO_ID_2" style="cursor:pointer; background:#fb923c; color:#001018; border:0; padding:10px 14px; border-radius:10px; font-weight:800;">Canal 2</button>
-        <button data-yt="VIDEO_ID_3" style="cursor:pointer; background:#22c55e; color:#001018; border:0; padding:10px 14px; border-radius:10px; font-weight:800;">Canal 3</button>
-        <button data-yt="VIDEO_ID_4" style="cursor:pointer; background:#a78bfa; color:#001018; border:0; padding:10px 14px; border-radius:10px; font-weight:800;">Canal 4</button>
-      </div>
-
-      <!-- Player embebido -->
-      <div style="aspect-ratio:16/9; width:100%; background:#000; border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,.18);">
-        <iframe id="tvframe" src="https://www.youtube.com/embed/21X5lGlDOfg" title="TV Player" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen
-          style="width:100%; height:100%; border:0; display:block;"></iframe>
-      </div>
-
-      <!-- Ayuda para cambiar canales -->
-      <div style="margin-top:10px; font-size:.92rem; opacity:.95; line-height:1.5;">
-        <b>Cómo cambiar un canal:</b> En el botón, reemplaza <code>VIDEO_ID_X</code> por el ID del video en vivo de YouTube.  
-        Ejemplo: si tu URL es <code>https://www.youtube.com/watch?v=ABCDEFG</code>, el ID es <code>ABCDEFG</code>.
-      </div>
-    </section>
-
-    <!-- ======= Monetización (botones) ======= -->
-    <section style="width:min(980px,96%); margin:0 auto; background:rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.25); border-radius:18px; padding:18px; backdrop-filter:blur(8px); box-shadow:0 20px 50px rgba(0,0,0,.45);">
-      <div style="display:flex; align-items:center; gap:10px; margin:0 0 8px;">
-        <div style="width:10px; height:10px; border-radius:50%; background:#f59e0b; box-shadow:0 0 0 6px rgba(245,158,11,.18);"></div>
-        <h2 style="margin:0; font-size:1.25rem;">💸 Apoya & Servicios</h2>
-      </div>
-      <p style="margin:6px 0 14px; opacity:.9;">Pide tu canción, envía un saludo especial o patrocina una hora al aire. ¡Gracias por apoyar Tropical Flow TV📺Radio!</p>
-
-      <div style="display:flex; flex-wrap:wrap; gap:10px;">
-        <a href="https://wa.me/19399029695?text=Hola%20quiero%20pedir%20una%20canci%C3%B3n%20por%205%20USD" target="_blank" style="background:#0ea5e9; color:#001018; padding:10px 14px; border-radius:10px; font-weight:800; text-decoration:none;">🎵 Request Song — $5</a>
-        <a href="https://wa.me/19399029695?text=Hola%20quiero%20un%20shoutout%20por%2010%20USD" target="_blank" style="background:#fb923c; color:#001018; padding:10px 14px; border-radius:10px; font-weight:800; text-decoration:none;">📣 Shoutout — $10</a>
-        <a href="https://wa.me/19399029695?text=Hola%20quiero%20patrocinar%20una%20hora%20por%2025%20USD" target="_blank" style="background:#22c55e; color:#001018; padding:10px 14px; border-radius:10px; font-weight:800; text-decoration:none;">🏷️ Sponsor del Hour — $25</a>
-        <a href="https://wa.me/19399029695?text=Hola%20quiero%20cotizar%20DJ%20para%20evento" target="_blank" style="background:#a78bfa; color:#001018; padding:10px 14px; border-radius:10px; font-weight:800; text-decoration:none;">🎧 DJ para Eventos</a>
-      </div>
-
-      <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
-        <span style="opacity:.9;">Formas de pago:</span>
-        <!-- ⚠️ Reemplaza con tu cashtag de Cash App -->
-        <a href="https://cash.app/$TUCASETAG" target="_blank" rel="noopener" style="text-decoration:none; border:1px solid rgba(255,255,255,.3); padding:8px 12px; border-radius:10px; color:#fff; background:rgba(0,0,0,.2);">💚 Cash App: $TUCASETAG</a>
-        <!-- ⚠️ Reemplaza con tu PayPal.me -->
-        <a href="https://paypal.me/TuEnlacePayPal" target="_blank" rel="noopener" style="text-decoration:none; border:1px solid rgba(255,255,255,.3); padding:8px 12px; border-radius:10px; color:#fff; background:rgba(0,0,0,.2);">💙 PayPal.me/TuEnlacePayPal</a>
-      </div>
-    </section>
-
-    <!-- ======= Banners de Patrocinadores ======= -->
-    <section style="width:min(980px,96%); margin:0 auto; background:rgba(0,0,0,.25); border:1px solid rgba(255,255,255,.25); border-radius:18px; padding:18px; backdrop-filter:blur(8px); box-shadow:0 20px 50px rgba(0,0,0,.35);">
-      <div style="display:flex; align-items:center; gap:10px; margin:0 0 8px;">
-        <div style="width:10px; height:10px; border-radius:50%; background:#eab308; box-shadow:0 0 0 6px rgba(234,179,8,.18);"></div>
-        <h2 style="margin:0; font-size:1.25rem;">🏪 Patrocinadores</h2>
-      </div>
-      <div style="display:flex; justify-content:space-around; flex-wrap:wrap; gap:12px;">
-        <a href="#" target="_blank"><img src="https://via.placeholder.com/180x90?text=Logo+1" alt="Patrocinador 1" style="border-radius:10px; border:1px solid rgba(255,255,255,.2)"></a>
-        <a href="#" target="_blank"><img src="https://via.placeholder.com/180x90?text=Logo+2" alt="Patrocinador 2" style="border-radius:10px; border:1px solid rgba(255,255,255,.2)"></a>
-        <a href="#" target="_blank"><img src="https://via.placeholder.com/180x90?text=Logo+3" alt="Patrocinador 3" style="border-radius:10px; border:1px solid rgba(255,255,255,.2)"></a>
-      </div>
-      <div style="margin-top:12px; font-size:.92rem; opacity:.95;">Vende estos espacios a negocios locales. Reemplaza el <i>link</i> y la imagen por el logo real.</div>
-    </section>
-
-  </main>
-
-  <footer style="padding:16px; text-align:center; background:rgba(0,0,0,.25); border-top:1px solid rgba(255,255,255,.2);">
-    © <span id="y"></span> Tropical Flow TV📺Radio — Hecho con 💛 desde PR
-  </footer>
-
-  <!-- JS mínimo: año + cambio de canales -->
-  <script>
-    document.getElementById('y').textContent = new Date().getFullYear();
-    // Botones de canales (YouTube)
-    document.querySelectorAll('button[data-yt]').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        const id = btn.getAttribute('data-yt');
-        if(!id || id === 'VIDEO_ID_2' || id === 'VIDEO_ID_3' || id === 'VIDEO_ID_4'){
-          alert('Reemplaza VIDEO_ID_x por el ID real del canal/video en vivo de YouTube.');
-          return;
-        }
-        document.getElementById('tvframe').src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
-      });
-    });
-  </script>
-</body>
-</html>
+  .alt{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+  .alt a{
+    color:#fff; text-decoration:none;
+    border:1px solid rgba(255,255,255,.3);
+    padding:8px 12px; border
