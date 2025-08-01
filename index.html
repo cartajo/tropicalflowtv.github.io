@@ -79,7 +79,26 @@
     .notice{font-size:.9rem; opacity:.9}
 
     footer{padding:18px 12px; text-align:center; background:rgba(0,0,0,.25); border-top:1px solid rgba(255,255,255,.2)}
- 
+  </style>
+</head>
+<body>
+  <!-- Barra superior -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-badge">TF</div>
+      <div class="brand-title">
+        Tropical Flow TV📺Radio
+        <small>Música, Ritmo y Alegría 24/7</small>
+      </div>
+    </div>
+    <nav class="links">
+      <a href="https://www.facebook.com/TropicalFlowTVRadio" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://www.youtube.com" target="_blank" rel="noopener">YouTube</a>
+      <a class="primary" href="https://wa.me/19399029695" target="_blank" rel="noopener">WhatsApp</a>
+    </nav>
+  </header>
+
+  <!-- Contenido principal -->
   <main>
     <section class="glass">
       <div class="title">
@@ -120,57 +139,10 @@
     © <span id="year"></span> Tropical Flow TV📺Radio — Hecho con 💛 desde PR
   </footer>
 
-  <!-- SCRIPT (JS) -->
-  <script>
-    const audio    = document.getElementById('radio');
-    const btn      = document.getElementById('btnPlay');
-    const statusTx = document.getElementById('statusTxt');
-    const vol      = document.getElementById('vol');
-    const liveDot  = document.getElementById('liveDot');
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Intento de autoplay suave (algunos navegadores lo bloquean)
-    document.addEventListener('DOMContentLoaded', () => {
-      try {
-        audio.volume = vol.value;
-        audio.play().then(() => {
-          btn.textContent = '⏸ Pausa';
-          statusTx.textContent = 'Reproduciendo…';
-          liveDot.style.background = '#22c55e';
-        }).catch(() => {
-          statusTx.textContent = 'Listo — Toca Play para empezar';
+ ara empezar';
         });
       } catch(e){
-        statusTx.textContent = 'Listo — Toca Play para empezar';
-      }
-    });
-
-    btn.addEventListener('click', async () => {
-      if (audio.paused) {
-        try {
-          await audio.play();
-          btn.textContent = '⏸ Pausa';
-          statusTx.textContent = 'Reproduciendo…';
-          liveDot.style.background = '#22c55e';
-        } catch (e) {
-          statusTx.textContent = 'No se pudo reproducir. Intenta de nuevo.';
-        }
-      } else {
-        audio.pause();
-        btn.textContent = '▶ Play';
-        statusTx.textContent = 'Pausado';
-        liveDot.style.background = '#ef4444';
-      }
-    });
-
-    vol.addEventListener('input', () => { audio.volume = vol.value; });
-    audio.addEventListener('error',   () => { statusTx.textContent = 'Error de conexión.'; liveDot.style.background = '#ef4444'; });
-    audio.addEventListener('playing', () => { statusTx.textContent = 'Reproduciendo…'; liveDot.style.background = '#22c55e'; });
-    audio.addEventListener('pause',   () => { statusTx.textContent = 'Pausado'; liveDot.style.background = '#ef4444'; });
-  </script>
-</body>
-</html>
- <!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -313,4 +285,3 @@
   </script>
 </body>
 </html>
-
