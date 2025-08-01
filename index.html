@@ -123,90 +123,149 @@
       </div>
     </section>
 
-   
- <!-- ======= TV (enlaces directos 100% funcionales) ======= -->
-<section style="width:min(980px,96%); margin:0 auto; background:rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.25); border-radius:18px; padding:18px; backdrop-filter:blur(8px); box-shadow:0 20px 50px rgba(0,0,0,.45);">
-  <div style="display:flex; align-items:center; gap:10px; margin:0 0 8px;">
-    <div style="width:10px; height:10px; border-radius:50%; background:#3b82f6; box-shadow:0 0 0 6px rgba(59,130,246,.18);"></div>
-    <h2 style="margin:0; font-size:1.25rem;">📺 TV — Canales en Vivo (abrir en YouTube)</h2>
-  </div>
-  <p style="margin:6px 0 14px; opacity:.9;">Haz clic en un canal para abrirlo en YouTube (sin bloqueos). La radio sigue sonando aquí.</p>
+    <!-- ===== TV estilo Netflix (12 canales) ===== -->
+    <section class="card container">
+      <div class="row-title"><span class="dot" style="background:#3b82f6; box-shadow:0 0 0 6px rgba(59,130,246,.18);"></span><h2>📺 TV — Canales en Vivo</h2></div>
+      <p class="lead">Toca un canal para verlo en el reproductor. (Puedes añadir más copiando una tarjeta y cambiando el ID de YouTube.)</p>
 
-  <!-- Carrusel / fila desplazable con “tarjetas” -->
-  <div style="display:flex; gap:12px; overflow-x:auto; padding-bottom:6px; scroll-snap-type:x mandatory;">
-    <!-- Cada tarjeta es un link que abre en nueva pestaña -->
-    <a href="https://www.youtube.com/watch?v=jfKfPfyJRdk" target="_blank" rel="noopener"
-       style="flex:0 0 auto; width:170px; scroll-snap-align:start; text-decoration:none; color:#fff; border-radius:12px; border:1px solid rgba(255,255,255,.18); overflow:hidden; background:rgba(0,0,0,.28);">
-      <div style="height:90px; display:grid; place-items:center; font-weight:900; font-size:28px; background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));">🎧</div>
-      <div style="padding:10px 12px; font-size:.95rem; text-align:center">Lofi Girl 24/7</div>
-    </a>
+      <!-- Carrusel de tarjetas -->
+      <div class="tv-carousel" id="tvCarousel">
 
-    <a href="https://www.youtube.com/watch?v=5yx6BWlEVcY" target="_blank" rel="noopener"
-       style="flex:0 0 auto; width:170px; scroll-snap-align:start; text-decoration:none; color:#fff; border-radius:12px; border:1px solid rgba(255,255,255,.18); overflow:hidden; background:rgba(0,0,0,.28);">
-      <div style="height:90px; display:grid; place-items:center; font-weight:900; font-size:28px; background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));">🎵</div>
-      <div style="padding:10px 12px; font-size:.95rem; text-align:center">Chillhop 24/7</div>
-    </a>
+        <!-- 1 NASA Live -->
+        <div class="tv-card tv-active" data-yt="21X5lGlDOfg">
+          <div class="tv-thumb">🛰</div>
+          <div class="tv-label">NASA Live</div>
+        </div>
 
-    <a href="https://www.youtube.com/watch?v=36YnV9STBqc" target="_blank" rel="noopener"
-       style="flex:0 0 auto; width:170px; scroll-snap-align:start; text-decoration:none; color:#fff; border-radius:12px; border:1px solid rgba(255,255,255,.18); overflow:hidden; background:rgba(0,0,0,.28);">
-      <div style="height:90px; display:grid; place-items:center; font-weight:900; font-size:28px; background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));">🎶</div>
-      <div style="padding:10px 12px; font-size:.95rem; text-align:center">Good Life Radio</div>
-    </a>
+        <!-- 2 DW Español -->
+        <div class="tv-card" data-yt="p5rJ9Y-8rEo">
+          <div class="tv-thumb">🗞</div>
+          <div class="tv-label">DW Español</div>
+        </div>
 
-    <a href="https://www.youtube.com/watch?v=Dx5qFachd3A" target="_blank" rel="noopener"
-       style="flex:0 0 auto; width:170px; scroll-snap-align:start; text-decoration:none; color:#fff; border-radius:12px; border:1px solid rgba(255,255,255,.18); overflow:hidden; background:rgba(0,0,0,.28);">
-      <div style="height:90px; display:grid; place-items:center; font-weight:900; font-size:28px; background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));">🎹</div>
-      <div style="padding:10px 12px; font-size:.95rem; text-align:center">Jazz Piano Radio</div>
-    </a>
+        <!-- 3 RT Español (puede estar restringido en algunos países) -->
+        <div class="tv-card" data-yt="pIkn2C7yJik">
+          <div class="tv-thumb">🛰</div>
+          <div class="tv-label">RT Español</div>
+        </div>
 
-    <a href="https://www.youtube.com/watch?v=21X5lGlDOfg" target="_blank" rel="noopener"
-       style="flex:0 0 auto; width:170px; scroll-snap-align:start; text-decoration:none; color:#fff; border-radius:12px; border:1px solid rgba(255,255,255,.18); overflow:hidden; background:rgba(0,0,0,.28);">
-      <div style="height:90px; display:grid; place-items:center; font-weight:900; font-size:28px; background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));">🛰</div>
-      <div style="padding:10px 12px; font-size:.95rem; text-align:center">NASA Live</div>
-    </a>
+        <!-- 4 Euronews Español -->
+        <div class="tv-card" data-yt="6GzxbrO0vbM">
+          <div class="tv-thumb">🌍</div>
+          <div class="tv-label">Euronews ES</div>
+        </div>
 
-    <a href="https://www.youtube.com/watch?v=R1P77xoZ6xQ" target="_blank" rel="noopener"
-       style="flex:0 0 auto; width:170px; scroll-snap-align:start; text-decoration:none; color:#fff; border-radius:12px; border:1px solid rgba(255,255,255,.18); overflow:hidden; background:rgba(0,0,0,.28);">
-      <div style="height:90px; display:grid; place-items:center; font-weight:900; font-size:28px; background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));">🌊</div>
-      <div style="padding:10px 12px; font-size:.95rem; text-align:center">Nature Relax</div>
-    </a>
+        <!-- 5 Bloomberg Originals (documentales/negocios) -->
+        <div class="tv-card" data-yt="tc3U6Y8Y2Lk">
+          <div class="tv-thumb">💼</div>
+          <div class="tv-label">Bloomberg Originals</div>
+        </div>
 
-    <a href="https://www.youtube.com/watch?v=mhvP3bJdR9I" target="_blank" rel="noopener"
-       style="flex:0 0 auto; width:170px; scroll-snap-align:start; text-decoration:none; color:#fff; border-radius:12px; border:1px solid rgba(255,255,255,.18); overflow:hidden; background:rgba(0,0,0,.28);">
-      <div style="height:90px; display:grid; place-items:center; font-weight:900; font-size:28px; background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));">🌴</div>
-      <div style="padding:10px 12px; font-size:.95rem; text-align:center">Cámara Miami</div>
-    </a>
+        <!-- 6 Cámara Miami -->
+        <div class="tv-card" data-yt="mhvP3bJdR9I">
+          <div class="tv-thumb">🌴</div>
+          <div class="tv-label">Cámara Miami</div>
+        </div>
 
-    <a href="https://www.youtube.com/watch?v=j6wuwf3hzRI" target="_blank" rel="noopener"
-       style="flex:0 0 auto; width:170px; scroll-snap-align:start; text-decoration:none; color:#fff; border-radius:12px; border:1px solid rgba(255,255,255,.18); overflow:hidden; background:rgba(0,0,0,.28);">
-      <div style="height:90px; display:grid; place-items:center; font-weight:900; font-size:28px; background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));">🗽</div>
-      <div style="padding:10px 12px; font-size:.95rem; text-align:center">Cámara NYC</div>
-    </a>
+        <!-- 7 Cámara NYC -->
+        <div class="tv-card" data-yt="j6wuwf3hzRI">
+          <div class="tv-thumb">🗽</div>
+          <div class="tv-label">Cámara NYC</div>
+        </div>
 
-    <a href="https://www.youtube.com/watch?v=DPFIzHUWU_U" target="_blank" rel="noopener"
-       style="flex:0 0 auto; width:170px; scroll-snap-align:start; text-decoration:none; color:#fff; border-radius:12px; border:1px solid rgba(255,255,255,.18); overflow:hidden; background:rgba(0,0,0,.28);">
-      <div style="height:90px; display:grid; place-items:center; font-weight:900; font-size:28px; background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));">🌆</div>
-      <div style="padding:10px 12px; font-size:.95rem; text-align:center">Skyline Chicago</div>
-    </a>
+        <!-- 8 Skyline Chicago -->
+        <div class="tv-card" data-yt="DPFIzHUWU_U">
+          <div class="tv-thumb">🌆</div>
+          <div class="tv-label">Skyline Chicago</div>
+        </div>
 
-    <a href="https://www.youtube.com/watch?v=ye3sUcSydwA" target="_blank" rel="noopener"
-       style="flex:0 0 auto; width:170px; scroll-snap-align:start; text-decoration:none; color:#fff; border-radius:12px; border:1px solid rgba(255,255,255,.18); overflow:hidden; background:rgba(0,0,0,.28);">
-      <div style="height:90px; display:grid; place-items:center; font-weight:900; font-size:28px; background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));">🗼</div>
-      <div style="padding:10px 12px; font-size:.95rem; text-align:center">Vistas Tokio</div>
-    </a>
+        <!-- 9 Vistas de Tokio -->
+        <div class="tv-card" data-yt="ye3sUcSydwA">
+          <div class="tv-thumb">🗼</div>
+          <div class="tv-label">Vistas Tokio</div>
+        </div>
 
-    <a href="https://www.youtube.com/watch?v=tc3U6Y8Y2Lk" target="_blank" rel="noopener"
-       style="flex:0 0 auto; width:170px; scroll-snap-align:start; text-decoration:none; color:#fff; border-radius:12px; border:1px solid rgba(255,255,255,.18); overflow:hidden; background:rgba(0,0,0,.28);">
-      <div style="height:90px; display:grid; place-items:center; font-weight:900; font-size:28px; background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));">💼</div>
-      <div style="padding:10px 12px; font-size:.95rem; text-align:center">Bloomberg Originals</div>
-    </a>
+        <!-- 10 Lofi Girl (24/7 música) -->
+        <div class="tv-card" data-yt="jfKfPfyJRdk">
+          <div class="tv-thumb">🎧</div>
+          <div class="tv-label">Lofi Girl 24/7</div>
+        </div>
 
-    <a href="https://www.youtube.com/watch?v=6GzxbrO0vbM" target="_blank" rel="noopener"
-       style="flex:0 0 auto; width:170px; scroll-snap-align:start; text-decoration:none; color:#fff; border-radius:12px; border:1px solid rgba(255,255,255,.18); overflow:hidden; background:rgba(0,0,0,.28);">
-      <div style="height:90px; display:grid; place-items:center; font-weight:900; font-size:28px; background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));">🌍</div>
-      <div style="padding:10px 12px; font-size:.95rem; text-align:center">Euronews ES</div>
-    </a>
-  </div>
+        <!-- 11 Chillhop Radio (24/7 chill) -->
+        <div class="tv-card" data-yt="5yx6BWlEVcY">
+          <div class="tv-thumb">🎵</div>
+          <div class="tv-label">Chillhop 24/7</div>
+        </div>
 
-  <div style="margin-top:10px; font-size:.92rem; opacity:.95;">Para añadir más, copia una tarjeta <code>&lt;a …&gt;</code> y cambia la URL de YouTube y el texto.</div>
-</section>
+        <!-- 12 Nature Relax (reemplazable) -->
+        <div class="tv-card" data-yt="R1P77xoZ6xQ">
+          <div class="tv-thumb">🌊</div>
+          <div class="tv-label">Nature Relax</div>
+        </div>
+      </div>
+
+      <!-- Reproductor -->
+      <div class="tv-frame" style="margin-top:12px;">
+        <iframe id="tvframe" src="https://www.youtube.com/embed/21X5lGlDOfg?rel=0" title="TV Player" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </section>
+
+    <!-- ===== Monetización ===== -->
+    <section class="card container">
+      <div class="row-title"><span class="dot" style="background:#f59e0b; box-shadow:0 0 0 6px rgba(245,158,11,.18);"></span><h2>💸 Apoya & Servicios</h2></div>
+      <p class="lead">Pide tu canción, envía un saludo especial o patrocina una hora al aire. ¡Gracias por apoyar Tropical Flow TV📺Radio!</p>
+
+      <div class="chips" style="margin-bottom:10px">
+        <a class="chip" href="https://wa.me/19399029695?text=Hola%20quiero%20pedir%20una%20canci%C3%B3n%20por%205%20USD" target="_blank" style="background:#0ea5e9;">🎵 Request Song — $5</a>
+        <a class="chip" href="https://wa.me/19399029695?text=Hola%20quiero%20un%20shoutout%20por%2010%20USD" target="_blank" style="background:#fb923c;">📣 Shoutout — $10</a>
+        <a class="chip" href="https://wa.me/19399029695?text=Hola%20quiero%20patrocinar%20una%20hora%20por%2025%20USD" target="_blank" style="background:#22c55e;">🏷 Sponsor del Hour — $25</a>
+        <a class="chip" href="https://wa.me/19399029695?text=Hola%20quiero%20cotizar%20DJ%20para%20evento" target="_blank" style="background:#a78bfa;">🎧 DJ para Eventos</a>
+      </div>
+
+      <div class="chips" style="align-items:center;">
+        <span style="opacity:.9;">Formas de pago:</span>
+        <!-- ⚠ Reemplaza con tu cashtag y PayPal reales -->
+        <a class="cashlike" href="https://cash.app/$TUCASETAG" target="_blank" rel="noopener">💚 Cash App: $TUCASETAG</a>
+        <a class="cashlike" href="https://paypal.me/TuEnlacePayPal" target="_blank" rel="noopener">💙 PayPal.me/TuEnlacePayPal</a>
+      </div>
+    </section>
+
+    <!-- ===== Banners de Patrocinadores ===== -->
+    <section class="card container" style="background:rgba(0,0,0,.25)">
+      <div class="row-title"><span class="dot" style="background:#eab308; box-shadow:0 0 0 6px rgba(234,179,8,.18);"></span><h2>🏪 Patrocinadores</h2></div>
+      <div class="sponsors" style="margin-top:10px;">
+        <a href="#" target="_blank"><img src="https://via.placeholder.com/180x90?text=Logo+1" alt="Patrocinador 1"></a>
+        <a href="#" target="_blank"><img src="https://via.placeholder.com/180x90?text=Logo+2" alt="Patrocinador 2"></a>
+        <a href="#" target="_blank"><img src="https://via.placeholder.com/180x90?text=Logo+3" alt="Patrocinador 3"></a>
+      </div>
+      <div class="lead" style="margin-top:12px;">Vende estos espacios a negocios locales. Reemplaza el enlace y la imagen por el logo real.</div>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="y"></span> Tropical Flow TV📺Radio — Hecho con 💛 desde PR
+  </footer>
+
+  <script>
+    // Año en footer
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Cambiar canal al hacer click en tarjeta
+    const frame = document.getElementById('tvframe');
+    const cards = document.querySelectorAll('.tv-card');
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        const id = card.getAttribute('data-yt');
+        if (!id) return;
+        // Cambia src y autoplay
+        frame.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
+        // Marca activo visualmente
+        cards.forEach(c => c.classList.remove('tv-active'));
+        card.classList.add('tv-active');
+        // Opcional: centra la tarjeta seleccionada
+        card.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+      });
+    });
+  </script>
+</body>
+</html>
