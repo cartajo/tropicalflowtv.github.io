@@ -275,3 +275,56 @@
 
   <div style="margin-top:10px; font-size:.92rem; opacity:.95;">Para añadir más, copia una tarjeta <code>&lt;a …&gt;</code> y cambia la URL de YouTube y el texto.</div>
 </section>
+
+<!-- ======= TV (canales embebidos con fallback) ======= -->
+<section style="width:min(980px,96%); margin:0 auto; background:rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.25); border-radius:18px; padding:18px; backdrop-filter:blur(8px); box-shadow:0 20px 50px rgba(0,0,0,.45);">
+  <div style="display:flex; align-items:center; gap:10px; margin:0 0 8px;">
+    <div style="width:10px; height:10px; border-radius:50%; background:#3b82f6; box-shadow:0 0 0 6px rgba(59,130,246,.18);"></div>
+    <h2 style="margin:0; font-size:1.25rem;">📺 TV — Canales en Vivo</h2>
+  </div>
+  <p style="margin:6px 0 14px; opacity:.9;">Toca un canal. Si no se puede ver incrustado, usa el botón “Abrir en YouTube”.</p>
+
+  <!-- Botones de canales (elegidos por alta probabilidad de permitir embed) -->
+  <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
+    <button data-yt="jfKfPfyJRdk" data-url="https://www.youtube.com/watch?v=jfKfPfyJRdk" style="cursor:pointer; background:#0ea5e9; color:#001018; border:0; padding:10px 14px; border-radius:10px; font-weight:800;">Lofi Girl 24/7</button>
+    <button data-yt="5yx6BWlEVcY" data-url="https://www.youtube.com/watch?v=5yx6BWlEVcY" style="cursor:pointer; background:#fb923c; color:#001018; border:0; padding:10px 14px; border-radius:10px; font-weight:800;">Chillhop 24/7</button>
+    <button data-yt="36YnV9STBqc" data-url="https://www.youtube.com/watch?v=36YnV9STBqc" style="cursor:pointer; background:#22c55e; color:#001018; border:0; padding:10px 14px; border-radius:10px; font-weight:800;">Good Life Radio</button>
+    <button data-yt="Dx5qFachd3A" data-url="https://www.youtube.com/watch?v=Dx5qFachd3A" style="cursor:pointer; background:#a78bfa; color:#001018; border:0; padding:10px 14px; border-radius:10px; font-weight:800;">Jazz Piano Radio</button>
+    <button data-yt="21X5lGlDOfg" data-url="https://www.youtube.com/watch?v=21X5lGlDOfg" style="cursor:pointer; background:#f59e0b; color:#001018; border:0; padding:10px 14px; border-radius:10px; font-weight:800;">NASA Live</button>
+    <button data-yt="R1P77xoZ6xQ" data-url="https://www.youtube.com/watch?v=R1P77xoZ6xQ" style="cursor:pointer; background:#ef4444; color:#001018; border:0; padding:10px 14px; border-radius:10px; font-weight:800;">Nature Relax</button>
+  </div>
+
+  <!-- Player embebido -->
+  <div style="aspect-ratio:16/9; width:100%; background:#000; border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,.18); position:relative;">
+    <iframe id="tvframe" src="https://www.youtube.com/embed/jfKfPfyJRdk?rel=0" title="TV Player" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen
+      style="width:100%; height:100%; border:0; display:block;"></iframe>
+  </div>
+
+  <!-- Fallback: si el canal no se puede embeber -->
+  <div style="margin-top:10px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+    <span id="tvLabel" style="opacity:.9;">Viendo: Lofi Girl 24/7</span>
+    <a id="tvOpen" href="https://www.youtube.com/watch?v=jfKfPfyJRdk" target="_blank" rel="noopener"
+       style="text-decoration:none; border:1px solid rgba(255,255,255,.3); padding:8px 12px; border-radius:10px; color:#fff; background:rgba(0,0,0,.2);">🔗 Abrir en YouTube</a>
+  </div>
+</section>
+
+<!-- Script para cambiar canales + actualizar enlace de fallback -->
+<script>
+  (function(){
+    const frame  = document.getElementById('tvframe');
+    const openEl = document.getElementById('tvOpen');
+    const label  = document.getElementById('tvLabel');
+
+    function setChannel(btn){
+      const id  = btn.getAttribute('data-yt');
+      const url = btn.getAttribute('data-url') || ('https://www.youtube.com/watch?v=' + id);
+      frame.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
+      openEl.href = url;
+      label.textContent = 'Viendo: ' + btn.textContent.trim();
+    }
+
+    document.querySelectorAll('button[data-yt]').forEach(btn=>{
+      btn.addEventListener('click', ()=> setChannel(btn));
+    });
+  })();
+</script>
