@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="es">
+Tropical Flow Code 7. <!DOCTYPE html><html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -61,7 +61,7 @@
     }
     .social-buttons a {
       display: inline-block;
-      margin: 0.5rem 1rem;
+      margin: 0.5rem;
       padding: 0.5rem 1rem;
       background: #25d366;
       color: white;
@@ -71,10 +71,16 @@
     .social-buttons a.youtube { background: red; }
     .social-buttons a.facebook { background: #3b5998; }
     .social-buttons a.paypal { background: #0070ba; }
+    .social-buttons a.athmovil { background: #191919; }
     footer {
       background-color: rgba(0, 0, 0, 0.7);
       padding: 1rem;
       text-align: center;
+    }
+    #visits {
+      font-size: 1rem;
+      color: #ddd;
+      margin-top: 0.5rem;
     }
   </style></head>
 <body>
@@ -90,7 +96,6 @@
   </section>  <section class="tv-section">
     <h2>🎬 Videos Recientes</h2>
     <div class="carousel">
-      <!-- Se insertan los videos desde YouTube en carrusel -->
       <iframe width="300" height="170" src="https://www.youtube.com/embed/tpi8zLE3Kqw" allowfullscreen></iframe>
       <iframe width="300" height="170" src="https://www.youtube.com/embed/RBE8A9rAj8Y" allowfullscreen></iframe>
       <iframe width="300" height="170" src="https://www.youtube.com/embed/XYe0ZHVvVig" allowfullscreen></iframe>
@@ -105,12 +110,17 @@
     <a href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
     <a class="youtube" href="https://www.youtube.com/@TFTvpoweredbyworldm8780" target="_blank">YouTube</a>
     <a class="facebook" href="https://www.facebook.com/profile.php?id=61555653663073" target="_blank">Facebook</a>
-  </div>  <div class="social-buttons">
-    <a class="paypal" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=cartajo1970@gmail.com&currency_code=USD&amount=2.00&item_name=Acceso+Premium+Tropical+Flow+TV&return=https://cartajo.github.io/tropicalflowtv.github.io/premium.html" target="_blank">🎧 Acceso Premium $2.00</a>
-    <p style="color: #ccc; margin-top: 1rem;">También puedes donar por ATH Móvil: <b>939-902-9695</b></p>
+    <a class="paypal" href="https://www.paypal.com/donate/?hosted_button_id=YOUR_PAYPAL_BUTTON_ID&return=https://cartajo.github.io/tropicalflowtv.github.io/acceso.html" target="_blank">🎧 Acceso Premium $2</a>
+    <a class="athmovil" href="https://wa.me/19399029695?text=Hola%2C+ya+realic%C3%A9+el+env%C3%ADo+de+ATH+M%C3%B3vil+de+%242+para+el+acceso+premium+de+Tropical+Flow+TVRadio.+Por+favor%2C+env%C3%ADame+el+link+de+acceso." target="_blank">ATH Móvil</a>
+    <div id="visits">👥 Visitantes conectados: <span id="counter">...</span></div>
   </div>  <footer>
     © <span id="year"></span> Tropical Flow TV📺Radio - Todos los derechos reservados
   </footer>  <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+    fetch('https://api.countapi.xyz/hit/tropicalflowtvradio.github.io/visits')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('counter').textContent = data.value;
+      });
   </script></body>
 </html>
