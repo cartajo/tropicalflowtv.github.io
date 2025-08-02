@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Tropical Flow TV📺Radio</title>
   <style>
     body {
@@ -10,11 +10,11 @@
       font-family: Arial, sans-serif;
       background: url('https://i.imgur.com/vN0uyTF.jpg') no-repeat center center fixed;
       background-size: cover;
-      color: #fff;
+      color: white;
       text-align: center;
     }
     header {
-      background: rgba(0, 0, 0, 0.6);
+      background-color: rgba(0, 0, 0, 0.6);
       padding: 1rem;
     }
     header h1 {
@@ -22,8 +22,8 @@
       font-size: 2.5rem;
     }
     .radio-player {
+      background-color: rgba(0, 0, 0, 0.5);
       margin: 2rem auto;
-      background: rgba(0, 0, 0, 0.5);
       padding: 1rem;
       border-radius: 10px;
       max-width: 400px;
@@ -38,8 +38,11 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 1rem;
+      padding: 0 1rem;
     }
     iframe {
+      width: 100%;
+      height: 170px;
       border: none;
       border-radius: 10px;
     }
@@ -51,21 +54,21 @@
       margin: 0 10px;
       padding: 10px 20px;
       border-radius: 8px;
+      color: white;
       text-decoration: none;
-      color: #fff;
       font-weight: bold;
     }
     .whatsapp { background: #25d366; }
     .youtube { background: red; }
     .facebook { background: #3b5998; }
     footer {
-      background: rgba(0, 0, 0, 0.6);
+      background-color: rgba(0, 0, 0, 0.6);
       padding: 1rem;
-      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
+
   <header>
     <h1>Tropical Flow TV📺Radio</h1>
   </header>
@@ -74,16 +77,16 @@
     <h2>🎧 Escúchanos en Vivo</h2>
     <audio controls autoplay>
       <source src="https://stream.zeno.fm/sl8wpcxtjy3uv" type="audio/mpeg">
-      Tu navegador no soporta la radio.
+      Tu navegador no soporta el audio.
     </audio>
   </section>
 
   <section class="tv-section">
     <h2>📺 Canales en Vivo</h2>
     <div class="tv-grid">
-      <iframe width="300" height="170" src="https://www.youtube.com/embed/jfKfPfyJRdk" allowfullscreen></iframe>
-      <iframe width="300" height="170" src="https://www.youtube.com/embed/hHW1oY26kxQ" allowfullscreen></iframe>
-      <iframe width="300" height="170" src="https://www.youtube.com/embed/5qap5aO4i9A" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/jfKfPfyJRdk" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/hHW1oY26kxQ" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/5qap5aO4i9A" allowfullscreen></iframe>
     </div>
   </section>
 
@@ -96,5 +99,6 @@
   <footer>
     © 2025 Tropical Flow TV📺Radio - Todos los derechos reservados
   </footer>
+
 </body>
 </html>
