@@ -1,100 +1,91 @@
-<!DOCTYPE html>
+PRIVADO. <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tropical Flow TV 📺 Radio - Área Privada</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Área Exclusiva | Tropical Flow TV📺Radio</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') no-repeat center center fixed;
-      background-size: cover;
       color: white;
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') no-repeat center center fixed;
+      background-size: cover;
     }
     header {
       text-align: center;
-      padding: 20px;
-      font-size: 2rem;
-      background: rgba(0, 0, 0, 0.5);
+      padding: 2rem;
+      background-color: rgba(0, 0, 0, 0.5);
     }
-    .radio-player {
-      text-align: center;
-      margin: 20px;
+    header h1 {
+      font-size: 2rem;
+    }
+    .radio {
+      display: flex;
+      justify-content: center;
+      margin: 1rem;
+    }
+    .videos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      padding: 1rem;
+      background-color: rgba(0,0,0,0.6);
     }
     iframe {
-      border-radius: 12px;
+      border: none;
+      width: 320px;
+      height: 180px;
     }
-    .carousel {
+    .social {
       display: flex;
-      overflow: hidden;
-      width: 90%;
-      margin: auto;
-      padding: 20px 0;
       justify-content: center;
-      scroll-behavior: smooth;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
     }
-    .carousel iframe {
-      min-width: 300px;
-      margin: 0 10px;
-    }
-    @keyframes scroll {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-320px); }
-      50% { transform: translateX(-640px); }
-      75% { transform: translateX(-960px); }
-      100% { transform: translateX(0); }
-    }
-    .carousel {
-      animation: scroll 20s infinite linear;
-    }
-    footer {
-      background: rgba(0, 0, 0, 0.5);
-      text-align: center;
-      padding: 10px;
-    }
-    .botones {
-      text-align: center;
-      margin: 20px;
-    }
-    .botones a {
-      display: inline-block;
-      margin: 5px;
-      padding: 10px 20px;
-      background-color: #00cc99;
+    .social a {
+      background: #25d366;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
       color: white;
       text-decoration: none;
-      border-radius: 20px;
-      font-weight: bold;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.6);
     }
   </style>
 </head>
 <body>
-  <header>🎉 Bienvenido al Área Privada 🎉</header>
+  <header>
+    <h1>🎉 Bienvenido al Área Exclusiva 🎉</h1>
+    <p>¡Disfruta de música, videos y contenido especial!</p>
+  </header>
 
-  <div class="radio-player">
-    <h3>🎧 Escúchanos en vivo 24/7</h3>
-    <audio controls autoplay>
-      <source src="https://stream.zeno.fm/9ysf1q2g0f9uv" type="audio/mpeg" />
-      Tu navegador no soporta audio HTML5
-    </audio>
+  <div class="radio">
+    <iframe src="https://zeno.fm/player/tropicalflowtv" width="100%" height="100" frameborder="0" allow="autoplay"></iframe>
   </div>
 
-  <div class="carousel">
-    <iframe width="300" height="180" src="https://www.youtube.com/embed/hHW1oY26kxQ" title="Video 1" frameborder="0" allowfullscreen></iframe>
-    <iframe width="300" height="180" src="https://www.youtube.com/embed/kJQP7kiw5Fk" title="Video 2" frameborder="0" allowfullscreen></iframe>
-    <iframe width="300" height="180" src="https://www.youtube.com/embed/8aZpG9e4H7I" title="Video 3" frameborder="0" allowfullscreen></iframe>
-    <iframe width="300" height="180" src="https://www.youtube.com/embed/lY2yjAdbvdQ" title="Video 4" frameborder="0" allowfullscreen></iframe>
+  <div class="videos">
+    <iframe src="https://www.youtube.com/embed/videoseries?list=PLQfm0U7T_BFadJTXWbUhVOh5qGBcOEolb" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/Ji0LzUnn4jo" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/zW9FxU7QozY" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/Rf5m-bGQQp4" allowfullscreen></iframe>
   </div>
 
-  <div class="botones">
+  <div class="social">
     <a href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
-    <a href="https://youtube.com/@TropicalFlowTVRadio" target="_blank">YouTube</a>
-    <a href="https://facebook.com" target="_blank">Facebook</a>
-    <a href="https://www.paypal.com/donate/?hosted_button_id=XYZ123" target="_blank">Donar vía PayPal</a>
-    <a href="https://www.athmovil.com/cartajo" target="_blank">Donar vía ATH Móvil</a>
+    <a href="https://www.youtube.com/@TropicalFlowTVRadio" target="_blank">YouTube</a>
+    <a href="https://www.facebook.com/tropicalflowtv" target="_blank">Facebook</a>
+    <a href="https://www.paypal.com/donate?hosted_button_id=XXXXXXX" target="_blank">Donar vía PayPal</a>
+    <a href="https://athmovil.com/cartagenajose1970" target="_blank">Donar vía ATH Móvil</a>
   </div>
 
-  <footer>© 2025 Tropical Flow TV📺Radio - Todos los derechos reservados</footer>
+  <footer>
+    <p>&copy; 2025 Tropical Flow TV📺Radio — Todos los derechos reservados.</p>
+  </footer>
 </body>
 </html>
