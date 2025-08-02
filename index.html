@@ -10,8 +10,7 @@
       margin: 0;
       font-family: Arial, sans-serif;
       color: #fff;
-      background:
-        linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.45)),
+      background: linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.4)),
         url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover fixed no-repeat;
       min-height: 100vh;
       display: flex;
@@ -24,17 +23,17 @@
     }
     header h1 {
       margin: 0;
-      font-size: 2rem;
+      font-size: 2.2rem;
     }
     .radio-player {
       margin: 2rem auto;
       width: min(920px, 96%);
-      background: rgba(0, 0, 0, .35);
+      background: rgba(0, 0, 0, .4);
       backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, .25);
+      border: 1px solid rgba(255, 255, 255, .3);
       border-radius: 18px;
       padding: 18px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, .45);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, .5);
       text-align: center;
     }
     .tv-section {
@@ -69,25 +68,22 @@
     }
     .social-buttons a {
       display: inline-block;
-      margin: 0.5rem 1rem;
+      margin: 0.5rem;
       padding: 0.5rem 1rem;
-      background: #25d366;
       color: white;
       text-decoration: none;
       border-radius: 8px;
+      font-weight: bold;
     }
-    .social-buttons a.youtube { background: red; }
-    .social-buttons a.facebook { background: #3b5998; }
-    .social-buttons a.paypal { background: #0070ba; }
-    .social-buttons a.athmovil { background: #ff7b00; }
+    .whatsapp { background: #25d366; }
+    .youtube { background: red; }
+    .facebook { background: #3b5998; }
+    .paypal { background: #0070ba; }
+    .athmovil { background: #a435f0; }
     footer {
       background-color: rgba(0, 0, 0, 0.7);
       padding: 1rem;
       text-align: center;
-    }
-    #visitorCount {
-      color: #00ff88;
-      font-weight: bold;
     }
   </style>
 </head>
@@ -99,7 +95,7 @@
   <section class="radio-player">
     <h2>🎧 Escúchanos en vivo 24/7</h2>
     <p>Si no se reproduce automáticamente, toca <b>Play</b> o sube el volumen.</p>
-    <audio id="radio" controls autoplay preload="none" crossorigin="anonymous">
+    <audio controls autoplay preload="none" crossorigin="anonymous">
       <source src="https://stream.zeno.fm/sl8wpcxtjy3uv" type="audio/mpeg" />
       Tu navegador no soporta audio en vivo.
     </audio>
@@ -113,22 +109,19 @@
       <iframe width="300" height="170" src="https://www.youtube.com/embed/XYe0ZHVvVig" allowfullscreen></iframe>
       <iframe width="300" height="170" src="https://www.youtube.com/embed/h86xW_G-j4s" allowfullscreen></iframe>
       <iframe width="300" height="170" src="https://www.youtube.com/embed/5pKPlIlQa_8" allowfullscreen></iframe>
-      <iframe width="300" height="170" src="https://www.youtube.com/embed/M9wQdkQicbk" allowfullscreen></iframe>
-      <iframe width="300" height="170" src="https://www.youtube.com/embed/O6xVXaBcOac" allowfullscreen></iframe>
-      <iframe width="300" height="170" src="https://www.youtube.com/embed/jTqKxMTtVEI" allowfullscreen></iframe>
     </div>
   </section>
 
   <div class="social-buttons">
-    <a href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
+    <a class="whatsapp" href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
     <a class="youtube" href="https://www.youtube.com/@TFTvpoweredbyworldm8780" target="_blank">YouTube</a>
     <a class="facebook" href="https://www.facebook.com/profile.php?id=61555653663073" target="_blank">Facebook</a>
-    <a class="paypal" href="https://www.paypal.com/donate/?hosted_button_id=XXXXXX" target="_blank">Donar vía PayPal</a>
-    <a class="athmovil" href="https://athmovil.com/cartajo" target="_blank">Pagar con ATH Móvil</a>
+    <a class="paypal" href="https://www.paypal.com/donate/?hosted_button_id=XXXXXX" target="_blank">Donar con PayPal</a>
+    <a class="athmovil" href="https://portal.athmovil.com/pagos/TuNegocio" target="_blank">Pagar con ATH Móvil</a>
   </div>
 
-  <div style="text-align:center; color:#ccc;">
-    👥 Usuarios conectados ahora: <span id="visitorCount">...</span>
+  <div style="text-align:center; color:#ccc; font-size: 0.95rem;">
+    🔴 Visitantes conectados ahora: <span id="counter">...</span>
   </div>
 
   <footer>
@@ -138,11 +131,12 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Contador ficticio (puede reemplazarse con una API real luego)
-    function randomVisitors() {
-      return Math.floor(Math.random() * 30) + 1;
-    }
-    document.getElementById('visitorCount').textContent = randomVisitors();
+    // Contador de visitantes (usando API simple)
+    fetch('https://api.countapi.xyz/hit/tropicalflowtv.github.io/visits')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('counter').textContent = data.value;
+      });
   </script>
 </body>
 </html>
