@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Área Exclusiva | Tropical Flow TV📺Radio</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       margin: 0;
-      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') no-repeat center center fixed;
-      background-size: cover;
       font-family: Arial, sans-serif;
       color: white;
-      text-align: center;
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') no-repeat center center fixed;
+      background-size: cover;
     }
     header {
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 1rem;
+      text-align: center;
+      padding: 2rem;
+      background-color: rgba(0, 0, 0, 0.5);
     }
-    h1 {
-      margin: 0;
-      font-size: 2em;
+    header h1 {
+      font-size: 2rem;
     }
     .radio {
-      margin: 1rem auto;
+      display: flex;
+      justify-content: center;
+      margin: 1rem;
     }
     .videos {
       display: flex;
@@ -30,40 +31,8 @@
       justify-content: center;
       gap: 1rem;
       padding: 1rem;
+      background-color: rgba(0,0,0,0.6);
     }
     iframe {
-      width: 320px;
-      height: 180px;
       border: none;
-    }
-    .volver {
-      margin: 2rem 0;
-    }
-    .volver a {
-      color: white;
-      text-decoration: underline;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>🎉 Bienvenido al Área Exclusiva 🎉</h1>
-    <p>¡Disfruta de música, videos y contenido especial!</p>
-  </header>
-
-  <div class="radio">
-    <iframe src="https://zeno.fm/player/tropicalflowtv" width="100%" height="150" frameborder="0" allow="autoplay"></iframe>
-  </div>
-
-  <div class="videos">
-    <iframe src="https://www.youtube.com/embed/WL2txMU50CI" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/BeyEGebJ1l4" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/3GwjfUFyY6M" allowfullscreen></iframe>
-  </div>
-
-  <div class="volver">
-    <a href="../index.html">← Volver a la Página Principal</a>
-  </div>
-</body>
-</html>
+      width: 320px;
