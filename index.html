@@ -1,9 +1,13 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Tropical Flow TV📺Radio — En Vivo 24/7</title>
-  <meta name="description" content="Tropical Flow TV📺Radio - Música tropical en vivo 24/7. Dale play y disfruta." />  <!-- ESTILOS (CSS) -->  <style>
+  <meta name="description" content="Tropical Flow TV📺Radio - Música tropical en vivo 24/7. Dale play y disfruta." />
+
+  <!-- ESTILOS (CSS) -->
+  <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -35,15 +39,25 @@
       text-align: center;
     }
     .tv-section {
-      margin: 2rem;
+      margin: 2rem auto;
+      width: 96%;
+      max-width: 1200px;
+      text-align: center;
     }
     .tv-section h2 {
       margin-bottom: 1rem;
     }
-    .tv-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    .carousel {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
       gap: 1rem;
+      padding: 1rem;
+    }
+    .carousel iframe {
+      flex: 0 0 auto;
+      scroll-snap-align: center;
+      border-radius: 12px;
     }
     .social-buttons {
       margin: 2rem;
@@ -65,36 +79,50 @@
       padding: 1rem;
       text-align: center;
     }
-  </style></head>
+  </style>
+</head>
 <body>
   <header>
     <h1>Tropical Flow TV📺Radio</h1>
-  </header>  <section class="radio-player">
+  </header>
+
+  <section class="radio-player">
     <h2>🎧 Escúchanos en vivo 24/7</h2>
     <p>Si no se reproduce automáticamente, toca <b>Play</b> o sube el volumen. Funciona en celular y computadora.</p>
     <audio id="radio" controls autoplay preload="none" crossorigin="anonymous">
       <source src="https://stream.zeno.fm/sl8wpcxtjy3uv" type="audio/mpeg" />
       Tu navegador no soporta audio en vivo.
     </audio>
-  </section>  <section class="tv-section">
+  </section>
+
+  <section class="tv-section">
     <h2>📺 Canales en Vivo</h2>
-    <div class="tv-grid">
-      <iframe width="300" height="170" src="https://www.youtube.com/embed/jfKfPfyJRdk" allowfullscreen></iframe>
-      <iframe width="300" height="170" src="https://www.youtube.com/embed/hHW1oY26kxQ" allowfullscreen></iframe>
-      <iframe width="300" height="170" src="https://www.youtube.com/embed/5qap5aO4i9A" allowfullscreen></iframe>
-      <iframe width="300" height="170" src="https://www.youtube.com/embed/21qNxnCS8WU" allowfullscreen></iframe>
-      <iframe width="300" height="170" src="https://www.youtube.com/embed/R4L_6RP3aF0" allowfullscreen></iframe>
+    <div class="carousel">
+      <iframe width="300" height="170" src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=0" allowfullscreen></iframe>
+      <iframe width="300" height="170" src="https://www.youtube.com/embed/hHW1oY26kxQ?autoplay=0" allowfullscreen></iframe>
+      <iframe width="300" height="170" src="https://www.youtube.com/embed/5qap5aO4i9A?autoplay=0" allowfullscreen></iframe>
+      <iframe width="300" height="170" src="https://www.youtube.com/embed/21qNxnCS8WU?autoplay=0" allowfullscreen></iframe>
+      <iframe width="300" height="170" src="https://www.youtube.com/embed/R4L_6RP3aF0?autoplay=0" allowfullscreen></iframe>
     </div>
-  </section>  <div class="social-buttons">
+  </section>
+
+  <div class="social-buttons">
     <a href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
     <a class="youtube" href="https://www.youtube.com/@TFTvpoweredbyworldm8780" target="_blank">YouTube</a>
     <a class="facebook" href="https://www.facebook.com/profile.php?id=61555653663073" target="_blank">Facebook</a>
-  </div>  <div class="social-buttons">
+  </div>
+
+  <div class="social-buttons">
     <a href="https://www.paypal.com/donate/?hosted_button_id=XXXXXX" target="_blank">🎧 Acceso Premium</a>
     <p style="color: #ccc; margin-top: 1rem;">Haz tu donación y accede a contenido exclusivo.</p>
-  </div>  <footer>
+  </div>
+
+  <footer>
     © <span id="year"></span> Tropical Flow TV📺Radio - Todos los derechos reservados
-  </footer>  <script>
+  </footer>
+
+  <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-  </script></body>
+  </script>
+</body>
 </html>
