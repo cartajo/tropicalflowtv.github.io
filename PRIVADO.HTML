@@ -1,88 +1,60 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Acceso Privado | Tropical Flow TV📺Radio</title>
+  <meta charset="UTF-8">
+  <title>Acceso Privado - Tropical Flow TV📺Radio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)),
-        url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat fixed;
+      background: linear-gradient(to right, #000000, #333333);
       color: #fff;
+      font-family: Arial, sans-serif;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
-    }
-    .access-box {
-      background: rgba(0, 0, 0, 0.65);
-      border-radius: 12px;
-      padding: 2rem;
       text-align: center;
-      width: 90%;
-      max-width: 400px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.6);
     }
-    .access-box h2 {
-      margin-bottom: 1rem;
-    }
-    .access-box input {
-      padding: 0.5rem;
-      width: 100%;
-      margin: 0.5rem 0;
+    input, button {
+      padding: 0.8rem;
+      margin: 1rem;
+      font-size: 1rem;
       border-radius: 6px;
       border: none;
     }
-    .access-box button {
-      padding: 0.6rem 1.2rem;
-      border: none;
-      background: #25d366;
+    button {
+      background-color: #28a745;
       color: white;
-      border-radius: 6px;
       cursor: pointer;
-      margin-top: 0.5rem;
     }
-    .access-box button:hover {
-      background: #20b358;
+    button:hover {
+      background-color: #218838;
     }
     .error {
       color: #ff4d4d;
       margin-top: 1rem;
     }
-    .whatsapp {
-      margin-top: 2rem;
-      font-size: 0.9rem;
-    }
-    .whatsapp a {
-      color: #25d366;
-      text-decoration: none;
-    }
   </style>
 </head>
 <body>
-  <div class="access-box">
-    <h2>Acceso Privado</h2>
-    <p>Ingresa tu código de acceso para continuar</p>
-    <input type="password" id="codigo" placeholder="Código de acceso" />
-    <button onclick="verificarCodigo()">Entrar</button>
-    <div class="error" id="error-msg"></div>
-    <div class="whatsapp">
-      ¿No tienes un código? Escríbenos por <a href="https://wa.me/19399029695" target="_blank">WhatsApp</a>.
-    </div>
-  </div>
+  <h1>🔒 Acceso Restringido</h1>
+  <p>Ingresa tu código de acceso para continuar</p>
+  <input type="text" id="codigo" placeholder="Código de acceso">
+  <br>
+  <button onclick="verificarCodigo()">Entrar</button>
+  <p class="error" id="mensaje"></p>
 
   <script>
     function verificarCodigo() {
-      const codigoCorrecto = "tropical2025"; // Este es el código de acceso válido
-      const ingreso = document.getElementById("codigo").value.trim();
-      const errorMsg = document.getElementById("error-msg");
+      const codigo = document.getElementById("codigo").value.trim();
+      const claveCorrecta = "tropical2025";
 
-      if (ingreso === codigoCorrecto) {
-        window.location.href = "index.html"; // Redirección al contenido privado
+      if (codigo === claveCorrecta) {
+        // Redirige al área privada
+        window.location.href = "privado/index.html"; // Puedes cambiar a "index.html" si es el mismo sitio
       } else {
-        errorMsg.textContent = "Código incorrecto. Verifica tu pago o contáctanos por WhatsApp.";
+        document.getElementById("mensaje").innerText = "❌ Código incorrecto. Verifica tu pago o contacta por WhatsApp.";
       }
     }
   </script>
