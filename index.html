@@ -1,171 +1,67 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tropical Flow TV📺Radio — En Vivo 24/7</title>
-  <meta name="description" content="Tropical Flow TV📺Radio - Música tropical en vivo 24/7. Dale play y disfruta." />  <style>
+  <title>Acceso Privado | Tropical Flow TV📺Radio</title>
+  <meta name="description" content="Acceso exclusivo a Tropical Flow TV📺Radio para usuarios registrados y autorizados." />
+  <style>
     body {
-      margin: 0;
+      background: #000 url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat fixed;
+      color: white;
       font-family: Arial, sans-serif;
-      color: #fff;
-      background:
-        linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.45)),
-        url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover fixed no-repeat;
-      min-height: 100vh;
       display: flex;
       flex-direction: column;
-    }
-    header {
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 1rem;
-    }
-    header h1 {
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
       margin: 0;
-      font-size: 2rem;
-    }
-    .radio-player {
-      margin: 2rem auto;
-      width: min(920px, 96%);
-      background: rgba(0, 0, 0, .35);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, .25);
-      border-radius: 18px;
-      padding: 18px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, .45);
+      padding: 1rem;
       text-align: center;
     }
-    .tv-section, .podcast-section {
-      margin: 2rem auto;
-      width: 96%;
-      max-width: 1200px;
-      text-align: center;
-    }
-    .tv-section h2, .podcast-section h2 {
+    h1 {
       margin-bottom: 1rem;
     }
-    .carousel {
-      display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      scroll-behavior: smooth;
-      gap: 1rem;
-      padding: 1rem;
+    input[type="text"] {
+      padding: 0.5rem;
+      border-radius: 5px;
+      border: none;
+      margin-bottom: 1rem;
+      width: 250px;
     }
-    .carousel iframe {
-      flex: 0 0 auto;
-      scroll-snap-align: center;
-      border-radius: 12px;
-    }
-    .social-buttons {
-      margin: 2rem;
-      text-align: center;
-    }
-    .social-buttons a {
-      display: inline-block;
-      margin: 0 1rem;
+    button {
       padding: 0.5rem 1rem;
       background: #25d366;
       color: white;
-      text-decoration: none;
-      border-radius: 8px;
-    }
-    .social-buttons a.youtube { background: red; }
-    .social-buttons a.facebook { background: #3b5998; }
-    .donation-section {
-      margin: 2rem auto;
-      text-align: center;
-    }
-    .donation-section p {
-      color: #ccc;
-    }
-    footer {
-      text-align: center;
-      color: #ccc;
-      margin: 2rem 0;
-    }
-    .access-form {
-      margin: 2rem auto;
-      text-align: center;
-    }
-    .access-form input[type="text"] {
-      padding: 0.5rem;
-      width: 250px;
-      margin-right: 1rem;
-      border-radius: 8px;
       border: none;
-    }
-    .access-form button {
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      background: #0070f3;
-      color: white;
-      border: none;
+      border-radius: 5px;
       cursor: pointer;
     }
-    .hidden-section { display: none; }
-  </style>  <script src="https://www.paypal.com/sdk/js?client-id=BAAGA9IrIak-xJU7dZDAYp9GICSBg174u0xjSjiY1t6wRUo3rZr7JFP7-2gLwl2SYbrYYb5WlmGa0L4urw&components=hosted-buttons&disable-funding=venmo&currency=USD"></script></head>
-<body>
-  <header>
-    <h1>Tropical Flow TV📺Radio</h1>
-  </header>  <section class="access-form">
-    <p>Ingresa tu código de acceso para entrar al contenido premium:</p>
-    <input type="text" id="accessCode" placeholder="Código de acceso" />
-    <button onclick="checkAccess()">Entrar</button>
-  </section>  <div id="content" class="hidden-section">
-    <section class="radio-player">
-      <h2>🎧 Escúchanos en vivo 24/7</h2>
-      <p>Si no se reproduce automáticamente, toca <b>Play</b> o sube el volumen. Funciona en celular y computadora.</p>
-      <audio id="radio" controls autoplay preload="none" crossorigin="anonymous">
-        <source src="https://stream.zeno.fm/sl8wpcxtjy3uv" type="audio/mpeg" />
-        Tu navegador no soporta audio en vivo.
-      </audio>
-    </section><section class="tv-section">
-  <h2>🎬 Videos Recientes</h2>
-  <div class="carousel">
-    <iframe width="300" height="170" src="https://www.youtube.com/embed/tpi8zLE3Kqw" allowfullscreen></iframe>
-    <iframe width="300" height="170" src="https://www.youtube.com/embed/RBE8A9rAj8Y" allowfullscreen></iframe>
-    <iframe width="300" height="170" src="https://www.youtube.com/embed/XYe0ZHVvVig" allowfullscreen></iframe>
-    <iframe width="300" height="170" src="https://www.youtube.com/embed/h86xW_G-j4s" allowfullscreen></iframe>
-    <iframe width="300" height="170" src="https://www.youtube.com/embed/5pKPlIlQa_8" allowfullscreen></iframe>
-  </div>
-</section>
-
-<section class="podcast-section">
-  <h2>🎙 Podcast</h2>
-  <iframe src="https://anchor.fm/yourpodcast/embed" height="102px" width="100%" frameborder="0" scrolling="no"></iframe>
-</section>
-
-  </div>  <div class="social-buttons">
-    <a href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
-    <a class="youtube" href="https://www.youtube.com/@TFTvpoweredbyworldm8780" target="_blank">YouTube</a>
-    <a class="facebook" href="https://www.facebook.com/profile.php?id=61555653663073" target="_blank">Facebook</a>
-  </div>  <div class="donation-section">
-    <div id="paypal-container-QYL55GLXQ77TY"></div>
-    <script>
-      paypal.HostedButtons({ hostedButtonId: "QYL55GLXQ77TY" }).render("#paypal-container-QYL55GLXQ77TY")
-    </script>
-    <p>Haz tu donación por PayPal o ATH Móvil.</p>
-    <p><strong>ATH Móvil:</strong> 939-902-9695</p>
-  </div>  <div style="text-align: center; margin: 2rem 0;">
-    <p style="color: #ccc;">Visitas a la página:</p>
-    <a href="https://www.freecounterstat.com" title="contador de visitas">
-      <img src="https://counter11.optistats.ovh/private/freecounterstat.php?c=dc3wstjy1tltxvmthg6w0byxtjapchkd" border="0" title="contador de visitas" alt="contador de visitas" />
-    </a>
-    <p style="color: #888; font-size: 0.9rem;">Gracias por tu visita 🎧📺</p>
-  </div>  <footer>
-    © <span id="year"></span> Tropical Flow TV📺Radio - Todos los derechos reservados
-  </footer>  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    <script>
-  function verificarCodigo() {
-    const codigoValido = "TFTV2025VIP";
-    const ingresado = document.getElementById('codigo').value.trim();
-    if (ingresado === codigoValido) {
-      window.location.href = "https://cartajo.github.io/tropicalflowtv.github.io/privado/index.html"; // Redirige correctamente
-    } else {
-      document.getElementById('mensaje').innerText = "Código incorrecto. Verifica tu pago o contacta por WhatsApp.";
+    #mensaje {
+      margin-top: 1rem;
+      color: red;
     }
-  }
-</script></body>
+  </style>
+</head>
+<body>
+  <h1>🔒 Acceso Privado</h1>
+  <p>Ingresa tu código de acceso para entrar a Tropical Flow TV📺Radio</p>
+  <input type="text" id="codigo" placeholder="Código de acceso" />
+  <br>
+  <button onclick="verificarCodigo()">Entrar</button>
+  <div id="mensaje"></div>
+
+  <script>
+    function verificarCodigo() {
+      const codigoValido = "TFTV2025VIP";
+      const ingresado = document.getElementById('codigo').value.trim();
+      if (ingresado === codigoValido) {
+        window.location.href = "privado/index.html"; // Redirige a la carpeta privada
+      } else {
+        document.getElementById('mensaje').innerText =
+          "Código incorrecto. Verifica tu pago o contacta por WhatsApp.";
+      }
+    }
+  </script>
+</body>
 </html>
