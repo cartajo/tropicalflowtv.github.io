@@ -1,271 +1,40 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Tropical Flow TV📺Radio — En Vivo 24/7</title>
-<meta name="description" content="Tropical Flow TV📺Radio - Música tropical en vivo 24/7 + canales de TV.">
-
-<style>
-  /* ===== Base y fondo ===== */
-  :root { --bg: rgba(0,0,0,.35); --border: rgba(255,255,255,.25); --card: rgba(0,0,0,.35); --glass-blur: 8px; }
-  body{
-    margin:0; color:#fff; font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
-    background: linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.45)),
-      url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover fixed no-repeat;
-    min-height:100vh; display:flex; flex-direction:column;
-  }
-  .container{ width:min(1000px,96%); margin:0 auto; }
-
-  /* ===== Topbar ===== */
-  .topbar{
-    display:flex; align-items:center; justify-content:space-between;
-    padding:14px 16px; background:rgba(0,0,0,.25); border-bottom:1px solid rgba(255,255,255,.2);
-    backdrop-filter: blur(6px);
-  }
-  .brand{display:flex; align-items:center; gap:12px; font-weight:800}
-  .badge{width:44px; height:44px; border-radius:12px; display:grid; place-items:center; color:#001018; font-weight:900;
-    background:radial-gradient(120% 120% at 10% 10%, #fb923c, #0ea5e9);
-    border:1px solid rgba(255,255,255,.25); box-shadow:0 8px 24px rgba(0,0,0,.35);
-  }
-  .brand small{display:block; font-weight:600; opacity:.9}
-  .links a{
-    color:#fff; text-decoration:none; font-weight:600; border:1px solid rgba(255,255,255,.35);
-    padding:10px 14px; border-radius:10px; margin-left:8px; background:rgba(0,0,0,.15);
-  }
-  .links a.primary{background:#0ea5e9; color:#001018; border-color:transparent; font-weight:800}
-
-  /* ===== Secciones tipo tarjeta ===== */
-  .card{
-    background:var(--card); border:1px solid var(--border); border-radius:18px; padding:18px;
-    backdrop-filter: blur(var(--glass-blur)); box-shadow:0 20px 50px rgba(0,0,0,.45);
-  }
-  main{flex:1; padding:24px 16px; display:flex; flex-direction:column; gap:16px}
-  h1,h2{margin:0; font-size:1.35rem}
-  .lead{margin:6px 0 14px; opacity:.9}
-  .dot{width:10px; height:10px; border-radius:50%; margin-right:10px; display:inline-block}
-  .row-title{display:flex; align-items:center; gap:10px; margin-bottom:8px}
-
-  /* ===== Radio ===== */
-  audio{width:100%}
-  .alt-links{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
-  .alt-links a{ color:#fff; text-decoration:none; border:1px solid rgba(255,255,255,.3);
-    padding:8px 12px; border-radius:10px; font-size:.92rem; background:rgba(0,0,0,.2)}
-
-  /* ===== TV: carrusel estilo Netflix ===== */
-  .tv-carousel{
-    display:flex; gap:12px; overflow-x:auto; padding-bottom:6px; scroll-snap-type:x mandatory;
-  }
-  .tv-card{
-    flex:0 0 auto; width:160px; scroll-snap-align:start; cursor:pointer;
-    border-radius:12px; border:1px solid rgba(255,255,255,.18); overflow:hidden;
-    background:rgba(0,0,0,.28);
-    transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
-  }
-  .tv-card:hover{ transform: translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,.35); border-color: rgba(255,255,255,.35); }
-  .tv-thumb{
-    height:90px; display:grid; place-items:center; font-weight:900; font-size:28px;
-    background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
-  }
-  .tv-label{ padding:10px 12px; font-size:.95rem; text-align:center }
-  .tv-active{ outline:2px solid #0ea5e9; outline-offset:2px; }
-
-  .tv-frame{
-    aspect-ratio:16/9; width:100%; background:#000; border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,.18);
-  }
-  .tv-frame iframe{ width:100%; height:100%; border:0; display:block }
-
-  /* ===== Monetización y Banners ===== */
-  .chips{display:flex; flex-wrap:wrap; gap:10px}
-  .chip{
-    text-decoration:none; display:inline-block; padding:10px 14px; border-radius:10px; font-weight:800; border:1px solid transparent;
-    color:#001018;
-  }
-  .cashlike{ color:#fff; border:1px solid rgba(255,255,255,.3); background:rgba(0,0,0,.2); }
-  .sponsors{ display:flex; justify-content:space-around; flex-wrap:wrap; gap:12px; }
-  .sponsors img{ border-radius:10px; border:1px solid rgba(255,255,255,.2); width:180px; height:90px; object-fit:cover; }
-
-  footer{ padding:16px; text-align:center; background:rgba(0,0,0,.25); border-top:1px solid rgba(255,255,255,.2) }
-</style>
+<meta name="description" content="Tropical Flow TV📺Radio - Música tropical en vivo 24/7. Dale play y disfruta.">
 </head>
-<body>
-  <!-- Topbar -->
-  <header class="topbar">
-    <div class="brand">
-      <div class="badge">TF</div>
+<body style="margin:0; color:#fff; font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif; background:
+  linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.45)),
+  url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover fixed no-repeat; min-height:100vh; display:flex; flex-direction:column;">
+
+  <!-- Top bar -->
+  <header style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; background:rgba(0,0,0,.25); border-bottom:1px solid rgba(255,255,255,.2);">
+    <div style="display:flex; align-items:center; gap:12px; font-weight:800;">
+      <div style="width:44px; height:44px; border-radius:12px; background:radial-gradient(120% 120% at 10% 10%, #fb923c, #0ea5e9); display:grid; place-items:center; color:#001018; font-weight:900; border:1px solid rgba(255,255,255,.25); box-shadow:0 8px 24px rgba(0,0,0,.35);">TF</div>
       <div>
         Tropical Flow TV📺Radio
-        <small>Música, Ritmo y Alegría 24/7</small>
+        <div style="font-weight:600; opacity:.9; font-size:.9rem;">Música, Ritmo y Alegría 24/7</div>
       </div>
     </div>
-    <nav class="links">
-      <!-- Facebook: cambia cuando tengas tu URL oficial -->
-      <a href="https://www.facebook.com/TropicalFlowTVRadio" target="_blank" rel="noopener">Facebook</a>
-      <!-- YouTube: tu canal correcto -->
-      <a href="https://www.youtube.com/@TFTvpoweredbyworldm8780" target="_blank" rel="noopener">YouTube</a>
-      <!-- WhatsApp: con mensaje automático -->
-      <a class="primary" href="https://wa.me/19399029695?text=Hola%20quiero%20informaci%C3%B3n%20sobre%20Tropical%20Flow%20TV%F0%9F%93%BARadio" target="_blank" rel="noopener">WhatsApp</a>
+    <nav>
+      <a href="https://www.facebook.com/TropicalFlowTVRadio" target="_blank" rel="noopener" style="color:#fff; text-decoration:none; font-weight:600; border:1px solid rgba(255,255,255,.35); padding:10px 14px; border-radius:10px; margin-left:8px; background:rgba(0,0,0,.15);">Facebook</a>
+      <a href="https://www.youtube.com/@TFTvpoweredbyworldm8780" target="_blank" rel="noopener" style="color:#fff; text-decoration:none; font-weight:600; border:1px solid rgba(255,255,255,.35); padding:10px 14px; border-radius:10px; margin-left:8px; background:rgba(0,0,0,.15);">YouTube</a>
+      <a href="https://wa.me/19399029695?text=Hola%20quiero%20informaci%C3%B3n%20sobre%20Tropical%20Flow%20TV%F0%9F%93%BARadio" target="_blank" rel="noopener" style="color:#001018; text-decoration:none; font-weight:800; border:1px solid transparent; padding:10px 14px; border-radius:10px; margin-left:8px; background:#0ea5e9;">WhatsApp</a>
     </nav>
   </header>
 
-  <main>
-    <section class="card container">
-      <div class="row-title"><span class="dot" style="background:#22c55e; box-shadow:0 0 0 6px rgba(34,197,94,.18);"></span><h1>🎧 Radio — En vivo 24/7</h1></div>
-      <p class="lead">Si no inicia solo, toca <b>Play</b>. Funciona en celular y computadora.</p>
-      <audio controls preload="none">
+  <!-- Tarjeta del player -->
+  <main style="flex:1; display:grid; place-items:center; padding:24px 16px;">
+    <div style="width:min(920px,96%); background:rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.25); border-radius:18px; padding:18px; backdrop-filter:blur(8px); box-shadow:0 20px 50px rgba(0,0,0,.45);">
+      <div style="display:flex; align-items:center; gap:10px; margin:0 0 8px;">
+        <div style="width:10px; height:10px; border-radius:50%; background:#ef4444; box-shadow:0 0 0 6px rgba(239,68,68,.18);"></div>
+        <h1 style="margin:0; font-size:1.35rem;">En vivo 24/7 — Dale Play</h1>
+      </div>
+      <p style="margin:6px 0 14px; opacity:.9;">Si no inicia solo, toca <b>Play</b>. Funciona en celular y computadora.</p>
+
+      <!-- PLAYER NATIVO (estable) -->
+      <audio controls preload="none" style="width:100%;">
         <source src="https://stream.zeno.fm/sl8wpcxtjy3uv" type="audio/mpeg">
-        Tu navegador no soporta audio en vivo.
-      </audio>
-      <div class="alt-links">
-        <a href="https://stream.zeno.fm/sl8wpcxtjy3uv" target="_blank" rel="noopener">Abrir MP3</a>
-        <a href="https://stream.zeno.fm/sl8wpcxtjy3uv.m3u" target="_blank" rel="noopener">M3U</a>
-        <a href="https://stream.zeno.fm/sl8wpcxtjy3uv.pls" target="_blank" rel="noopener">PLS</a>
-      </div>
-    </section>
-
-    <!-- ===== TV estilo Netflix (12 canales) ===== -->
-    <section class="card container">
-      <div class="row-title"><span class="dot" style="background:#3b82f6; box-shadow:0 0 0 6px rgba(59,130,246,.18);"></span><h2>📺 TV — Canales en Vivo</h2></div>
-      <p class="lead">Toca un canal para verlo en el reproductor. (Puedes añadir más copiando una tarjeta y cambiando el ID de YouTube.)</p>
-
-      <!-- Carrusel de tarjetas -->
-      <div class="tv-carousel" id="tvCarousel">
-
-        <!-- 1 NASA Live -->
-        <div class="tv-card tv-active" data-yt="21X5lGlDOfg">
-          <div class="tv-thumb">🛰</div>
-          <div class="tv-label">NASA Live</div>
-        </div>
-
-        <!-- 2 DW Español -->
-        <div class="tv-card" data-yt="p5rJ9Y-8rEo">
-          <div class="tv-thumb">🗞</div>
-          <div class="tv-label">DW Español</div>
-        </div>
-
-        <!-- 3 RT Español (puede estar restringido en algunos países) -->
-        <div class="tv-card" data-yt="pIkn2C7yJik">
-          <div class="tv-thumb">🛰</div>
-          <div class="tv-label">RT Español</div>
-        </div>
-
-        <!-- 4 Euronews Español -->
-        <div class="tv-card" data-yt="6GzxbrO0vbM">
-          <div class="tv-thumb">🌍</div>
-          <div class="tv-label">Euronews ES</div>
-        </div>
-
-        <!-- 5 Bloomberg Originals (documentales/negocios) -->
-        <div class="tv-card" data-yt="tc3U6Y8Y2Lk">
-          <div class="tv-thumb">💼</div>
-          <div class="tv-label">Bloomberg Originals</div>
-        </div>
-
-        <!-- 6 Cámara Miami -->
-        <div class="tv-card" data-yt="mhvP3bJdR9I">
-          <div class="tv-thumb">🌴</div>
-          <div class="tv-label">Cámara Miami</div>
-        </div>
-
-        <!-- 7 Cámara NYC -->
-        <div class="tv-card" data-yt="j6wuwf3hzRI">
-          <div class="tv-thumb">🗽</div>
-          <div class="tv-label">Cámara NYC</div>
-        </div>
-
-        <!-- 8 Skyline Chicago -->
-        <div class="tv-card" data-yt="DPFIzHUWU_U">
-          <div class="tv-thumb">🌆</div>
-          <div class="tv-label">Skyline Chicago</div>
-        </div>
-
-        <!-- 9 Vistas de Tokio -->
-        <div class="tv-card" data-yt="ye3sUcSydwA">
-          <div class="tv-thumb">🗼</div>
-          <div class="tv-label">Vistas Tokio</div>
-        </div>
-
-        <!-- 10 Lofi Girl (24/7 música) -->
-        <div class="tv-card" data-yt="jfKfPfyJRdk">
-          <div class="tv-thumb">🎧</div>
-          <div class="tv-label">Lofi Girl 24/7</div>
-        </div>
-
-        <!-- 11 Chillhop Radio (24/7 chill) -->
-        <div class="tv-card" data-yt="5yx6BWlEVcY">
-          <div class="tv-thumb">🎵</div>
-          <div class="tv-label">Chillhop 24/7</div>
-        </div>
-
-        <!-- 12 Nature Relax (reemplazable) -->
-        <div class="tv-card" data-yt="R1P77xoZ6xQ">
-          <div class="tv-thumb">🌊</div>
-          <div class="tv-label">Nature Relax</div>
-        </div>
-      </div>
-
-      <!-- Reproductor -->
-      <div class="tv-frame" style="margin-top:12px;">
-        <iframe id="tvframe" src="https://www.youtube.com/embed/21X5lGlDOfg?rel=0" title="TV Player" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
-      </div>
-    </section>
-
-    <!-- ===== Monetización ===== -->
-    <section class="card container">
-      <div class="row-title"><span class="dot" style="background:#f59e0b; box-shadow:0 0 0 6px rgba(245,158,11,.18);"></span><h2>💸 Apoya & Servicios</h2></div>
-      <p class="lead">Pide tu canción, envía un saludo especial o patrocina una hora al aire. ¡Gracias por apoyar Tropical Flow TV📺Radio!</p>
-
-      <div class="chips" style="margin-bottom:10px">
-        <a class="chip" href="https://wa.me/19399029695?text=Hola%20quiero%20pedir%20una%20canci%C3%B3n%20por%205%20USD" target="_blank" style="background:#0ea5e9;">🎵 Request Song — $5</a>
-        <a class="chip" href="https://wa.me/19399029695?text=Hola%20quiero%20un%20shoutout%20por%2010%20USD" target="_blank" style="background:#fb923c;">📣 Shoutout — $10</a>
-        <a class="chip" href="https://wa.me/19399029695?text=Hola%20quiero%20patrocinar%20una%20hora%20por%2025%20USD" target="_blank" style="background:#22c55e;">🏷 Sponsor del Hour — $25</a>
-        <a class="chip" href="https://wa.me/19399029695?text=Hola%20quiero%20cotizar%20DJ%20para%20evento" target="_blank" style="background:#a78bfa;">🎧 DJ para Eventos</a>
-      </div>
-
-      <div class="chips" style="align-items:center;">
-        <span style="opacity:.9;">Formas de pago:</span>
-        <!-- ⚠ Reemplaza con tu cashtag y PayPal reales -->
-        <a class="cashlike" href="https://cash.app/$TUCASETAG" target="_blank" rel="noopener">💚 Cash App: $TUCASETAG</a>
-        <a class="cashlike" href="https://paypal.me/TuEnlacePayPal" target="_blank" rel="noopener">💙 PayPal.me/TuEnlacePayPal</a>
-      </div>
-    </section>
-
-    <!-- ===== Banners de Patrocinadores ===== -->
-    <section class="card container" style="background:rgba(0,0,0,.25)">
-      <div class="row-title"><span class="dot" style="background:#eab308; box-shadow:0 0 0 6px rgba(234,179,8,.18);"></span><h2>🏪 Patrocinadores</h2></div>
-      <div class="sponsors" style="margin-top:10px;">
-        <a href="#" target="_blank"><img src="https://via.placeholder.com/180x90?text=Logo+1" alt="Patrocinador 1"></a>
-        <a href="#" target="_blank"><img src="https://via.placeholder.com/180x90?text=Logo+2" alt="Patrocinador 2"></a>
-        <a href="#" target="_blank"><img src="https://via.placeholder.com/180x90?text=Logo+3" alt="Patrocinador 3"></a>
-      </div>
-      <div class="lead" style="margin-top:12px;">Vende estos espacios a negocios locales. Reemplaza el enlace y la imagen por el logo real.</div>
-    </section>
-  </main>
-
-  <footer>
-    © <span id="y"></span> Tropical Flow TV📺Radio — Hecho con 💛 desde PR
-  </footer>
-
-  <script>
-    // Año en footer
-    document.getElementById('y').textContent = new Date().getFullYear();
-
-    // Cambiar canal al hacer click en tarjeta
-    const frame = document.getElementById('tvframe');
-    const cards = document.querySelectorAll('.tv-card');
-    cards.forEach(card => {
-      card.addEventListener('click', () => {
-        const id = card.getAttribute('data-yt');
-        if (!id) return;
-        // Cambia src y autoplay
-        frame.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
-        // Marca activo visualmente
-        cards.forEach(c => c.classList.remove('tv-active'));
-        card.classList.add('tv-active');
-        // Opcional: centra la tarjeta seleccionada
-        card.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
-      });
-    });
-  </script>
-</body>
-</html>
