@@ -1,67 +1,49 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Acceso Privado | Tropical Flow TV📺Radio</title>
-  <meta name="description" content="Acceso exclusivo a Tropical Flow TV📺Radio para usuarios registrados y autorizados." />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tropical Flow TV📺Radio | Exclusivo</title>
   <style>
     body {
-      background: #000 url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat fixed;
-      color: white;
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
       margin: 0;
-      padding: 1rem;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(#000000cc, #000000cc), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
       text-align: center;
+      padding: 2rem;
     }
     h1 {
+      font-size: 2rem;
       margin-bottom: 1rem;
     }
-    input[type="text"] {
-      padding: 0.5rem;
-      border-radius: 5px;
-      border: none;
-      margin-bottom: 1rem;
-      width: 250px;
+    p {
+      font-size: 1.2rem;
     }
-    button {
-      padding: 0.5rem 1rem;
-      background: #25d366;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
+    .video-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
     }
-    #mensaje {
-      margin-top: 1rem;
-      color: red;
+    iframe {
+      width: 300px;
+      height: 170px;
+      border: none;
     }
   </style>
 </head>
 <body>
-  <h1>🔒 Acceso Privado</h1>
-  <p>Ingresa tu código de acceso para entrar a Tropical Flow TV📺Radio</p>
-  <input type="text" id="codigo" placeholder="Código de acceso" />
-  <br>
-  <button onclick="verificarCodigo()">Entrar</button>
-  <div id="mensaje"></div>
+  <h1>🎉 Bienvenido al área privada de Tropical Flow TV📺Radio</h1>
+  <p>Disfruta de nuestros contenidos exclusivos 🎶📺</p>
 
-  <script>
-    function verificarCodigo() {
-      const codigoValido = "TFTV2025VIP";
-      const ingresado = document.getElementById('codigo').value.trim();
-      if (ingresado === codigoValido) {
-        window.location.href = "privado/index.html"; // Redirige a la carpeta privada
-      } else {
-        document.getElementById('mensaje').innerText =
-          "Código incorrecto. Verifica tu pago o contacta por WhatsApp.";
-      }
-    }
-  </script>
+  <div class="video-container">
+    <iframe src="https://www.youtube.com/embed/tpi8zLE3Kqw" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/RBE8A9rAj8Y" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/XYe0ZHVvVig" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/h86xW_G-j4s" allowfullscreen></iframe>
+  </div>
 </body>
 </html>
