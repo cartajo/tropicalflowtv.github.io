@@ -20,7 +20,6 @@
     header {
       background-color: rgba(0, 0, 0, 0.7);
       padding: 1rem;
-      text-align: center;
     }
     header h1 {
       margin: 0;
@@ -48,10 +47,11 @@
     }
     .carousel {
       display: flex;
-      overflow-x: auto;
+      overflow: hidden;
       scroll-snap-type: x mandatory;
       gap: 1rem;
       padding: 1rem;
+      position: relative;
     }
     .carousel iframe {
       flex: 0 0 auto;
@@ -88,7 +88,7 @@
   <section class="radio-player">
     <h2>🎧 Escúchanos en vivo 24/7</h2>
     <p>Si no se reproduce automáticamente, toca <b>Play</b> o sube el volumen. Funciona en celular y computadora.</p>
-    <audio id="radio" controls autoplay preload="auto" crossorigin="anonymous">
+    <audio id="radio" controls autoplay preload="none" crossorigin="anonymous">
       <source src="https://stream.zeno.fm/sl8wpcxtjy3uv" type="audio/mpeg" />
       Tu navegador no soporta audio en vivo.
     </audio>
@@ -96,7 +96,8 @@
 
   <section class="tv-section">
     <h2>🎬 Videos Recientes</h2>
-    <div class="carousel">
+    <div class="carousel" id="video-carousel">
+      <!-- Lista de iframes de YouTube -->
       <iframe width="300" height="170" src="https://www.youtube.com/embed/tpi8zLE3Kqw" allowfullscreen></iframe>
       <iframe width="300" height="170" src="https://www.youtube.com/embed/RBE8A9rAj8Y" allowfullscreen></iframe>
       <iframe width="300" height="170" src="https://www.youtube.com/embed/XYe0ZHVvVig" allowfullscreen></iframe>
@@ -134,15 +135,12 @@
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-    // Forzar reproducción de audio si es posible
-    window.addEventListener('DOMContentLoaded', () => {
-      const radio = document.getElementById('radio');
-      if (radio) {
-        radio.play().catch(e => {
-          console.warn('Autoplay bloqueado por el navegador.');
-        });
-      }
-    });
+
+    // Carrusel automático
+    const carousel = document.getElementById('video-carousel');
+    setInterval(() => {
+      carousel.scrollBy({ left: 310, behavior: 'smooth' });
+    }, 3000);
   </script>
 </body>
 </html>
