@@ -1,372 +1,68 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tropical Flow TV📺Radio</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Arial', sans-serif;
-      background-image: url('https://i.imgur.com/tRpiKXu.jpg'); /* Fondo de playa */
+      font-family: Arial, sans-serif;
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') no-repeat center center fixed;
       background-size: cover;
-      background-position: center;
       color: white;
+    }
+    header {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 1rem;
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+    .radio-player {
+      text-align: center;
+      margin: 2rem auto;
+    }
+    .tv-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      padding: 2rem;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+    .tv-card {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 1rem;
       text-align: center;
     }
-
-    header {
-      background: rgba(0, 0, 0, 0.6);
-      padding: 20px;
-      font-size: 2em;
-    }
-
-    .radio-player, .tv-section {
-      background: rgba(0, 0, 0, 0.5);
-      margin: 20px auto;
-      padding: 20px;
-      max-width: 800px;
-      border-radius: 12px;
-    }
-
-    iframe {
+    .tv-card img {
       width: 100%;
-      border: none;
       border-radius: 10px;
     }
-
-    footer {
-      background: rgba(0, 0, 0, 0.6);
-      padding: 10px;
-      position: relative;
-      bottom: 0;
-      width: 100%;
-      color: white;
-    }
-
-    .social-buttons {
-      margin-top: 10px;
-    }
-
-    .social-buttons a {
-      margin: 0 10px;
-      color: white;
-      font-weight: bold;
+    .tv-card a {
+      display: block;
+      margin-top: 0.5rem;
+      color: #00ffff;
       text-decoration: none;
+      font-weight: bold;
     }
-
-    .social-buttons a:hover {
-      text-decoration: underline;
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: rgba(0, 0, 0, 0.6);
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
   <header>
-    🌴 Tropical Flow TV📺Radio 🎶
-  </header>
-
-  <div class="radio-player">
-    <h2>🔊 Escucha Nuestra Radio en Vivo</h2>
+    Tropical Flow TV📺Radio
+  </header>  <div class="radio-player">
     <audio controls autoplay>
       <source src="https://stream.zeno.fm/sl8wpcxtjy3uv" type="audio/mpeg">
-      Tu navegador no soporta el elemento de audio.
+      Your browser does not support the audio element.
     </audio>
-  </div>
-
-  <div class="tv-section">
-    <h2>📺 Canal en Vivo - YouTube</h2>
-    <iframe width="560" height="315"
-      src="https://www.youtube.com/embed/5qap5aO4i9A?autoplay=1"
-      title="YouTube video player"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen>
-    </iframe>
-  </div>
-
-  <footer>
-    © 2025 Tropical Flow TV📺Radio - Todos los derechos reservados
-    <div class="social-buttons">
-      <a href="https://wa.me/19399029695" target="_blank">📲 WhatsApp</a>
-      <a href="https://www.youtube.com/@TFTvpoweredbyworldm8780" target="_blank">▶️ YouTube</a>
-      <a href="https://www.facebook.com/profile.php?id=100076473377581" target="_blank">📘 Facebook</a>
-    </div>
-  </footer>
-</body>
-</html> html>
-<html lang="es">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tropical Flow TV📺Radio — En Vivo 24/7</title>
-  <meta name="description" content="Tropical Flow TV📺Radio - Música tropical en vivo 24/7. Dale play y disfruta." />
-
-  <!-- ESTILOS (CSS) -->
-  <style>
-    /* ======= Fondo de playa (puedes cambiar la imagen si quieres) ======= */
-    body{
-      margin:0;
-      font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
-      color:#fff;
-      background:
-        linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.45)),
-        url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover fixed no-repeat;
-      min-height:100vh;
-      display:flex; flex-direction:column;
-    }
-    /* Si tienes tu propia imagen de playa en tu repo, reemplaza la URL de arriba por: url('img/playa.jpg') */
-
-    /* ======= Barra superior ======= */
-    .topbar{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:14px 16px; background:rgba(0,0,0,.25); backdrop-filter: blur(6px);
-      border-bottom:1px solid rgba(255,255,255,.2);
-    }
-    .brand{
-      display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.2px;
-    }
-    .brand-badge{
-      width:44px; height:44px; border-radius:12px;
-      background: radial-gradient(120% 120% at 10% 10%, #fb923c, #0ea5e9);
-      display:grid; place-items:center; color:#001018; font-weight:900;
-      border:1px solid rgba(255,255,255,.25); box-shadow:0 8px 24px rgba(0,0,0,.35);
-    }
-    .brand-title{line-height:1.05}
-    .brand-title small{display:block; font-weight:600; opacity:.9}
-
-    .links a{
-      color:#fff; text-decoration:none; font-weight:600;
-      border:1px solid rgba(255,255,255,.35); padding:10px 14px; border-radius:10px;
-      margin-left:8px; display:inline-flex; align-items:center; gap:8px;
-      background: rgba(0,0,0,.15);
-    }
-    .links a.primary{background:#0ea5e9; color:#001018; border-color:transparent; font-weight:800}
-
-    /* ======= Sección principal (player) ======= */
-    main{flex:1; display:grid; place-items:center; padding:24px 16px}
-    .glass{
-      width:min(920px, 96%); background:rgba(0,0,0,.35); backdrop-filter: blur(8px);
-      border:1px solid rgba(255,255,255,.25); border-radius:18px; padding:18px;
-      box-shadow:0 20px 50px rgba(0,0,0,.45);
-    }
-    .title{display:flex; align-items:center; gap:10px; margin:0 0 6px}
-    .live-dot{width:10px; height:10px; border-radius:50%; background:#ef4444; box-shadow:0 0 0 6px rgba(239,68,68,.18)}
-    h1{font-size:1.4rem; margin:0}
-    .subtitle{margin:6px 0 14px; opacity:.9}
-
-    .player{
-      background:rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.25);
-      border-radius:14px; padding:14px;
-      display:flex; flex-direction:column; gap:12px;
-    }
-    .controls{display:flex; align-items:center; gap:12px; flex-wrap:wrap}
-    .btn{
-      background:#0ea5e9; color:#001018; border:0; border-radius:12px;
-      padding:12px 18px; font-weight:800; cursor:pointer;
-      box-shadow:0 10px 20px rgba(14,165,233,.25);
-    }
-    .status{opacity:.9}
-    .vol{margin-left:auto; display:flex; align-items:center; gap:10px}
-    .vol input[type="range"]{width:170px}
-    .alt-links{display:flex; gap:10px; flex-wrap:wrap}
-    .alt-links a{ color:#fff; text-decoration:none; border:1px solid rgba(255,255,255,.3);
-      padding:8px 12px; border-radius:10px; font-size:.92rem; background:rgba(0,0,0,.2)}
-    .notice{font-size:.9rem; opacity:.9}
-
-    footer{padding:18px 12px; text-align:center; background:rgba(0,0,0,.25); border-top:1px solid rgba(255,255,255,.2)}
-  </style>
-</head>
-<body>
-  <!-- Barra superior -->
-  <header class="topbar">
-    <div class="brand">
-      <div class="brand-badge">TF</div>
-      <div class="brand-title">
-        Tropical Flow TV📺Radio
-        <small>Música, Ritmo y Alegría 24/7</small>
-      </div>
-    </div>
-    <nav class="links">
-      <a href="https://www.facebook.com/TropicalFlowTVRadio" target="_blank" rel="noopener">Facebook</a>
-      <a href="https://www.youtube.com" target="_blank" rel="noopener">YouTube</a>
-      <a class="primary" href="https://wa.me/19399029695" target="_blank" rel="noopener">WhatsApp</a>
-    </nav>
-  </header>
-
-  <!-- Contenido principal -->
-  <main>
-    <section class="glass">
-      <div class="title">
-        <div class="live-dot" id="liveDot"></div>
-        <h1>En vivo 24/7 — Dale Play</h1>
-      </div>
-      <p class="subtitle">Si no se reproduce automáticamente, toca <b>Play</b> o sube el volumen. Funciona en celular y computadora.</p>
-
-      <div class="player">
-        <div class="controls">
-          <button class="btn" id="btnPlay">▶ Play</button>
-          <span class="status" id="statusTxt">Listo</span>
-          <div class="vol">
-            <label for="vol">Volumen</label>
-            <input id="vol" type="range" min="0" max="1" step="0.01" value="0.9" />
-          </div>
-        </div>
-
-        <!-- AUDIO (Zeno) -->
-        <audio id="radio" preload="none" crossorigin="anonymous">
-          <source src="https://stream.zeno.fm/sl8wpcxtjy3uv" type="audio/mpeg" />
-          Tu navegador no soporta audio en vivo.
-        </audio>
-
-        <!-- Enlaces alternos -->
-        <div class="alt-links">
-          <a href="https://stream.zeno.fm/sl8wpcxtjy3uv" target="_blank" rel="noopener">Abrir MP3</a>
-          <a href="https://stream.zeno.fm/sl8wpcxtjy3uv.m3u" target="_blank" rel="noopener">M3U</a>
-          <a href="https://stream.zeno.fm/sl8wpcxtjy3uv.pls" target="_blank" rel="noopener">PLS</a>
-        </div>
-
-        <div class="notice">En iPhone/iPad el navegador puede bloquear el autoplay; solo toca <b>Play</b> y listo.</div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-   
-  </footer>
-
-  <!-- SCRIPT (JS) -->
-  <script>
-    const audio    = document.getElementById('radio');
-    const btn      = document.getElementById('btnPlay');
-    const statusTx = document.getElementById('statusTxt');
-    const vol      = document.getElementById('vol');
-    const liveDot  = document.getElementById('liveDot');
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Intento de autoplay suave (algunos navegadores lo bloquean)
-    document.addEventListener('DOMContentLoaded', () => {
-      try {
-        audio.volume = vol.value;
-        audio.play().then(() => {
-          btn.textContent = '⏸ Pausa';
-          statusTx.textContent = 'Reproduciendo…';
-          liveDot.style.background = '#22c55e';
-        }).catch(() => {
-          statusTx.textContent = 'Listo — Toca Play para empezar';
-        });
-      } catch(e){
-        statusTx.textContent = 'Listo — Toca Play para empezar';
-      }
-    });
-
-    btn.addEventListener('click', async () => {
-      if (audio.paused) {
-        try {
-          await audio.play();
-          btn.textContent = '⏸ Pausa';
-          statusTx.textContent = 'Reproduciendo…';
-          liveDot.style.background = '#22c55e';
-        } catch (e) {
-          statusTx.textContent = 'No se pudo reproducir. Intenta de nuevo.';
-        }
-      } else {
-        audio.pause();
-        btn.textContent = '▶ Play';
-        statusTx.textContent = 'Pausado';
-        liveDot.style.background = '#ef4444';
-      }
-    });
-
-    vol.addEventListener('input', () => { audio.volume = vol.value; });
-    audio.addEventListener('error',   () => { statusTx.textContent = 'Error de conexión.'; liveDot.style.background = '#ef4444'; });
-    audio.addEventListener('playing', () => { statusTx.textContent = 'Reproduciendo…'; liveDot.style.background = '#22c55e'; });
-    audio.addEventListener('pause',   () => { statusTx.textContent = 'Pausado'; liveDot.style.background = '#ef4444'; });
-  </script>
-</body>
-</html>
-<!-- ======= TV (enlaces directos 100% funcionales) ======= -->
-<section style="width:min(980px,96%); margin:0 auto; background:rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.25); border-radius:18px; padding:18px; backdrop-filter:blur(8px); box-shadow:0 20px 50px rgba(0,0,0,.45);">
-  <div style="display:flex; align-items:center; gap:10px; margin:0 0 8px;">
-    <div style="width:10px; height:10px; border-radius:50%; background:#3b82f6; box-shadow:0 0 0 6px rgba(59,130,246,.18);"></div>
-    <h2 style="margin:0; font-size:1.25rem;">📺 TV — Canales en Vivo (abrir en YouTube)</h2>
-  </div>
-  <p style="margin:6px 0 14px; opacity:.9;">Haz clic en un canal para abrirlo en YouTube (sin bloqueos). La radio sigue sonando aquí.</p>
-
-  <!-- Carrusel / fila desplazable con “tarjetas” -->
-  <div style="display:flex; gap:12px; overflow-x:auto; padding-bottom:6px; scroll-snap-type:x mandatory;">
-    <!-- Cada tarjeta es un link que abre en nueva pestaña -->
-    <a href="https://www.youtube.com/watch?v=jfKfPfyJRdk" target="_blank" rel="noopener"
-       style="flex:0 0 auto; width:170px; scroll-snap-align:start; text-decoration:none; color:#fff; border-radius:12px; border:1px solid rgba(255,255,255,.18); overflow:hidden; background:rgba(0,0,0,.28);">
-      <div style="height:90px; display:grid; place-items:center; font-weight:900; font-size:28px; background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));">🎧</div>
-      <div style="padding:10px 12px; font-size:.95rem; text-align:center">Lofi Girl 24/7</div>
-    </a>
-
-    <a href="https://www.youtube.com/watch?v=5yx6BWlEVcY" target="_blank" rel="noopener"
-       style="flex:0 0 auto; width:170px; scroll-snap-align:start; text-decoration:none; color:#fff; border-radius:12px; border:1px solid rgba(255,255,255,.18); overflow:hidden; background:rgba(0,0,0,.28);">
-      <div style="height:90px; display:grid; place-items:center; font-weight:900; font-size:28px; background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));">🎵</div>
-      <div style="padding:10px 12px; font-size:.95rem; text-align:center">Chillhop 24/7</div>
-    </a>
-
-    <a href="https://www.youtube.com/watch?v=36YnV9STBqc" target="_blank" rel="noopener"
-       style="flex:0 0 auto; width:170px; scroll-snap-align:start; text-decoration:none; color:#fff; border-radius:12px; border:1px solid rgba(255,255,255,.18); overflow:hidden; background:rgba(0,0,0,.28);">
-      <div style="height:90px; display:grid; place-items:center; font-weight:900; font-size:28px; background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));">🎶</div>
-      <div style="padding:10px 12px; font-size:.95rem; text-align:center">Good Life Radio</div>
-    </a>
-
-    <a href="https://www.youtube.com/watch?v=Dx5qFachd3A" target="_blank" rel="noopener"
-       style="flex:0 0 auto; width:170px; scroll-snap-align:start; text-decoration:none; color:#fff; border-radius:12px; border:1px solid rgba(255,255,255,.18); overflow:hidden; background:rgba(0,0,0,.28);">
-      <div style="height:90px; display:grid; place-items:center; font-weight:900; font-size:28px; background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));">🎹</div>
-      <div style="padding:10px 12px; font-size:.95rem; text-align:center">Jazz Piano Radio</div>
-    </a>
-
-    <a href="https://www.youtube.com/watch?v=21X5lGlDOfg" target="_blank" rel="noopener"
-       style="flex:0 0 auto; width:170px; scroll-snap-align:start; text-decoration:none; color:#fff; border-radius:12px; border:1px solid rgba(255,255,255,.18); overflow:hidden; background:rgba(0,0,0,.28);">
-      <div style="height:90px; display:grid; place-items:center; font-weight:900; font-size:28px; background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));">🛰</div>
-      <div style="padding:10px 12px; font-size:.95rem; text-align:center">NASA Live</div>
-    </a>
-
-    <a href="https://www.youtube.com/watch?v=R1P77xoZ6xQ" target="_blank" rel="noopener"
-       style="flex:0 0 auto; width:170px; scroll-snap-align:start; text-decoration:none; color:#fff; border-radius:12px; border:1px solid rgba(255,255,255,.18); overflow:hidden; background:rgba(0,0,0,.28);">
-      <div style="height:90px; display:grid; place-items:center; font-weight:900; font-size:28px; background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));">🌊</div>
-      <div style="padding:10px 12px; font-size:.95rem; text-align:center">Nature Relax</div>
-    </a>
-
-    <a href="https://www.youtube.com/watch?v=mhvP3bJdR9I" target="_blank" rel="noopener"
-       style="flex:0 0 auto; width:170px; scroll-snap-align:start; text-decoration:none; color:#fff; border-radius:12px; border:1px solid rgba(255,255,255,.18); overflow:hidden; background:rgba(0,0,0,.28);">
-      <div style="height:90px; display:grid; place-items:center; font-weight:900; font-size:28px; background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));">🌴</div>
-      <div style="padding:10px 12px; font-size:.95rem; text-align:center">Cámara Miami</div>
-    </a>
-
-    <a href="https://www.youtube.com/watch?v=j6wuwf3hzRI" target="_blank" rel="noopener"
-       style="flex:0 0 auto; width:170px; scroll-snap-align:start; text-decoration:none; color:#fff; border-radius:12px; border:1px solid rgba(255,255,255,.18); overflow:hidden; background:rgba(0,0,0,.28);">
-      <div style="height:90px; display:grid; place-items:center; font-weight:900; font-size:28px; background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));">🗽</div>
-      <div style="padding:10px 12px; font-size:.95rem; text-align:center">Cámara NYC</div>
-    </a>
-
-    <a href="https://www.youtube.com/watch?v=DPFIzHUWU_U" target="_blank" rel="noopener"
-       style="flex:0 0 auto; width:170px; scroll-snap-align:start; text-decoration:none; color:#fff; border-radius:12px; border:1px solid rgba(255,255,255,.18); overflow:hidden; background:rgba(0,0,0,.28);">
-      <div style="height:90px; display:grid; place-items:center; font-weight:900; font-size:28px; background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));">🌆</div>
-      <div style="padding:10px 12px; font-size:.95rem; text-align:center">Skyline Chicago</div>
-    </a>
-
-    <a href="https://www.youtube.com/watch?v=ye3sUcSydwA" target="_blank" rel="noopener"
-       style="flex:0 0 auto; width:170px; scroll-snap-align:start; text-decoration:none; color:#fff; border-radius:12px; border:1px solid rgba(255,255,255,.18); overflow:hidden; background:rgba(0,0,0,.28);">
-      <div style="height:90px; display:grid; place-items:center; font-weight:900; font-size:28px; background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));">🗼</div>
-      <div style="padding:10px 12px; font-size:.95rem; text-align:center">Vistas Tokio</div>
-    </a>
-
-    <a href="https://www.youtube.com/watch?v=tc3U6Y8Y2Lk" target="_blank" rel="noopener"
-       style="flex:0 0 auto; width:170px; scroll-snap-align:start; text-decoration:none; color:#fff; border-radius:12px; border:1px solid rgba(255,255,255,.18); overflow:hidden; background:rgba(0,0,0,.28);">
-      <div style="height:90px; display:grid; place-items:center; font-weight:900; font-size:28px; background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));">💼</div>
-      <div style="padding:10px 12px; font-size:.95rem; text-align:center">Bloomberg Originals</div>
-    </a>
-
-    <a href="https://www.youtube.com/watch?v=6GzxbrO0vbM" target="_blank" rel="noopener"
-       style="flex:0 0 auto; width:170px; scroll-snap-align:start; text-decoration:none; color:#fff; border-radius:12px; border:1px solid rgba(255,255,255,.18); overflow:hidden; background:rgba(0,0,0,.28);">
-      <div style="height:90px; display:grid; place-items:center; font-weight:900; font-size:28px; background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));">🌍</div>
-      <div style="padding:10px 12px; font-size:.95rem; text-align:center">Euronews ES</div>
-    </a>
-  </div>
-
-  <div style="margin-top:10px; font-size:.92rem; opacity:.95;">Para añadir más, copia una tarjeta <code>&lt;a …&gt;</code> y cambia la URL de YouTube y el texto.</div>
-</section>
-
+    <p>🎵 Escuchando música tropical en vivo 24/7</p>
+  </div>  <section class="tv-grid">
+    <div class="tv-card">
+      <img src="https://i.ytimg.com/vi/ 
