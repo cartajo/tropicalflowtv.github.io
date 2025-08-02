@@ -1,91 +1,67 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Área Exclusiva | Tropical Flow TV📺Radio</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Acceso Privado | Tropical Flow TV📺Radio</title>
+  <meta name="description" content="Acceso exclusivo a Tropical Flow TV📺Radio para usuarios registrados y autorizados." />
   <style>
     body {
-      margin: 0;
+      background: #000 url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat fixed;
+      color: white;
       font-family: Arial, sans-serif;
-      color: white;
-      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') no-repeat center center fixed;
-      background-size: cover;
-    }
-    header {
-      text-align: center;
-      padding: 2rem;
-      background-color: rgba(0, 0, 0, 0.5);
-    }
-    header h1 {
-      font-size: 2rem;
-    }
-    .radio {
       display: flex;
+      flex-direction: column;
+      align-items: center;
       justify-content: center;
-      margin: 1rem;
-    }
-    .videos {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
+      height: 100vh;
+      margin: 0;
       padding: 1rem;
-      background-color: rgba(0,0,0,0.6);
+      text-align: center;
     }
-    iframe {
-      border: none;
-      width: 320px;
-      height: 180px;
+    h1 {
+      margin-bottom: 1rem;
     }
-    .social {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 2rem;
-    }
-    .social a {
-      background: #25d366;
-      padding: 0.5rem 1rem;
+    input[type="text"] {
+      padding: 0.5rem;
       border-radius: 5px;
-      color: white;
-      text-decoration: none;
+      border: none;
+      margin-bottom: 1rem;
+      width: 250px;
     }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background: rgba(0, 0, 0, 0.6);
+    button {
+      padding: 0.5rem 1rem;
+      background: #25d366;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #mensaje {
+      margin-top: 1rem;
+      color: red;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>🎉 Bienvenido al Área Exclusiva 🎉</h1>
-    <p>¡Disfruta de música, videos y contenido especial!</p>
-  </header>
+  <h1>🔒 Acceso Privado</h1>
+  <p>Ingresa tu código de acceso para entrar a Tropical Flow TV📺Radio</p>
+  <input type="text" id="codigo" placeholder="Código de acceso" />
+  <br>
+  <button onclick="verificarCodigo()">Entrar</button>
+  <div id="mensaje"></div>
 
-  <div class="radio">
-    <iframe src="https://zeno.fm/player/tropicalflowtv" width="100%" height="100" frameborder="0" allow="autoplay"></iframe>
-  </div>
-
-  <div class="videos">
-    <iframe src="https://www.youtube.com/embed/videoseries?list=PLQfm0U7T_BFadJTXWbUhVOh5qGBcOEolb" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/Ji0LzUnn4jo" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/zW9FxU7QozY" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/Rf5m-bGQQp4" allowfullscreen></iframe>
-  </div>
-
-  <div class="social">
-    <a href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
-    <a href="https://www.youtube.com/@TropicalFlowTVRadio" target="_blank">YouTube</a>
-    <a href="https://www.facebook.com/tropicalflowtv" target="_blank">Facebook</a>
-    <a href="https://www.paypal.com/donate?hosted_button_id=XXXXXXX" target="_blank">Donar vía PayPal</a>
-    <a href="https://athmovil.com/cartagenajose1970" target="_blank">Donar vía ATH Móvil</a>
-  </div>
-
-  <footer>
-    <p>&copy; 2025 Tropical Flow TV📺Radio — Todos los derechos reservados.</p>
-  </footer>
+  <script>
+    function verificarCodigo() {
+      const codigoValido = "TFTV2025VIP";
+      const ingresado = document.getElementById('codigo').value.trim();
+      if (ingresado === codigoValido) {
+        window.location.href = "privado/index.html"; // Redirige a la carpeta privada
+      } else {
+        document.getElementById('mensaje').innerText =
+          "Código incorrecto. Verifica tu pago o contacta por WhatsApp.";
+      }
+    }
+  </script>
 </body>
 </html>
