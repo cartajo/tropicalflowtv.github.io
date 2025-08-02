@@ -1,142 +1,82 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tropical Flow TV📺Radio — En Vivo 24/7</title>
-  <meta name="description" content="Tropical Flow TV📺Radio - Música tropical en vivo 24/7. Dale play y disfruta." />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Acceso Privado - Tropical Flow TV📺Radio</title>
   <style>
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      color: #fff;
-      background: linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.4)),
-        url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover fixed no-repeat;
-      min-height: 100vh;
+      background: #000 url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat fixed;
       display: flex;
       flex-direction: column;
-    }
-    header {
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 1rem;
-      text-align: center;
-    }
-    header h1 {
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #fff;
+      font-family: sans-serif;
       margin: 0;
-      font-size: 2.2rem;
-    }
-    .radio-player {
-      margin: 2rem auto;
-      width: min(920px, 96%);
-      background: rgba(0, 0, 0, .4);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, .3);
-      border-radius: 18px;
-      padding: 18px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, .5);
       text-align: center;
     }
-    .tv-section {
-      margin: 2rem auto;
-      width: 96%;
-      max-width: 1200px;
-      text-align: center;
-    }
-    .tv-section h2 {
-      margin-bottom: 1rem;
-    }
-    .carousel {
-      display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      gap: 1rem;
-      padding: 1rem;
-      animation: scroll 60s linear infinite;
-    }
-    .carousel iframe {
-      flex: 0 0 auto;
-      scroll-snap-align: center;
+    .container {
+      background: rgba(0,0,0,0.65);
+      padding: 2rem;
       border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.1);
     }
-    @keyframes scroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-    .social-buttons {
-      margin: 2rem;
+    input {
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+      font-size: 1rem;
+      margin-top: 1rem;
+      width: 250px;
       text-align: center;
     }
-    .social-buttons a {
-      display: inline-block;
-      margin: 0.5rem;
-      padding: 0.5rem 1rem;
+    button {
+      margin-top: 1rem;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      background-color: #25d366;
       color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
     }
-    .whatsapp { background: #25d366; }
-    .youtube { background: red; }
-    .facebook { background: #3b5998; }
-    .paypal { background: #0070ba; }
-    .athmovil { background: #a435f0; }
-    footer {
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 1rem;
-      text-align: center;
+    .error {
+      color: red;
+      margin-top: 1rem;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Tropical Flow TV📺Radio</h1>
-  </header>
-
-  <section class="radio-player">
-    <h2>🎧 Escúchanos en vivo 24/7</h2>
-    <p>Si no se reproduce automáticamente, toca <b>Play</b> o sube el volumen.</p>
-    <audio controls autoplay preload="none" crossorigin="anonymous">
-      <source src="https://stream.zeno.fm/sl8wpcxtjy3uv" type="audio/mpeg" />
-      Tu navegador no soporta audio en vivo.
-    </audio>
-  </section>
-
-  <section class="tv-section">
-    <h2>🎬 Videos Recientes</h2>
-    <div class="carousel">
-      <iframe width="300" height="170" src="https://www.youtube.com/embed/tpi8zLE3Kqw" allowfullscreen></iframe>
-      <iframe width="300" height="170" src="https://www.youtube.com/embed/RBE8A9rAj8Y" allowfullscreen></iframe>
-      <iframe width="300" height="170" src="https://www.youtube.com/embed/XYe0ZHVvVig" allowfullscreen></iframe>
-      <iframe width="300" height="170" src="https://www.youtube.com/embed/h86xW_G-j4s" allowfullscreen></iframe>
-      <iframe width="300" height="170" src="https://www.youtube.com/embed/5pKPlIlQa_8" allowfullscreen></iframe>
-    </div>
-  </section>
-
-  <div class="social-buttons">
-    <a class="whatsapp" href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
-    <a class="youtube" href="https://www.youtube.com/@TFTvpoweredbyworldm8780" target="_blank">YouTube</a>
-    <a class="facebook" href="https://www.facebook.com/profile.php?id=61555653663073" target="_blank">Facebook</a>
-    <a class="paypal" href="https://www.paypal.com/donate/?hosted_button_id=XXXXXX" target="_blank">Donar con PayPal</a>
-    <a class="athmovil" href="https://portal.athmovil.com/pagos/TuNegocio" target="_blank">Pagar con ATH Móvil</a>
+  <div class="container">
+    <h1>🎧 Acceso Privado Tropical Flow TV📺Radio</h1>
+    <p>Introduce tu código VIP para entrar:</p>
+    <input type="text" id="codigo" placeholder="Ejemplo: TFTV2025-VIP-A1" />
+    <br />
+    <button onclick="verificarCodigo()">Entrar</button>
+    <div class="error" id="mensaje"></div>
   </div>
-
-  <div style="text-align:center; color:#ccc; font-size: 0.95rem;">
-    🔴 Visitantes conectados ahora: <span id="counter">...</span>
-  </div>
-
-  <footer>
-    © <span id="year"></span> Tropical Flow TV📺Radio - Todos los derechos reservados
-  </footer>
 
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    const codigosValidos = ["TFTV2025-VIP-A1", "TFTV2025-VIP-A2", "TFTV2025-VIP-A3"];
 
-    // Contador de visitantes (usando API simple)
-    fetch('https://api.countapi.xyz/hit/tropicalflowtv.github.io/visits')
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('counter').textContent = data.value;
-      });
+    function verificarCodigo() {
+      const codigo = document.getElementById("codigo").value.trim();
+      const mensaje = document.getElementById("mensaje");
+
+      if (localStorage.getItem("codigoUsado")) {
+        mensaje.textContent = "Ya utilizaste un código en este dispositivo.";
+        return;
+      }
+
+      if (codigosValidos.includes(codigo)) {
+        localStorage.setItem("codigoUsado", "true");
+        window.location.href = "privado/index.html";
+      } else {
+        mensaje.textContent = "Código inválido. Verifica con el administrador.";
+      }
+    }
   </script>
 </body>
 </html>
