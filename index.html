@@ -1,9 +1,12 @@
-<!DOCTYPE html><html lang="es">
+ <!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Tropical Flow TV📺Radio — En Vivo 24/7</title>
-  <meta name="description" content="Tropical Flow TV📺Radio - Música tropical en vivo 24/7. Dale play y disfruta." />  <style>
+  <meta name="description" content="Tropical Flow TV📺Radio - Música tropical en vivo 24/7. Dale play y disfruta." />
+
+  <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -47,6 +50,7 @@
       display: flex;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
       gap: 1rem;
       padding: 1rem;
     }
@@ -78,48 +82,57 @@
       color: #ccc;
     }
     footer {
-      margin-top: auto;
       text-align: center;
-      padding: 1rem;
-      background: rgba(0, 0, 0, 0.6);
+      color: #ccc;
+      margin: 2rem 0;
     }
-  </style>  <script src="https://www.paypal.com/sdk/js?client-id=BAAGA9IrIak-xJU7dZDAYp9GICSBg174u0xjSjiY1t6wRUo3rZr7JFP7-2gLwl2SYbrYYb5WlmGa0L4urw&components=hosted-buttons&disable-funding=venmo&currency=USD"></script></head>
+  </style>
+  <script src="https://www.paypal.com/sdk/js?client-id=BAAGA9IrIak-xJU7dZDAYp9GICSBg174u0xjSjiY1t6wRUo3rZr7JFP7-2gLwl2SYbrYYb5WlmGa0L4urw&components=hosted-buttons&disable-funding=venmo&currency=USD"></script>
+</head>
 <body>
   <header>
     <h1>Tropical Flow TV📺Radio</h1>
-  </header>  <section class="radio-player">
+  </header>
+
+  <section class="radio-player">
     <h2>🎧 Escúchanos en vivo 24/7</h2>
     <p>Si no se reproduce automáticamente, toca <b>Play</b> o sube el volumen. Funciona en celular y computadora.</p>
     <audio id="radio" controls autoplay preload="none" crossorigin="anonymous">
       <source src="https://stream.zeno.fm/sl8wpcxtjy3uv" type="audio/mpeg" />
       Tu navegador no soporta audio en vivo.
     </audio>
-  </section>  <section class="tv-section">
+  </section>
+
+  <section class="tv-section">
     <h2>🎬 Videos Recientes</h2>
-    <div class="carousel" style="scroll-behavior: smooth;">
-  <iframe width="300" height="170" src="https://www.youtube.com/embed/tpi8zLE3Kqw" allowfullscreen></iframe>
-  <iframe width="300" height="170" src="https://www.youtube.com/embed/RBE8A9rAj8Y" allowfullscreen></iframe>
-  <iframe width="300" height="170" src="https://www.youtube.com/embed/XYe0ZHVvVig" allowfullscreen></iframe>
-  <iframe width="300" height="170" src="https://www.youtube.com/embed/h86xW_G-j4s" allowfullscreen></iframe>
-  <iframe width="300" height="170" src="https://www.youtube.com/embed/5pKPlIlQa_8" allowfullscreen></iframe>
-  <iframe width="300" height="170" src="https://www.youtube.com/embed/wgqGHqhEZ8M" allowfullscreen></iframe>
-  <iframe width="300" height="170" src="https://www.youtube.com/embed/auTHP2prrxw" allowfullscreen></iframe>
-  <iframe width="300" height="170" src="https://www.youtube.com/embed/CL7m60BISiw" allowfullscreen></iframe>
-  <iframe width="300" height="170" src="https://www.youtube.com/embed/4tXLT0hN8n8" allowfullscreen></iframe>
-  <iframe width="300" height="170" src="https://www.youtube.com/embed/FCu8-sim5F4" allowfullscreen></iframe>
-  <iframe width="300" height="170" src="https://www.youtube.com/embed/X_Df1rsXBjE" allowfullscreen></iframe>
-  <iframe width="300" height="170" src="https://www.youtube.com/embed/M9wQdkQicbk" allowfullscreen></iframe>
-  <iframe width="300" height="170" src="https://www.youtube.com/embed/O6xVXaBcOac" allowfullscreen></iframe>
-  <iframe width="300" height="170" src="https://www.youtube.com/embed/RWp76Pj0RUo" allowfullscreen></iframe>
-  <iframe width="300" height="170" src="https://www.youtube.com/embed/jTqKxMTtVEI" allowfullscreen></iframe>
-  <iframe width="300" height="170" src="https://www.youtube.com/embed/4jdbpZVzlf4" allowfullscreen></iframe>
-  <iframe width="300" height="170" src="https://www.youtube.com/embed/n8RMGnc8v_o" allowfullscreen></iframe>
-</div>
-  </section>  <div class="social-buttons">
+    <div class="carousel">
+      <iframe width="300" height="170" src="https://www.youtube.com/embed/tpi8zLE3Kqw" allowfullscreen></iframe>
+      <iframe width="300" height="170" src="https://www.youtube.com/embed/RBE8A9rAj8Y" allowfullscreen></iframe>
+      <iframe width="300" height="170" src="https://www.youtube.com/embed/XYe0ZHVvVig" allowfullscreen></iframe>
+      <iframe width="300" height="170" src="https://www.youtube.com/embed/h86xW_G-j4s" allowfullscreen></iframe>
+      <iframe width="300" height="170" src="https://www.youtube.com/embed/5pKPlIlQa_8" allowfullscreen></iframe>
+      <iframe width="300" height="170" src="https://www.youtube.com/embed/wgqGHqhEZ8M" allowfullscreen></iframe>
+      <iframe width="300" height="170" src="https://www.youtube.com/embed/auTHP2prrxw" allowfullscreen></iframe>
+      <iframe width="300" height="170" src="https://www.youtube.com/embed/CL7m60BISiw" allowfullscreen></iframe>
+      <iframe width="300" height="170" src="https://www.youtube.com/embed/4tXLT0hN8n8" allowfullscreen></iframe>
+      <iframe width="300" height="170" src="https://www.youtube.com/embed/FCu8-sim5F4" allowfullscreen></iframe>
+      <iframe width="300" height="170" src="https://www.youtube.com/embed/X_Df1rsXBjE" allowfullscreen></iframe>
+      <iframe width="300" height="170" src="https://www.youtube.com/embed/M9wQdkQicbk" allowfullscreen></iframe>
+      <iframe width="300" height="170" src="https://www.youtube.com/embed/O6xVXaBcOac" allowfullscreen></iframe>
+      <iframe width="300" height="170" src="https://www.youtube.com/embed/RWp76Pj0RUo" allowfullscreen></iframe>
+      <iframe width="300" height="170" src="https://www.youtube.com/embed/jTqKxMTtVEI" allowfullscreen></iframe>
+      <iframe width="300" height="170" src="https://www.youtube.com/embed/4jdbpZVzlf4" allowfullscreen></iframe>
+      <iframe width="300" height="170" src="https://www.youtube.com/embed/n8RMGnc8v_o" allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <div class="social-buttons">
     <a href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
     <a class="youtube" href="https://www.youtube.com/@TFTvpoweredbyworldm8780" target="_blank">YouTube</a>
     <a class="facebook" href="https://www.facebook.com/profile.php?id=61555653663073" target="_blank">Facebook</a>
-  </div>  <div class="donation-section">
+  </div>
+
+  <div class="donation-section">
     <div id="paypal-container-QYL55GLXQ77TY"></div>
     <script>
       paypal.HostedButtons({
@@ -128,15 +141,22 @@
     </script>
     <p>Haz tu donación por PayPal o ATH Móvil.</p>
     <p><strong>ATH Móvil:</strong> 939-902-9695</p>
-  </div>  <div style="text-align: center; margin: 2rem 0;">
+  </div>
+
+  <div style="text-align: center; margin: 2rem 0;">
     <p style="color: #ccc;">Visitas a la página:</p>
     <a href="https://www.freecounterstat.com" title="contador de visitas">
       <img src="https://counter11.optistats.ovh/private/freecounterstat.php?c=dc3wstjy1tltxvmthg6w0byxtjapchkd" border="0" title="contador de visitas" alt="contador de visitas" />
     </a>
     <p style="color: #888; font-size: 0.9rem;">Gracias por tu visita 🎧📺</p>
-  </div>  <footer>
-    <p>© <span id="year"></span> Tropical Flow TV📺Radio - Todos los derechos reservados</p>
-  </footer>  <script>
+  </div>
+
+  <footer>
+    © <span id="year"></span> Tropical Flow TV📺Radio - Todos los derechos reservados
+  </footer>
+
+  <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-  </script></body>
+  </script>
+</body>
 </html>
