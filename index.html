@@ -157,15 +157,15 @@
   </footer>  <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    function checkAccess() {
-      const validCode = "TROPICAL2025"; // Puedes cambiarlo cada semana
-      const enteredCode = document.getElementById("accessCode").value;
-      if (enteredCode === validCode) {
-        document.querySelector(".access-form").style.display = "none";
-        document.getElementById("content").classList.remove("hidden-section");
-      } else {
-        alert("Código incorrecto. Verifica tu pago o contacto por WhatsApp.");
-      }
+    <script>
+  function verificarCodigo() {
+    const codigoValido = "TFTV2025VIP";
+    const ingresado = document.getElementById('codigo').value.trim();
+    if (ingresado === codigoValido) {
+      window.location.href = "https://cartajo.github.io/tropicalflowtv.github.io/privado/index.html"; // Redirige correctamente
+    } else {
+      document.getElementById('mensaje').innerText = "Código incorrecto. Verifica tu pago o contacta por WhatsApp.";
     }
-  </script></body>
+  }
+</script></body>
 </html>
