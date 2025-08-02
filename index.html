@@ -1,73 +1,66 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Acceso Privado | Tropical Flow TV📺Radio</title>
   <style>
     body {
-      margin: 0;
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)),
+        url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover fixed no-repeat;
       font-family: Arial, sans-serif;
-      background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.8)),
-                  url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover fixed no-repeat;
-      color: #fff;
+      color: white;
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
-      min-height: 100vh;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
     }
-    h1 {
-      margin-bottom: 1rem;
-      text-shadow: 1px 1px 4px black;
-    }
-    form {
-      background: rgba(0, 0, 0, 0.7);
+    .access-box {
+      background-color: rgba(0,0,0,0.7);
       padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.4);
+      border-radius: 10px;
+      box-shadow: 0 0 15px #000;
     }
-    input[type="password"] {
+    input {
       padding: 0.5rem;
-      font-size: 1rem;
+      margin-top: 1rem;
+      width: 100%;
+      max-width: 300px;
+      border-radius: 5px;
       border: none;
-      border-radius: 6px;
-      margin-right: 0.5rem;
+      font-size: 1rem;
     }
     button {
       padding: 0.5rem 1rem;
-      font-size: 1rem;
+      margin-top: 1rem;
       border: none;
-      border-radius: 6px;
       background-color: #25d366;
       color: white;
+      font-size: 1rem;
+      border-radius: 5px;
       cursor: pointer;
-    }
-    .error {
-      color: red;
-      margin-top: 1rem;
     }
   </style>
 </head>
 <body>
-  <h1>🎧 Bienvenido a Tropical Flow TV📺Radio</h1>
-  <form onsubmit="checkCode(event)">
-    <label for="code">Ingresa tu código de acceso:</label><br><br>
-    <input type="password" id="code" placeholder="Código de acceso" required>
-    <button type="submit">Entrar</button>
-    <div class="error" id="errorMsg"></div>
-  </form>
+  <div class="access-box">
+    <h2>🔒 Acceso Privado</h2>
+    <p>Introduce tu código de acceso para continuar</p>
+    <input type="password" id="accessCode" placeholder="Código..." />
+    <br />
+    <button onclick="checkCode()">Entrar</button>
+    <p id="errorMsg" style="color:red; margin-top:1rem;"></p>
+  </div>
 
   <script>
-    function checkCode(event) {
-      event.preventDefault();
-      const code = document.getElementById('code').value;
-      const errorMsg = document.getElementById('errorMsg');
-
-      if (code === 'TFTV2025VIP') {
-        window.location.href = 'privado/index.html';
+    function checkCode() {
+      const code = document.getElementById("accessCode").value.trim();
+      if (code === "TFTV2025VIP") {
+        window.location.href = "privado/";
       } else {
-        errorMsg.textContent = 'Código incorrecto. Verifica tu pago o contáctanos por WhatsApp.';
+        document.getElementById("errorMsg").textContent = "Código incorrecto. Intenta de nuevo.";
       }
     }
   </script>
