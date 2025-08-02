@@ -3,78 +3,44 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Acceso Privado - Tropical Flow TV📺Radio</title>
+  <title>Tropical Flow TV📺Radio - Acceso Privado</title>
   <style>
     body {
-      background: #000 url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat fixed;
+      background: #000 url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') center/cover no-repeat;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      color: #fff;
-      font-family: sans-serif;
-      margin: 0;
-      text-align: center;
-    }
-    .container {
-      background: rgba(0,0,0,0.65);
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(255,255,255,0.1);
-    }
-    input {
-      padding: 10px;
-      border-radius: 6px;
-      border: none;
-      font-size: 1rem;
-      margin-top: 1rem;
-      width: 250px;
-      text-align: center;
-    }
-    button {
-      margin-top: 1rem;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 6px;
-      background-color: #25d366;
       color: white;
+      font-family: sans-serif;
+      text-align: center;
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
       font-size: 1rem;
-      cursor: pointer;
     }
-    .error {
-      color: red;
-      margin-top: 1rem;
-    }
+    .hidden { display: none; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🎧 Acceso Privado Tropical Flow TV📺Radio</h1>
-    <p>Introduce tu código VIP para entrar:</p>
-    <input type="text" id="codigo" placeholder="Ejemplo: TFTV2025-VIP-A1" />
-    <br />
-    <button onclick="verificarCodigo()">Entrar</button>
-    <div class="error" id="mensaje"></div>
-  </div>
+  <h1>🎉 Bienvenido a Tropical Flow TV📺Radio</h1>
+  <p>Introduce tu código de acceso</p>
+  <input type="text" id="codigo" placeholder="Código de acceso"/>
+  <button onclick="verificarCodigo()">Entrar</button>
+  <p id="error" style="color:red;" class="hidden">❌ Código incorrecto</p>
 
   <script>
-    const codigosValidos = ["TFTV2025-VIP-A1", "TFTV2025-VIP-A2", "TFTV2025-VIP-A3"];
-
     function verificarCodigo() {
-      const codigo = document.getElementById("codigo").value.trim();
-      const mensaje = document.getElementById("mensaje");
-
-      if (localStorage.getItem("codigoUsado")) {
-        mensaje.textContent = "Ya utilizaste un código en este dispositivo.";
-        return;
-      }
-
-      if (codigosValidos.includes(codigo)) {
-        localStorage.setItem("codigoUsado", "true");
-        window.location.href = "privado/index.html";
+      const valido = "tropical2025"; // Cambia este código cuando quieras
+      const ingreso = document.getElementById("codigo").value.trim();
+      if (ingreso === valido) {
+        window.location.href = "./privado/index.html";
       } else {
-        mensaje.textContent = "Código inválido. Verifica con el administrador.";
+        document.getElementById("error").classList.remove("hidden");
       }
     }
   </script>
