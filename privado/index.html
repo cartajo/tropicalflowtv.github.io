@@ -56,9 +56,10 @@
       const codigoValido = "TFTV2025VIP";
       const ingresado = document.getElementById('codigo').value.trim();
       if (ingresado === codigoValido) {
-        window.location.href = "../index.html"; // Redirige correctamente fuera del folder
+        window.location.href = "privado/index.html"; // Redirige a la carpeta privada
       } else {
-        document.getElementById('mensaje').innerText = "Código incorrecto. Verifica tu pago o contacta por WhatsApp.";
+        document.getElementById('mensaje').innerText =
+          "Código incorrecto. Verifica tu pago o contacta por WhatsApp.";
       }
     }
   </script>
