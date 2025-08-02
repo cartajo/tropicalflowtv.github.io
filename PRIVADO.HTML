@@ -3,60 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Acceso Privado - Tropical Flow TV📺Radio</title>
+  <title>Acceso Privado | Tropical Flow TV📺Radio</title>
   <style>
     body {
-      background: #111;
-      color: white;
-      font-family: sans-serif;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)),
+        url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat fixed;
+      color: #fff;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
+    }
+    .access-box {
+      background: rgba(0, 0, 0, 0.65);
+      border-radius: 12px;
+      padding: 2rem;
       text-align: center;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.6);
     }
-    input {
-      padding: 10px;
-      font-size: 1rem;
-      border-radius: 8px;
-      border: none;
-      margin-top: 10px;
+    .access-box h2 {
+      margin-bottom: 1rem;
     }
-    button {
-      padding: 10px 20px;
-      margin-top: 15px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 8px;
-      background: #25d366;
-      color: white;
-      cursor: pointer;
-    }
-    .error {
-      color: red;
-      margin-top: 15px;
-    }
-  </style>
-</head>
-<body>
-  <h1>🔐 Acceso Privado</h1>
-  <p>Ingresa el código de acceso recibido tras tu donación:</p>
-  <input type="text" id="codigo" placeholder="Código de acceso" />
-  <button onclick="verificarCodigo()">Entrar</button>
-  <div class="error" id="mensajeError"></div>
-
-  <script>
-    function verificarCodigo() {
-      const codigo = document.getElementById("codigo").value.trim();
-      const correcto = "TFTV2025VIP"; // Cambia este código cuando lo desees
-
-      if (codigo === correcto) {
-        window.location.href = "index.html"; // Redirige a la página principal
-      } else {
-        document.getElementById("mensajeError").innerText = "❌ Código incorrecto. Verifica tu pago o contacta por WhatsApp.";
-      }
-    }
-  </script>
-</body>
-</html>
+    .access-box input {
+      padding: 0.5rem;
+      width: 100%;
+      margin: 0.5rem 0;
+      border-radius: 6px;
