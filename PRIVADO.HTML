@@ -33,3 +33,58 @@
       width: 100%;
       margin: 0.5rem 0;
       border-radius: 6px;
+      border: none;
+    }
+    .access-box button {
+      padding: 0.6rem 1.2rem;
+      border: none;
+      background: #25d366;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+    .access-box button:hover {
+      background: #20b358;
+    }
+    .error {
+      color: #ff4d4d;
+      margin-top: 1rem;
+    }
+    .whatsapp {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+    }
+    .whatsapp a {
+      color: #25d366;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="access-box">
+    <h2>Acceso Privado</h2>
+    <p>Ingresa tu código de acceso para continuar</p>
+    <input type="password" id="codigo" placeholder="Código de acceso" />
+    <button onclick="verificarCodigo()">Entrar</button>
+    <div class="error" id="error-msg"></div>
+    <div class="whatsapp">
+      ¿No tienes un código? Escríbenos por <a href="https://wa.me/19399029695" target="_blank">WhatsApp</a>.
+    </div>
+  </div>
+
+  <script>
+    function verificarCodigo() {
+      const codigoCorrecto = "tropical2025"; // Este es el código de acceso válido
+      const ingreso = document.getElementById("codigo").value.trim();
+      const errorMsg = document.getElementById("error-msg");
+
+      if (ingreso === codigoCorrecto) {
+        window.location.href = "index.html"; // Redirección al contenido privado
+      } else {
+        errorMsg.textContent = "Código incorrecto. Verifica tu pago o contáctanos por WhatsApp.";
+      }
+    }
+  </script>
+</body>
+</html>
