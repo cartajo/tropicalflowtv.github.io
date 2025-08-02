@@ -5,61 +5,67 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tropical Flow TV📺Radio</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background-image: url('https://i.imgur.com/vN0uyTF.jpg');
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://i.imgur.com/vN0uyTF.jpg') no-repeat center center fixed;
       background-size: cover;
-      background-position: center;
       color: #fff;
       text-align: center;
     }
     header {
-      background-color: rgba(0, 0, 0, 0.7);
+      background-color: rgba(0, 0, 0, 0.6);
       padding: 1rem;
     }
     header h1 {
       margin: 0;
-      font-size: 2rem;
+      font-size: 2.5rem;
     }
     .radio-player {
       margin: 2rem auto;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 1rem;
+      border-radius: 10px;
+      max-width: 400px;
     }
-    iframe {
-      border: none;
-      border-radius: 12px;
+    audio {
+      width: 100%;
     }
     .tv-section {
       margin: 2rem;
-    }
-    .tv-section h2 {
-      margin-bottom: 1rem;
     }
     .tv-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 1rem;
     }
+    iframe {
+      border: none;
+      border-radius: 10px;
+    }
     .social-buttons {
-      margin: 2rem;
+      margin: 2rem 0;
     }
     .social-buttons a {
       display: inline-block;
-      margin: 0 1rem;
-      padding: 0.5rem 1rem;
-      background: #25d366;
-      color: white;
-      text-decoration: none;
+      margin: 0 10px;
+      padding: 10px 20px;
       border-radius: 8px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
     }
-    .social-buttons a.youtube { background: red; }
+    .social-buttons a.whatsapp { background: #25d366; }
+    .social-buttons a.youtube { background: #FF0000; }
     .social-buttons a.facebook { background: #3b5998; }
     footer {
-      background-color: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.7);
       padding: 1rem;
-      position: fixed;
-      width: 100%;
-      bottom: 0;
+      font-size: 0.9rem;
+      position: relative;
     }
   </style>
 </head>
@@ -82,11 +88,13 @@
       <iframe width="300" height="170" src="https://www.youtube.com/embed/jfKfPfyJRdk" allowfullscreen></iframe>
       <iframe width="300" height="170" src="https://www.youtube.com/embed/hHW1oY26kxQ" allowfullscreen></iframe>
       <iframe width="300" height="170" src="https://www.youtube.com/embed/5qap5aO4i9A" allowfullscreen></iframe>
+      <iframe width="300" height="170" src="https://www.youtube.com/embed/21qNxnCS8WU" allowfullscreen></iframe>
+      <iframe width="300" height="170" src="https://www.youtube.com/embed/R4L_6RP3aF0" allowfullscreen></iframe>
     </div>
   </section>
 
   <div class="social-buttons">
-    <a href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
+    <a class="whatsapp" href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
     <a class="youtube" href="https://www.youtube.com/@TFTvpoweredbyworldm8780" target="_blank">YouTube</a>
     <a class="facebook" href="https://www.facebook.com/profile.php?id=61555653663073" target="_blank">Facebook</a>
   </div>
