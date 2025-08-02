@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,91 +9,77 @@
       font-family: Arial, sans-serif;
       background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') no-repeat center center fixed;
       background-size: cover;
-      color: white;
     }
-    header {
-      text-align: center;
-      padding: 20px;
-      font-size: 2rem;
-      background: rgba(0, 0, 0, 0.5);
+    .container {
+      background: rgba(0, 0, 0, 0.65);
+      padding: 30px;
+      margin: 0 auto;
+      max-width: 800px;
+      color: #fff;
+      border-radius: 20px;
+      margin-top: 50px;
     }
-    .radio-player {
+    h1 {
       text-align: center;
-      margin: 20px;
     }
     iframe {
-      border-radius: 12px;
+      width: 100%;
+      height: 300px;
+      border: none;
+      margin-bottom: 15px;
     }
-    .carousel {
+    .btns {
       display: flex;
-      overflow: hidden;
-      width: 90%;
-      margin: auto;
-      padding: 20px 0;
+      flex-wrap: wrap;
       justify-content: center;
-      scroll-behavior: smooth;
+      gap: 10px;
+      margin-bottom: 20px;
     }
-    .carousel iframe {
-      min-width: 300px;
-      margin: 0 10px;
+    .btns a {
+      background: green;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
     }
-    @keyframes scroll {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-320px); }
-      50% { transform: translateX(-640px); }
-      75% { transform: translateX(-960px); }
-      100% { transform: translateX(0); }
+    .donate {
+      background: #0070ba;
     }
-    .carousel {
-      animation: scroll 20s infinite linear;
+    .ath {
+      background: #00a859;
     }
     footer {
-      background: rgba(0, 0, 0, 0.5);
       text-align: center;
-      padding: 10px;
-    }
-    .botones {
-      text-align: center;
-      margin: 20px;
-    }
-    .botones a {
-      display: inline-block;
-      margin: 5px;
-      padding: 10px 20px;
-      background-color: #00cc99;
+      margin-top: 30px;
       color: white;
-      text-decoration: none;
-      border-radius: 20px;
-      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <header>🎉 Bienvenido al Área Privada 🎉</header>
+  <div class="container">
+    <h1>🌿 Bienvenido al Área Privada</h1>
+    <p style="text-align:center;">Escúchanos en vivo 24/7 y disfruta de nuestros videos exclusivos.</p><!-- RADIO PLAYER ZENO -->
+<iframe src="https://zeno.fm/player/tropicalflowtv" width="100%" height="120" frameborder="0" scrolling="no"></iframe>
 
-  <div class="radio-player">
-    <h3>🎧 Escúchanos en vivo 24/7</h3>
-    <audio controls autoplay>
-      <source src="https://stream.zeno.fm/9ysf1q2g0f9uv" type="audio/mpeg" />
-      Tu navegador no soporta audio HTML5
-    </audio>
-  </div>
+<!-- VIDEOS YOUTUBE -->
+<iframe src="https://www.youtube.com/embed/videoseries?list=PLFnzU2IbbS7QpMDvOUCqyyWBoVzYI9WZ6" allowfullscreen></iframe>
 
-  <div class="carousel">
-    <iframe width="300" height="180" src="https://www.youtube.com/embed/hHW1oY26kxQ" title="Video 1" frameborder="0" allowfullscreen></iframe>
-    <iframe width="300" height="180" src="https://www.youtube.com/embed/kJQP7kiw5Fk" title="Video 2" frameborder="0" allowfullscreen></iframe>
-    <iframe width="300" height="180" src="https://www.youtube.com/embed/8aZpG9e4H7I" title="Video 3" frameborder="0" allowfullscreen></iframe>
-    <iframe width="300" height="180" src="https://www.youtube.com/embed/lY2yjAdbvdQ" title="Video 4" frameborder="0" allowfullscreen></iframe>
-  </div>
+<div class="btns">
+  <a href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
+  <a href="https://www.youtube.com/@TropicalFlowTVRadio" target="_blank">YouTube</a>
+  <a href="https://www.facebook.com" target="_blank">Facebook</a>
+  <a class="donate" href="https://www.paypal.com/donate/?hosted_button_id=XXXXXXX" target="_blank">Donar vía PayPal</a>
+  <a class="ath" href="https://www.athmovil.com/cartagenajose1970" target="_blank">Donar vía ATH Móvil</a>
+</div>
 
-  <div class="botones">
-    <a href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
-    <a href="https://youtube.com/@TropicalFlowTVRadio" target="_blank">YouTube</a>
-    <a href="https://facebook.com" target="_blank">Facebook</a>
-    <a href="https://www.paypal.com/donate/?hosted_button_id=XYZ123" target="_blank">Donar vía PayPal</a>
-    <a href="https://www.athmovil.com/cartajo" target="_blank">Donar vía ATH Móvil</a>
-  </div>
+<!-- CONTADOR DE VISITAS -->
+<p style="text-align:center">
+  <img src="https://www.reliablecounter.com/count.php?page=tropicalflowtvradio&digit=style/plain/6/&reloads=1" alt="contador de visitas" title="Contador de Visitas" />
+</p>
 
-  <footer>© 2025 Tropical Flow TV📺Radio - Todos los derechos reservados</footer>
+  </div>  <footer>
+    &copy; 2025 Tropical Flow TV 📺 Radio - Todos los derechos reservados.
+  </footer>
 </body>
 </html>
