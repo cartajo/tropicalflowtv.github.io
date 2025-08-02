@@ -1,9 +1,11 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Tropical Flow TV📺Radio — En Vivo 24/7</title>
-  <meta name="description" content="Tropical Flow TV📺Radio - Música tropical en vivo 24/7. Dale play y disfruta." />  <style>
+  <meta name="description" content="Tropical Flow TV📺Radio - Música tropical en vivo 24/7. Dale play y disfruta." />
+  <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -18,6 +20,7 @@
     header {
       background-color: rgba(0, 0, 0, 0.7);
       padding: 1rem;
+      text-align: center;
     }
     header h1 {
       margin: 0;
@@ -75,18 +78,23 @@
       padding: 1rem;
       text-align: center;
     }
-  </style></head>
+  </style>
+</head>
 <body>
   <header>
     <h1>Tropical Flow TV📺Radio</h1>
-  </header>  <section class="radio-player">
+  </header>
+
+  <section class="radio-player">
     <h2>🎧 Escúchanos en vivo 24/7</h2>
     <p>Si no se reproduce automáticamente, toca <b>Play</b> o sube el volumen. Funciona en celular y computadora.</p>
-    <audio id="radio" controls autoplay preload="none" crossorigin="anonymous">
+    <audio id="radio" controls autoplay preload="auto" crossorigin="anonymous">
       <source src="https://stream.zeno.fm/sl8wpcxtjy3uv" type="audio/mpeg" />
       Tu navegador no soporta audio en vivo.
     </audio>
-  </section>  <section class="tv-section">
+  </section>
+
+  <section class="tv-section">
     <h2>🎬 Videos Recientes</h2>
     <div class="carousel">
       <iframe width="300" height="170" src="https://www.youtube.com/embed/tpi8zLE3Kqw" allowfullscreen></iframe>
@@ -107,16 +115,34 @@
       <iframe width="300" height="170" src="https://www.youtube.com/embed/4jdbpZVzlf4" allowfullscreen></iframe>
       <iframe width="300" height="170" src="https://www.youtube.com/embed/n8RMGnc8v_o" allowfullscreen></iframe>
     </div>
-  </section>  <div class="social-buttons">
+  </section>
+
+  <div class="social-buttons">
     <a href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
     <a class="youtube" href="https://www.youtube.com/@TFTvpoweredbyworldm8780" target="_blank">YouTube</a>
     <a class="facebook" href="https://www.facebook.com/profile.php?id=61555653663073" target="_blank">Facebook</a>
-  </div>  <div class="social-buttons">
+  </div>
+
+  <div class="social-buttons">
     <a href="https://www.paypal.com/donate/?hosted_button_id=XXXXXX" target="_blank">🎧 Acceso Premium</a>
     <p style="color: #ccc; margin-top: 1rem;">Haz tu donación y accede a contenido exclusivo.</p>
-  </div>  <footer>
+  </div>
+
+  <footer>
     © <span id="year"></span> Tropical Flow TV📺Radio - Todos los derechos reservados
-  </footer>  <script>
+  </footer>
+
+  <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-  </script></body>
+    // Forzar reproducción de audio si es posible
+    window.addEventListener('DOMContentLoaded', () => {
+      const radio = document.getElementById('radio');
+      if (radio) {
+        radio.play().catch(e => {
+          console.warn('Autoplay bloqueado por el navegador.');
+        });
+      }
+    });
+  </script>
+</body>
 </html>
