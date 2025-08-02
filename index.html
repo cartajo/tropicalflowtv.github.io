@@ -1,104 +1,191 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tropical Flow TV📺Radio</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tropical Flow TV📺Radio — En Vivo 24/7</title>
+  <meta name="description" content="Tropical Flow TV📺Radio - Música tropical en vivo 24/7. Dale play y disfruta." />
+
+  <!-- ESTILOS (CSS) -->
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: url('https://i.imgur.com/vN0uyTF.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: white;
-      text-align: center;
+    /* ======= Fondo de playa (puedes cambiar la imagen si quieres) ======= */
+    body{
+      margin:0;
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+      color:#fff;
+      background:
+        linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.45)),
+        url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover fixed no-repeat;
+      min-height:100vh;
+      display:flex; flex-direction:column;
     }
-    header {
-      background-color: rgba(0, 0, 0, 0.6);
-      padding: 1rem;
+    /* Si tienes tu propia imagen de playa en tu repo, reemplaza la URL de arriba por: url('img/playa.jpg') */
+
+    /* ======= Barra superior ======= */
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 16px; background:rgba(0,0,0,.25); backdrop-filter: blur(6px);
+      border-bottom:1px solid rgba(255,255,255,.2);
     }
-    header h1 {
-      margin: 0;
-      font-size: 2.5rem;
+    .brand{
+      display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.2px;
     }
-    .radio-player {
-      background-color: rgba(0, 0, 0, 0.5);
-      margin: 2rem auto;
-      padding: 1rem;
-      border-radius: 10px;
-      max-width: 400px;
+    .brand-badge{
+      width:44px; height:44px; border-radius:12px;
+      background: radial-gradient(120% 120% at 10% 10%, #fb923c, #0ea5e9);
+      display:grid; place-items:center; color:#001018; font-weight:900;
+      border:1px solid rgba(255,255,255,.25); box-shadow:0 8px 24px rgba(0,0,0,.35);
     }
-    audio {
-      width: 100%;
+    .brand-title{line-height:1.05}
+    .brand-title small{display:block; font-weight:600; opacity:.9}
+
+    .links a{
+      color:#fff; text-decoration:none; font-weight:600;
+      border:1px solid rgba(255,255,255,.35); padding:10px 14px; border-radius:10px;
+      margin-left:8px; display:inline-flex; align-items:center; gap:8px;
+      background: rgba(0,0,0,.15);
     }
-    .tv-section {
-      margin: 2rem;
+    .links a.primary{background:#0ea5e9; color:#001018; border-color:transparent; font-weight:800}
+
+    /* ======= Sección principal (player) ======= */
+    main{flex:1; display:grid; place-items:center; padding:24px 16px}
+    .glass{
+      width:min(920px, 96%); background:rgba(0,0,0,.35); backdrop-filter: blur(8px);
+      border:1px solid rgba(255,255,255,.25); border-radius:18px; padding:18px;
+      box-shadow:0 20px 50px rgba(0,0,0,.45);
     }
-    .tv-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1rem;
-      padding: 0 1rem;
+    .title{display:flex; align-items:center; gap:10px; margin:0 0 6px}
+    .live-dot{width:10px; height:10px; border-radius:50%; background:#ef4444; box-shadow:0 0 0 6px rgba(239,68,68,.18)}
+    h1{font-size:1.4rem; margin:0}
+    .subtitle{margin:6px 0 14px; opacity:.9}
+
+    .player{
+      background:rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.25);
+      border-radius:14px; padding:14px;
+      display:flex; flex-direction:column; gap:12px;
     }
-    iframe {
-      width: 100%;
-      height: 170px;
-      border: none;
-      border-radius: 10px;
+    .controls{display:flex; align-items:center; gap:12px; flex-wrap:wrap}
+    .btn{
+      background:#0ea5e9; color:#001018; border:0; border-radius:12px;
+      padding:12px 18px; font-weight:800; cursor:pointer;
+      box-shadow:0 10px 20px rgba(14,165,233,.25);
     }
-    .social-buttons {
-      margin: 2rem 0;
-    }
-    .social-buttons a {
-      display: inline-block;
-      margin: 0 10px;
-      padding: 10px 20px;
-      border-radius: 8px;
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .whatsapp { background: #25d366; }
-    .youtube { background: red; }
-    .facebook { background: #3b5998; }
-    footer {
-      background-color: rgba(0, 0, 0, 0.6);
-      padding: 1rem;
-    }
+    .status{opacity:.9}
+    .vol{margin-left:auto; display:flex; align-items:center; gap:10px}
+    .vol input[type="range"]{width:170px}
+    .alt-links{display:flex; gap:10px; flex-wrap:wrap}
+    .alt-links a{ color:#fff; text-decoration:none; border:1px solid rgba(255,255,255,.3);
+      padding:8px 12px; border-radius:10px; font-size:.92rem; background:rgba(0,0,0,.2)}
+    .notice{font-size:.9rem; opacity:.9}
+
+    footer{padding:18px 12px; text-align:center; background:rgba(0,0,0,.25); border-top:1px solid rgba(255,255,255,.2)}
   </style>
 </head>
 <body>
-
-  <header>
-    <h1>Tropical Flow TV📺Radio</h1>
+  <!-- Barra superior -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-badge">TF</div>
+      <div class="brand-title">
+        Tropical Flow TV📺Radio
+        <small>Música, Ritmo y Alegría 24/7</small>
+      </div>
+    </div>
+    <nav class="links">
+      <a href="https://www.facebook.com/TropicalFlowTVRadio" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://www.youtube.com" target="_blank" rel="noopener">YouTube</a>
+      <a class="primary" href="https://wa.me/19399029695" target="_blank" rel="noopener">WhatsApp</a>
+    </nav>
   </header>
 
-  <section class="radio-player">
-    <h2>🎧 Escúchanos en Vivo</h2>
-    <audio controls autoplay>
-      <source src="https://stream.zeno.fm/sl8wpcxtjy3uv" type="audio/mpeg">
-      Tu navegador no soporta el audio.
-    </audio>
-  </section>
+  <!-- Contenido principal -->
+  <main>
+    <section class="glass">
+      <div class="title">
+        <div class="live-dot" id="liveDot"></div>
+        <h1>En vivo 24/7 — Dale Play</h1>
+      </div>
+      <p class="subtitle">Si no se reproduce automáticamente, toca <b>Play</b> o sube el volumen. Funciona en celular y computadora.</p>
 
-  <section class="tv-section">
-    <h2>📺 Canales en Vivo</h2>
-    <div class="tv-grid">
-      <iframe src="https://www.youtube.com/embed/jfKfPfyJRdk" allowfullscreen></iframe>
-      <iframe src="https://www.youtube.com/embed/hHW1oY26kxQ" allowfullscreen></iframe>
-      <iframe src="https://www.youtube.com/embed/5qap5aO4i9A" allowfullscreen></iframe>
-    </div>
-  </section>
+      <div class="player">
+        <div class="controls">
+          <button class="btn" id="btnPlay">▶ Play</button>
+          <span class="status" id="statusTxt">Listo</span>
+          <div class="vol">
+            <label for="vol">Volumen</label>
+            <input id="vol" type="range" min="0" max="1" step="0.01" value="0.9" />
+          </div>
+        </div>
 
-  <div class="social-buttons">
-    <a class="whatsapp" href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
-    <a class="youtube" href="https://www.youtube.com/@TFTvpoweredbyworldm8780" target="_blank">YouTube</a>
-    <a class="facebook" href="https://www.facebook.com/profile.php?id=61555653663073" target="_blank">Facebook</a>
-  </div>
+        <!-- AUDIO (Zeno) -->
+        <audio id="radio" preload="none" crossorigin="anonymous">
+          <source src="https://stream.zeno.fm/sl8wpcxtjy3uv" type="audio/mpeg" />
+          Tu navegador no soporta audio en vivo.
+        </audio>
+
+        <!-- Enlaces alternos -->
+        <div class="alt-links">
+          <a href="https://stream.zeno.fm/sl8wpcxtjy3uv" target="_blank" rel="noopener">Abrir MP3</a>
+          <a href="https://stream.zeno.fm/sl8wpcxtjy3uv.m3u" target="_blank" rel="noopener">M3U</a>
+          <a href="https://stream.zeno.fm/sl8wpcxtjy3uv.pls" target="_blank" rel="noopener">PLS</a>
+        </div>
+
+        <div class="notice">En iPhone/iPad el navegador puede bloquear el autoplay; solo toca <b>Play</b> y listo.</div>
+      </div>
+    </section>
+  </main>
 
   <footer>
-    © 2025 Tropical Flow TV📺Radio - Todos los derechos reservados
+    © <span id="year"></span> Tropical Flow TV📺Radio — Hecho con 💛 desde PR
   </footer>
 
+  <!-- SCRIPT (JS) -->
+  <script>
+    const audio    = document.getElementById('radio');
+    const btn      = document.getElementById('btnPlay');
+    const statusTx = document.getElementById('statusTxt');
+    const vol      = document.getElementById('vol');
+    const liveDot  = document.getElementById('liveDot');
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Intento de autoplay suave (algunos navegadores lo bloquean)
+    document.addEventListener('DOMContentLoaded', () => {
+      try {
+        audio.volume = vol.value;
+        audio.play().then(() => {
+          btn.textContent = '⏸ Pausa';
+          statusTx.textContent = 'Reproduciendo…';
+          liveDot.style.background = '#22c55e';
+        }).catch(() => {
+          statusTx.textContent = 'Listo — Toca Play para empezar';
+        });
+      } catch(e){
+        statusTx.textContent = 'Listo — Toca Play para empezar';
+      }
+    });
+
+    btn.addEventListener('click', async () => {
+      if (audio.paused) {
+        try {
+          await audio.play();
+          btn.textContent = '⏸ Pausa';
+          statusTx.textContent = 'Reproduciendo…';
+          liveDot.style.background = '#22c55e';
+        } catch (e) {
+          statusTx.textContent = 'No se pudo reproducir. Intenta de nuevo.';
+        }
+      } else {
+        audio.pause();
+        btn.textContent = '▶ Play';
+        statusTx.textContent = 'Pausado';
+        liveDot.style.background = '#ef4444';
+      }
+    });
+
+    vol.addEventListener('input', () => { audio.volume = vol.value; });
+    audio.addEventListener('error',   () => { statusTx.textContent = 'Error de conexión.'; liveDot.style.background = '#ef4444'; });
+    audio.addEventListener('playing', () => { statusTx.textContent = 'Reproduciendo…'; liveDot.style.background = '#22c55e'; });
+    audio.addEventListener('pause',   () => { statusTx.textContent = 'Pausado'; liveDot.style.background = '#ef4444'; });
+  </script>
 </body>
 </html>
