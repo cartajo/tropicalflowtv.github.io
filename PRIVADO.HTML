@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Acceso Privado - Tropical Flow TV📺Radio</title>
+  <style>
+    body {
+      background: #111;
+      color: white;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+    input {
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: none;
+      margin-top: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 15px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      background: #25d366;
+      color: white;
+      cursor: pointer;
+    }
+    .error {
+      color: red;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔐 Acceso Privado</h1>
+  <p>Ingresa el código de acceso recibido tras tu donación:</p>
+  <input type="text" id="codigo" placeholder="Código de acceso" />
+  <button onclick="verificarCodigo()">Entrar</button>
+  <div class="error" id="mensajeError"></div>
+
+  <script>
+    function verificarCodigo() {
+      const codigo = document.getElementById("codigo").value.trim();
+      const correcto = "TFTV2025VIP"; // Cambia este código cuando lo desees
+
+      if (codigo === correcto) {
+        window.location.href = "index.html"; // Redirige a la página principal
+      } else {
+        document.getElementById("mensajeError").innerText = "❌ Código incorrecto. Verifica tu pago o contacta por WhatsApp.";
+      }
+    }
+  </script>
+</body>
+</html>
