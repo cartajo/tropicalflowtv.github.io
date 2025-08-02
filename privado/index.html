@@ -1,38 +1,62 @@
-<!DOCTYPE html>
+TOKEN. <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Área Exclusiva | Tropical Flow TV📺Radio</title>
+  <meta charset="UTF-8">
+  <title>Acceso Privado - Tropical Flow TV📺Radio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      margin: 0;
+      background: linear-gradient(to right, #000000, #333333);
+      color: #fff;
       font-family: Arial, sans-serif;
-      color: white;
-      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') no-repeat center center fixed;
-      background-size: cover;
-    }
-    header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
       text-align: center;
-      padding: 2rem;
-      background-color: rgba(0, 0, 0, 0.5);
     }
-    header h1 {
-      font-size: 2rem;
-    }
-    .radio {
-      display: flex;
-      justify-content: center;
+    input, button {
+      padding: 0.8rem;
       margin: 1rem;
-    }
-    .videos {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-      padding: 1rem;
-      background-color: rgba(0,0,0,0.6);
-    }
-    iframe {
+      font-size: 1rem;
+      border-radius: 6px;
       border: none;
-      width: 320px;
+    }
+    button {
+      background-color: #28a745;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    .error {
+      color: #ff4d4d;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔒 Acceso Restringido</h1>
+  <p>Ingresa tu código de acceso para continuar</p>
+  <input type="text" id="codigo" placeholder="Código de acceso">
+  <br>
+  <button onclick="verificarCodigo()">Entrar</button>
+  <p class="error" id="mensaje"></p>
+
+  <script>
+    function verificarCodigo() {
+      const codigo = document.getElementById("codigo").value.trim();
+      const claveCorrecta = "tropical2025";
+
+      if (codigo === claveCorrecta) {
+        // Redirige al área privada
+        window.location.href = "privado/index.html"; // Puedes cambiar a "index.html" si es el mismo sitio
+      } else {
+        document.getElementById("mensaje").innerText = "❌ Código incorrecto. Verifica tu pago o contacta por WhatsApp.";
+      }
+    }
+  </script>
+</body>
+</html>
