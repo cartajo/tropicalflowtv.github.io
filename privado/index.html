@@ -3,71 +3,106 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tropical Flow TV📺Radio - Área Exclusiva</title>
-  <meta name="description" content="Contenido exclusivo para usuarios VIP de Tropical Flow TV📺Radio." />
+  <title>Tropical Flow TV📺Radio - Acceso VIP</title>
+  <meta name="description" content="Acceso exclusivo a Tropical Flow TV📺Radio. Música, videos y más 24/7.">
+
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') no-repeat center center fixed;
-      background-size: cover;
-      color: white;
+      background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.7)),
+        url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover fixed no-repeat;
+      color: #fff;
+    }
+
+    header {
       text-align: center;
+      padding: 1rem;
+      background-color: rgba(0,0,0,0.6);
     }
-    .container {
-      padding: 2rem;
-      background-color: rgba(0, 0, 0, 0.6);
-    }
+
     h1 {
-      margin-top: 0;
+      margin: 0;
+      font-size: 2rem;
     }
-    .player {
-      margin: 1rem 0;
+
+    .radio-player {
+      text-align: center;
+      margin: 2rem auto;
     }
+
+    audio {
+      width: 90%;
+      max-width: 600px;
+      margin-top: 1rem;
+    }
+
     .carousel {
       display: flex;
       overflow-x: auto;
+      scroll-snap-type: x mandatory;
       gap: 1rem;
-      padding: 1rem 0;
+      padding: 1rem;
+      scroll-behavior: smooth;
     }
+
     .carousel iframe {
-      min-width: 300px;
+      flex: 0 0 auto;
+      width: 300px;
       height: 170px;
-      border: none;
+      border-radius: 12px;
+      scroll-snap-align: start;
     }
-    .buttons {
+
+    .social-buttons {
+      text-align: center;
       margin: 2rem 0;
     }
-    .buttons a {
+
+    .social-buttons a {
       display: inline-block;
       margin: 0.5rem;
-      padding: 0.7rem 1.5rem;
-      background-color: #25d366;
-      color: white;
-      border-radius: 6px;
+      padding: 0.6rem 1rem;
+      color: #fff;
       text-decoration: none;
+      border-radius: 8px;
     }
+
+    .whatsapp { background: #25d366; }
+    .youtube { background: red; }
+    .facebook { background: #3b5998; }
+    .paypal { background: #0070ba; }
+    .athmovil { background: #6f42c1; }
+
     footer {
       text-align: center;
       padding: 1rem;
-      background-color: rgba(0, 0, 0, 0.7);
-      position: relative;
-      bottom: 0;
-      width: 100%;
+      background: rgba(0,0,0,0.6);
+    }
+
+    .contador {
+      margin-top: 1rem;
+      font-weight: bold;
+      font-size: 1.2rem;
     }
   </style>
 </head>
+
 <body>
-  <div class="container">
-    <h1>🎉 Bienvenido al Área Exclusiva 🎉</h1>
-    <p>¡Disfruta de música, videos y contenido especial!</p>
+  <header>
+    <h1>🌴 Tropical Flow TV📺Radio - VIP</h1>
+  </header>
 
-    <!-- Reproductor de radio -->
-    <div class="player">
-      <iframe src="https://zeno.fm/player/tropicalflowtv" width="100%" height="120" frameborder="0" allow="autoplay" allowfullscreen></iframe>
-    </div>
+  <section class="radio-player">
+    <h2>🎧 Escúchanos en Vivo 24/7</h2>
+    <audio controls autoplay>
+      <source src="https://stream.zeno.fm/sl8wpcxtjy3uv" type="audio/mpeg">
+      Tu navegador no soporta la reproducción de audio.
+    </audio>
+  </section>
 
-    <!-- Carrusel de videos -->
+  <section>
+    <h2 style="text-align:center;">🎬 Videos Recientes</h2>
     <div class="carousel">
       <iframe src="https://www.youtube.com/embed/tpi8zLE3Kqw" allowfullscreen></iframe>
       <iframe src="https://www.youtube.com/embed/RBE8A9rAj8Y" allowfullscreen></iframe>
@@ -78,19 +113,34 @@
       <iframe src="https://www.youtube.com/embed/auTHP2prrxw" allowfullscreen></iframe>
       <iframe src="https://www.youtube.com/embed/CL7m60BISiw" allowfullscreen></iframe>
     </div>
+  </section>
 
-    <!-- Botones sociales y donación -->
-    <div class="buttons">
-      <a href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
-      <a href="https://www.youtube.com/@TropicalFlowTVRadio" target="_blank">YouTube</a>
-      <a href="https://facebook.com/tropicalflowtv" target="_blank">Facebook</a>
-      <a href="https://www.paypal.com/donate/?business=Cartagenajose1970@hotmail.com&currency_code=USD" target="_blank">Donar via PayPal</a>
-      <a href="https://wa.me/19399029695?text=Quiero%20donar%20por%20ATH%20Móvil%20a%20939-902-9695" target="_blank">Donar via ATH Móvil</a>
-    </div>
+  <div class="social-buttons">
+    <a class="whatsapp" href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
+    <a class="youtube" href="https://www.youtube.com/@TFTvpoweredbyworldm8780" target="_blank">YouTube</a>
+    <a class="facebook" href="https://www.facebook.com/profile.php?id=61555653663073" target="_blank">Facebook</a>
+    <a class="paypal" href="https://www.paypal.com/donate/?hosted_button_id=XXXXXXXX" target="_blank">Donar con PayPal</a>
+    <a class="athmovil" href="https://www.athmovil.com/cartajo" target="_blank">Donar ATH Móvil</a>
+  </div>
+
+  <div class="contador">
+    👥 Usuarios conectados ahora: <span id="contador">cargando...</span>
   </div>
 
   <footer>
-    © 2025 Tropical Flow TV📺Radio - Todos los derechos reservados
+    &copy; <span id="year"></span> Tropical Flow TV📺Radio - Todos los derechos reservados
   </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Simulación contador en vivo (puedes reemplazar esto por API real luego)
+    function generarVisitantes() {
+      const numero = Math.floor(Math.random() * 30) + 1;
+      document.getElementById("contador").textContent = numero;
+    }
+    setInterval(generarVisitantes, 3000);
+    generarVisitantes();
+  </script>
 </body>
 </html>
