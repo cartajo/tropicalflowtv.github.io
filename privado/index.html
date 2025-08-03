@@ -234,3 +234,92 @@
   </div>
 </body>
 </html>
+<!DOCTYPE html><html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Biblioteca Musical</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-image: url("https://i.imgur.com/L5J5z9F.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-attachment: fixed;
+      color: white;
+    }
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      margin-top: 50px;
+      border-radius: 15px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .track {
+      margin-bottom: 20px;
+      background: #111;
+      padding: 15px;
+      border-radius: 10px;
+    }
+    .track h3 {
+      margin-top: 0;
+    }
+    .buttons {
+      margin-top: 10px;
+    }
+    .buttons a {
+      margin-right: 15px;
+      padding: 8px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .download {
+      background-color: #2ecc71;
+      color: white;
+    }
+    .donate {
+      background-color: #f1c40f;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎵 Tu Biblioteca Musical</h1>
+    <div id="music-list">
+      <p>Cargando canciones...</p>
+    </div>
+  </div>  <script>
+    const musicFolder = "https://cartajo.github.io/tropicalflowtv.github.io/musica/";
+
+    const songs = [
+      "Lo-Mio-Va-Primero.mp3",
+      "Otra-Cancion-Tropical.mp3"
+    ]; // Aquí irán listadas automáticamente en el futuro
+
+    const musicListDiv = document.getElementById("music-list");
+    musicListDiv.innerHTML = "";
+
+    songs.forEach(song => {
+      const title = song.replace(/-/g, " ").replace(/\.mp3$/, "");
+      const html = `
+        <div class="track">
+          <h3>${title}</h3>
+          <audio controls src="${musicFolder + song}"></audio>
+          <div class="buttons">
+            <a class="download" href="${musicFolder + song}" download>Descargar Gratis</a>
+            <a class="donate" href="https://www.paypal.com/donate?hosted_button_id=G97YMPMN8P8D4" target="_blank">Donar por esta canción</a>
+          </div>
+        </div>
+      `;
+      musicListDiv.innerHTML += html;
+    });
+  </script></body>
+</html>
