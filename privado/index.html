@@ -1,144 +1,77 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tropical Flow TV📺Radio - Acceso VIP</title>
-  <meta name="description" content="Acceso exclusivo a Tropical Flow TV📺Radio. Música, videos y más 24/7.">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Acceso Privado - Tropical Flow TV📺Radio</title>
   <style>
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
-      background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.7)),
-        url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover fixed no-repeat;
-      color: #fff;
-    }
-
-    header {
+      background: #111 url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
+      color: white;
       text-align: center;
-      padding: 1rem;
-      background-color: rgba(0,0,0,0.6);
+      padding: 50px;
     }
-
-    h1 {
-      margin: 0;
-      font-size: 2rem;
+    input, button {
+      padding: 10px;
+      font-size: 1rem;
+      margin: 10px;
+      border-radius: 6px;
+      border: none;
     }
-
-    .radio-player {
-      text-align: center;
-      margin: 2rem auto;
-    }
-
-    audio {
-      width: 90%;
-      max-width: 600px;
-      margin-top: 1rem;
-    }
-
-    .carousel {
-      display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      gap: 1rem;
-      padding: 1rem;
-      scroll-behavior: smooth;
-    }
-
-    .carousel iframe {
-      flex: 0 0 auto;
-      width: 300px;
-      height: 170px;
-      border-radius: 12px;
-      scroll-snap-align: start;
-    }
-
-    .social-buttons {
-      text-align: center;
-      margin: 2rem 0;
-    }
-
-    .social-buttons a {
-      display: inline-block;
-      margin: 0.5rem;
-      padding: 0.6rem 1rem;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 8px;
-    }
-
-    .whatsapp { background: #25d366; }
-    .youtube { background: red; }
-    .facebook { background: #3b5998; }
-    .paypal { background: #0070ba; }
-    .athmovil { background: #6f42c1; }
-
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background: rgba(0,0,0,0.6);
-    }
-
-    .contador {
-      margin-top: 1rem;
-      font-weight: bold;
-      font-size: 1.2rem;
+    .error {
+      color: red;
     }
   </style>
 </head>
-
 <body>
-  <header>
-    <h1>🌴 Tropical Flow TV📺Radio - VIP</h1>
-  </header>
+  <h1>🔒 Acceso Privado a Tropical Flow TV📺Radio</h1>
+  <p>Introduce tu código de acceso único:</p>
+  <input type="text" id="codigo" placeholder="Ejemplo: TFTV001" />
+  <br />
+  <button onclick="verificarCodigo()">Entrar</button>
+  <p class="error" id="mensaje"></p>
 
-  <section class="radio-player">
-    <h2>🎧 Escúchanos en Vivo 24/7</h2>
-    <audio controls autoplay>
-      <source src="https://stream.zeno.fm/sl8wpcxtjy3uv" type="audio/mpeg">
-      Tu navegador no soporta la reproducción de audio.
-    </audio>
-  </section>
-
-  <section>
-    <h2 style="text-align:center;">🎬 Videos Recientes</h2>
-    <div class="carousel">
-      <iframe src="https://www.youtube.com/embed/tpi8zLE3Kqw" allowfullscreen></iframe>
-      <iframe src="https://www.youtube.com/embed/RBE8A9rAj8Y" allowfullscreen></iframe>
-      <iframe src="https://www.youtube.com/embed/XYe0ZHVvVig" allowfullscreen></iframe>
-      <iframe src="https://www.youtube.com/embed/h86xW_G-j4s" allowfullscreen></iframe>
-      <iframe src="https://www.youtube.com/embed/5pKPlIlQa_8" allowfullscreen></iframe>
-      <iframe src="https://www.youtube.com/embed/wgqGHqhEZ8M" allowfullscreen></iframe>
-      <iframe src="https://www.youtube.com/embed/auTHP2prrxw" allowfullscreen></iframe>
-      <iframe src="https://www.youtube.com/embed/CL7m60BISiw" allowfullscreen></iframe>
-    </div>
-  </section>
-
- <div class="social-buttons">
-    <a class="whatsapp" href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
-    <a class="youtube" href="https://www.youtube.com/@TFTvpoweredbyworldm8780" target="_blank">YouTube</a>
-    <a class="facebook" href="https://www.facebook.com/profile.php?id=61555653663073" target="_blank">Facebook</a>
-    <div class="social-buttons">
-  <a href="https://www.paypal.com/donate/?business=cartajoffice1@gmail.com&currency_code=USD" target="_blank">🎧 Donar vía PayPal</a>
-  <p style="color: #ccc; margin-top: 1rem;">Haz tu donación y accede a contenido exclusivo.</p>
-</div>
-    <a class="athmovil" href="https://www.athmovil.com/cartajo" target="_blank">Donar ATH Móvil</a>
-  </div>
-  <footer>
-    &copy; <span id="year"></span> Tropical Flow TV📺Radio - Todos los derechos reservados
-  </footer>
-
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Simulación contador en vivo (puedes reemplazar esto por API real luego)
-    function generarVisitantes() {
-      const numero = Math.floor(Math.random() * 30) + 1;
-      document.getElementById("contador").textContent = numero;
-    }
-    setInterval(generarVisitantes, 3000);
-    generarVisitantes();
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
+async function verificarCodigo() {
+  const codigo = document.getElementById("codigo").value.trim().toUpperCase();
+  const mensaje = document.getElementById("mensaje");
+
+  if (!codigo) {
+    mensaje.textContent = "Por favor, introduce un código.";
+    return;
+  }
+
+  try {
+    const res = await fetch("codes.json");
+    const data = await res.json();
+
+    if (data.includes(codigo)) {
+      // Remover el código para que no vuelva a usarse
+      const nuevoListado = data.filter(c => c !== codigo);
+
+      // Guardar en localStorage para no reingresar
+      localStorage.setItem("accesoTFTV", "ok");
+
+      // Redirigir
+      window.location.href = "../index.html";
+
+      // (Solo para pruebas locales) Mostrar en consola
+      console.log("Código aceptado, redirigiendo...");
+    } else {
+      mensaje.textContent = "Código incorrecto o ya fue usado.";
+    }
+  } catch (error) {
+    mensaje.textContent = "Error al validar código.";
+    console.error(error);
+  }
+}
+[
+  "TFTV001",
+  "TFTV002",
+  "TFTV003",
+  "TFTV004",
+  "TFTV005"
+]
