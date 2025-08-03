@@ -79,14 +79,6 @@
       padding: 1rem;
       background: rgba(0,0,0,0.6);
     }
-
-    .contador {
-      margin-top: 1rem;
-      font-weight: bold;
-      font-size: 1.2rem;
-    }
-  </style>
-</head>
 <!-- Contador de personas conectadas -->
 <div style="position: fixed; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 8px 14px; border-radius: 10px; font-size: 14px; z-index: 999;">
   👥 Conectados ahora: <span id="liveCount">...</span>
@@ -105,6 +97,14 @@
   actualizarContador();
   setInterval(actualizarContador, 10000); // Actualiza cada 10 segundos
 </script>
+    .contador {
+      margin-top: 1rem;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+
 <body>
   <header>
     <h1>🌴 Tropical Flow TV📺Radio - VIP</h1>
