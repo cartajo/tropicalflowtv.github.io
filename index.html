@@ -1,51 +1,90 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>🔒 Acceso Privado - Tropical Flow TV📺Radio</title>
+  <meta charset="UTF-8">
+  <title>🔒 Acceso Privado - Tropical Flow TV 📺 Radio</title>
   <style>
     body {
-      background-color: black;
-      color: white;
-      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: #fff;
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      width: 220px;
+      margin-bottom: 15px;
       text-align: center;
-      padding-top: 100px;
     }
-    input, button {
-      font-size: 1.2rem;
-      padding: 8px;
-      margin: 10px;
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #00c853;
+      border: none;
+      color: white;
+      cursor: pointer;
     }
-    #error {
+
+    button:hover {
+      background-color: #00b248;
+    }
+
+    .error {
       color: red;
       margin-top: 10px;
+    }
+
+    .logo {
+      font-size: 40px;
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
-  <h1>🔒 Acceso Privado - Tropical Flow TV📺Radio</h1>
-  <p>Introduce tu <strong>código de acceso único:</strong></p>
-  <input type="text" id="codigo" placeholder="Escribe tu código aquí" />
+  <div class="logo">🔒</div>
+  <h1>Acceso Privado - Tropical Flow TV 📺 Radio</h1>
+  <input type="text" id="codeInput" placeholder="Introduce tu código de acceso único">
   <button onclick="verificarCodigo()">Entrar</button>
-  <div id="error"></div>
+  <div id="mensaje" class="error"></div>
 
   <script>
     async function verificarCodigo() {
-      const input = document.getElementById('codigo').value.trim().toUpperCase();
-      const error = document.getElementById('error');
+      const input = document.getElementById('codeInput');
+      const codigo = input.value.trim();
+      const mensaje = document.getElementById('mensaje');
+
+      if (!codigo) {
+        mensaje.textContent = 'Por favor, escribe un código.';
+        return;
+      }
+
       try {
         const response = await fetch('codes.json');
-        const codes = await response.json();
+        const data = await response.json();
 
-        if (codes[input]) {
-          // Marcar código como usado (si deseas hacer esto, debe ser en un backend real)
-          window.location.href = "vip.html"; // Redirige a contenido VIP
+        if (data[codigo] === true) {
+          // El código es válido
+          // Opcional: marcarlo como usado si se gestiona del lado del servidor
+          window.location.href = "viparea.html"; // redirigir a la zona VIP real
         } else {
-          error.textContent = "❌ Código inválido o ya usado.";
+          mensaje.textContent = '❌ Código inválido o ya usado.';
         }
-      } catch (e) {
-        error.textContent = "Error al verificar el código.";
+      } catch (error) {
+        mensaje.textContent = 'Error cargando los códigos.';
+        console.error('Error:', error);
       }
     }
   </script>
