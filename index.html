@@ -46,3 +46,55 @@
   </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Acceso con Código Único</title>
+  <style>
+    body {
+      background: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    input, button {
+      padding: 12px;
+      font-size: 1rem;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔐 Acceso Privado - Tropical Flow TV📺Radio</h1>
+  <p>Introduce tu código de acceso único:</p>
+  <input type="text" id="codigo" placeholder="Ej: VIP123" />
+  <button onclick="verificarCodigo()">Entrar</button>
+  <p id="mensaje"></p>
+
+  <script>
+    // Lista de códigos válidos (puedes agregar los tuyos aquí)
+    const codigosValidos = {
+      "TF123": true,
+      "VIP987": true,
+      "MUSIC24": true
+    };
+
+    function verificarCodigo() {
+      const entrada = document.getElementById("codigo").value.trim();
+      const mensaje = document.getElementById("mensaje");
+
+      if (codigosValidos[entrada]) {
+        // Elimina el código de la lista (para un solo uso)
+        delete codigosValidos[entrada];
+        // Redirecciona al contenido privado
+        window.location.href = "privado/index.html";
+      } else {
+        mensaje.textContent = "❌ Código inválido o ya usado.";
+        mensaje.style.color = "red";
+      }
+    }
+  </script>
+</body>
+</html>
