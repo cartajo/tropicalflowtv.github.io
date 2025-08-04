@@ -1,146 +1,123 @@
- <!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tropical Flow TV📺Radio — En Vivo 24/7</title>
-  <meta name="description" content="Tropical Flow TV📺Radio - Música tropical en vivo 24/7. Dale play y disfruta." />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tropical Flow TV📺Radio</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      color: #fff;
-      background:
-        linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.45)),
-        url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover fixed no-repeat;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      background: url('https://i.imgur.com/LL5sJpg.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
     }
-    header {
+    .container {
+      padding: 20px;
       background-color: rgba(0, 0, 0, 0.7);
-      padding: 1rem;
+      max-width: 900px;
+      margin: auto;
+      border-radius: 20px;
     }
-    header h1 {
-      margin: 0;
-      font-size: 2rem;
-    }
-    .radio-player {
-      margin: 2rem auto;
-      width: min(920px, 96%);
-      background: rgba(0, 0, 0, .35);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, .25);
-      border-radius: 18px;
-      padding: 18px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, .45);
+    h1, h2 {
       text-align: center;
     }
-    .tv-section, .music-section {
-      margin: 2rem auto;
-      width: 96%;
-      max-width: 1200px;
+    .videos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .player {
+      margin: 20px 0;
       text-align: center;
     }
-    .carousel {
-      display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      gap: 1rem;
-      padding: 1rem;
+    audio {
+      width: 100%;
+      margin: 10px 0;
     }
-    .carousel iframe {
-      flex: 0 0 auto;
-      scroll-snap-align: center;
-      border-radius: 12px;
-    }
-    .social-buttons {
-      margin: 2rem;
+    .buttons {
       text-align: center;
+      margin-bottom: 20px;
     }
-    .social-buttons a {
+    .buttons a {
+      margin: 5px;
+      padding: 10px 20px;
       display: inline-block;
-      margin: 0 1rem;
-      padding: 0.5rem 1rem;
-      background: #25d366;
+      border-radius: 5px;
       color: white;
       text-decoration: none;
-      border-radius: 8px;
+      font-weight: bold;
     }
-    .social-buttons a.youtube { background: red; }
-    .social-buttons a.facebook { background: #3b5998; }
+    .whatsapp { background: green; }
+    .youtube { background: red; }
+    .facebook { background: #3b5998; }
+    .paypal { background: #6e4da6; }
+    .ath { background: #764abc; }
     footer {
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 1rem;
       text-align: center;
-    }
-    .music-list audio {
-      width: 100%;
-      margin-bottom: 10px;
-    }
-    .music-entry {
-      background: rgba(0,0,0,0.4);
-      padding: 1rem;
-      border-radius: 10px;
-      margin-bottom: 1rem;
+      font-size: 0.9em;
+      margin-top: 30px;
+      color: #ccc;
     }
   </style>
 </head>
 <body>
-  <header>
+  <div class="container">
     <h1>Tropical Flow TV📺Radio</h1>
-  </header>
-  <section class="radio-player">
-    <h2>🎧 Escúchanos en vivo 24/7</h2>
-    <p>Si no se reproduce automáticamente, toca <b>Play</b> o sube el volumen. Funciona en celular y computadora.</p>
-    <audio id="radio" controls autoplay preload="none" crossorigin="anonymous">
-      <source src="https://stream.zeno.fm/sl8wpcxtjy3uv" type="audio/mpeg" />
-      Tu navegador no soporta audio en vivo.
-    </audio>
-  </section>
-  <section class="tv-section">
-    <h2>🎬 Videos Recientes</h2>
-    <div class="carousel">
-      <iframe width="300" height="170" src="https://www.youtube.com/embed/tpi8zLE3Kqw" allowfullscreen></iframe>
-      <iframe width="300" height="170" src="https://www.youtube.com/embed/RBE8A9rAj8Y" allowfullscreen></iframe>
-      <iframe width="300" height="170" src="https://www.youtube.com/embed/XYe0ZHVvVig" allowfullscreen></iframe>
-      <iframe width="300" height="170" src="https://www.youtube.com/embed/h86xW_G-j4s" allowfullscreen></iframe>
+    
+    <div class="player">
+      <h2>🎧 Escucha tu música automáticamente</h2>
+      <p>Sube canciones a la carpeta <code>/musica</code> en tu repositorio y se cargarán aquí.</p>
+      <div id="playlist"></div>
     </div>
-  </section>
-  <section class="music-section">
-    <h2>🎵 Biblioteca Musical</h2>
-    <div id="music-list" class="music-list"></div>
-    <script>
-      fetch('https://cartajo.github.io/tropicalflowtv.github.io/musica/listado.json')
-        .then(response => response.json())
-        .then(data => {
-          const container = document.getElementById('music-list');
-          data.forEach(song => {
-            const div = document.createElement('div');
-            div.className = 'music-entry';
-            div.innerHTML = `
-              <p><strong>${song.title}</strong></p>
-              <audio controls src="musica/${song.file}"></audio><br>
-              <a href="musica/${song.file}" download>Descargar 🎶</a>
-            `;
-            container.appendChild(div);
-          });
-        });
-    </script>
-  </section>
-  <div class="social-buttons">
-    <a href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
-    <a class="youtube" href="https://www.youtube.com/@TFTvpoweredbyworldm8780" target="_blank">YouTube</a>
-    <a class="facebook" href="https://www.facebook.com/profile.php?id=61555653663073" target="_blank">Facebook</a>
+
+    <h2>🎥 Videos Recientes</h2>
+    <div class="videos">
+      <iframe width="100%" height="200" src="https://www.youtube.com/embed/7-k9uL2Gdl8" frameborder="0" allowfullscreen></iframe>
+      <iframe width="100%" height="200" src="https://www.youtube.com/embed/jYzA1gxwWfM" frameborder="0" allowfullscreen></iframe>
+      <iframe width="100%" height="200" src="https://www.youtube.com/embed/zC1tSH2MIlo" frameborder="0" allowfullscreen></iframe>
+      <iframe width="100%" height="200" src="https://www.youtube.com/embed/TxRQXQDdp28" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <div class="buttons">
+      <a class="whatsapp" href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
+      <a class="youtube" href="https://www.youtube.com/@TropicalFlowTVRadio" target="_blank">YouTube</a>
+      <a class="facebook" href="https://www.facebook.com/tropicalflowtv" target="_blank">Facebook</a>
+      <a class="paypal" href="https://www.paypal.me/cartajoffice1" target="_blank">Donar por PayPal</a>
+      <a class="ath" href="https://athmovil.com/cartajoffice1" target="_blank">Donar por ATH Móvil</a>
+    </div>
+
+    <footer>© 2025 Tropical Flow TV📺Radio - Todos los derechos reservados</footer>
   </div>
-  <div class="social-buttons">
-    <a href="https://www.paypal.com/donate/?business=cartajoffice1@gmail.com" target="_blank">💳 Donar por PayPal</a>
-    <a href="https://wa.me/19399029695?text=Hola,+deseo+donar+por+ATH+Móvil" target="_blank">📱 Donar por ATH Móvil</a>
-  </div>
-  <footer>
-    © <span id="year"></span> Tropical Flow TV📺Radio - Todos los derechos reservados
-  </footer>
+
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    async function cargarMusica() {
+      const playlist = document.getElementById("playlist");
+      try {
+        const response = await fetch("musica/");
+        const text = await response.text();
+        const matches = [...text.matchAll(/href="([^"]+\.mp3)"/g)];
+        if (matches.length === 0) {
+          playlist.innerHTML = "<p>No hay canciones aún. Sube archivos .mp3 a /musica.</p>";
+          return;
+        }
+        matches.forEach((match) => {
+          const file = match[1];
+          const nombre = decodeURIComponent(file.replace(".mp3", ""));
+          const div = document.createElement("div");
+          div.innerHTML = `
+            <h3>${nombre}</h3>
+            <audio controls src="musica/${file}"></audio>
+            <br><a href="musica/${file}" download style="color:lime;font-weight:bold;">⬇ Descargar</a>
+            <hr>`;
+          playlist.appendChild(div);
+        });
+      } catch (err) {
+        playlist.innerHTML = "<p>Error cargando canciones. Asegúrate de que la carpeta /musica existe.</p>";
+      }
+    }
+    cargarMusica();
   </script>
 </body>
 </html>
