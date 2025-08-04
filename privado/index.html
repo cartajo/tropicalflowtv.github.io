@@ -87,24 +87,7 @@
     }
   </style>
 </head>
-<!-- Contador de personas conectadas -->
-<div style="position: fixed; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 8px 14px; border-radius: 10px; font-size: 14px; z-index: 999;">
-  👥 Conectados ahora: <span id="liveCount">...</span>
-</div>
 
-<script>
-  async function actualizarContador() {
-    try {
-      const respuesta = await fetch("https://api.countapi.xyz/hit/tropicalflowtvradio/visitas");
-      const datos = await respuesta.json();
-      document.getElementById("liveCount").textContent = Math.floor(5 + Math.random() * 10); // valor simulado entre 5 y 15
-    } catch {
-      document.getElementById("liveCount").textContent = '...';
-    }
-  }
-  actualizarContador();
-  setInterval(actualizarContador, 10000); // Actualiza cada 10 segundos
-</script>
 <body>
   <header>
     <h1>🌴 Tropical Flow TV📺Radio - VIP</h1>
@@ -157,91 +140,5 @@
     setInterval(generarVisitantes, 3000);
     generarVisitantes();
   </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Área Privada - Tropical Flow TV📺Radio</title>
-  <style>
-  body {
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-    background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1950&q=80'); 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    color: white;
-  }
-
-  .contenedor {
-    background-color: rgba(0, 0, 0, 0.7);
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-    border-radius: 20px;
-  }
-
-  h2, h3, p, a {
-    color: white;
-  }
-
-  audio {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
-  .boton {
-    display: inline-block;
-    background-color: green;
-    color: white;
-    padding: 8px 16px;
-    margin: 5px 5px 15px 0;
-    text-decoration: none;
-    border-radius: 8px;
-  }
-</style>
-</head>
-<body>
-  <div class="contenedor">
-<h2>🎵 Tu Biblioteca Musical</h2>
-    
-    <p>Escucha y descarga tu música original de Tropical Flow TV📺Radio.</p>
-
-    <!-- CANCIONES VISIBLES -->
-    <div>
-      <h3>Lo Mío Va Primero</h3>
-      <audio controls>
-        <source src=[01] Chino y Nacho ft Fainal - Dame Un Besito.mp3
- type="audio/mpeg">
-        Tu navegador no soporta el reproductor de audio.
-      </audio><br>
-      <a class="boton" href="musica/lo_mio_va_primero.mp3" download>Descargar Gratis</a>
-      <a class="boton" href="https://paypal.me/cartajoffice1" target="_blank">Donar por esta canción</a>
-    </div>
-<div class="cancion">
-  <p>[01] Chino y Nacho ft Fainal - Dame Un Besito.mp3
-</p>
-  <audio controls>
-    <source src="musica/Nombre de la canción.mp3" type="audio/mpeg">
-    Tu navegador no soporta el audio.
-  </audio>
-  <a class="descargar" href="musica/Nombre de la canción.mp3" download>Descargar Gratis</a>
-  <a class="donar" href="https://www.paypal.com/paypalme/cartajo" target="_blank">Donar por esta canción</a>
-</div>
-    <div>
-      <h3>Otra Canción Tropical</h3>
-      <audio controls>
-        <source src="musica/otra_cancion.mp3" type="audio/mpeg">
-        Tu navegador no soporta el reproductor de audio.
-      </audio><br>
-      <a class="boton" href="musica/otra_cancion.mp3" download>Descargar Gratis</a>
-      <a class="boton" href="https://paypal.me/cartajoffice1" target="_blank">Donar por esta canción</a>
-    </div>
-
-    <p>¿Cómo subir tu música? 📤 Sube archivos .mp3 al folder <code>/privado/musica/</code> de este repositorio GitHub. Lo que subas aparecerá aquí automáticamente.</p>
-  </div>
 </body>
 </html>
