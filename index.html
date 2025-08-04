@@ -3,121 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tropical Flow TV📺Radio</title>
+  <title>Tropical Flow TV📺Radio - Acceso Privado</title>
   <style>
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: url('https://i.imgur.com/LL5sJpg.jpg') no-repeat center center fixed;
-      background-size: cover;
+      background: #000 url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
       color: white;
-    }
-    .container {
-      padding: 20px;
-      background-color: rgba(0, 0, 0, 0.7);
-      max-width: 900px;
-      margin: auto;
-      border-radius: 20px;
-    }
-    h1, h2 {
+      font-family: sans-serif;
       text-align: center;
     }
-    .videos {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 15px;
-      margin-bottom: 20px;
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
     }
-    .player {
-      margin: 20px 0;
-      text-align: center;
-    }
-    audio {
-      width: 100%;
-      margin: 10px 0;
-    }
-    .buttons {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .buttons a {
-      margin: 5px;
-      padding: 10px 20px;
-      display: inline-block;
-      border-radius: 5px;
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .whatsapp { background: green; }
-    .youtube { background: red; }
-    .facebook { background: #3b5998; }
-    .paypal { background: #6e4da6; }
-    .ath { background: #764abc; }
-    footer {
-      text-align: center;
-      font-size: 0.9em;
-      margin-top: 30px;
-      color: #ccc;
-    }
+    .hidden { display: none; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Tropical Flow TV📺Radio</h1>
-    
-    <div class="player">
-      <h2>🎧 Escucha tu música automáticamente</h2>
-      <p>Sube canciones a la carpeta <code>/musica</code> en tu repositorio y se cargarán aquí.</p>
-      <div id="playlist"></div>
-    </div>
-
-    <h2>🎥 Videos Recientes</h2>
-    <div class="videos">
-      <iframe width="100%" height="200" src="https://www.youtube.com/embed/7-k9uL2Gdl8" frameborder="0" allowfullscreen></iframe>
-      <iframe width="100%" height="200" src="https://www.youtube.com/embed/jYzA1gxwWfM" frameborder="0" allowfullscreen></iframe>
-      <iframe width="100%" height="200" src="https://www.youtube.com/embed/zC1tSH2MIlo" frameborder="0" allowfullscreen></iframe>
-      <iframe width="100%" height="200" src="https://www.youtube.com/embed/TxRQXQDdp28" frameborder="0" allowfullscreen></iframe>
-    </div>
-
-    <div class="buttons">
-      <a class="whatsapp" href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
-      <a class="youtube" href="https://www.youtube.com/@TropicalFlowTVRadio" target="_blank">YouTube</a>
-      <a class="facebook" href="https://www.facebook.com/tropicalflowtv" target="_blank">Facebook</a>
-      <a class="paypal" href="https://www.paypal.me/cartajoffice1" target="_blank">Donar por PayPal</a>
-      <a class="ath" href="https://athmovil.com/cartajoffice1" target="_blank">Donar por ATH Móvil</a>
-    </div>
-
-    <footer>© 2025 Tropical Flow TV📺Radio - Todos los derechos reservados</footer>
-  </div>
+  <h1>🎉 Bienvenido a Tropical Flow TV📺Radio</h1>
+  <p>Introduce tu código de acceso</p>
+  <input type="text" id="codigo" placeholder="Código de acceso"/>
+  <button onclick="verificarCodigo()">Entrar</button>
+  <p id="error" style="color:red;" class="hidden">❌ Código incorrecto</p>
 
   <script>
-    async function cargarMusica() {
-      const playlist = document.getElementById("playlist");
-      try {
-        const response = await fetch("musica/");
-        const text = await response.text();
-        const matches = [...text.matchAll(/href="([^"]+\.mp3)"/g)];
-        if (matches.length === 0) {
-          playlist.innerHTML = "<p>No hay canciones aún. Sube archivos .mp3 a /musica.</p>";
-          return;
-        }
-        matches.forEach((match) => {
-          const file = match[1];
-          const nombre = decodeURIComponent(file.replace(".mp3", ""));
-          const div = document.createElement("div");
-          div.innerHTML = `
-            <h3>${nombre}</h3>
-            <audio controls src="musica/${file}"></audio>
-            <br><a href="musica/${file}" download style="color:lime;font-weight:bold;">⬇ Descargar</a>
-            <hr>`;
-          playlist.appendChild(div);
-        });
-      } catch (err) {
-        playlist.innerHTML = "<p>Error cargando canciones. Asegúrate de que la carpeta /musica existe.</p>";
+    function verificarCodigo() {
+      const valido = "tropical2025"; // Cambia este código cuando quieras
+      const ingreso = document.getElementById("codigo").value.trim();
+      if (ingreso === valido) {
+        window.location.href = "./privado/index.html";
+      } else {
+        document.getElementById("error").classList.remove("hidden");
       }
     }
-    cargarMusica();
   </script>
 </body>
 </html>
+VERY GOOD
