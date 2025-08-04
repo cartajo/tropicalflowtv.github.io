@@ -3,94 +3,120 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tropical Flow TV📺Radio</title>
+  <title>Tropical Flow TV📺Radio · VIP</title>
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background-image: url('https://i.imgur.com/kf3QdCH.jpeg');
+      font-family: sans-serif;
+      color: white;
+      background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?fit=crop&w=1400&q=80');
       background-size: cover;
       background-position: center;
-      color: white;
-      text-align: center;
     }
-    .overlay {
-      background-color: rgba(0, 0, 0, 0.7);
+    .contenedor {
+      background: rgba(0, 0, 0, 0.75);
       padding: 20px;
+      max-width: 900px;
+      margin: auto;
+      margin-top: 30px;
       border-radius: 15px;
-      margin: 30px;
     }
-    iframe, audio {
+    h1 {
+      text-align: center;
+      color: #00ffcc;
+    }
+    .radio {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .videos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+    iframe {
+      width: 300px;
+      height: 180px;
+      border: none;
+      border-radius: 10px;
+    }
+    .player {
+      text-align: center;
+      margin-top: 30px;
+    }
+    audio {
       width: 90%;
       max-width: 600px;
-      margin: 10px auto;
-      display: block;
+      margin-top: 10px;
     }
-    .btn {
-      display: inline-block;
-      margin: 10px;
-      padding: 10px 15px;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-    }
-    .green { background-color: #28a745; }
-    .red { background-color: #dc3545; }
-    .blue { background-color: #007bff; }
-    .purple { background-color: #6f42c1; }
-    .video-carousel {
+    .botones {
       display: flex;
-      overflow-x: auto;
+      justify-content: center;
       gap: 10px;
-      padding: 10px;
-      scroll-snap-type: x mandatory;
+      margin: 15px 0;
+      flex-wrap: wrap;
     }
-    .video-carousel iframe {
-      flex: 0 0 auto;
-      scroll-snap-align: start;
-      width: 300px;
-      height: 170px;
-      border: none;
+    .botones a {
+      background-color: #00cc66;
+      color: white;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 8px;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 14px;
+      color: #ccc;
     }
   </style>
 </head>
 <body>
+  <div class="contenedor">
+    <h1>🌴 Tropical Flow TV📺Radio · VIP</h1>
 
-  <div class="overlay">
-    <h1>Tropical Flow TV📺Radio</h1>
-    <h3>Escucha tu música automáticamente</h3>
-    <p>Sube archivos .mp3 a la carpeta <code>/musica</code> en tu GitHub. Se cargarán aquí automáticamente.</p>
-    
-    <audio controls autoplay loop>
-      <source src="musica/LoMioVaPrimero.mp3" type="audio/mpeg">
-      Tu navegador no soporta el reproductor de audio.
-    </audio>
-
-    <hr style="margin: 30px 0;">
-
-    <h2>🎥 Videos Recientes</h2>
-    <div class="video-carousel">
-      <iframe src="https://www.youtube.com/embed/3O5hQKp9BL4" allowfullscreen></iframe>
-      <iframe src="https://www.youtube.com/embed/U9QK3A81G1U" allowfullscreen></iframe>
-      <iframe src="https://www.youtube.com/embed/7yx4OtwKbnw" allowfullscreen></iframe>
-      <iframe src="https://www.youtube.com/embed/DN_7qKz0GdI" allowfullscreen></iframe>
+    <div class="radio">
+      <p>🎧 Escúchanos en vivo 24/7:</p>
+      <audio controls autoplay>
+        <source src="https://stream.zeno.fm/p6y92m05p98uv" type="audio/mpeg">
+        Tu navegador no soporta el audio.
+      </audio>
     </div>
 
-    <hr style="margin: 30px 0;">
+    <div class="player">
+      <h2>🎵 Biblioteca Musical</h2>
+      <p>Sube tus canciones a <strong>/musica</strong> en GitHub y aparecerán aquí automáticamente.</p>
 
-    <h2>📻 Escúchanos en Vivo 24/7</h2>
-    <iframe src="https://zeno.fm/player/tropicalflowtvradio" width="100%" height="120" frameborder="0" scrolling="no"></iframe>
+      <p><strong>Lo Mío Va Primero</strong></p>
+      <audio controls>
+        <source src="musica/LoMioVaPrimero.mp3" type="audio/mpeg">
+      </audio>
+      <div class="botones">
+        <a href="musica/LoMioVaPrimero.mp3" download>Descargar Gratis</a>
+        <a href="https://www.paypal.com/donate?business=cartajoffice1@gmail.com" target="_blank">Donar por PayPal</a>
+        <a href="https://wa.me/19399029695" target="_blank">Donar por ATH Móvil</a>
+      </div>
+    </div>
 
-    <hr style="margin: 30px 0;">
+    <div class="videos">
+      <h2 style="width: 100%; text-align: center;">📺 Videos Recientes</h2>
 
-    <a class="btn green" href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
-    <a class="btn red" href="https://www.youtube.com/@TropicalFlowTVRadio" target="_blank">YouTube</a>
-    <a class="btn blue" href="https://www.facebook.com/profile.php?id=61559980682663" target="_blank">Facebook</a>
-    <a class="btn purple" href="https://www.paypal.com/donate/?hosted_button_id=J7TYZJL89KDPJ" target="_blank">Donar por PayPal</a>
-    <a class="btn green" href="https://athmovil.com/9399029695" target="_blank">Donar por ATH Móvil</a>
-    
-    <p style="margin-top: 40px;">© 2025 Tropical Flow TV📺Radio - Todos los derechos reservados</p>
+      <iframe src="https://www.youtube.com/embed/n9WwV8Z4UuY" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/xn_fi7gn_5E" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/zQf0XyGmR2M" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/7cqP0aRYEq8" allowfullscreen></iframe>
+    </div>
+
+    <div class="botones" style="margin-top: 30px;">
+      <a href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
+      <a href="https://www.youtube.com/@TropicalFlowTVRadio" target="_blank">YouTube</a>
+      <a href="https://www.facebook.com" target="_blank">Facebook</a>
+    </div>
+
+    <div class="footer">
+      © 2025 Tropical Flow TV📺Radio · Todos los derechos reservados
+    </div>
   </div>
-
 </body>
 </html>
