@@ -1,146 +1,122 @@
-ropical Flow TV code funciona  <!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tropical Flow TV📺Radio — En Vivo 24/7</title>
-  <meta name="description" content="Tropical Flow TV📺Radio - Música tropical en vivo 24/7. Dale play y disfruta." />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tropical Flow TV📺Radio · VIP</title>
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      color: #fff;
-      background:
-        linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.45)),
-        url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover fixed no-repeat;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    header {
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 1rem;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2rem;
-    }
-    .radio-player {
-      margin: 2rem auto;
-      width: min(920px, 96%);
-      background: rgba(0, 0, 0, .35);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, .25);
-      border-radius: 18px;
-      padding: 18px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, .45);
-      text-align: center;
-    }
-    .tv-section, .music-section {
-      margin: 2rem auto;
-      width: 96%;
-      max-width: 1200px;
-      text-align: center;
-    }
-    .carousel {
-      display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      gap: 1rem;
-      padding: 1rem;
-    }
-    .carousel iframe {
-      flex: 0 0 auto;
-      scroll-snap-align: center;
-      border-radius: 12px;
-    }
-    .social-buttons {
-      margin: 2rem;
-      text-align: center;
-    }
-    .social-buttons a {
-      display: inline-block;
-      margin: 0 1rem;
-      padding: 0.5rem 1rem;
-      background: #25d366;
+      font-family: sans-serif;
       color: white;
+      background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?fit=crop&w=1400&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+    .contenedor {
+      background: rgba(0, 0, 0, 0.75);
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+      margin-top: 30px;
+      border-radius: 15px;
+    }
+    h1 {
+      text-align: center;
+      color: #00ffcc;
+    }
+    .radio {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .videos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+    iframe {
+      width: 300px;
+      height: 180px;
+      border: none;
+      border-radius: 10px;
+    }
+    .player {
+      text-align: center;
+      margin-top: 30px;
+    }
+    audio {
+      width: 90%;
+      max-width: 600px;
+      margin-top: 10px;
+    }
+    .botones {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 15px 0;
+      flex-wrap: wrap;
+    }
+    .botones a {
+      background-color: #00cc66;
+      color: white;
+      padding: 10px 15px;
       text-decoration: none;
       border-radius: 8px;
     }
-    .social-buttons a.youtube { background: red; }
-    .social-buttons a.facebook { background: #3b5998; }
-    footer {
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 1rem;
+    .footer {
       text-align: center;
-    }
-    .music-list audio {
-      width: 100%;
-      margin-bottom: 10px;
-    }
-    .music-entry {
-      background: rgba(0,0,0,0.4);
-      padding: 1rem;
-      border-radius: 10px;
-      margin-bottom: 1rem;
+      margin-top: 30px;
+      font-size: 14px;
+      color: #ccc;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Tropical Flow TV📺Radio</h1>
-  </header>
-  <section class="radio-player">
-    <h2>🎧 Escúchanos en vivo 24/7</h2>
-    <p>Si no se reproduce automáticamente, toca <b>Play</b> o sube el volumen. Funciona en celular y computadora.</p>
-    <audio id="radio" controls autoplay preload="none" crossorigin="anonymous">
-      <source src="https://stream.zeno.fm/sl8wpcxtjy3uv" type="audio/mpeg" />
-      Tu navegador no soporta audio en vivo.
-    </audio>
-  </section>
-  <section class="tv-section">
-    <h2>🎬 Videos Recientes</h2>
-    <div class="carousel">
-      <iframe width="300" height="170" src="https://www.youtube.com/embed/tpi8zLE3Kqw" allowfullscreen></iframe>
-      <iframe width="300" height="170" src="https://www.youtube.com/embed/RBE8A9rAj8Y" allowfullscreen></iframe>
-      <iframe width="300" height="170" src="https://www.youtube.com/embed/XYe0ZHVvVig" allowfullscreen></iframe>
-      <iframe width="300" height="170" src="https://www.youtube.com/embed/h86xW_G-j4s" allowfullscreen></iframe>
+  <div class="contenedor">
+    <h1>🌴 Tropical Flow TV📺Radio · VIP</h1>
+
+    <div class="radio">
+      <p>🎧 Escúchanos en vivo 24/7:</p>
+      <audio controls autoplay>
+        <source src="https://stream.zeno.fm/p6y92m05p98uv" type="audio/mpeg">
+        Tu navegador no soporta el audio.
+      </audio>
     </div>
-  </section>
-  <section class="music-section">
-    <h2>🎵 Biblioteca Musical</h2>
-    <div id="music-list" class="music-list"></div>
-    <script>
-      fetch('https://cartajo.github.io/tropicalflowtv.github.io/musica/listado.json')
-        .then(response => response.json())
-        .then(data => {
-          const container = document.getElementById('music-list');
-          data.forEach(song => {
-            const div = document.createElement('div');
-            div.className = 'music-entry';
-            div.innerHTML = `
-              <p><strong>${song.title}</strong></p>
-              <audio controls src="musica/${song.file}"></audio><br>
-              <a href="musica/${song.file}" download>Descargar 🎶</a>
-            `;
-            container.appendChild(div);
-          });
-        });
-    </script>
-  </section>
-  <div class="social-buttons">
-    <a href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
-    <a class="youtube" href="https://www.youtube.com/@TFTvpoweredbyworldm8780" target="_blank">YouTube</a>
-    <a class="facebook" href="https://www.facebook.com/profile.php?id=61555653663073" target="_blank">Facebook</a>
+
+    <div class="player">
+      <h2>🎵 Biblioteca Musical</h2>
+      <p>Sube tus canciones a <strong>/musica</strong> en GitHub y aparecerán aquí automáticamente.</p>
+
+      <p><strong>Lo Mío Va Primero</strong></p>
+      <audio controls>
+        <source src="musica/LoMioVaPrimero.mp3" type="audio/mpeg">
+      </audio>
+      <div class="botones">
+        <a href="musica/LoMioVaPrimero.mp3" download>Descargar Gratis</a>
+        <a href="https://www.paypal.com/donate?business=cartajoffice1@gmail.com" target="_blank">Donar por PayPal</a>
+        <a href="https://wa.me/19399029695" target="_blank">Donar por ATH Móvil</a>
+      </div>
+    </div>
+
+    <div class="videos">
+      <h2 style="width: 100%; text-align: center;">📺 Videos Recientes</h2>
+
+      <iframe src="https://www.youtube.com/embed/n9WwV8Z4UuY" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/xn_fi7gn_5E" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/zQf0XyGmR2M" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/7cqP0aRYEq8" allowfullscreen></iframe>
+    </div>
+
+    <div class="botones" style="margin-top: 30px;">
+      <a href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
+      <a href="https://www.youtube.com/@TropicalFlowTVRadio" target="_blank">YouTube</a>
+      <a href="https://www.facebook.com" target="_blank">Facebook</a>
+    </div>
+
+    <div class="footer">
+      © 2025 Tropical Flow TV📺Radio · Todos los derechos reservados
+    </div>
   </div>
-  <div class="social-buttons">
-    <a href="https://www.paypal.com/donate/?business=cartajoffice1@gmail.com" target="_blank">💳 Donar por PayPal</a>
-    <a href="https://wa.me/19399029695?text=Hola,+deseo+donar+por+ATH+Móvil" target="_blank">📱 Donar por ATH Móvil</a>
-  </div>
-  <footer>
-    © <span id="year"></span> Tropical Flow TV📺Radio - Todos los derechos reservados
-  </footer>
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
 </body>
 </html>
