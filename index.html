@@ -3,47 +3,94 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tropical Flow TV📺Radio - Acceso Privado</title>
+  <title>Tropical Flow TV📺Radio</title>
   <style>
     body {
-      background: #000 url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') center/cover no-repeat;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-image: url('https://i.imgur.com/kf3QdCH.jpeg');
+      background-size: cover;
+      background-position: center;
       color: white;
-      font-family: sans-serif;
       text-align: center;
     }
-    input, button {
-      padding: 10px;
-      margin: 10px;
-      border-radius: 8px;
-      border: none;
-      font-size: 1rem;
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      border-radius: 15px;
+      margin: 30px;
     }
-    .hidden { display: none; }
+    iframe, audio {
+      width: 90%;
+      max-width: 600px;
+      margin: 10px auto;
+      display: block;
+    }
+    .btn {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 15px;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    .green { background-color: #28a745; }
+    .red { background-color: #dc3545; }
+    .blue { background-color: #007bff; }
+    .purple { background-color: #6f42c1; }
+    .video-carousel {
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+      padding: 10px;
+      scroll-snap-type: x mandatory;
+    }
+    .video-carousel iframe {
+      flex: 0 0 auto;
+      scroll-snap-align: start;
+      width: 300px;
+      height: 170px;
+      border: none;
+    }
   </style>
 </head>
 <body>
-  <h1>🎉 Bienvenido a Tropical Flow TV📺Radio</h1>
-  <p>Introduce tu código de acceso</p>
-  <input type="text" id="codigo" placeholder="Código de acceso"/>
-  <button onclick="verificarCodigo()">Entrar</button>
-  <p id="error" style="color:red;" class="hidden">❌ Código incorrecto</p>
 
-  <script>
-    function verificarCodigo() {
-      const valido = "tropical2025"; // Cambia este código cuando quieras
-      const ingreso = document.getElementById("codigo").value.trim();
-      if (ingreso === valido) {
-        window.location.href = "./privado/index.html";
-      } else {
-        document.getElementById("error").classList.remove("hidden");
-      }
-    }
-  </script>
+  <div class="overlay">
+    <h1>Tropical Flow TV📺Radio</h1>
+    <h3>Escucha tu música automáticamente</h3>
+    <p>Sube archivos .mp3 a la carpeta <code>/musica</code> en tu GitHub. Se cargarán aquí automáticamente.</p>
+    
+    <audio controls autoplay loop>
+      <source src="musica/LoMioVaPrimero.mp3" type="audio/mpeg">
+      Tu navegador no soporta el reproductor de audio.
+    </audio>
+
+    <hr style="margin: 30px 0;">
+
+    <h2>🎥 Videos Recientes</h2>
+    <div class="video-carousel">
+      <iframe src="https://www.youtube.com/embed/3O5hQKp9BL4" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/U9QK3A81G1U" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/7yx4OtwKbnw" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/DN_7qKz0GdI" allowfullscreen></iframe>
+    </div>
+
+    <hr style="margin: 30px 0;">
+
+    <h2>📻 Escúchanos en Vivo 24/7</h2>
+    <iframe src="https://zeno.fm/player/tropicalflowtvradio" width="100%" height="120" frameborder="0" scrolling="no"></iframe>
+
+    <hr style="margin: 30px 0;">
+
+    <a class="btn green" href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
+    <a class="btn red" href="https://www.youtube.com/@TropicalFlowTVRadio" target="_blank">YouTube</a>
+    <a class="btn blue" href="https://www.facebook.com/profile.php?id=61559980682663" target="_blank">Facebook</a>
+    <a class="btn purple" href="https://www.paypal.com/donate/?hosted_button_id=J7TYZJL89KDPJ" target="_blank">Donar por PayPal</a>
+    <a class="btn green" href="https://athmovil.com/9399029695" target="_blank">Donar por ATH Móvil</a>
+    
+    <p style="margin-top: 40px;">© 2025 Tropical Flow TV📺Radio - Todos los derechos reservados</p>
+  </div>
+
 </body>
 </html>
-VERY GOOD
