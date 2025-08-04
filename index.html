@@ -1,92 +1,96 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tropical Flow TV📺Radio - VIP</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tropical Flow TV📺Radio</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: url('https://i.imgur.com/2v1iS4v.jpg') no-repeat center center fixed;
+      background-image: url('https://i.imgur.com/kf3QdCH.jpeg');
       background-size: cover;
+      background-position: center;
       color: white;
-    }
-    .container {
-      background-color: rgba(0, 0, 0, 0.75);
-      padding: 20px;
-      max-width: 900px;
-      margin: auto;
-      border-radius: 15px;
-    }
-    h1, h2 {
       text-align: center;
     }
-    .radio-player, .music-library, .videos {
-      margin-top: 30px;
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      border-radius: 15px;
+      margin: 30px;
     }
-    audio, iframe {
-      width: 100%;
-      border-radius: 8px;
+    iframe, audio {
+      width: 90%;
+      max-width: 600px;
+      margin: 10px auto;
+      display: block;
     }
-    .video-list iframe {
-      margin-bottom: 15px;
-    }
-    .donate-buttons button {
-      margin: 5px;
+    .btn {
+      display: inline-block;
+      margin: 10px;
       padding: 10px 15px;
-      font-size: 16px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
     }
-    .whatsapp { background-color: green; color: white; }
-    .youtube { background-color: red; color: white; }
-    .facebook { background-color: #3b5998; color: white; }
-    .paypal { background-color: purple; color: white; }
-    .ath { background-color: darkgreen; color: white; }
+    .green { background-color: #28a745; }
+    .red { background-color: #dc3545; }
+    .blue { background-color: #007bff; }
+    .purple { background-color: #6f42c1; }
+    .video-carousel {
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+      padding: 10px;
+      scroll-snap-type: x mandatory;
+    }
+    .video-carousel iframe {
+      flex: 0 0 auto;
+      scroll-snap-align: start;
+      width: 300px;
+      height: 170px;
+      border: none;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🌴 Tropical Flow TV📺Radio - VIP</h1>
-    <div class="radio-player">
-      <h2>📻 Escúchanos en Vivo 24/7</h2>
-      <audio controls autoplay>
-        <source src="https://stream.zeno.fm/xxxxxxxxxxxx.aac" type="audio/aac">
-        Tu navegador no soporta el reproductor de audio.
-      </audio>
-    </div><div class="music-library">
-  <h2>🎵 Tu Biblioteca Musical</h2>
-  <p>Sube archivos .mp3 al folder /privado/musica y se mostrarán aquí automáticamente.</p>
-  <audio controls>
-    <source src="musica/LoMioVaPrimero.mp3" type="audio/mpeg">
-    Tu navegador no soporta la reproducción de audio.
-  </audio>
-  <a href="musica/LoMioVaPrimero.mp3" download>
-    <button>Descargar 🎶</button>
-  </a>
-</div>
 
-<div class="videos">
-  <h2>🎥 Videos Recientes</h2>
-  <div class="video-list">
-    <iframe src="https://www.youtube.com/embed/wZF0wIFvDPA" frameborder="0" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/FyPZdiwu7sU" frameborder="0" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/v2lLsffE8dU" frameborder="0" allowfullscreen></iframe>
+  <div class="overlay">
+    <h1>Tropical Flow TV📺Radio</h1>
+    <h3>Escucha tu música automáticamente</h3>
+    <p>Sube archivos .mp3 a la carpeta <code>/musica</code> en tu GitHub. Se cargarán aquí automáticamente.</p>
+    
+    <audio controls autoplay loop>
+      <source src="musica/LoMioVaPrimero.mp3" type="audio/mpeg">
+      Tu navegador no soporta el reproductor de audio.
+    </audio>
+
+    <hr style="margin: 30px 0;">
+
+    <h2>🎥 Videos Recientes</h2>
+    <div class="video-carousel">
+      <iframe src="https://www.youtube.com/embed/3O5hQKp9BL4" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/U9QK3A81G1U" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/7yx4OtwKbnw" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/DN_7qKz0GdI" allowfullscreen></iframe>
+    </div>
+
+    <hr style="margin: 30px 0;">
+
+    <h2>📻 Escúchanos en Vivo 24/7</h2>
+    <iframe src="https://zeno.fm/player/tropicalflowtvradio" width="100%" height="120" frameborder="0" scrolling="no"></iframe>
+
+    <hr style="margin: 30px 0;">
+
+    <a class="btn green" href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
+    <a class="btn red" href="https://www.youtube.com/@TropicalFlowTVRadio" target="_blank">YouTube</a>
+    <a class="btn blue" href="https://www.facebook.com/profile.php?id=61559980682663" target="_blank">Facebook</a>
+    <a class="btn purple" href="https://www.paypal.com/donate/?hosted_button_id=J7TYZJL89KDPJ" target="_blank">Donar por PayPal</a>
+    <a class="btn green" href="https://athmovil.com/9399029695" target="_blank">Donar por ATH Móvil</a>
+    
+    <p style="margin-top: 40px;">© 2025 Tropical Flow TV📺Radio - Todos los derechos reservados</p>
   </div>
-</div>
 
-<div class="donate-buttons">
-  <h2>💸 Apóyanos</h2>
-  <button class="whatsapp" onclick="window.open('https://wa.me/19399029695','_blank')">WhatsApp</button>
-  <button class="youtube" onclick="window.open('https://youtube.com/@TropicalFlowTVRadio','_blank')">YouTube</button>
-  <button class="facebook" onclick="window.open('https://facebook.com','_blank')">Facebook</button>
-  <button class="paypal" onclick="window.open('https://www.paypal.me/cartajoffice1','_blank')">Donar por PayPal</button>
-  <button class="ath" onclick="window.open('https://athmovil.com/19399029695','_blank')">Donar por ATH Móvil</button>
-</div>
-
-<p style="text-align: center; margin-top: 30px;">© 2025 Tropical Flow TV📺Radio - Todos los derechos reservados</p>
-
-  </div>
 </body>
 </html>
