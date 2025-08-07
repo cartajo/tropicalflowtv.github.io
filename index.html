@@ -1,117 +1,48 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tropical Flow TV📺Radio</title>
+  <title>Tropical Flow TV📺Radio - Acceso Privado</title>
   <style>
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
+      background: #000 url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
       color: white;
-      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') no-repeat center center fixed;
-      background-size: cover;
-    }
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 20px;
-      background-color: rgba(0, 0, 0, 0.6);
-      border-radius: 15px;
-    }
-    header, section, footer {
-      margin-bottom: 60px;
-    }
-    nav {
-      margin: 20px 0;
+      font-family: sans-serif;
       text-align: center;
     }
-    nav a {
-      color: #00e0ff;
-      margin: 0 10px;
-      text-decoration: none;
-      font-weight: bold;
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
     }
-    h1, h2 {
-      text-align: center;
-      color: #fff;
-    }
-    video {
-      width: 100%;
-      max-width: 600px;
-      display: block;
-      margin: 0 auto;
-    }
-    footer {
-      text-align: center;
-      font-size: 14px;
-      color: #ccc;
-    }
-    section {
-      padding-top: 30px;
-      border-top: 2px solid #ffffff30;
-    }
+    .hidden { display: none; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Tropical Flow TV📺Radio</h1>
-      <nav>
-        <a href="#radio">Radio en Vivo</a>
-        <a href="#videos">Videos</a>
-        <a href="#contacto">Contacto</a>
-      </nav>
-    </header>
-
-    <section id="radio">
-      <h2>🎧 Radio en Vivo</h2>
-      <iframe src="https://your-azuracast-url.com/public/tropicalflow/embed"
-              frameborder="0" allowtransparency="true"
-              style="width:100%; max-width:500px; height:150px;"></iframe>
-    </section>
-
-    <section id="videos">
-      <h2>🎬 Playlist de Videos Musicales</h2>
-      <video id="videoPlayer" controls autoplay>
-        <source src="videos/video1.mp4" type="video/mp4">
-        Tu navegador no soporta el video.
-      </video>
-    </section>
-
-    <section id="contacto">
-      <h2>📞 Contáctanos</h2>
-      <form action="https://formspree.io/f/xwkgrlpl" method="POST">
-        <input type="text" name="name" placeholder="Tu nombre" required>
-        <input type="email" name="email" placeholder="Tu correo" required>
-        <textarea name="message" placeholder="Mensaje" required></textarea>
-        <button type="submit">Enviar</button>
-      </form>
-    </section>
-
-    <footer>
-      <p>&copy; 2025 Tropical Flow TV📺Radio - Todos los derechos reservados</p>
-    </footer>
-  </div>
+  <h1>🎉 Bienvenido a Tropical Flow TV📺Radio</h1>
+  <p>Introduce tu código de acceso</p>
+  <input type="text" id="codigo" placeholder="Código de acceso"/>
+  <button onclick="verificarCodigo()">Entrar</button>
+  <p id="error" style="color:red;" class="hidden">❌ Código incorrecto</p>
 
   <script>
-    const videos = [
-      "videos/video1.mp4",
-      "videos/video2.mp4",
-      "videos/video3.mp4"
-    ];
-    let current = 0;
-    const player = document.getElementById("videoPlayer");
-
-    player.addEventListener("ended", () => {
-      current++;
-      if (current >= videos.length) {
-        current = 0; // reinicia la playlist
+    function verificarCodigo() {
+      const valido = "tropical2025"; // Cambia este código cuando quieras
+      const ingreso = document.getElementById("codigo").value.trim();
+      if (ingreso === valido) {
+        window.location.href = "./privado/index.html";
+      } else {
+        document.getElementById("error").classList.remove("hidden");
       }
-      player.src = videos[current];
-      player.load();
-      player.play();
-    });
+    }
   </script>
 </body>
 </html>
