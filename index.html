@@ -1,79 +1,127 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tropical Flow TV📺Radio - Acceso Privado</title>
+  <title>Tropical Flow TV📺Radio</title>
   <style>
     body {
-      background: #000 url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') center/cover no-repeat;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') no-repeat center center fixed;
+      background-size: cover;
       color: white;
-      font-family: sans-serif;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 15px;
+    }
+
+    nav {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    nav a {
+      color: #00e0ff;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    h1, h2 {
       text-align: center;
     }
-    input, button {
-      padding: 10px;
-      margin: 10px;
-      border-radius: 8px;
-      border: none;
-      font-size: 1rem;
+
+    video {
+      width: 100%;
+      max-width: 600px;
+      display: block;
+      margin: 20px auto;
     }
-    .hidden { display: none; }
+
+    footer {
+      text-align: center;
+      color: #ccc;
+      font-size: 14px;
+      margin-top: 40px;
+    }
+
+    section {
+      margin-bottom: 40px;
+      border-top: 2px solid #ffffff30;
+      padding-top: 30px;
+    }
   </style>
 </head>
 <body>
-  <h1>🎉 Bienvenido a Tropical Flow TV📺Radio</h1>
-  <p>Introduce tu código de acceso</p>
-  <input type="text" id="codigo" placeholder="Código de acceso"/>
-  <button onclick="verificarCodigo()">Entrar</button>
-  <p id="error" style="color:red;" class="hidden">❌ Código incorrecto</p>
+  <div class="container">
+    <header>
+      <h1>Tropical Flow TV📺Radio</h1>
+      <nav>
+        <a href="#radio">Radio en Vivo</a>
+        <a href="#playlist-video">Playlist de Videos</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+    </header>
+
+    <section id="radio">
+      <h2>🎧 Radio en Vivo</h2>
+      <iframe src="https://your-azuracast-url.com/public/tropicalflow/embed"
+              frameborder="0" allowtransparency="true"
+              style="width:100%; max-width:500px; height:150px;"></iframe>
+    </section>
+
+    <section id="playlist-video">
+      <h2>🎬 Playlist de Videos (Auto Reproducir)</h2>
+      <video id="videoPlayer" controls autoplay>
+        <source src="videos/video1.mp4" type="video/mp4">
+        Tu navegador no soporta el video.
+      </video>
+    </section>
+
+    <section id="contacto">
+      <h2>📞 Contáctanos</h2>
+      <form action="https://formspree.io/f/xwkgrlpl" method="POST">
+        <input type="text" name="name" placeholder="Tu nombre" required>
+        <input type="email" name="email" placeholder="Tu correo" required>
+        <textarea name="message" placeholder="Mensaje" required></textarea>
+        <button type="submit">Enviar</button>
+      </form>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 Tropical Flow TV📺Radio - Todos los derechos reservados</p>
+    </footer>
+  </div>
 
   <script>
-    function verificarCodigo() {
-      const valido = "tropical2026"; // Cambia este código cuando quieras
-      const ingreso = document.getElementById("codigo").value.trim();
-      if (ingreso === valido) {
-        window.location.href = "./privado/index.html";
+    const videos = [
+      "videos/video1.mp4",
+      "videos/video2.mp4",
+      "videos/video3.mp4"
+    ];
+
+    let current = 0;
+    const player = document.getElementById("videoPlayer");
+
+    player.addEventListener('ended', () => {
+      current++;
+      if (current < videos.length) {
+        player.src = videos[current];
+        player.load();
+        player.play();
       } else {
-        document.getElementById("error").classList.remove("hidden");
+        current = 0; // Reiniciar playlist
+        player.src = videos[current];
+        player.load();
+        player.play();
       }
-    }
+    });
   </script>
- <h2>🎬 Reproducción Continua de Videos</h2>
-<video id="videoPlayer" width="100%" controls autoplay>
-  <source src="videos/video1.mp4" type="video/mp4">
-  Tu navegador no soporta el video.
-</video>
-
-<script>
-  const videos = [
-    "videos/video1.mp4",
-    "videos/video2.mp4",
-    "videos/video3.mp4"
-  ];
-
-  let current = 0;
-  const player = document.getElementById("videoPlayer");
-
-  player.addEventListener('ended', () => {
-    current++;
-    if (current < videos.length) {
-      player.src = videos[current];
-      player.load();
-      player.play();
-    } else {
-      current = 0; // Reiniciar si deseas que repita
-      player.src = videos[current];
-      player.load();
-      player.play();
-    }
-  });
-</script>
-
 </body>
 </html>
