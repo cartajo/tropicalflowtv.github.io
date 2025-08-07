@@ -1,48 +1,134 @@
+<?php
+$archivos = scandir("uploads/");
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tropical Flow TV📺Radio - Acceso Privado</title>
+  <title>Tropical Flow TV📺Radio</title>
   <style>
     body {
-      background: #000 url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') center/cover no-repeat;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
       color: white;
-      font-family: sans-serif;
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 15px;
+    }
+    header, section, footer {
+      margin-bottom: 60px;
+    }
+    nav {
+      margin: 20px 0;
       text-align: center;
     }
-    input, button {
-      padding: 10px;
-      margin: 10px;
-      border-radius: 8px;
-      border: none;
-      font-size: 1rem;
+    nav a {
+      color: #00e0ff;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: bold;
     }
-    .hidden { display: none; }
+    h1, h2 {
+      text-align: center;
+      color: #fff;
+    }
+    video, audio {
+      width: 100%;
+      max-width: 500px;
+      margin: 10px auto;
+      display: block;
+    }
+    input, textarea, button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+    }
+    footer {
+      text-align: center;
+      font-size: 14px;
+      color: #ccc;
+    }
+    section {
+      padding-top: 30px;
+      border-top: 2px solid #ffffff30;
+    }
   </style>
 </head>
 <body>
-  <h1>🎉 Bienvenido a Tropical Flow TV📺Radio</h1>
-  <p>Introduce tu código de acceso</p>
-  <input type="text" id="codigo" placeholder="Código de acceso"/>
-  <button onclick="verificarCodigo()">Entrar</button>
-  <p id="error" style="color:red;" class="hidden">❌ Código incorrecto</p>
+  <div class="container">
+    <header>
+      <h1>Tropical Flow TV📺Radio</h1>
+      <nav>
+        <a href="#radio">Radio en Vivo</a>
+        <a href="#videos">Videos</a>
+        <a href="#djs">DJs</a>
+        <a href="#descargas">Descargas</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+    </header>
 
-  <script>
-    function verificarCodigo() {
-      const valido = "tropical2025"; // Cambia este código cuando quieras
-      const ingreso = document.getElementById("codigo").value.trim();
-      if (ingreso === valido) {
-        window.location.href = "./privado/index.html";
-      } else {
-        document.getElementById("error").classList.remove("hidden");
-      }
-    }
-  </script>
+    <section id="radio">
+      <h2>🎧 Radio en Vivo</h2>
+      <iframe src="https://your-azuracast-url.com/public/tropicalflow/embed"
+              frameborder="0" allowtransparency="true"
+              style="width:100%; max-width:500px; height:150px;"></iframe>
+    </section>
+
+    <section id="videos">
+      <h2>🎥 Subir Video Musical</h2>
+      <form action="upload.php" method="post" enctype="multipart/form-data">
+        <input type="file" name="archivo" accept="video/*" required>
+        <button type="submit">Subir Video</button>
+      </form>
+      <h3>🎬 Galería de Videos</h3>
+      <?php foreach($archivos as $archivo){
+        if (in_array(pathinfo($archivo, PATHINFO_EXTENSION), ['mp4', 'webm'])) {
+          echo "<video controls><source src='uploads/$archivo' type='video/mp4'></video>";
+        }
+      } ?>
+    </section>
+
+    <section id="djs">
+      <h2>🎧 Zona de DJs - Sube tu Música</h2>
+      <form action="upload.php" method="post" enctype="multipart/form-data">
+        <input type="file" name="archivo" accept="audio/*" required>
+        <button type="submit">Subir Canción</button>
+      </form>
+      <h3>🎶 Playlist</h3>
+      <?php foreach($archivos as $archivo){
+        if (in_array(pathinfo($archivo, PATHINFO_EXTENSION), ['mp3', 'ogg', 'wav'])) {
+          echo "<audio controls src='uploads/$archivo'></audio>";
+        }
+      } ?>
+    </section>
+
+    <section id="descargas">
+      <h2>⬇ Descargas Exclusivas</h2>
+      <a href="https://www.paypal.com/paypalme/cartajo1970" target="_blank" style="color:#00e0ff;">Pagar con PayPal</a><br><br>
+      <a href="uploads/exclusiva.mp3" download>Descargar Canción Exclusiva</a>
+    </section>
+
+    <section id="contacto">
+      <h2>📞 Contáctanos</h2>
+      <form action="https://formspree.io/f/xwkgrlpl" method="POST">
+        <input type="text" name="name" placeholder="Tu nombre" required>
+        <input type="email" name="email" placeholder="Tu correo" required>
+        <textarea name="message" placeholder="Mensaje" required></textarea>
+        <button type="submit">Enviar</button>
+      </form>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 Tropical Flow TV📺Radio - Todos los derechos reservados</p>
+    </footer>
+  </div>
 </body>
 </html>
