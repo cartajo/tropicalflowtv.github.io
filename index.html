@@ -1,66 +1,48 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Tropical Flow TV📺Radio - Acceso Privado</title>
   <style>
-    <div class="container">
-    <header>
-      <h1>Tropical Flow TV📺Radio</h1>
-      <nav>
-        <a href="#radio">Radio</a>
-        <a href="#playlist">Playlist</a>
-        <a href="#videos">Videos</a>
-        <a href="#podcast">Podcast</a>
-        <a href="#contacto">Contacto</a>
-      </nav>
-    </header>
+    body {
+      background: #000 url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+      font-family: sans-serif;
+      text-align: center;
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+    }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <h1>🎉 Bienvenido a Tropical Flow TV📺Radio</h1>
+  <p>Introduce tu código de acceso</p>
+  <input type="text" id="codigo" placeholder="Código de acceso"/>
+  <button onclick="verificarCodigo()">Entrar</button>
+  <p id="error" style="color:red;" class="hidden">❌ Código incorrecto</p>
 
-    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;">
-      <!-- Columna Izquierda -->
-      <div style="flex: 1; min-width: 300px;">
-        <section id="radio">
-          <h2>🎧 Radio en Vivo</h2>
-          <iframe src="https://your-radio-url.com/embed" frameborder="0" allowtransparency="true"
-                  style="width:100%; height:150px;"></iframe>
-          <div class="contador">🔴 Personas conectadas: 51</div>
-        </section>
-      </div>
-
-      <!-- Columna Derecha -->
-      <div style="flex: 1; min-width: 300px;">
-        <section id="playlist">
-          <h2>🎵 Playlist</h2>
-          <audio controls src="musica/tema1.mp3" class="audio-player"></audio>
-          <audio controls src="musica/tema2.mp3" class="audio-player"></audio>
-        </section>
-
-        <section id="videos">
-          <h2>🎬 Videos</h2>
-          <video controls width="100%">
-            <source src="videos/video1.mp4" type="video/mp4">
-            Tu navegador no soporta video.
-          </video>
-        </section>
-      </div>
-    </div>
-
-    <!-- Carrusel o galería adicional abajo -->
-    <section style="margin-top: 40px;">
-      <h2 style="text-align:center;">🎞 Galería de Videos Recientes</h2>
-      <div style="display: flex; overflow-x: auto; gap: 15px; padding: 10px;">
-        <iframe width="250" height="150" src="https://www.youtube.com/embed/VIDEO_ID_1" frameborder="0" allowfullscreen></iframe>
-        <iframe width="250" height="150" src="https://www.youtube.com/embed/VIDEO_ID_2" frameborder="0" allowfullscreen></iframe>
-        <iframe width="250" height="150" src="https://www.youtube.com/embed/VIDEO_ID_3" frameborder="0" allowfullscreen></iframe>
-      </div>
-    </section>
-
-    <footer>
-      <p>&copy; 2025 Tropical Flow TV📺Radio - Todos los derechos reservados</p>
-    </footer>
-  </div>
+  <script>
+    function verificarCodigo() {
+      const valido = "tropical2026"; // Cambia este código cuando quieras
+      const ingreso = document.getElementById("codigo").value.trim();
+      if (ingreso === valido) {
+        window.location.href = "./privado/index.html";
+      } else {
+        document.getElementById("error").classList.remove("hidden");
+      }
+    }
+  </script>
 </body>
 </html>
-<body>
- 
