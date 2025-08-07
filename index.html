@@ -44,5 +44,36 @@
       }
     }
   </script>
+ <h2>🎬 Reproducción Continua de Videos</h2>
+<video id="videoPlayer" width="100%" controls autoplay>
+  <source src="videos/video1.mp4" type="video/mp4">
+  Tu navegador no soporta el video.
+</video>
+
+<script>
+  const videos = [
+    "videos/video1.mp4",
+    "videos/video2.mp4",
+    "videos/video3.mp4"
+  ];
+
+  let current = 0;
+  const player = document.getElementById("videoPlayer");
+
+  player.addEventListener('ended', () => {
+    current++;
+    if (current < videos.length) {
+      player.src = videos[current];
+      player.load();
+      player.play();
+    } else {
+      current = 0; // Reiniciar si deseas que repita
+      player.src = videos[current];
+      player.load();
+      player.play();
+    }
+  });
+</script>
+
 </body>
 </html>
