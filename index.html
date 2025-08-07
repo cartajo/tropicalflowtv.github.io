@@ -125,3 +125,51 @@
   </script>
 </body>
 </html>
+ <!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tropical Flow TV📺Radio - Acceso Privado</title>
+  <style>
+    body {
+      background: #000 url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+      font-family: sans-serif;
+      text-align: center;
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+    }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <h1>🎉 Bienvenido a Tropical Flow TV📺Radio</h1>
+  <p>Introduce tu código de acceso</p>
+  <input type="text" id="codigo" placeholder="Código de acceso"/>
+  <button onclick="verificarCodigo()">Entrar</button>
+  <p id="error" style="color:red;" class="hidden">❌ Código incorrecto</p>
+
+  <script>
+    function verificarCodigo() {
+      const valido = "tropical2025"; // Cambia este código cuando quieras
+      const ingreso = document.getElementById("codigo").value.trim();
+      if (ingreso === valido) {
+        window.location.href = "./privado/index.html";
+      } else {
+        document.getElementById("error").classList.remove("hidden");
+      }
+    }
+  </script>
+</body>
+</html>
