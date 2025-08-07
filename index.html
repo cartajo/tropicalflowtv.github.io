@@ -1,82 +1,49 @@
 
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tropical Flow TV📺Radio</title>
+  <title>Tropical Flow TV📺Radio - Acceso Privado</title>
   <style>
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') no-repeat center center fixed;
-      background-size: cover;
-      color: #fff;
-    }
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 20px;
-      background-color: rgba(0, 0, 0, 0.6);
-      border-radius: 15px;
-    }
-    header, section, footer {
-      margin-bottom: 40px;
-    }
-    nav {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    nav a {
-      color: #00e0ff;
-      margin: 0 15px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    h1, h2 {
-      text-align: center;
-      color: #00e0ff;
-    }
-    .audio-player, video {
-      width: 100%;
-      max-width: 500px;
-      display: block;
-      margin: 10px auto;
-    }
-    .contador {
-      text-align: center;
-      margin-top: 10px;
-      color: #ff4d4d;
-    }
-    .podcast, .playlist, .videos {
+      background: #000 url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+      font-family: sans-serif;
       text-align: center;
     }
-    form input, form textarea, form button {
-      width: 100%;
+    input, button {
       padding: 10px;
-      margin: 10px 0;
-      border-radius: 5px;
+      margin: 10px;
+      border-radius: 8px;
       border: none;
+      font-size: 1rem;
     }
-    form button {
-      background: #00e0ff;
-      color: black;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    footer {
-      text-align: center;
-      font-size: 14px;
-      color: #ccc;
-    }
+    .hidden { display: none; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Tropical Flow TV📺Radio</h1>
-      <nav>
-        <a href="#radio">Radio</a>
-        <a href="#playlist">Playlist</a>
-        <a href="#videos">Videos</a>
-        <a href="#podcast
+  <h1>🎉 Bienvenido a Tropical Flow TV📺Radio</h1>
+  <p>Introduce tu código de acceso</p>
+  <input type="text" id="codigo" placeholder="Código de acceso"/>
+  <button onclick="verificarCodigo()">Entrar</button>
+  <p id="error" style="color:red;" class="hidden">❌ Código incorrecto</p>
+
+  <script>
+    function verificarCodigo() {
+      const valido = "tropical2025"; // Cambia este código cuando quieras
+      const ingreso = document.getElementById("codigo").value.trim();
+      if (ingreso === valido) {
+        window.location.href = "./privado/index.html";
+      } else {
+        document.getElementById("error").classList.remove("hidden");
+      }
+    }
+  </script>
+</body>
+</html>
