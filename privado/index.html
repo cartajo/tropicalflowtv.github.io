@@ -123,45 +123,6 @@
       <iframe src="https://www.youtube.com/embed/n8RMGnc8v_o" allowfullscreen></iframe>
     </div>
   </section>
-// PLAYER DE MÚSICA
-const audioPlayer = document.getElementById('audioPlayer');
-const playlist = document.getElementById('playlist');
-const tracks = [
-  { name: "Lo Mio va Primero", file:"assets/musica/cancion1.mp3" },
-  { name: "Canción 2", file: "assets/musica/cancion2.mp3" }
-];
-
-tracks.forEach((track, index) => {
-  const li = document.createElement('li');
-  li.textContent = track.name;
-  li.onclick = () => {
-    audioPlayer.src = track.file;
-    audioPlayer.play();
-  };
-  playlist.appendChild(li);
-});
-
-// CARRUSEL DE VIDEOS
-const videoFiles = [
-  "assets/videos/video1.mp4",
-  "assets/videos/video2.mp4"
-];
-let videoIndex = 0;
-const videoCarousel = document.getElementById('videoCarousel');
-videoCarousel.src = videoFiles[videoIndex];
-
-videoCarousel.onended = () => {
-  videoIndex = (videoIndex + 1) % videoFiles.length;
-  videoCarousel.src = videoFiles[videoIndex];
-  videoCarousel.play();
-};
-
-// CONTADOR DE PERSONAS ONLINE
-fetch('https://api.countapi.xyz/hit/tropicalflowtv/visitas')
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById('onlineCount').textContent = `${data.value} personas conectadas`;
-  });
 
  <div class="social-buttons">
     <a class="whatsapp" href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
