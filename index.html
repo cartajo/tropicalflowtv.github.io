@@ -1,48 +1,77 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tropical Flow TV📺Radio - Acceso Privado</title>
+  <meta charset="UTF-8">
+  <title>Acceso VIP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      background: #000 url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') center/cover no-repeat;
+      background: linear-gradient(#000000cc, #000000cc), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') no-repeat center center fixed;
+      background-size: cover;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
       color: white;
-      font-family: sans-serif;
-      text-align: center;
+      font-family: Arial, sans-serif;
     }
-    input, button {
+
+    .login-box {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      max-width: 320px;
+    }
+
+    input[type="password"] {
       padding: 10px;
-      margin: 10px;
+      width: 80%;
+      margin: 10px 0;
       border-radius: 8px;
       border: none;
-      font-size: 1rem;
+      font-size: 16px;
     }
-    .hidden { display: none; }
+
+    button {
+      padding: 10px 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .error {
+      color: red;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
-  <h1>🎉 Bienvenido a Tropical Flow TV📺Radio</h1>
-  <p>Introduce tu código de acceso</p>
-  <input type="text" id="codigo" placeholder="Código de acceso"/>
-  <button onclick="verificarCodigo()">Entrar</button>
-  <p id="error" style="color:red;" class="hidden">❌ Código incorrecto</p>
+  <div class="login-box">
+    <h2>🔒 Acceso VIP</h2>
+    <p>Ingresa tu código para acceder</p>
+    <input type="password" id="codigo" placeholder="Código de acceso">
+    <br>
+    <button onclick="verificarAcceso()">Entrar</button>
+    <p id="mensaje" class="error"></p>
+  </div>
 
   <script>
-    function verificarCodigo() {
-      const valido = "tropical2025"; // Cambia este código cuando quieras
-      const ingreso = document.getElementById("codigo").value.trim();
-      if (ingreso === valido) {
-        window.location.href = "./privado/index.html";
+    function verificarAcceso() {
+      const claveCorrecta = "tropical2025";
+      const entrada = document.getElementById("codigo").value;
+
+      if (entrada === claveCorrecta) {
+        // Redirige al contenido VIP si el código es correcto
+        window.location.href = "privado.html";
       } else {
-        document.getElementById("error").classList.remove("hidden");
+        document.getElementById("mensaje").textContent = "❌ Código incorrecto.";
       }
     }
   </script>
 </body>
 </html>
+
