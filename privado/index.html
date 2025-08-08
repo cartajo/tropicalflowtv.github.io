@@ -1,318 +1,77 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tropical Flow TV📺Radio - Acceso VIP</title>
-  <meta name="description" content="Acceso exclusivo a Tropical Flow TV📺Radio. Música, videos y más 24/7.">
-
+  <meta charset="UTF-8">
+  <title>Acceso VIP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    :root { --accent:#00e0ff; --bg:rgba(0,0,0,.6); }
-    *{box-sizing:border-box}
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.7)),
-        url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover fixed no-repeat;
-      color: #fff;
-    }
-
-    header {
-      text-align: center;
-      padding: 1rem;
-      background-color: rgba(0,0,0,0.6);
-    }
-
-    h1 { margin: 0; font-size: 2rem; }
-
-    .wrap { max-width: 1100px; margin: 0 auto; padding: 16px; background: var(--bg); border-radius: 14px; }
-
-    .radio-player, .block { margin: 2rem auto; }
-    .block h2 { text-align:center; margin: 0 0 1rem; }
-
-    audio, video {
-      width: 90%;
-      max-width: 700px;
-      margin: 0.5rem auto 0;
-      display: block;
-      border-radius: 10px;
-    }
-
-    .grid {
-      display: flex; gap: 16px; flex-wrap: wrap; justify-content: space-between;
-    }
-    .col {
-      flex: 1; min-width: 300px; background: rgba(255,255,255,.08);
-      padding: 16px; border-radius: 12px;
-    }
-
-    /* Carousel YouTube */
-    .carousel {
+      background: linear-gradient(#000000cc, #000000cc), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') no-repeat center center fixed;
+      background-size: cover;
       display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      gap: 1rem; padding: 1rem; scroll-behavior: smooth;
-    }
-    .carousel iframe {
-      flex: 0 0 auto;
-      width: 300px; height: 170px;
-      border-radius: 12px;
-      scroll-snap-align: start; border:0;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+      font-family: Arial, sans-serif;
     }
 
-    .social-buttons { text-align: center; margin: 2rem 0; }
-    .social-buttons a {
-      display: inline-block; margin: 0.5rem; padding: 0.6rem 1rem;
-      color: #fff; text-decoration: none; border-radius: 8px; background:#444;
-    }
-    .whatsapp { background: #25d366; }
-    .youtube { background: red; }
-    .facebook { background: #3b5998; }
-    .paypal { background: #0070ba; }
-    .athmovil { background: #6f42c1; }
-
-    footer { text-align: center; padding: 1rem; background: rgba(0,0,0,0.6); }
-    .contador { margin-top: 1rem; font-weight: bold; font-size: 1.1rem; text-align:center; }
-
-    /* Lista playlist */
-    ul.playlist { list-style: none; padding: 0; margin: .5rem auto 0; max-width: 700px; }
-    ul.playlist li {
-      background: rgba(255,255,255,.1); padding: 8px 12px; margin-bottom: 6px; border-radius: 8px;
-      cursor: pointer; display:flex; align-items:center; gap:10px;
-    }
-    ul.playlist li:hover { background: rgba(255,255,255,.25); }
-    .btns { display:flex; gap:10px; justify-content:center; margin-top:8px; }
-    .btn {
-      background: var(--accent); color:#000; font-weight:700; border:none; border-radius:8px; padding:8px 12px; cursor:pointer;
+    .login-box {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      max-width: 320px;
     }
 
-    /* Puerta VIP (overlay simple) */
-    #vipGate {
-      position: fixed; inset: 0; background: rgba(0,0,0,.92);
-      display: grid; place-items: center; z-index: 9999;
+    input[type="password"] {
+      padding: 10px;
+      width: 80%;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
     }
-    #vipCard {
-      background: #101010; padding: 22px; border-radius: 12px; width: min(92vw, 380px);
-      box-shadow: 0 10px 30px rgba(0,0,0,.4);
+
+    button {
+      padding: 10px 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
     }
-    #vipCard h3 { margin: 0 0 10px; text-align:center; }
-    #vipCard input, #vipCard button {
-      width: 100%; padding: 10px; border-radius: 8px; border: none; margin: 8px 0;
+
+    .error {
+      color: red;
+      margin-top: 10px;
     }
-    #vipCard button { background: var(--accent); color:#000; font-weight: 700; cursor:pointer; }
-    #vipMsg { color: #f99; text-align: center; min-height: 20px; font-size:.95rem; }
   </style>
 </head>
-
 <body>
-  <!-- 🔐 Puerta VIP (simple) -->
-  <div id="vipGate">
-    <div id="vipCard">
-      <h3>🔐 Acceso VIP</h3>
-      <p style="color:#ccc; text-align:center; margin:0 0 6px;">Ingresa tu código para acceder</p>
-      <input id="vipPass" type="password" placeholder="Código VIP" />
-      <button id="vipBtn">Entrar</button>
-      <div id="vipMsg"></div>
-      <p style="color:#777; text-align:center; font-size:.85rem; margin-top:8px;">(Solo para pruebas. Luego lo protegemos con .htaccess)</p>
-    </div>
+  <div class="login-box">
+    <h2>🔒 Acceso VIP</h2>
+    <p>Ingresa tu código para acceder</p>
+    <input type="password" id="codigo" placeholder="Código de acceso">
+    <br>
+    <button onclick="verificarAcceso()">Entrar</button>
+    <p id="mensaje" class="error"></p>
   </div>
-
-  <header>
-    <h1>🌴 Tropical Flow TV📺Radio - VIP</h1>
-  </header>
-
-  <div class="wrap">
-    <!-- RADIO -->
-    <section class="radio-player block">
-      <h2>🎧 Escúchanos en Vivo 24/7</h2>
-      <audio controls autoplay>
-        <source src="https://stream.zeno.fm/sl8wpcxtjy3uv" type="audio/mpeg">
-        Tu navegador no soporta la reproducción de audio.
-      </audio>
-
-      <!-- Contador en tiempo real (widget externo) -->
-      <div class="contador">
-        <strong>👥 Conectados ahora:</strong><br>
-        <script src="https://counterapi.com/api/online?label=Usuarios&style=badge"></script>
-      </div>
-    </section>
-
-    <!-- GRID: Player música + Playlist video MP4 -->
-    <div class="grid">
-      <!-- PLAYER MÚSICA -->
-      <section class="col">
-        <h2>🎵 Player de Música (Playlist)</h2>
-        <audio id="audioPlayer" controls></audio>
-        <div class="btns">
-          <button class="btn" id="prevTrack">⏮ Anterior</button>
-          <button class="btn" id="nextTrack">⏭ Siguiente</button>
-        </div>
-        <ul class="playlist" id="audioList">
-          <!-- items se inyectan por JS -->
-        </ul>
-      </section>
-
-      <!-- VIDEO MP4 EN SECUENCIA -->
-      <section class="col">
-        <h2>🎬 Playlist de Videos (MP4 auto)</h2>
-        <video id="videoPlayer" controls autoplay>
-          <!-- src se asigna por JS -->
-        </video>
-        <ul class="playlist" id="videoListUI"></ul>
-      </section>
-    </div>
-
-    <!-- CAROUSEL YOUTUBE -->
-    <section class="block">
-      <h2>🎬 Videos Recientes (YouTube)</h2>
-      <div class="carousel">
-        <iframe src="https://www.youtube.com/embed/tpi8zLE3Kqw" allowfullscreen></iframe>
-        <iframe src="https://www.youtube.com/embed/RBE8A9rAj8Y" allowfullscreen></iframe>
-        <iframe src="https://www.youtube.com/embed/XYe0ZHVvVig" allowfullscreen></iframe>
-        <iframe src="https://www.youtube.com/embed/h86xW_G-j4s" allowfullscreen></iframe>
-        <iframe src="https://www.youtube.com/embed/5pKPlIlQa_8" allowfullscreen></iframe>
-        <iframe src="https://www.youtube.com/embed/wgqGHqhEZ8M" allowfullscreen></iframe>
-        <iframe src="https://www.youtube.com/embed/auTHP2prrxw" allowfullscreen></iframe>
-        <iframe src="https://www.youtube.com/embed/CL7m60BISiw" allowfullscreen></iframe>
-        <iframe src="https://www.youtube.com/embed/4jdbpZVzlf4" allowfullscreen></iframe>
-        <iframe src="https://www.youtube.com/embed/X_Df1rsXBjE" allowfullscreen></iframe>
-        <iframe src="https://www.youtube.com/embed/RWp76Pj0RUo" allowfullscreen></iframe>
-        <iframe src="https://www.youtube.com/embed/M9wQdkQicbk" allowfullscreen></iframe>
-        <iframe src="https://www.youtube.com/embed/FCu8-sim5F4" allowfullscreen></iframe>
-        <iframe src="https://www.youtube.com/embed/O6xVXaBcOac" allowfullscreen></iframe>
-        <iframe src="https://www.youtube.com/embed/jTqKxMTtVEI" allowfullscreen></iframe>
-        <iframe src="https://www.youtube.com/embed/4tXLT0hN8n8" allowfullscreen></iframe>
-        <iframe src="https://www.youtube.com/embed/n8RMGnc8v_o" allowfullscreen></iframe>
-      </div>
-    </section>
-
-    <!-- PODCAST -->
-    <section class="block">
-      <h2>🎙 Podcast</h2>
-      <audio controls src="assets/podcast/episodio1.mp3"></audio>
-      <audio controls src="assets/podcast/episodio2.mp3"></audio>
-    </section>
-
-    <!-- SOCIALES / DONACIONES -->
-    <div class="social-buttons">
-      <a class="whatsapp" href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
-      <a class="youtube" href="https://www.youtube.com/@TFTvpoweredbyworldm8780" target="_blank">YouTube</a>
-      <a class="facebook" href="https://www.facebook.com/profile.php?id=61555653663073" target="_blank">Facebook</a>
-      <a class="paypal" href="https://www.paypal.com/donate/?business=cartajoffice1@gmail.com&currency_code=USD" target="_blank">🎧 Donar vía PayPal</a>
-      <a class="athmovil" href="https://www.athmovil.com/cartajo" target="_blank">Donar ATH Móvil</a>
-      <p style="color: #ccc; margin-top: 1rem;">Haz tu donación y accede a contenido exclusivo.</p>
-    </div>
-  </div>
-
-  <footer>
-    &copy; <span id="year"></span> Tropical Flow TV📺Radio - Todos los derechos reservados
-  </footer>
 
   <script>
-    // Año dinámico
-    document.getElementById('year').textContent = new Date().getFullYear();
+    function verificarAcceso() {
+      const claveCorrecta = "tropical2025";
+      const entrada = document.getElementById("codigo").value;
 
-    // ===========================================
-    // 🔐 Puerta VIP (solo para pruebas privadas)
-    // ===========================================
-    (function(){
-      const PASS = "VIP2025"; // <- cambia tu código aquí
-      const gate = document.getElementById('vipGate');
-      const input = document.getElementById('vipPass');
-      const btn = document.getElementById('vipBtn');
-      const msg = document.getElementById('vipMsg');
-
-      btn.addEventListener('click', ()=>{
-        if (input.value.trim() === PASS) {
-          gate.style.display = 'none';
-          localStorage.setItem('vip_ok','1');
-        } else {
-          msg.textContent = "Código incorrecto.";
-        }
-      });
-
-      // Si ya entró antes en este navegador
-      if (localStorage.getItem('vip_ok') === '1') {
-        gate.style.display = 'none';
+      if (entrada === claveCorrecta) {
+        // Redirige al contenido VIP si el código es correcto
+        window.location.href = "privado.html";
+      } else {
+        document.getElementById("mensaje").textContent = "❌ Código incorrecto.";
       }
-    })();
-
-    // ===========================================
-    // 🎵 PLAYER DE MÚSICA (playlist)
-    // ===========================================
-    const audioTracks = [
-      { name: "Canción 1", file: "assets/musica/cancion1.mp3" },
-      { name: "Canción 2", file: "assets/musica/cancion2.mp3" },
-      { name: "Canción 3", file: "assets/musica/cancion3.mp3" }
-    ];
-    const audio = document.getElementById('audioPlayer');
-    const list = document.getElementById('audioList');
-    let aIndex = 0;
-
-    function loadAudio(i){
-      aIndex = i;
-      audio.src = audioTracks[aIndex].file;
-      audio.play().catch(()=>{});
-      renderAudioList();
     }
-    function renderAudioList(){
-      list.innerHTML = "";
-      audioTracks.forEach((t, i)=>{
-        const li = document.createElement('li');
-        li.textContent = (i===aIndex ? "▶ " : "") + t.name;
-        li.onclick = ()=> loadAudio(i);
-        list.appendChild(li);
-      });
-    }
-    document.getElementById('nextTrack').onclick = ()=> loadAudio((aIndex+1)%audioTracks.length);
-    document.getElementById('prevTrack').onclick = ()=> loadAudio((aIndex-1+audioTracks.length)%audioTracks.length);
-    loadAudio(0);
-
-    // ===========================================
-    // 🎬 VIDEO MP4 EN SECUENCIA (autoplay)
-    // ===========================================
-    const videoList = [
-      "assets/videos/video1.mp4",
-      "assets/videos/video2.mp4",
-      "assets/videos/video3.mp4"
-    ];
-    const vPlayer = document.getElementById('videoPlayer');
-    const vUI = document.getElementById('videoListUI');
-    let vIndex = 0;
-
-    function loadVideo(i){
-      vIndex = i;
-      vPlayer.src = videoList[vIndex];
-      vPlayer.load();
-      vPlayer.play().catch(()=>{});
-      renderVideoList();
-    }
-    function renderVideoList(){
-      vUI.innerHTML = "";
-      videoList.forEach((src, i)=>{
-        const li = document.createElement('li');
-        const name = src.split('/').pop();
-        li.textContent = (i===vIndex ? "▶ " : "") + name;
-        li.onclick = ()=> loadVideo(i);
-        vUI.appendChild(li);
-      });
-    }
-    vPlayer.addEventListener('ended', ()=>{
-      vIndex = (vIndex + 1) % videoList.length;
-      loadVideo(vIndex);
-    });
-    loadVideo(0);
-
-    // ===========================================
-    // 👥 Contador aleatorio (legacy) — SI QUIERES mantenerlo
-    // ===========================================
-    function generarVisitantes() {
-      const numero = Math.floor(Math.random() * 30) + 1;
-      const el = document.getElementById("contador");
-      if (el) el.textContent = numero;
-    }
-    setInterval(generarVisitantes, 3000);
-    generarVisitantes();
   </script>
 </body>
 </html>
+
