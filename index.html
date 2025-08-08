@@ -59,16 +59,14 @@
     <p id="mensaje" class="error"></p>
   </div>
 
-  <script>
-    function verificarAcceso() {
-      const claveCorrecta = "tropical2025";
-      const entrada = document.getElementById("codigo").value;
-
-      if (entrada === claveCorrecta) {
-        // Redirige al contenido VIP si el código es correcto
-        window.location.href = "privado.html";
+  <<script>
+    function verificarCodigo() {
+      const valido = "tropical2025"; // Cambia este código cuando quieras
+      const ingreso = document.getElementById("codigo").value.trim();
+      if (ingreso === valido) {
+        window.location.href = "./privado/index.html";
       } else {
-        document.getElementById("mensaje").textContent = "❌ Código incorrecto.";
+        document.getElementById("error").classList.remove("hidden");
       }
     }
   </script>
