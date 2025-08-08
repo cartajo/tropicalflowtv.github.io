@@ -32,8 +32,16 @@
   <input type="text" id="codigo" placeholder="Código de acceso"/>
   <button onclick="verificarCodigo()">Entrar</button>
   <p id="error" style="color:red;" class="hidden">❌ Código incorrecto</p>
-
- 
+   <script>
+    function verificarCodigo() {
+      const valido = "tropical2025"; // Cambia este código cuando quieras
+      const ingreso = document.getElementById("codigo").value.trim();
+      if (ingreso === valido) {
+        window.location.href = "./privado/index.html";
+      } else {
+        document.getElementById("error").classList.remove("hidden");
+      }
+    
     }
   </script>
 </body>
