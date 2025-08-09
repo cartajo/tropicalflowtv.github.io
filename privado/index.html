@@ -20,22 +20,30 @@
     section{margin:22px 0;padding:16px;background:rgba(255,255,255,.08);border-radius:12px}
     h2{margin:0 0 12px;text-align:center}
     audio, video{ width:100%; max-width:720px; display:block; margin:8px auto; border-radius:10px }
+
     /* Carrusel YouTube */
     .carousel{ display:flex; overflow-x:auto; scroll-snap-type:x mandatory; gap:1rem; padding:1rem; scroll-behavior:smooth }
     .carousel iframe{ flex:0 0 auto; width:300px; height:170px; border-radius:12px; scroll-snap-align:start; border:0 }
+
     /* Botones sociales */
     .social-buttons{ text-align:center; margin: 16px 0 }
     .social-buttons a{ display:inline-block; margin:.4rem; padding:.6rem 1rem; color:#fff; text-decoration:none; border-radius:8px; background:#444 }
     .whatsapp{ background:#25d366 } .youtube{ background:#FF0000 } .facebook{ background:#3b5998 }
     .paypal{ background:#0070ba } .athmovil{ background:#6f42c1 }
+
     /* Playlist de música */
-    .btns{ display:flex; gap:10px; justify-content:center; margin:8px 0 }
-    .btn{ background:var(--accent); color:#000; font-weight:700; border:none; border-radius:8px; padding:8px 14px; cursor:pointer }
-    ul.playlist{ list-style:none; padding:0; margin:8px auto 0; max-width:720px }
-    ul.playlist li{ background:rgba(255,255,255,.1); padding:8px 12px; margin-bottom:6px; border-radius:8px; cursor:pointer }
-    ul.playlist li:hover{ background:rgba(255,255,255,.25) }
-    .center{text-align:center}
+    .playlist-box{ text-align:center; padding:20px; background:rgba(0,0,0,0.5); border-radius:15px }
+    #song-title{ color:#fff; font-weight:bold; margin:8px 0 }
+    ul#playlist{ list-style:none; padding:0; text-align:left; max-width:700px; margin:0 auto; color:#fff }
+    ul#playlist li{ padding:8px 10px; border-radius:8px; cursor:pointer; display:flex; gap:8px; align-items:center }
+    ul#playlist li:hover{ background:rgba(255,255,255,.2) }
+    .dot{ width:8px; height:8px; border-radius:50%; background:#888 }
+    .active{ background:rgba(0,191,255,.35) }
+    .active .dot{ background:#00bfff }
+    .muted{ color:#ccc; font-size:.92rem }
+
     footer{ text-align:center; padding:1rem; background:rgba(0,0,0,.6); color:#ccc }
+    .center{text-align:center}
   </style>
 </head>
 
@@ -54,7 +62,7 @@
       </audio>
     </section>
 
-    <!-- CONECTADOS AHORA (no rompe nada) -->
+    <!-- CONECTADOS AHORA -->
     <section>
       <h2>👥 Conectados ahora</h2>
       <div class="center" style="margin-bottom:10px;">
@@ -64,6 +72,7 @@
       <!-- Fallback por si el widget no carga -->
       <div id="onlineBox" class="center" style="font-weight:700;"></div>
       <script>
+        // Si el widget no dibuja nada en 2s, mostramos un número simulado para no dejar vacío.
         setTimeout(()=>{
           const box=document.getElementById('onlineBox');
           if(box && !box.textContent.trim()){
@@ -74,7 +83,7 @@
       </script>
     </section>
 
-    <!-- CARRUSEL YOUTUBE (tu lista intacta) -->
+    <!-- CARRUSEL YOUTUBE -->
     <section>
       <h2>🎬 Videos Recientes</h2>
       <div class="carousel">
@@ -98,62 +107,80 @@
       </div>
     </section>
 
-    <!-- PLAYER DE MÚSICA (NUEVO) -->
-    <section>
-      <h2>🎵 Player de Música (Playlist)</h2>
-      <audio id="audioPlayer" controls></audio>
-      <div class="btns">
-        <button class="btn" id="prevTrack">⏮ Anterior</button>
-        <button class="btn" id="nextTrack">⏭ Siguiente</button>
-      </div>
-      <ul class="playlist" id="audioList"></ul>
+    <!-- PLAYER DE MÚSICA (LISTA VISIBLE + AUTO-SIGUIENTE) -->
+    <section class="playlist-box">
+      <h2>🎶 Playlist VIP</h2>
+      <audio id="audio-player" controls style="width:100%; margin-bottom:10px;"></audio>
+      <p id="song-title"></p>
+      <p class="muted">Tip: si alguna no suena y queda en 0:00, revisa el nombre/ruta exacta del MP3 en /Privado/assets/musica/.</p>
+
+      <!-- Lista visible -->
+      <ul id="playlist"></ul>
 
       <script>
-        // 🔊 PRUEBA INMEDIATA (sin subir nada): 3 MP3 públicos
-        const audioTracks = [
-          { name: "Track 1 (test)", file: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
-          { name: "Track 2 (test)", file: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
-          { name: "Track 3 (test)", file: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" }
+        // 🔊 TUS 10 TEMAS — tal como me los enviaste (no tienes que renombrar)
+        const rawTracks = [
+          { title: "Alexio La Bestia - Tumba La Casa", file: "Alexio_La_Bestia_-Tumba_La_Casa_WWW.ELGENERO.COM.mp3" },
+          { title: "Alexio La Bestia Ft. Farruko - Pánico En La Disco", file: "Alexio_La_Bestia_Ft.Farruko-Panico_En_La_Disco_WWW.ELGENERO.COM.mp3" },
+          { title: "Alexio Ft. Januelle - Otro Idiota Que Se Enamora", file: "Alexio_La_Bestia_Ft.Januelle-Otro_Idiota_Que_Se_Enamora_WWW.ELGENERO.COM.mp3" },
+          { title: "Alexio Ft. Jowny Boom Boom - Ya No Creo En El Amor", file: "Alexio_La_Bestia_Ft.Jowny_Boom_Boom-Ya_No_Creo_En_El_Amor_WWW.ELGENERO.COM.mp3" },
+          { title: "Alexis y Fido Ft. Gotay, Pusho y Alexio - Problemático", file: "Alexis Y Fido Ft. Gotay  Pusho Y Alexio - Problematico (WWW.ELGENERO.COM).mp3" },
+          { title: "Alexis y Fido Ft. Pusho - Tiemblan", file: "Alexis_y_Fido_Ft.Pusho-Tiemblan_WWW.ELGENERO.COM.mp3" },
+          { title: "Almighty - White House Down", file: "Almighty - White House Down (WWW.ELGENERO.COM).mp3" },
+          { title: "Arca vs. Coscu - Chavos Pa'l Banco", file: "Arca_Vs.Coscu-Chavos_Pal_Banco_WWW.ELGENERO.COM.mp3" },
+          { title: "Arcángel - Me Dejo Llevar", file: "Arcangel - Me Dejo Llevar (WWW.ELGENERO.COM).mp3" },
+          { title: "Arcángel - Tu Cuerpo Me Hace Bien", file: "Arcangel - Tu Cuerpo Me Hace Bien (Prod. Mambo Kingz y DJ Luian) (WWW.ELGENERO.COM).mp3" }
         ];
 
-        // 👉 CUANDO SUBAS TUS MP3, cambia el arreglo a algo así:
-        // const audioTracks = [
-        //   { name: "Canción 1", file: "assets/musica/cancion1.mp3" },
-        //   { name: "Mix DJ 1",  file: "assets/musica/mix1.mp3" },
-        //   { name: "Bachata 1", file: "assets/musica/bachata1.mp3" }
-        // ];
+        // Construimos rutas seguras (soporta espacios y paréntesis) → /Privado/assets/musica/...
+        const tracks = rawTracks.map(t => ({
+          title: t.title,
+          src: "assets/musica/" + encodeURIComponent(t.file)
+        }));
 
-        const audio = document.getElementById('audioPlayer');
-        const list = document.getElementById('audioList');
-        let aIndex = 0;
+        const audio = document.getElementById('audio-player');
+        const titleEl = document.getElementById('song-title');
+        const listEl  = document.getElementById('playlist');
+        let current = 0;
 
-        function loadAudio(i){
-          aIndex = i;
-          audio.src = audioTracks[aIndex].file;
-          audio.play().catch(()=>{});
-          renderAudioList();
-        }
-        function renderAudioList(){
-          list.innerHTML = "";
-          audioTracks.forEach((t, i)=>{
+        function renderList(){
+          listEl.innerHTML = "";
+          tracks.forEach((t, i) => {
             const li = document.createElement('li');
-            li.textContent = (i===aIndex ? "▶ " : "") + t.name;
-            li.onclick = ()=> loadAudio(i);
-            list.appendChild(li);
+            li.innerHTML = <span class="dot"></span> <span>${t.title}</span>;
+            li.className = i===current ? "active" : "";
+            li.onclick = () => load(i);
+            listEl.appendChild(li);
           });
         }
-        document.getElementById('nextTrack').onclick = ()=> loadAudio((aIndex+1)%audioTracks.length);
-        document.getElementById('prevTrack').onclick = ()=> loadAudio((aIndex-1+audioTracks.length)%audioTracks.length);
-        audio.addEventListener('ended', ()=> document.getElementById('nextTrack').click());
-        loadAudio(0);
+
+        function load(i){
+          current = i;
+          audio.src = tracks[current].src;
+          titleEl.textContent = tracks[current].title;
+          audio.play().catch(()=>{});
+          renderList();
+        }
+
+        // Auto-siguiente al terminar
+        audio.addEventListener('ended', () => {
+          current = (current + 1) % tracks.length;
+          load(current);
+        });
+
+        // Arranca
+        renderList();
+        load(0);
       </script>
     </section>
 
-    <!-- PODCAST (tu sección intacta; añade más <audio> si quieres) -->
+    <!-- PODCAST -->
     <section>
       <h2>🎙 Podcast</h2>
+      <!-- Sube tus archivos a /Privado/assets/podcast/ y cambia los nombres si los usas -->
       <audio controls src="assets/podcast/episodio1.mp3"></audio>
       <audio controls src="assets/podcast/episodio2.mp3"></audio>
+      <p class="muted center">Coloca tus episodios en /Privado/assets/podcast/ y cambia los nombres arriba.</p>
     </section>
 
     <!-- BOTONES -->
