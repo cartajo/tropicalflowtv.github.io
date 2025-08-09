@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
@@ -111,9 +111,9 @@
       </div>
     </section>
 
-    <!-- PLAYER DE MÚSICA (LISTA + ANTERIOR/SIGUIENTE + BARRA) -->
+    <!-- PLAYER DE MÚSICA (LISTA + ANTERIOR/SIGUIENTE + BARRA) — PRUEBA -->
     <section class="playlist-box">
-      <h2>🎶 Playlist VIP</h2>
+      <h2>🎶 Playlist (Prueba con MP3 públicos)</h2>
       <p id="song-title"></p>
 
       <div class="controls">
@@ -130,31 +130,19 @@
       </div>
 
       <audio id="audio-player" preload="metadata"></audio>
-      <p class="muted">Tip: si alguna no suena y queda en 0:00, revisa que el MP3 exista en <code>/musica/</code> y la ruta/nombre sea exacto.</p>
+      <p class="muted">Si suena, luego reemplazamos por tus MP3 en /musica/.</p>
 
       <!-- Lista visible -->
       <ul id="playlist"></ul>
 
       <script>
-        // ⬇ TUS 10 TEMAS en /musica/ (raíz del sitio). NO hace falta renombrar.
-        const rawTracks = [
-          { title: "Alexio La Bestia - Tumba La Casa", file: "Alexio_La_Bestia_-Tumba_La_Casa_WWW.ELGENERO.COM.mp3" },
-          { title: "Alexio La Bestia Ft. Farruko - Pánico En La Disco", file: "Alexio_La_Bestia_Ft.Farruko-Panico_En_La_Disco_WWW.ELGENERO.COM.mp3" },
-          { title: "Alexio Ft. Januelle - Otro Idiota Que Se Enamora", file: "Alexio_La_Bestia_Ft.Januelle-Otro_Idiota_Que_Se_Enamora_WWW.ELGENERO.COM.mp3" },
-          { title: "Alexio Ft. Jowny Boom Boom - Ya No Creo En El Amor", file: "Alexio_La_Bestia_Ft.Jowny_Boom_Boom-Ya_No_Creo_En_El_Amor_WWW.ELGENERO.COM.mp3" },
-          { title: "Alexis y Fido Ft. Gotay, Pusho y Alexio - Problemático", file: "Alexis Y Fido Ft. Gotay  Pusho Y Alexio - Problematico (WWW.ELGENERO.COM).mp3" },
-          { title: "Alexis y Fido Ft. Pusho - Tiemblan", file: "Alexis_y_Fido_Ft.Pusho-Tiemblan_WWW.ELGENERO.COM.mp3" },
-          { title: "Almighty - White House Down", file: "Almighty - White House Down (WWW.ELGENERO.COM).mp3" },
-          { title: "Arca vs. Coscu - Chavos Pa'l Banco", file: "Arca_Vs.Coscu-Chavos_Pal_Banco_WWW.ELGENERO.COM.mp3" },
-          { title: "Arcángel - Me Dejo Llevar", file: "Arcangel - Me Dejo Llevar (WWW.ELGENERO.COM).mp3" },
-          { title: "Arcángel - Tu Cuerpo Me Hace Bien", file: "Arcangel - Tu Cuerpo Me Hace Bien (Prod. Mambo Kingz y DJ Luian) (WWW.ELGENERO.COM).mp3" }
+        // ✅ PRUEBA: MP3 públicos (deben sonar al toque)
+        const tracks = [
+          { title: "SoundHelix Song 1 (test)", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+          { title: "SoundHelix Song 2 (test)", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
+          { title: "SoundHelix Song 3 (test)", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" },
+          { title: "SoundHelix Song 4 (test)", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" }
         ];
-
-        // Construye rutas seguras → /musica/NOMBRE.mp3
-        const tracks = rawTracks.map(t => ({
-          title: t.title,
-          src: "musica/" + encodeURIComponent(t.file)
-        }));
 
         const audio = document.getElementById('audio-player');
         const titleEl = document.getElementById('song-title');
@@ -234,13 +222,13 @@
           isUserSeeking = false;
         });
 
-        // Inicia
+        // Inicia (en móvil puede requerir 1 toque Play por política de autoplay)
         renderList();
         load(0, false);
       </script>
     </section>
 
-    <!-- PODCAST -->
+    <!-- PODCAST (opcional) -->
     <section>
       <h2>🎙 Podcast</h2>
       <!-- Si los usas: sube tus episodios a /podcast/ y cambia nombres -->
