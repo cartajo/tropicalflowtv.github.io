@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
@@ -20,17 +20,24 @@
     section{margin:22px 0;padding:16px;background:rgba(255,255,255,.08);border-radius:12px}
     h2{margin:0 0 12px;text-align:center}
     audio, video{ width:100%; max-width:720px; display:block; margin:8px auto; border-radius:10px }
+
+    /* Carrusel YouTube */
     .carousel{ display:flex; overflow-x:auto; scroll-snap-type:x mandatory; gap:1rem; padding:1rem; scroll-behavior:smooth }
     .carousel iframe{ flex:0 0 auto; width:300px; height:170px; border-radius:12px; scroll-snap-align:start; border:0 }
+
+    /* Botones sociales */
     .social-buttons{ text-align:center; margin: 16px 0 }
     .social-buttons a{ display:inline-block; margin:.4rem; padding:.6rem 1rem; color:#fff; text-decoration:none; border-radius:8px; background:#444 }
     .whatsapp{ background:#25d366 } .youtube{ background:#FF0000 } .facebook{ background:#3b5998 }
     .paypal{ background:#0070ba } .athmovil{ background:#6f42c1 }
+
+    /* Players */
     .playlist-box{ text-align:center; padding:20px; background:rgba(0,0,0,0.5); border-radius:15px }
     .btn{ background:var(--accent); color:#000; font-weight:700; border:none; border-radius:8px; padding:8px 14px; cursor:pointer }
-    ul#list{ list-style:none; padding:0; text-align:left; max-width:720px; margin:0 auto; color:#fff }
-    ul#list li{ padding:8px 10px; border-radius:8px; cursor:pointer }
-    ul#list li:hover{ background:rgba(255,255,255,.2) }
+    ul.plist{ list-style:none; padding:0; text-align:left; max-width:720px; margin:0 auto; color:#fff }
+    ul.plist li{ padding:8px 10px; border-radius:8px; cursor:pointer }
+    ul.plist li:hover{ background:rgba(255,255,255,.2) }
+
     footer{ text-align:center; padding:1rem; background:rgba(0,0,0,.6); color:#ccc }
   </style>
 </head>
@@ -93,7 +100,7 @@
       </div>
     </section>
 
-    <!-- PLAYER ÚNICO -->
+    <!-- ===================== PLAYLIST VIP (lee /musica/) ===================== -->
     <section class="playlist-box">
       <h2>🎶 Playlist VIP</h2>
 
@@ -107,10 +114,10 @@
         <button id="next" class="btn">⏭ Siguiente</button>
       </div>
 
-      <ul id="list" style="list-style:none;padding:0;max-width:720px;margin:0 auto;color:#fff;"></ul>
+      <ul id="list" class="plist"></ul>
 
       <script>
-        // 10 temas (archivos LIMPIOS en /musica/)
+        /* Sube estos 10 nombres LIMPIOS a /musica/ */
         const raw = [
           { title: "Alexio La Bestia - Tumba La Casa", file: "Alexio_La_Bestia_-_Tumba_La_Casa.mp3" },
           { title: "Alexio Ft. Farruko - Pánico En La Disco", file: "Alexio_Ft_Farruko_-_Panico_En_La_Disco.mp3" },
@@ -123,7 +130,6 @@
           { title: "Arcángel - Me Dejo Llevar", file: "Arcangel_-_Me_Dejo_Llevar.mp3" },
           { title: "Arcángel - Tu Cuerpo Me Hace Bien", file: "Arcangel_-_Tu_Cuerpo_Me_Hace_Bien.mp3" }
         ];
-
         const tracks = raw.map(t => ({ title: t.title, src: "musica/" + encodeURIComponent(t.file) }));
 
         const audio = document.getElementById('audio');
@@ -157,10 +163,8 @@
         btnPrev.onclick = ()=>{ i = (i - 1 + tracks.length) % tracks.length; load(true); };
         btnNext.onclick = ()=>{ i = (i + 1) % tracks.length; load(true); };
         btnPlay.onclick = ()=>{ if (audio.paused) audio.play().catch(()=>{}); else audio.pause(); };
-
         audio.addEventListener('ended', ()=>{ i = (i + 1) % tracks.length; load(true); });
 
-        // Arranca (en móvil quizá pide tocar Play la primera vez)
         load(false);
       </script>
 
@@ -168,6 +172,74 @@
         Si alguna queda en 0:00, abre su URL directa en <code>/musica/</code> para confirmar que exista o que pese &lt; 25 MB.
       </p>
     </section>
+    <!-- =================== FIN PLAYLIST VIP =================== -->
+
+    <!-- ===================== PLAYLIST VIP 2 (lee /musica2/) ===================== -->
+    <section class="playlist-box">
+      <h2>🎶 Playlist VIP 2</h2>
+
+      <audio id="audio2" controls style="width:100%;max-width:720px;display:block;margin:8px auto;" preload="metadata">
+        Tu navegador no soporta audio HTML5.
+      </audio>
+
+      <div style="text-align:center;margin:10px 0;">
+        <button id="prev2" class="btn">⏮ Anterior</button>
+        <button id="play2" class="btn">▶ / ⏸</button>
+        <button id="next2" class="btn">⏭ Siguiente</button>
+      </div>
+
+      <ul id="list2" class="plist"></ul>
+
+      <script>
+        // Coincide EXACTO con lo que subiste a /musica2/ (por ahora 1 tema)
+        const raw2 = [
+          { title: "Alexio La Bestia - Tumba La Casa", file: "Alexio La Bestia - Tumba La Casa.mp3" }
+          // Para agregar más:
+          // { title: "Título visible", file: "Nombre Exacto.mp3" },
+        ];
+        const tracks2 = raw2.map(t => ({ title: t.title, src: "musica2/" + encodeURIComponent(t.file) }));
+
+        const audio2   = document.getElementById('audio2');
+        const list2    = document.getElementById('list2');
+        const btnPrev2 = document.getElementById('prev2');
+        const btnPlay2 = document.getElementById('play2');
+        const btnNext2 = document.getElementById('next2');
+
+        let i2 = 0;
+
+        function render2(){
+          list2.innerHTML = "";
+          tracks2.forEach((t, idx)=>{
+            const li = document.createElement('li');
+            li.textContent = (idx===i2 ? "▶ " : "") + t.title;
+            li.style.padding = "8px 10px";
+            li.style.borderRadius = "8px";
+            li.style.cursor = "pointer";
+            li.style.background = idx===i2 ? "rgba(0,191,255,.35)" : "transparent";
+            li.onclick = () => { i2 = idx; load2(true); };
+            list2.appendChild(li);
+          });
+        }
+
+        function load2(autoplay){
+          audio2.src = tracks2[i2].src;
+          render2();
+          if (autoplay) audio2.play().catch(()=>{});
+        }
+
+        btnPrev2.onclick = ()=>{ i2 = (i2 - 1 + tracks2.length) % tracks2.length; load2(true); };
+        btnNext2.onclick = ()=>{ i2 = (i2 + 1) % tracks2.length; load2(true); };
+        btnPlay2.onclick = ()=>{ if (audio2.paused) audio2.play().catch(()=>{}); else audio2.pause(); };
+        audio2.addEventListener('ended', ()=>{ i2 = (i2 + 1) % tracks2.length; load2(true); });
+
+        load2(false);
+      </script>
+
+      <p style="color:#ccc; font-size:.9rem; margin-top:8px;">
+        Sube más MP3 a <code>/musica2/</code> y agrégalos al array <code>raw2</code>. Refresca con <b>Ctrl+F5</b>.
+      </p>
+    </section>
+    <!-- =================== FIN PLAYLIST VIP 2 =================== -->
 
     <!-- PODCAST (opcional) -->
     <section>
@@ -193,4 +265,4 @@
   </footer>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
-</html>
+</html> CANCIÓN.
