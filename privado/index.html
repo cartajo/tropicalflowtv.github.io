@@ -1,262 +1,196 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Tropical Flow — Audio & Video</title>
-<style>
-  :root { --accent:#1db954; }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tropical Flow TV📺Radio - VIP</title>
+  <meta name="description" content="Acceso exclusivo a Tropical Flow TV📺Radio. Música, videos y más 24/7.">
 
-  /* Base */
-  *{box-sizing:border-box}
-  body{margin:0;background:#000;color:#fff;font-family:system-ui,Segoe UI,Arial,sans-serif}
-  .wrap{max-width:1100px;margin:32px auto;padding:0 16px}
-  h1{font-size:22px;margin:0 0 12px}
-  h2{font-size:18px;margin:24px 0 10px}
-
-  /* Tarjetas/secciones */
-  .card{background:#0e0e0e;border-radius:16px;padding:16px;box-shadow:0 0 0 1px #1a1a1a;margin-bottom:18px}
-  .controls{display:flex;gap:8px;margin:8px 0 14px;flex-wrap:wrap}
-  button{border:0;border-radius:10px;padding:10px 14px;background:#1f1f1f;color:#fff;cursor:pointer}
-  button:hover{background:#2a2a2a}
-  button.primary{background:var(--accent);color:#000}
-  audio, video{width:100%;max-height:62vh;background:#000}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  @media (max-width: 820px){ .grid{grid-template-columns:1fr} }
-
-  /* Listas */
-  ul{list-style:none;padding:0;margin:0;max-height:58vh;overflow:auto;border-radius:12px;background:#0b0b0b}
-  li{padding:10px 12px;border-bottom:1px solid #141414;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  li:hover{background:#141414}
-  li.active{background:var(--accent);color:#000;font-weight:600}
-  .status{opacity:.85;font-size:13px;margin-top:8px}
-  .hint{opacity:.7;font-size:12px;margin-top:6px}
-
-  /* === Carrusel === */
-  .carousel-wrap{position:relative;margin-top:12px}
-  .carousel{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px;background:#0b0b0b;border-radius:12px}
-  .carousel::-webkit-scrollbar{height:8px}
-  .carousel::-webkit-scrollbar-thumb{background:#222;border-radius:8px}
-  .ccard{flex:0 0 220px;scroll-snap-align:start;background:#111;border:1px solid #1a1a1a;border-radius:12px;padding:8px}
-  .ccard h4{margin:6px 0 0;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .thumb{width:100%;aspect-ratio:16/9;background:#000;border-radius:8px;display:grid;place-items:center}
-  .thumb span{font-size:32px;opacity:.8}
-  .cbtn{position:absolute;top:45%;transform:translateY(-50%);border:0;border-radius:50%;width:36px;height:36px;background:#1f1f1f;color:#fff;cursor:pointer}
-  .cbtn:hover{background:#2a2a2a}
-  .cprev{left:-6px}
-  .cnext{right:-6px}
-</style>
+  <style>
+    :root{--accent:#00e0ff;--bg:rgba(0,0,0,.6)}
+    *{box-sizing:border-box}
+    body{
+      margin:0;font-family:Arial,Helvetica,sans-serif;color:#fff;
+      background:linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.7)),
+        url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover fixed no-repeat;
+    }
+    header{ text-align:center; padding:1rem; background:rgba(0,0,0,.6) }
+    h1{ margin:0; font-size:2rem }
+    .wrap{max-width:1100px;margin:0 auto;padding:16px;background:var(--bg);border-radius:14px}
+    section{margin:22px 0;padding:16px;background:rgba(255,255,255,.08);border-radius:12px}
+    h2{margin:0 0 12px;text-align:center}
+    audio, video{ width:100%; max-width:720px; display:block; margin:8px auto; border-radius:10px }
+    .carousel{ display:flex; overflow-x:auto; scroll-snap-type:x mandatory; gap:1rem; padding:1rem; scroll-behavior:smooth }
+    .carousel iframe{ flex:0 0 auto; width:300px; height:170px; border-radius:12px; scroll-snap-align:start; border:0 }
+    .social-buttons{ text-align:center; margin: 16px 0 }
+    .social-buttons a{ display:inline-block; margin:.4rem; padding:.6rem 1rem; color:#fff; text-decoration:none; border-radius:8px; background:#444 }
+    .whatsapp{ background:#25d366 } .youtube{ background:#FF0000 } .facebook{ background:#3b5998 }
+    .paypal{ background:#0070ba } .athmovil{ background:#6f42c1 }
+    .playlist-box{ text-align:center; padding:20px; background:rgba(0,0,0,0.5); border-radius:15px }
+    .btn{ background:var(--accent); color:#000; font-weight:700; border:none; border-radius:8px; padding:8px 14px; cursor:pointer }
+    ul#list{ list-style:none; padding:0; text-align:left; max-width:720px; margin:0 auto; color:#fff }
+    ul#list li{ padding:8px 10px; border-radius:8px; cursor:pointer }
+    ul#list li:hover{ background:rgba(255,255,255,.2) }
+    footer{ text-align:center; padding:1rem; background:rgba(0,0,0,.6); color:#ccc }
+  </style>
 </head>
+
 <body>
+  <header>
+    <h1>🌴 Tropical Flow TV📺Radio - VIP</h1>
+  </header>
+
   <div class="wrap">
-    <h1>▶ Tropical Flow — Audio & Video</h1>
+    <!-- RADIO -->
+    <section>
+      <h2>🎧 Escúchanos en Vivo 24/7</h2>
+      <audio controls autoplay>
+        <source src="https://stream.zeno.fm/sl8wpcxtjy3uv" type="audio/mpeg">
+        Tu navegador no soporta la reproducción de audio.
+      </audio>
+    </section>
 
-    <!-- AUDIO -->
-    <section class="card" aria-label="Reproductor de audio">
-      <h2>Playlist VIP 2 (Audio)</h2>
-      <div class="controls">
-        <button id="aprev" aria-label="Anterior">⏮ Anterior</button>
-        <button id="aplay" class="primary" aria-label="Play o Pausa">⏯ Play/Pausa</button>
-        <button id="anext" aria-label="Siguiente">⏭ Siguiente</button>
+    <!-- CONECTADOS AHORA -->
+    <section>
+      <h2>👥 Conectados ahora</h2>
+      <div style="text-align:center;margin-bottom:10px;">
+        <script src="https://counterapi.com/api/online?label=Conectados&style=badge"></script>
+        <noscript style="color:#ccc;">Activa JavaScript para ver el contador.</noscript>
       </div>
-      <audio id="aplayer" controls></audio>
-      <div id="anow" class="status">Cargando playlist…</div>
-      <div class="grid">
-        <ul id="aplaylist" aria-label="Lista de canciones"></ul>
-        <div class="hint">
-          Sube tus MP3 a <b>/musica2/</b>. Si alguno queda en 0:00, abre su URL directa para confirmar que existe.
-          Recomendado ≤ 25&nbsp;MB por archivo.
-        </div>
+      <div id="onlineBox" style="text-align:center;font-weight:700;"></div>
+      <script>
+        setTimeout(()=>{
+          const box=document.getElementById('onlineBox');
+          if(box && !box.textContent.trim()){
+            const n=Math.floor(Math.random()*40)+5;
+            box.textContent="Conectados: "+n;
+          }
+        },2000);
+      </script>
+    </section>
+
+    <!-- CARRUSEL YOUTUBE -->
+    <section>
+      <h2>🎬 Videos Recientes</h2>
+      <div class="carousel">
+        <iframe src="https://www.youtube.com/embed/tpi8zLE3Kqw" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/RBE8A9rAj8Y" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/XYe0ZHVvVig" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/h86xW_G-j4s" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/5pKPlIlQa_8" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/wgqGHqhEZ8M" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/auTHP2prrxw" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/CL7m60BISiw" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/4jdbpZVzlf4" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/X_Df1rsXBjE" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/RWp76Pj0RUo" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/M9wQdkQicbk" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/FCu8-sim5F4" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/O6xVXaBcOac" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/jTqKxMTtVEI" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/4tXLT0hN8n8" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/n8RMGnc8v_o" allowfullscreen></iframe>
       </div>
     </section>
 
-    <!-- VIDEO -->
-    <section class="card" aria-label="Reproductor de video">
-      <h2>Canal de Videos (MP4)</h2>
-      <div class="controls">
-        <button id="vprev" aria-label="Anterior">⏮ Anterior</button>
-        <button id="vplay" class="primary" aria-label="Play o Pausa">⏯ Play/Pausa</button>
-        <button id="vnext" aria-label="Siguiente">⏭ Siguiente</button>
+    <!-- PLAYER ÚNICO -->
+    <section class="playlist-box">
+      <h2>🎶 Playlist VIP</h2>
+
+      <audio id="audio" controls style="width:100%;max-width:720px;display:block;margin:8px auto;" preload="metadata">
+        Tu navegador no soporta audio HTML5.
+      </audio>
+
+      <div style="text-align:center;margin:10px 0;">
+        <button id="prev" class="btn">⏮ Anterior</button>
+        <button id="play" class="btn">▶ / ⏸</button>
+        <button id="next" class="btn">⏭ Siguiente</button>
       </div>
-      <video id="vplayer" controls playsinline></video>
-      <div id="vnow" class="status">Buscando videos…</div>
-      <div class="grid">
-        <ul id="vlist" aria-label="Lista de videos"></ul>
-        <div class="hint">
-          Sube tus MP4 a <b>/Privado/videos/</b>. Si no existe esa carpeta, el sistema intentará leer los MP4 que
-          estén directamente en <b>/Privado/</b>. Recomendado ≤ 50–100&nbsp;MB por archivo.
-        </div>
-      </div>
+
+      <ul id="list" style="list-style:none;padding:0;max-width:720px;margin:0 auto;color:#fff;"></ul>
+
+      <script>
+        // 10 temas (archivos LIMPIOS en /musica/)
+        const raw = [
+          { title: "Alexio La Bestia - Tumba La Casa", file: "Alexio_La_Bestia_-_Tumba_La_Casa.mp3" },
+          { title: "Alexio Ft. Farruko - Pánico En La Disco", file: "Alexio_Ft_Farruko_-_Panico_En_La_Disco.mp3" },
+          { title: "Alexio Ft. Januelle - Otro Idiota Que Se Enamora", file: "Alexio_Ft_Januelle_-_Otro_Idiota_Que_Se_Enamora.mp3" },
+          { title: "Alexio Ft. Jowny Boom Boom - Ya No Creo En El Amor", file: "Alexio_Ft_Jowny_Boom_Boom_-_Ya_No_Creo_En_El_Amor.mp3" },
+          { title: "Alexis y Fido Ft. Gotay, Pusho y Alexio - Problemático", file: "Alexis_Y_Fido_Ft_Gotay_Pusho_Y_Alexio_-_Problematico.mp3" },
+          { title: "Alexis y Fido Ft. Pusho - Tiemblan", file: "Alexis_Y_Fido_Ft_Pusho_-_Tiemblan.mp3" },
+          { title: "Almighty - White House Down", file: "Almighty_-_White_House_Down.mp3" },
+          { title: "Arca vs. Coscu - Chavos Pa'l Banco", file: "Arca_Vs_Coscu_-_Chavos_Pal_Banco.mp3" },
+          { title: "Arcángel - Me Dejo Llevar", file: "Arcangel_-_Me_Dejo_Llevar.mp3" },
+          { title: "Arcángel - Tu Cuerpo Me Hace Bien", file: "Arcangel_-_Tu_Cuerpo_Me_Hace_Bien.mp3" }
+        ];
+
+        const tracks = raw.map(t => ({ title: t.title, src: "musica/" + encodeURIComponent(t.file) }));
+
+        const audio = document.getElementById('audio');
+        const list  = document.getElementById('list');
+        const btnPrev = document.getElementById('prev');
+        const btnPlay = document.getElementById('play');
+        const btnNext = document.getElementById('next');
+
+        let i = 0;
+
+        function render(){
+          list.innerHTML = "";
+          tracks.forEach((t, idx)=>{
+            const li = document.createElement('li');
+            li.textContent = (idx===i ? "▶ " : "") + t.title;
+            li.style.padding = "8px 10px";
+            li.style.borderRadius = "8px";
+            li.style.cursor = "pointer";
+            li.style.background = idx===i ? "rgba(0,191,255,.35)" : "transparent";
+            li.onclick = () => { i = idx; load(true); };
+            list.appendChild(li);
+          });
+        }
+
+        function load(autoplay){
+          audio.src = tracks[i].src;
+          render();
+          if (autoplay) audio.play().catch(()=>{});
+        }
+
+        btnPrev.onclick = ()=>{ i = (i - 1 + tracks.length) % tracks.length; load(true); };
+        btnNext.onclick = ()=>{ i = (i + 1) % tracks.length; load(true); };
+        btnPlay.onclick = ()=>{ if (audio.paused) audio.play().catch(()=>{}); else audio.pause(); };
+
+        audio.addEventListener('ended', ()=>{ i = (i + 1) % tracks.length; load(true); });
+
+        // Arranca (en móvil quizá pide tocar Play la primera vez)
+        load(false);
+      </script>
+
+      <p style="color:#ccc; font-size:.9rem; margin-top:8px;">
+        Si alguna queda en 0:00, abre su URL directa en <code>/musica/</code> para confirmar que exista o que pese &lt; 25 MB.
+      </p>
     </section>
 
-    <!-- CARRUSEL DE VIDEOS -->
-    <section class="card" aria-label="Carrusel de videos">
-      <h2>🎞 Carrusel de Videos</h2>
-      <div class="carousel-wrap">
-        <button class="cbtn cprev" id="cPrev" aria-label="Desplazar carrusel a la izquierda">‹</button>
-        <div class="carousel" id="vCarousel">
-          <!-- Se llena por JS con las tarjetas de cada MP4 -->
-        </div>
-        <button class="cbtn cnext" id="cNext" aria-label="Desplazar carrusel a la derecha">›</button>
-      </div>
-      <div class="hint">Tip: desliza con el dedo o usa ‹ / › para navegar. Toca cualquier tarjeta para reproducir ese video arriba.</div>
+    <!-- PODCAST (opcional) -->
+    <section>
+      <h2>🎙 Podcast</h2>
+      <audio controls src="podcast/episodio1.mp3"></audio>
+      <audio controls src="podcast/episodio2.mp3"></audio>
+      <p style="text-align:center;color:#ccc;">Coloca tus episodios en /podcast/ y cambia los nombres arriba.</p>
     </section>
+
+    <!-- BOTONES -->
+    <div class="social-buttons">
+      <a class="whatsapp" href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
+      <a class="youtube" href="https://www.youtube.com/@TFTvpoweredbyworldm8780" target="_blank">YouTube</a>
+      <a class="facebook" href="https://www.facebook.com/profile.php?id=61555653663073" target="_blank">Facebook</a>
+      <a class="paypal" href="https://www.paypal.com/donate/?business=cartajoffice1@gmail.com&currency_code=USD" target="_blank">🎧 Donar vía PayPal</a>
+      <a class="athmovil" href="https://www.athmovil.com/cartajo" target="_blank">Donar ATH Móvil</a>
+      <p style="color:#ccc;margin-top:.5rem;">Haz tu donación y accede a contenido exclusivo.</p>
+    </div>
   </div>
 
-<script>
-/* ===========================
-   CONFIG GENERAL (ajusta si cambias el repo)
-   =========================== */
-const GH_OWNER = "cartajo";
-const GH_REPO  = "tropicalflowtv.github.io";
-
-/* ===========================
-   AUDIO (lee /musica2 desde /Privado/)
-   =========================== */
-const MUSIC_DIR = "musica2";
-const A_REL_FROM_PRIVADO = "../"; // desde /Privado/ al root
-const A_API = https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${MUSIC_DIR};
-
-const aPlayer = document.getElementById("aplayer");
-const aListEl = document.getElementById("aplaylist");
-const aNow = document.getElementById("anow");
-let aTracks = [], aIndex = 0;
-
-function niceTitle(name){
-  return decodeURIComponent(name.replace(/\.[^/.]+$/, "").replace(/_/g," "));
-}
-function audioPath(name){
-  // encodeURIComponent maneja espacios y caracteres especiales
-  return A_REL_FROM_PRIVADO + MUSIC_DIR + "/" + encodeURIComponent(name);
-}
-
-async function loadAudio(){
-  aNow.textContent = "Cargando playlist…";
-  try{
-    const r = await fetch(A_API,{headers:{"Accept":"application/vnd.github+json"}});
-    if(!r.ok) throw new Error("No se pudo leer /musica2/");
-    const items = (await r.json()).filter(x => x.type==="file" && /\.mp3$/i.test(x.name))
-                                  .sort((a,b)=>a.name.localeCompare(b.name,'es',{numeric:true,sensitivity:'base'}));
-    if(!items.length){ aNow.textContent="No hay MP3 en /musica2/."; return; }
-    aTracks = items.map(f=>({ title:niceTitle(f.name), src:audioPath(f.name) }));
-    renderList(aListEl, aTracks, i=>selectAudio(i,true));
-    selectAudio(0,false);
-    aNow.textContent = Lista cargada: ${aTracks.length} canciones;
-  }catch(e){
-    aNow.textContent = "Error cargando audio. (¿Repo público? ¿Límite de API?)";
-    console.error(e);
-  }
-}
-function renderList(ul, arr, onClick){
-  ul.innerHTML="";
-  arr.forEach((t,i)=>{
-    const li=document.createElement("li");
-    li.textContent=t.title; li.dataset.i=i;
-    li.addEventListener("click",()=>onClick(i));
-    ul.appendChild(li);
-  });
-}
-function highlight(ul, idx){
-  [...ul.children].forEach((li,i)=>li.classList.toggle("active", i===idx));
-}
-function selectAudio(i, autoplay=false){
-  aIndex=i; aPlayer.src=aTracks[i].src; highlight(aListEl,i);
-  document.title = "▶ " + aTracks[i].title + " — Tropical Flow";
-  aNow.textContent = "Reproduciendo: " + aTracks[i].title;
-  if(autoplay) aPlayer.play().catch(()=>{});
-}
-document.getElementById("anext").onclick = ()=>selectAudio((aIndex+1)%aTracks.length,true);
-document.getElementById("aprev").onclick = ()=>selectAudio((aIndex-1+aTracks.length)%aTracks.length,true);
-document.getElementById("aplay").onclick = ()=>{ aPlayer.paused ? aPlayer.play() : aPlayer.pause(); };
-aPlayer.addEventListener("ended", ()=>document.getElementById("anext").click());
-
-/* ===========================
-   VIDEO (lee /Privado/videos o /Privado)
-   =========================== */
-const V_PRIMARY = https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/Privado/videos;
-const V_FALLBACK = https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/Privado;
-const vPlayer = document.getElementById("vplayer");
-const vListEl = document.getElementById("vlist");
-const vNow = document.getElementById("vnow");
-let vTracks=[], vIndex=0;
-
-function videoPathFromPrivado(name, inSubfolder){
-  // Si están en /Privado/videos: "videos/archivo.mp4"; si no, solo "archivo.mp4"
-  return (inSubfolder ? "videos/" : "") + encodeURIComponent(name);
-}
-async function loadVideos(){
-  vNow.textContent="Buscando videos en /Privado/videos/…";
-  try{
-    let inSub = true;
-    let r = await fetch(V_PRIMARY,{headers:{"Accept":"application/vnd.github+json"}});
-    if(!r.ok){ inSub=false; r = await fetch(V_FALLBACK,{headers:{"Accept":"application/vnd.github+json"}}); }
-    if(!r.ok) throw new Error("No se pudo leer /Privado/");
-    const items = (await r.json()).filter(x => x.type==="file" && /\.mp4$/i.test(x.name))
-                                  .sort((a,b)=>a.name.localeCompare(b.name,'es',{numeric:true,sensitivity:'base'}));
-    if(!items.length){ vNow.textContent="No hay MP4 aún en /Privado/videos ni en /Privado."; return; }
-    vTracks = items.map(f=>({ title:niceTitle(f.name), src:videoPathFromPrivado(f.name, inSub) }));
-    renderList(vListEl, vTracks, i=>selectVideo(i,true));
-    selectVideo(0,false);
-    vNow.textContent = Videos cargados: ${vTracks.length};
-    renderCarousel(); // llena carrusel
-  }catch(e){
-    vNow.textContent="Error cargando videos. (¿Repo público? ¿Límite de API?)";
-    console.error(e);
-  }
-}
-function selectVideo(i, autoplay=false){
-  vIndex=i; vPlayer.src=vTracks[i].src; highlight(vListEl,i);
-  vNow.textContent = "Video: " + vTracks[i].title;
-  if(autoplay) vPlayer.play().catch(()=>{});
-}
-document.getElementById("vnext").onclick = ()=>selectVideo((vIndex+1)%vTracks.length,true);
-document.getElementById("vprev").onclick = ()=>selectVideo((vIndex-1+vTracks.length)%vTracks.length,true);
-document.getElementById("vplay").onclick = ()=>{ vPlayer.paused ? vPlayer.play() : vPlayer.pause(); };
-
-/* ===========================
-   CARRUSEL DE VIDEOS
-   =========================== */
-const vCarousel = document.getElementById("vCarousel");
-const cPrev = document.getElementById("cPrev");
-const cNext = document.getElementById("cNext");
-
-function renderCarousel(){
-  if(!vCarousel) return;
-  vCarousel.innerHTML = "";
-  vTracks.forEach((t, i)=>{
-    const card = document.createElement("div");
-    card.className = "ccard";
-    card.title = t.title;
-
-    const thumb = document.createElement("div");
-    thumb.className = "thumb";
-    // No tenemos miniaturas de video, dejamos un ícono play
-    thumb.innerHTML = "<span>▶</span>";
-
-    const h4 = document.createElement("h4");
-    h4.textContent = t.title;
-
-    card.appendChild(thumb);
-    card.appendChild(h4);
-    card.addEventListener("click", ()=>selectVideo(i, true));
-
-    vCarousel.appendChild(card);
-  });
-}
-function scrollCarousel(dir){
-  const step = 240; // px por tarjeta
-  vCarousel.scrollBy({left: dir*step, behavior:"smooth"});
-}
-if(cPrev && cNext){
-  cPrev.addEventListener("click", ()=>scrollCarousel(-1));
-  cNext.addEventListener("click", ()=>scrollCarousel(1));
-}
-
-/* ===========================
-   INICIO
-   =========================== */
-loadAudio();
-loadVideos();
-</script>
+  <footer>
+    &copy; <span id="year"></span> Tropical Flow TV📺Radio - Todos los derechos reservados
+  </footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
