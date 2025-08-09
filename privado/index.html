@@ -20,24 +20,17 @@
     section{margin:22px 0;padding:16px;background:rgba(255,255,255,.08);border-radius:12px}
     h2{margin:0 0 12px;text-align:center}
     audio, video{ width:100%; max-width:720px; display:block; margin:8px auto; border-radius:10px }
-
-    /* Carrusel YouTube */
     .carousel{ display:flex; overflow-x:auto; scroll-snap-type:x mandatory; gap:1rem; padding:1rem; scroll-behavior:smooth }
     .carousel iframe{ flex:0 0 auto; width:300px; height:170px; border-radius:12px; scroll-snap-align:start; border:0 }
-
-    /* Botones sociales */
     .social-buttons{ text-align:center; margin: 16px 0 }
     .social-buttons a{ display:inline-block; margin:.4rem; padding:.6rem 1rem; color:#fff; text-decoration:none; border-radius:8px; background:#444 }
     .whatsapp{ background:#25d366 } .youtube{ background:#FF0000 } .facebook{ background:#3b5998 }
     .paypal{ background:#0070ba } .athmovil{ background:#6f42c1 }
-
-    /* Player */
     .playlist-box{ text-align:center; padding:20px; background:rgba(0,0,0,0.5); border-radius:15px }
     .btn{ background:var(--accent); color:#000; font-weight:700; border:none; border-radius:8px; padding:8px 14px; cursor:pointer }
     ul#list{ list-style:none; padding:0; text-align:left; max-width:720px; margin:0 auto; color:#fff }
     ul#list li{ padding:8px 10px; border-radius:8px; cursor:pointer }
     ul#list li:hover{ background:rgba(255,255,255,.2) }
-
     footer{ text-align:center; padding:1rem; background:rgba(0,0,0,.6); color:#ccc }
   </style>
 </head>
@@ -100,7 +93,7 @@
       </div>
     </section>
 
-    <!-- PLAYER ÚNICO (usa tus MP3 en /musica/) -->
+    <!-- PLAYER ÚNICO -->
     <section class="playlist-box">
       <h2>🎶 Playlist VIP</h2>
 
@@ -117,21 +110,20 @@
       <ul id="list" style="list-style:none;padding:0;max-width:720px;margin:0 auto;color:#fff;"></ul>
 
       <script>
-        // 🔊 TUS 10 TEMAS en /musica/ (no hace falta renombrar)
+        // 10 temas (archivos LIMPIOS en /musica/)
         const raw = [
-          { title: "Alexio La Bestia - Tumba La Casa", file: "Alexio_La_Bestia_-Tumba_La_Casa_WWW.ELGENERO.COM.mp3" },
-          { title: "Alexio Ft. Farruko - Pánico En La Disco", file: "Alexio_La_Bestia_Ft.Farruko-Panico_En_La_Disco_WWW.ELGENERO.COM.mp3" },
-          { title: "Alexio Ft. Januelle - Otro Idiota Que Se Enamora", file: "Alexio_La_Bestia_Ft.Januelle-Otro_Idiota_Que_Se_Enamora_WWW.ELGENERO.COM.mp3" },
-          { title: "Alexio Ft. Jowny Boom Boom - Ya No Creo En El Amor", file: "Alexio_La_Bestia_Ft.Jowny_Boom_Boom-Ya_No_Creo_En_El_Amor_WWW.ELGENERO.COM.mp3" },
-          { title: "Alexis y Fido Ft. Gotay, Pusho y Alexio - Problemático", file: "Alexis Y Fido Ft. Gotay  Pusho Y Alexio - Problematico (WWW.ELGENERO.COM).mp3" },
-          { title: "Alexis y Fido Ft. Pusho - Tiemblan", file: "Alexis_y_Fido_Ft.Pusho-Tiemblan_WWW.ELGENERO.COM.mp3" },
-          { title: "Almighty - White House Down", file: "Almighty - White House Down (WWW.ELGENERO.COM).mp3" },
-          { title: "Arca vs. Coscu - Chavos Pa'l Banco", file: "Arca_Vs.Coscu-Chavos_Pal_Banco_WWW.ELGENERO.COM.mp3" },
-          { title: "Arcángel - Me Dejo Llevar", file: "Arcangel - Me Dejo Llevar (WWW.ELGENERO.COM).mp3" },
-          { title: "Arcángel - Tu Cuerpo Me Hace Bien", file: "Arcangel - Tu Cuerpo Me Hace Bien (Prod. Mambo Kingz y DJ Luian) (WWW.ELGENERO.COM).mp3" }
+          { title: "Alexio La Bestia - Tumba La Casa", file: "Alexio_La_Bestia_-_Tumba_La_Casa.mp3" },
+          { title: "Alexio Ft. Farruko - Pánico En La Disco", file: "Alexio_Ft_Farruko_-_Panico_En_La_Disco.mp3" },
+          { title: "Alexio Ft. Januelle - Otro Idiota Que Se Enamora", file: "Alexio_Ft_Januelle_-_Otro_Idiota_Que_Se_Enamora.mp3" },
+          { title: "Alexio Ft. Jowny Boom Boom - Ya No Creo En El Amor", file: "Alexio_Ft_Jowny_Boom_Boom_-_Ya_No_Creo_En_El_Amor.mp3" },
+          { title: "Alexis y Fido Ft. Gotay, Pusho y Alexio - Problemático", file: "Alexis_Y_Fido_Ft_Gotay_Pusho_Y_Alexio_-_Problematico.mp3" },
+          { title: "Alexis y Fido Ft. Pusho - Tiemblan", file: "Alexis_Y_Fido_Ft_Pusho_-_Tiemblan.mp3" },
+          { title: "Almighty - White House Down", file: "Almighty_-_White_House_Down.mp3" },
+          { title: "Arca vs. Coscu - Chavos Pa'l Banco", file: "Arca_Vs_Coscu_-_Chavos_Pal_Banco.mp3" },
+          { title: "Arcángel - Me Dejo Llevar", file: "Arcangel_-_Me_Dejo_Llevar.mp3" },
+          { title: "Arcángel - Tu Cuerpo Me Hace Bien", file: "Arcangel_-_Tu_Cuerpo_Me_Hace_Bien.mp3" }
         ];
 
-        // Construye rutas seguras: /musica/ + nombre (soporta espacios, acentos, paréntesis)
         const tracks = raw.map(t => ({ title: t.title, src: "musica/" + encodeURIComponent(t.file) }));
 
         const audio = document.getElementById('audio');
@@ -173,7 +165,7 @@
       </script>
 
       <p style="color:#ccc; font-size:.9rem; margin-top:8px;">
-        Si alguna queda en 0:00, abre su URL directa en /musica/ para confirmar que exista o que pese &lt; 25 MB.
+        Si alguna queda en 0:00, abre su URL directa en <code>/musica/</code> para confirmar que exista o que pese &lt; 25 MB.
       </p>
     </section>
 
