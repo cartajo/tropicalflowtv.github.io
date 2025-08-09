@@ -34,6 +34,11 @@
     /* Playlist de música */
     .playlist-box{ text-align:center; padding:20px; background:rgba(0,0,0,0.5); border-radius:15px }
     #song-title{ color:#fff; font-weight:bold; margin:8px 0 }
+    .controls{ display:flex; gap:10px; justify-content:center; margin:10px 0 }
+    .btn{ background:var(--accent); color:#000; font-weight:700; border:none; border-radius:8px; padding:8px 14px; cursor:pointer }
+    .progress-row{ display:flex; align-items:center; gap:10px; max-width:720px; margin:8px auto; }
+    #progress{ flex:1; }
+    .time{ font-variant-numeric: tabular-nums; font-size:.95rem; color:#ddd }
     ul#playlist{ list-style:none; padding:0; text-align:left; max-width:700px; margin:0 auto; color:#fff }
     ul#playlist li{ padding:8px 10px; border-radius:8px; cursor:pointer; display:flex; gap:8px; align-items:center }
     ul#playlist li:hover{ background:rgba(255,255,255,.2) }
@@ -107,18 +112,33 @@
       </div>
     </section>
 
-    <!-- PLAYER DE MÚSICA (LISTA VISIBLE + AUTO-SIGUIENTE) -->
+    <!-- PLAYER DE MÚSICA (LISTA + ANTERIOR/SIGUIENTE + BARRA) -->
     <section class="playlist-box">
       <h2>🎶 Playlist VIP</h2>
-      <audio id="audio-player" controls style="width:100%; margin-bottom:10px;"></audio>
       <p id="song-title"></p>
+
+      <div class="controls">
+        <button id="prev-btn" class="btn">⏮ Anterior</button>
+        <button id="playpause-btn" class="btn">▶ / ⏸</button>
+        <button id="next-btn" class="btn">⏭ Siguiente</button>
+      </div>
+
+      <!-- Barra de progreso + tiempos -->
+      <div class="progress-row">
+        <span id="curTime" class="time">0:00</span>
+        <input id="progress" type="range" min="0" max="100" value="0">
+        <span id="durTime" class="time">0:00</span>
+      </div>
+
+      <audio id="audio-player" preload="metadata"></audio>
+
       <p class="muted">Tip: si alguna no suena y queda en 0:00, revisa el nombre/ruta exacta del MP3 en /Privado/assets/musica/.</p>
 
       <!-- Lista visible -->
       <ul id="playlist"></ul>
 
       <script>
-        // 🔊 TUS 10 TEMAS — tal como me los enviaste (no tienes que renombrar)
+        // 🔊 TUS 10 TEMAS — tal como me los enviaste
         const rawTracks = [
           { title: "Alexio La Bestia - Tumba La Casa", file: "Alexio_La_Bestia_-Tumba_La_Casa_WWW.ELGENERO.COM.mp3" },
           { title: "Alexio La Bestia Ft. Farruko - Pánico En La Disco", file: "Alexio_La_Bestia_Ft.Farruko-Panico_En_La_Disco_WWW.ELGENERO.COM.mp3" },
@@ -141,7 +161,22 @@
         const audio = document.getElementById('audio-player');
         const titleEl = document.getElementById('song-title');
         const listEl  = document.getElementById('playlist');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const playPauseBtn = document.getElementById('playpause-btn');
+        const progress = document.getElementById('progress');
+        const curTimeEl = document.getElementById('curTime');
+        const durTimeEl = document.getElementById('durTime');
+
         let current = 0;
+        let isUserSeeking = false;
+
+        function fmt(t){
+          if(!isFinite(t)) return "0:00";
+          const m = Math.floor(t/60);
+          const s = Math.floor(t%60).toString().padStart(2,"0");
+          return ${m}:${s};
+        }
 
         function renderList(){
           listEl.innerHTML = "";
@@ -149,28 +184,65 @@
             const li = document.createElement('li');
             li.innerHTML = <span class="dot"></span> <span>${t.title}</span>;
             li.className = i===current ? "active" : "";
-            li.onclick = () => load(i);
+            li.onclick = () => load(i, true);
             listEl.appendChild(li);
           });
         }
 
-        function load(i){
+        function load(i, autoplay=false){
           current = i;
           audio.src = tracks[current].src;
           titleEl.textContent = tracks[current].title;
-          audio.play().catch(()=>{});
+          progress.value = 0;
+          curTimeEl.textContent = "0:00";
+          durTimeEl.textContent = "0:00";
+          if (autoplay) audio.play().catch(()=>{});
           renderList();
         }
+
+        // Controles
+        prevBtn.addEventListener('click', () => {
+          current = (current - 1 + tracks.length) % tracks.length;
+          load(current, true);
+        });
+        nextBtn.addEventListener('click', () => {
+          current = (current + 1) % tracks.length;
+          load(current, true);
+        });
+        playPauseBtn.addEventListener('click', () => {
+          if (audio.paused) audio.play().catch(()=>{}); else audio.pause();
+        });
 
         // Auto-siguiente al terminar
         audio.addEventListener('ended', () => {
           current = (current + 1) % tracks.length;
-          load(current);
+          load(current, true);
         });
 
-        // Arranca
+        // Tiempos + barra
+        audio.addEventListener('loadedmetadata', ()=>{
+          durTimeEl.textContent = fmt(audio.duration);
+        });
+        audio.addEventListener('timeupdate', ()=>{
+          if (!isUserSeeking && audio.duration) {
+            progress.value = (audio.currentTime / audio.duration) * 100;
+          }
+          curTimeEl.textContent = fmt(audio.currentTime);
+          if (isFinite(audio.duration)) durTimeEl.textContent = fmt(audio.duration);
+        });
+        progress.addEventListener('input', ()=>{
+          isUserSeeking = true;
+        });
+        progress.addEventListener('change', ()=>{
+          if (audio.duration) {
+            audio.currentTime = (progress.value/100) * audio.duration;
+          }
+          isUserSeeking = false;
+        });
+
+        // Arranca en la 1ª (no autoplay por políticas móviles hasta tocar play)
         renderList();
-        load(0);
+        load(0, false);
       </script>
     </section>
 
