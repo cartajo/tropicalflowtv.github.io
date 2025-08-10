@@ -31,12 +31,16 @@
     .whatsapp{ background:#25d366 } .youtube{ background:#FF0000 } .facebook{ background:#3b5998 }
     .paypal{ background:#0070ba } .athmovil{ background:#6f42c1 }
 
-    /* Player simple */
+    /* Players */
     .playlist-box{ text-align:center; padding:20px; background:rgba(0,0,0,0.5); border-radius:15px }
     .btn{ background:var(--accent); color:#000; font-weight:700; border:none; border-radius:8px; padding:8px 14px; cursor:pointer }
-    ul#list{ list-style:none; padding:0; text-align:left; max-width:720px; margin:0 auto; color:#fff }
-    ul#list li{ padding:8px 10px; border-radius:8px; cursor:pointer }
-    ul#list li:hover{ background:rgba(255,255,255,.2) }
+    ul.plist{ list-style:none; padding:0; text-align:left; max-width:720px; margin:0 auto; color:#fff }
+    ul.plist li{ padding:8px 10px; border-radius:8px; cursor:pointer }
+    ul.plist li:hover{ background:rgba(255,255,255,.2) }
+    .status{max-width:720px;margin:6px auto 0; font-size:.92rem}
+    .ok{color:#7CFC00} .warn{color:#ffd166}
+
+    footer{ text-align:center; padding:1rem; background:rgba(0,0,0,.6); color:#ccc }
   </style>
 </head>
 
@@ -97,74 +101,178 @@
         <iframe src="https://www.youtube.com/embed/n8RMGnc8v_o" allowfullscreen></iframe>
       </div>
     </section>
-  
-    <!-- PLAYER DE MÚSICA (SIMPLE + LISTA + AUTO-SIGUIENTE) -->
-    <section class="playlist-box">
-      <h2>🎶 Playlist (Player De Musica)</h2>
 
-      <audio id="audio" controls style="width:100%;max-width:720px;display:block;margin:8px auto;" preload="metadata">
+    <!-- ===================== PLAYLIST VIP 1 (lee /musica/) ===================== -->
+    <section class="playlist-box">
+      <h2>🎶 Playlist VIP 1</h2>
+
+      <audio id="audio1" controls style="width:100%;max-width:720px;display:block;margin:8px auto;" preload="metadata">
         Tu navegador no soporta audio HTML5.
       </audio>
 
       <div style="text-align:center;margin:10px 0;">
-        <button id="prev" class="btn">⏮ Anterior</button>
-        <button id="play" class="btn">▶ / ⏸</button>
-        <button id="next" class="btn">⏭ Siguiente</button>
+        <button id="prev1" class="btn">⏮ Anterior</button>
+        <button id="play1" class="btn">▶️ / ⏸</button>
+        <button id="next1" class="btn">⏭ Siguiente</button>
       </div>
 
-      <ul id="list"></ul>
+      <ul id="list1" class="plist"></ul>
+      <div id="status1" class="status"></div>
 
       <script>
-        // ✅ PRUEBA con MP3 públicos
-        const tracks = [
-          { title: "Merengue Loco 1", src: "https://we.tl/t-4BvmFo3SwQ/" },
-          { title: "SoundHelix 2", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
-          { title: "SoundHelix 3", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" },
-          { title: "SoundHelix 4", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" }
+        // RUTA base a tus MP3
+        const base1 = "../musica/"; // <- están fuera de /Privado/ en /musica/
+
+        // TUS 10 TEMAS con nombres LIMPIOS (renómbralos así al subir a /musica/)
+        const raw1 = [
+          { title: "Luis Fonsi & Yomo – Aquí Estoy Yo (Urban Remix)", file: "aqui_estoy_yo.mp3" },
+          { title: "DJ Mario Andretti – Mix Merengue Romántico",     file: "mix_merengue_romantico.mp3" },
+          { title: "Karis – La Amas Como Yo",                         file: "la_amas_como_yo.mp3" },
+          { title: "Que Me Lo De En Vida",                            file: "que_me_lo_de_en_vida.mp3" },
+          { title: "Grupo Caneo – Qué Voy A Hacer Sin Ti",            file: "que_voy_a_hacer_sin_ti.mp3" },
+          { title: "Omega – Si No Me Ama",                            file: "si_no_me_ama.mp3" },
+          { title: "MC Hammer – U Can't Touch This",                  file: "u_cant_touch_this.mp3" },
+          { title: "Grupo Manía feat. Olga Tañón – Carita Linda",     file: "carita_linda.mp3" },
+          { title: "Omega – Amor Urbano 2",                           file: "amor_urbano_2.mp3" },
+          { title: "Si La Ves (Mix)",                                 file: "si_la_ves_mix.mp3" }
         ];
 
-        const audio = document.getElementById('audio');
-        const list  = document.getElementById('list');
-        const btnPrev = document.getElementById('prev');
-        const btnPlay = document.getElementById('play');
-        const btnNext = document.getElementById('next');
+        const t1 = raw1.map(t => ({ title: t.title, src: base1 + encodeURIComponent(t.file) }));
 
-        let i = 0;
+        const A1 = {
+          audio:  document.getElementById('audio1'),
+          list:   document.getElementById('list1'),
+          prev:   document.getElementById('prev1'),
+          play:   document.getElementById('play1'),
+          next:   document.getElementById('next1'),
+          status: document.getElementById('status1'),
+          i: 0
+        };
 
-        function render(){
-          list.innerHTML = "";
-          tracks.forEach((t, idx)=>{
+        function s1(msg, cls="ok"){ A1.status.className="status "+cls; A1.status.textContent=msg; }
+
+        function render1(){
+          A1.list.innerHTML = "";
+          t1.forEach((it, idx)=>{
             const li = document.createElement('li');
-            li.textContent = (idx===i ? "▶ " : "") + t.title;
-            li.style.padding = "8px 10px";
-            li.style.borderRadius = "8px";
-            li.style.cursor = "pointer";
-            li.style.background = idx===i ? "rgba(0,191,255,.35)" : "transparent";
-            li.onclick = () => { i = idx; load(true); };
-            list.appendChild(li);
+            li.textContent = (idx===A1.i ? "▶ " : "") + it.title;
+            li.style.padding="8px 10px"; li.style.borderRadius="8px"; li.style.cursor="pointer";
+            li.style.background = idx===A1.i ? "rgba(0,191,255,.35)" : "transparent";
+            li.onclick = () => { A1.i = idx; load1(true); };
+            A1.list.appendChild(li);
           });
         }
 
-        function load(autoplay){
-          audio.src = tracks[i].src;
-          render();
-          if (autoplay) audio.play().catch(()=>{});
+        function load1(autoplay){
+          A1.audio.src = t1[A1.i].src;
+          render1();
+          s1("Cargando: "+t1[A1.i].title+"…","ok");
+          if (autoplay) A1.audio.play().catch(()=>{});
         }
 
-        btnPrev.onclick = ()=>{ i = (i - 1 + tracks.length) % tracks.length; load(true); };
-        btnNext.onclick = ()=>{ i = (i + 1) % tracks.length; load(true); };
-        btnPlay.onclick = ()=>{ if (audio.paused) audio.play().catch(()=>{}); else audio.pause(); };
+        A1.prev.onclick = ()=>{ A1.i = (A1.i - 1 + t1.length) % t1.length; load1(true); };
+        A1.next.onclick = ()=>{ A1.i = (A1.i + 1) % t1.length; load1(true); };
+        A1.play.onclick = ()=>{ if (A1.audio.paused) A1.audio.play().catch(()=>{}); else A1.audio.pause(); };
 
-        audio.addEventListener('ended', ()=>{ i = (i + 1) % tracks.length; load(true); });
+        A1.audio.addEventListener('ended', ()=>{ A1.i = (A1.i + 1) % t1.length; load1(true); });
+        A1.audio.addEventListener('loadedmetadata', ()=> s1("Listo: "+t1[A1.i].title+" ✓","ok"));
+        A1.audio.addEventListener('error', ()=> s1("⚠ No se pudo cargar: "+decodeURIComponent(t1[A1.i].src)+" (¿/musica/ y nombre correcto?)","warn"));
 
-        // inicia (en móvil puede requerir tocar Play por política de autoplay)
-        load(false);
+        load1(false);
       </script>
 
-      <p style="color:#ccc; font-size:.9rem; margin-top:8px;">
-        
+      <p style="color:#ccc;font-size:.9rem;margin-top:8px;">
+        Sube los 10 MP3 a <code>/musica/</code> con esos nombres. Si alguno marca 0:00, abre su URL para confirmar.
       </p>
     </section>
+    <!-- =================== FIN PLAYLIST VIP 1 =================== -->
+
+    <!-- ===================== PLAYLIST VIP 2 (lee /musica2/) ===================== -->
+    <section class="playlist-box">
+      <h2>🎶 Playlist VIP 2</h2>
+
+      <audio id="audio2" controls style="width:100%;max-width:720px;display:block;margin:8px auto;" preload="metadata">
+        Tu navegador no soporta audio HTML5.
+      </audio>
+
+      <div style="text-align:center;margin:10px 0;">
+        <button id="prev2" class="btn">⏮ Anterior</button>
+        <button id="play2" class="btn">▶️ / ⏸</button>
+        <button id="next2" class="btn">⏭ Siguiente</button>
+      </div>
+
+      <ul id="list2" class="plist"></ul>
+      <div id="status2" class="status"></div>
+
+      <script>
+        // Carpeta para tu segunda tanda de temas
+        const base2 = "../musica2/";
+
+        // EDITA con tus archivos reales en /musica2/
+        const raw2 = [
+          // Ejemplos:
+          // { title: "Tema Nuevo 1", file: "tema_nuevo_1.mp3" },
+          // { title: "Tema Nuevo 2", file: "tema_nuevo_2.mp3" }
+        ];
+
+        const t2 = raw2.map(t => ({ title: t.title, src: base2 + encodeURIComponent(t.file) }));
+
+        const A2 = {
+          audio:  document.getElementById('audio2'),
+          list:   document.getElementById('list2'),
+          prev:   document.getElementById('prev2'),
+          play:   document.getElementById('play2'),
+          next:   document.getElementById('next2'),
+          status: document.getElementById('status2'),
+          i: 0
+        };
+
+        function s2(msg, cls="ok"){ A2.status.className="status "+cls; A2.status.textContent=msg; }
+
+        function render2(){
+          A2.list.innerHTML = "";
+          if (t2.length === 0) {
+            const empty = document.createElement('li');
+            empty.textContent = "Sube canciones a /musica2/ y agrégalas al listado.";
+            empty.style.opacity = .7;
+            A2.list.appendChild(empty);
+            return;
+          }
+          t2.forEach((it, idx)=>{
+            const li = document.createElement('li');
+            li.textContent = (idx===A2.i ? "▶ " : "") + it.title;
+            li.style.padding="8px 10px"; li.style.borderRadius="8px"; li.style.cursor="pointer";
+            li.style.background = idx===A2.i ? "rgba(0,191,255,.35)" : "transparent";
+            li.onclick = () => { A2.i = idx; load2(true); };
+            A2.list.appendChild(li);
+          });
+        }
+
+        function load2(autoplay){
+          if (!t2.length) return;
+          A2.audio.src = t2[A2.i].src;
+          render2();
+          s2("Cargando: "+t2[A2.i].title+"…","ok");
+          if (autoplay) A2.audio.play().catch(()=>{});
+        }
+
+        A2.prev.onclick = ()=>{ if(!t2.length) return; A2.i = (A2.i - 1 + t2.length) % t2.length; load2(true); };
+        A2.next.onclick = ()=>{ if(!t2.length) return; A2.i = (A2.i + 1) % t2.length; load2(true); };
+        A2.play.onclick = ()=>{ if(!t2.length) return; if (A2.audio.paused) A2.audio.play().catch(()=>{}); else A2.audio.pause(); };
+
+        A2.audio.addEventListener('ended', ()=>{ if(!t2.length) return; A2.i = (A2.i + 1) % t2.length; load2(true); });
+        A2.audio.addEventListener('loadedmetadata', ()=>{ if(!t2.length) return; s2("Listo: "+t2[A2.i].title+" ✓","ok"); });
+        A2.audio.addEventListener('error', ()=> s2("⚠ No se pudo cargar (¿/musica2/ y nombre correcto?)","warn"));
+
+        render2();
+        load2(false);
+      </script>
+
+      <p style="color:#ccc;font-size:.9rem;margin-top:8px;">
+        Crea la carpeta <code>/musica2/</code>, sube MP3 (≤25MB) y agrégalos al array <code>raw2</code>.
+      </p>
+    </section>
+    <!-- =================== FIN PLAYLIST VIP 2 =================== -->
 
     <!-- PODCAST (opcional) -->
     <section>
@@ -191,4 +299,3 @@
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
-
