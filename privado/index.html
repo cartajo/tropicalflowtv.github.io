@@ -274,13 +274,53 @@
     </section>
     <!-- =================== FIN PLAYLIST VIP 2 =================== -->
 
-    <!-- PODCAST (opcional) -->
-    <section>
-      <h2>🎙 Podcast</h2>
-      <audio controls src="podcast/episodio1.mp3"></audio>
-      <audio controls src="podcast/episodio2.mp3"></audio>
-      <p style="text-align:center;color:#ccc;">Coloca tus episodios en /podcast/ y cambia los nombres arriba.</p>
-    </section>
+    <!-- ===================== PODCAST (Audio + Video Promo Tropical) ===================== -->
+<section id="podcast">
+  <h2>🎙 Podcast</h2>
+
+  <!-- ===== AUDIO PODCAST (MP3 en /podcast/) ===== -->
+  <h3 style="text-align:center;margin-top:0;">Episodios (audio)</h3>
+  <div id="podcast-audio-list" style="max-width:900px;margin:0 auto"></div>
+
+  <!-- ===== VIDEO PROMO TROPICAL (YouTube, autoplay loop sin API) ===== -->
+  <h3 style="text-align:center;margin-top:24px;">Video Promo Tropical</h3>
+  <div style="max-width:900px;margin:0 auto;border-radius:12px;overflow:hidden;background:#000">
+    <div style="position:relative;width:100%;padding-top:56.25%; /* 16:9 */">
+      <iframe
+        src="https://www.youtube.com/embed/oD2ZKUSYG-g?autoplay=1&mute=1&controls=1&rel=0&modestbranding=1&loop=1&playlist=oD2ZKUSYG-g"
+        title="Video promo tropical"
+        allow="autoplay; encrypted-media"
+        allowfullscreen
+        style="position:absolute;inset:0;border:0;width:100%;height:100%;"
+      ></iframe>
+    </div>
+  </div>
+</section>
+
+<script>
+  /* ========== AUDIO PODCAST ==========
+     1) Sube estos MP3 a /podcast/
+     2) Cambia títulos si quieres (deja los nombres de archivo tal cual subas)
+  */
+  const PODCAST_AUDIO = [
+    { title: "Episodio 1 – Bienvenida",           file: "episodio1.mp3" },
+    { title: "Episodio 2 – Entrevista a DJ",       file: "episodio2.mp3" },
+    { title: "Episodio 3 – Noticias Tropicales",   file: "episodio3.mp3" },
+    { title: "Episodio 4 – Detrás de la Mezcla",   file: "episodio4.mp3" },
+    { title: "Episodio 5 – Preguntas de la Audiencia", file: "episodio5.mp3" }
+  ].map(e => ({ title: e.title, src: "podcast/" + encodeURIComponent(e.file) }));
+
+  const audioList = document.getElementById("podcast-audio-list");
+  audioList.innerHTML = PODCAST_AUDIO.map(ep => `
+    <div style="background:rgba(255,255,255,.08);padding:10px;border-radius:10px;margin:10px 0;">
+      <div style="font-weight:700;margin-bottom:6px;">${ep.title}</div>
+      <audio controls preload="metadata" style="width:100%;">
+        <source src="${ep.src}" type="audio/mpeg">
+      </audio>
+    </div>
+  `).join("");
+</script>
+<!-- =================== FIN PODCAST =================== -->
 
     <!-- BOTONES -->
     <div class="social-buttons">
