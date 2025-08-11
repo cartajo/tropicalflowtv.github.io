@@ -282,12 +282,13 @@
   <h3 style="text-align:center;margin-top:0;">Episodios (audio)</h3>
   <div id="podcast-audio-list" style="max-width:900px;margin:0 auto"></div>
 
-<!-- VIDEO PROMO TROPICAL -->
+<!-- VIDEO PROMO SECUENCIAL: Merengue y Salsa -->
 <div style="max-width:900px;margin:0 auto;border-radius:12px;overflow:hidden;background:#000">
   <div style="position:relative;width:100%;padding-top:56.25%;">
     <iframe
-      src="https://www.youtube.com/embed/ofrM-xTVvtA?autoplay=1&mute=1&controls=1&rel=0&modestbranding=1&loop=1&playlist=ofrM-xTVvtA"
-      title="Video promo tropical"
+      id="promoVideo"
+      src="https://www.youtube.com/embed/DZU5U-Fksfk?autoplay=1&mute=1&controls=1&rel=0&modestbranding=1"
+      title="Merengue Promo Mix"
       allow="autoplay; encrypted-media"
       allowfullscreen
       style="position:absolute;inset:0;border:0;width:100%;height:100%;"
@@ -295,9 +296,35 @@
   </div>
 </div>
 
-</section>
-
 <script>
+  // Lista de videos (IDs de YouTube)
+  const videos = [
+    "DZU5U-Fksfk", // Merengue
+    "-C1PacqcyNw"  // Salsa/Tropical
+  ];
+  let current = 0;
+  const iframe = document.getElementById("promoVideo");
+
+  // Escuchar cuando el video termine usando la API de YouTube
+  function onYouTubeIframeAPIReady() {
+    new YT.Player("promoVideo", {
+      events: {
+        'onStateChange': function (event) {
+          if (event.data === YT.PlayerState.ENDED) {
+            current = (current + 1) % videos.length;
+            iframe.src = https://www.youtube.com/embed/${videos[current]}?autoplay=1&mute=1&controls=1&rel=0&modestbranding=1;
+          }
+        }
+      }
+    });
+  }
+
+  // Cargar API de YouTube
+  const tag = document.createElement("script");
+  tag.src = "https://www.youtube.com/iframe_api";
+  document.body.appendChild(tag);
+</script>
+
   /* ========== AUDIO PODCAST ==========
      1) Sube estos MP3 a /podcast/
      2) Cambia títulos si quieres (deja los nombres de archivo tal cual subas)
