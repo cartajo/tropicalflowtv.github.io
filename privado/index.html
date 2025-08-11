@@ -373,33 +373,7 @@ function updatePromoTitle(){
 })();
 </script>
 <!-- =================== FIN PODCAST + PROMO =================== -->
-
-
-
-  /* ========== AUDIO PODCAST ==========
-     1) Sube estos MP3 a /podcast/
-     2) Cambia títulos si quieres (deja los nombres de archivo tal cual subas)
-  */
-  const PODCAST_AUDIO = [
-    { title: "Episodio 1 – Bienvenida",           file: "episodio1.mp3" },
-    { title: "Episodio 2 – Entrevista a DJ",       file: "episodio2.mp3" },
-    { title: "Episodio 3 – Noticias Tropicales",   file: "episodio3.mp3" },
-    { title: "Episodio 4 – Detrás de la Mezcla",   file: "episodio4.mp3" },
-    { title: "Episodio 5 – Preguntas de la Audiencia", file: "episodio5.mp3" }
-  ].map(e => ({ title: e.title, src: "podcast/" + encodeURIComponent(e.file) }));
-
-  const audioList = document.getElementById("podcast-audio-list");
-  audioList.innerHTML = PODCAST_AUDIO.map(ep => `
-    <div style="background:rgba(255,255,255,.08);padding:10px;border-radius:10px;margin:10px 0;">
-      <div style="font-weight:700;margin-bottom:6px;">${ep.title}</div>
-      <audio controls preload="metadata" style="width:100%;">
-        <source src="${ep.src}" type="audio/mpeg">
-      </audio>
-    </div>
-  `).join("");
-</script>
-<!-- =================== FIN PODCAST =================== -->
-
+ 
     <!-- BOTONES -->
     <div class="social-buttons">
       <a class="whatsapp" href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
