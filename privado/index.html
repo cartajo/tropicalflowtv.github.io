@@ -78,83 +78,29 @@
       </script>
     </section>
 
-   <!-- ===================== VIDEOS (YouTube playlist auto-siguiente) ===================== -->
-<section id="videos">
-  <h2>🎬 Videos Recientes (auto-siguiente)</h2>
-
-  <!-- Reproductor principal -->
-  <div id="yt-player" style="aspect-ratio:16/9;max-width:900px;margin:0 auto;border-radius:12px;overflow:hidden;background:#000"></div>
-
-  <!-- Título + contador -->
-  <div style="max-width:900px;margin:8px auto 0;text-align:center;">
-    <div id="yt-title" style="font-weight:700;"></div>
-    <div id="yt-count" style="opacity:.8;margin-top:4px;"></div>
-  </div>
-
-  <!-- Progreso -->
-  <div style="max-width:900px;margin:8px auto;background:rgba(255,255,255,.15);height:6px;border-radius:999px;overflow:hidden;">
-    <div id="yt-progress" style="height:100%;width:0%;background:#00e0ff;"></div>
-  </div>
-
-  <!-- Controles -->
-  <div style="text-align:center;margin:10px 0;">
-    <button id="yt-prev" class="btn">⏮ Anterior</button>
-    <button id="yt-play" class="btn">▶ / ⏸</button>
-    <button id="yt-next" class="btn">⏭ Siguiente</button>
-    <button id="yt-mute" class="btn">🔇 / 🔊</button>
-  </div>
-
-  <!-- Miniaturas -->
-  <div id="yt-thumbs" style="display:flex;gap:10px;overflow-x:auto;padding:10px;border-radius:12px;background:rgba(255,255,255,.08)"></div>
-
-  <!-- API de YouTube -->
-  <script src="https://www.youtube.com/iframe_api"></script>
-  <script>
-    (function(){
-      // 👉 Tus MISMOS videos (IDs sacados de tus iframes)
-      const YT_IDS = [
-        "tpi8zLE3Kqw","RBE8A9rAj8Y","XYe0ZHVvVig","h86xW_G-j4s","5pKPlIlQa_8",
-        "wgqGHqhEZ8M","auTHP2prrxw","CL7m60BISiw","4jdbpZVzlf4","X_Df1rsXBjE",
-        "RWp76Pj0RUo","M9wQdkQicbk","FCu8-sim5F4","O6xVXaBcOac","jTqKxMTtVEI",
-        "4tXLT0hN8n8","n8RMGnc8v_o"
-      ];
-
-      let ytPlayer, ytIndex = 0, autoplayTried = false, progressTimer=null;
-
-      const $prev   = document.getElementById('yt-prev');
-      const $play   = document.getElementById('yt-play');
-      const $next   = document.getElementById('yt-next');
-      const $mute   = document.getElementById('yt-mute');
-      const $thumbs = document.getElementById('yt-thumbs');
-      const $title  = document.getElementById('yt-title');
-      const $count  = document.getElementById('yt-count');
-      const $bar    = document.getElementById('yt-progress');
-
-      // Miniaturas
-      function renderThumbs(){
-        $thumbs.innerHTML = "";
-        YT_IDS.forEach((id, i)=>{
-          const url = https://i.ytimg.com/vi/${id}/hqdefault.jpg;
-          const a = document.createElement('a');
-          a.href = "javascript:void(0)";
-          a.onclick = ()=> loadVideo(i, true);
-          a.style.display="inline-block";
-          a.style.borderRadius="10px";
-          a.style.overflow="hidden";
-          a.style.boxShadow = i===ytIndex ? "0 0 0 3px #00e0ff" : "none";
-          a.style.transition = "box-shadow .2s ease";
-
-          const img = document.createElement('img');
-          img.src = url; img.loading="lazy";
-          img.style.height="90px"; img.style.display="block";
-
-          a.appendChild(img);
-          $thumbs.appendChild(a);
-        });
-      }
-
-      // Título + contador
-      function
+  <!-- CARRUSEL YOUTUBE -->
+    <section>
+      <h2>🎬 Videos Recientes</h2>
+      <div class="carousel">
+        <iframe src="https://www.youtube.com/embed/tpi8zLE3Kqw" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/RBE8A9rAj8Y" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/XYe0ZHVvVig" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/h86xW_G-j4s" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/5pKPlIlQa_8" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/wgqGHqhEZ8M" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/auTHP2prrxw" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/CL7m60BISiw" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/4jdbpZVzlf4" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/X_Df1rsXBjE" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/RWp76Pj0RUo" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/M9wQdkQicbk" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/FCu8-sim5F4" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/O6xVXaBcOac" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/jTqKxMTtVEI" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/4tXLT0hN8n8" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/n8RMGnc8v_o" allowfullscreen></iframe>
+      </div>
+    </section>
 
     <!-- ===================== PLAYLIST VIP 1 (lee /musica/) ===================== -->
     <section class="playlist-box">
