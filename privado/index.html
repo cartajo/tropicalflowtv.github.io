@@ -301,32 +301,6 @@
 </section>
 
 <script>
-/* ================== PODCAST (Audio) ==================
-   Sube tus archivos a /podcast/ como episodio1.mp3 (o .wav), episodio2...
-   Este bloque intenta MP3 y si no, usa WAV.
-*/
-const PODCAST_BASE = [
-  { title: "Episodio 1 – Bienvenida",                base: "episodio1" },
-  { title: "Episodio 2 – Entrevista a DJ",           base: "episodio2" },
-  { title: "Episodio 3 – Noticias Tropicales",       base: "episodio3" },
-  { title: "Episodio 4 – Detrás de la Mezcla",       base: "episodio4" },
-  { title: "Episodio 5 – Preguntas de la Audiencia", base: "episodio5" }
-];
-const audioList = document.getElementById("podcast-audio-list");
-audioList.innerHTML = PODCAST_BASE.map(ep => {
-  const mp3 = "podcast/" + ep.base + ".mp3";
-  const wav = "podcast/" + ep.base + ".wav";
-  return `
-    <div style="background:rgba(255,255,255,.08);padding:10px;border-radius:10px;margin:10px 0;">
-      <div style="font-weight:700;margin-bottom:6px;">${ep.title}</div>
-      <audio controls preload="metadata" style="width:100%;">
-        <source src="${mp3}" type="audio/mpeg">
-        <source src="${wav}">
-        Tu navegador no pudo cargar ${mp3} ni ${wav}.
-      </audio>
-    </div>
-  `;
-}).join("");
 
 
 /* ================== VIDEO PROMO (Merengue → Salsa) ==================
