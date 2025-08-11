@@ -19,7 +19,11 @@
     .wrap{max-width:1100px;margin:0 auto;padding:16px;background:var(--bg);border-radius:14px}
     section{margin:22px 0;padding:16px;background:rgba(255,255,255,.08);border-radius:12px}
     h2{margin:0 0 12px;text-align:center}
-    audio, video{ width:100%; max-width:900px; display:block; margin:8px auto; border-radius:10px }
+    audio, video{ width:100%; max-width:720px; display:block; margin:8px auto; border-radius:10px }
+
+    /* Carrusel YouTube */
+    .carousel{ display:flex; overflow-x:auto; scroll-snap-type:x mandatory; gap:1rem; padding:1rem; scroll-behavior:smooth }
+    .carousel iframe{ flex:0 0 auto; width:300px; height:170px; border-radius:12px; scroll-snap-align:start; border:0 }
 
     /* Botones sociales */
     .social-buttons{ text-align:center; margin: 16px 0 }
@@ -27,13 +31,13 @@
     .whatsapp{ background:#25d366 } .youtube{ background:#FF0000 } .facebook{ background:#3b5998 }
     .paypal{ background:#0070ba } .athmovil{ background:#6f42c1 }
 
-    /* Player de música */
+    /* Players */
     .playlist-box{ text-align:center; padding:20px; background:rgba(0,0,0,0.5); border-radius:15px }
     .btn{ background:var(--accent); color:#000; font-weight:700; border:none; border-radius:8px; padding:8px 14px; cursor:pointer }
-    ul.plist{ list-style:none; padding:0; text-align:left; max-width:900px; margin:0 auto; color:#fff }
+    ul.plist{ list-style:none; padding:0; text-align:left; max-width:720px; margin:0 auto; color:#fff }
     ul.plist li{ padding:8px 10px; border-radius:8px; cursor:pointer }
     ul.plist li:hover{ background:rgba(255,255,255,.2) }
-    .status{max-width:900px;margin:6px auto 0; font-size:.92rem}
+    .status{max-width:720px;margin:6px auto 0; font-size:.92rem}
     .ok{color:#7CFC00} .warn{color:#ffd166}
 
     footer{ text-align:center; padding:1rem; background:rgba(0,0,0,.6); color:#ccc }
@@ -46,7 +50,6 @@
   </header>
 
   <div class="wrap">
-
     <!-- RADIO -->
     <section>
       <h2>🎧 Escúchanos en Vivo 24/7</h2>
@@ -75,276 +78,35 @@
       </script>
     </section>
 
-    <!-- ===================== VIDEOS (YouTube playlist estable) ===================== -->
-<section id="videos">
-  <h2>🎬 Videos Recientes (auto-siguiente)</h2>
-
-  <!-- Contenedor responsive -->
-  <div class="yt-wrap" style="max-width:900px;margin:0 auto;position:relative;">
-    <div id="yt-player"
-         style="width:100%;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden"></div>
-  </div>
-
-  <!-- Título del video actual -->
-  <div id="yt-title" style="max-width:900px;margin:8px auto 0;text-align:center;font-weight:700;"></div>
-
-  <!-- Controles -->
-  <div style="text-align:center;margin:10px 0;">
-    <button id="yt-prev" class="btn">⏮ Anterior</button>
-    <button id="yt-play" class="btn">▶ / ⏸</button>
-    <button id="yt-next" class="btn">⏭ Siguiente</button>
-    <button id="yt-mute" class="btn">🔇 / 🔊</button>
-  </div>
-
-  <!-- Miniaturas -->
-  <div id="yt-thumbs" style="display:flex;gap:10px;overflow-x:auto;padding:10px;border-radius:12px;background:rgba(255,255,255,.08)"></div>
-
-  <!-- API de YouTube (UNA sola vez en toda la página) -->
-  <script src="https://www.youtube.com/iframe_api"></script>
-  <script>
-    (function(){
-      // 👉 Tus IDs (los mismos que tenías)
-      const YT_IDS = [
-        "tpi8zLE3Kqw","RBE8A9rAj8Y","XYe0ZHVvVig","h86xW_G-j4s","5pKPlIlQa_8",
-        "wgqGHqhEZ8M","auTHP2prrxw","CL7m60BISiw","4jdbpZVzlf4","X_Df1rsXBjE",
-        "RWp76Pj0RUo","M9wQdkQicbk","FCu8-sim5F4","O6xVXaBcOac","jTqKxMTtVEI",
-        "4tXLT0hN8n8","n8RMGnc8v_o"
-      ];
-
-      let ytPlayer, ytIndex = 0, autoplayTried = false;
-
-      const $prev   = document.getElementById('yt-prev');
-      const $play   = document.getElementById('yt-play');
-      const $next   = document.getElementById('yt-next');
-      const $mute   = document.getElementById('yt-mute');
-      const $thumbs = document.getElementById('yt-thumbs');
-      const $title  = document.getElementById('yt-title');
-
-      // Crea miniaturas
-      function renderThumbs(){
-        $thumbs.innerHTML = "";
-        YT_IDS.forEach((id, i)=>{
-          const url = https://i.ytimg.com/vi/${id}/hqdefault.jpg;
-          const a = document.createElement('a');
-          a.href = "javascript:void(0)";
-          a.onclick = ()=> loadVideo(i, true);
-          a.style.display="inline-block";
-          a.style.borderRadius="10px";
-          a.style.overflow="hidden";
-          a.style.boxShadow = i===ytIndex ? "0 0 0 3px #00e0ff" : "none";
-          a.style.transition = "box-shadow .2s ease";
-          const img = document.createElement('img');
-          img.src = url; img.loading="lazy";
-          img.style.height="90px"; img.style.display="block";
-          a.appendChild(img);
-          $thumbs.appendChild(a);
-        });
-      }
-
-      function updateTitle(){
-        if (!ytPlayer || !ytPlayer.getVideoData) return;
-        const data = ytPlayer.getVideoData();
-        $title.textContent = data && data.title ? data.title : "";
-        renderThumbs();
-      }
-
-      // Requerido por la API (global)
-      window.onYouTubeIframeAPIReady = function(){
-        // Ancho real del contenedor para altura estable
-        const w = Math.min(900, document.getElementById('yt-player').clientWidth || 900);
-        ytPlayer = new YT.Player('yt-player', {
-          width:  w,
-          height: Math.round(w * 9/16),
-          videoId: YT_IDS[ytIndex],
-          playerVars: { rel:0, modestbranding:1 },
-          events: { 'onReady': onReady, 'onStateChange': onStateChange }
-        });
-      };
-
-      function onReady(){
-        renderThumbs();
-        bindControls();
-        tryAutoplayMuted();
-        updateTitle();
-        // Reajusta al redimensionar (por si cambia el ancho)
-        window.addEventListener('resize', resizePlayer);
-      }
-
-      function resizePlayer(){
-        if (!ytPlayer || !ytPlayer.getIframe) return;
-        const ifr = ytPlayer.getIframe();
-        const wrapW = document.getElementById('yt-player').clientWidth || 900;
-        ifr.width  = wrapW;
-        ifr.height = Math.round(wrapW * 9/16);
-      }
-
-      function tryAutoplayMuted(){
-        if (autoplayTried) return;
-        autoplayTried = true;
-        try { ytPlayer.mute(); ytPlayer.playVideo(); } catch(e){}
-      }
-
-      function onStateChange(e){
-        if (e.data === YT.PlayerState.ENDED) nextVideo();
-        if (e.data === YT.PlayerState.PLAYING || e.data === YT.PlayerState.CUED) updateTitle();
-      }
-
-      function loadVideo(i, autoplay){
-        ytIndex = (i + YT_IDS.length) % YT_IDS.length;
-        ytPlayer.loadVideoById(YT_IDS[ytIndex]);
-        if (!autoplay) ytPlayer.pauseVideo();
-        updateTitle();
-      }
-      function prevVideo(){ loadVideo(ytIndex - 1, true); }
-      function nextVideo(){ loadVideo(ytIndex + 1, true); }
-
-      function bindControls(){
-        $prev.onclick = prevVideo;
-        $next.onclick = nextVideo;
-        $play.onclick = ()=>{
-          const s = ytPlayer.getPlayerState();
-          if (s === YT.PlayerState.PLAYING) ytPlayer.pauseVideo();
-          else ytPlayer.playVideo();
-        };
-        $mute.onclick = ()=>{
-          if (ytPlayer.isMuted()) ytPlayer.unMute();
-          else ytPlayer.mute();
-        };
-      }
-    })();
-  </script>
-</section>
-<!-- =================== FIN VIDEOS =================== --><!-- ===================== VIDEOS (YouTube playlist auto-siguiente + autoplay mute + título + thumbs) ===================== -->
-    <section id="videos">
-      <h2>🎬 Videos Recientes (auto-siguiente)</h2>
-
-      <!-- Reproductor principal -->
-      <div id="yt-player" style="aspect-ratio:16/9;max-width:900px;margin:0 auto;border-radius:12px;overflow:hidden;background:#000"></div>
-
-      <!-- Título del video actual -->
-      <div id="yt-title" style="max-width:900px;margin:8px auto 0;text-align:center;font-weight:700;"></div>
-
-      <!-- Controles -->
-      <div style="text-align:center;margin:10px 0;">
-        <button id="yt-prev" class="btn">⏮ Anterior</button>
-        <button id="yt-play" class="btn">▶ / ⏸</button>
-        <button id="yt-next" class="btn">⏭ Siguiente</button>
-        <button id="yt-mute" class="btn">🔇 / 🔊</button>
+  <!-- CARRUSEL YOUTUBE -->
+    <section>
+      <h2>🎬 Videos Recientes</h2>
+      <div class="carousel">
+        <iframe src="https://www.youtube.com/embed/tpi8zLE3Kqw" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/RBE8A9rAj8Y" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/XYe0ZHVvVig" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/h86xW_G-j4s" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/5pKPlIlQa_8" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/wgqGHqhEZ8M" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/auTHP2prrxw" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/CL7m60BISiw" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/4jdbpZVzlf4" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/X_Df1rsXBjE" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/RWp76Pj0RUo" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/M9wQdkQicbk" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/FCu8-sim5F4" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/O6xVXaBcOac" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/jTqKxMTtVEI" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/4tXLT0hN8n8" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/n8RMGnc8v_o" allowfullscreen></iframe>
       </div>
-
-      <!-- Miniaturas -->
-      <div id="yt-thumbs" style="display:flex;gap:10px;overflow-x:auto;padding:10px;border-radius:12px;background:rgba(255,255,255,.08)"></div>
-
-      <!-- API de YouTube -->
-      <script src="https://www.youtube.com/iframe_api"></script>
-      <script>
-        (function(){
-          // 👉 Tus videos (IDs tomados de tu carrusel original)
-          const YT_IDS = [
-            "tpi8zLE3Kqw","RBE8A9rAj8Y","XYe0ZHVvVig","h86xW_G-j4s","5pKPlIlQa_8",
-            "wgqGHqhEZ8M","auTHP2prrxw","CL7m60BISiw","4jdbpZVzlf4","X_Df1rsXBjE",
-            "RWp76Pj0RUo","M9wQdkQicbk","FCu8-sim5F4","O6xVXaBcOac","jTqKxMTtVEI",
-            "4tXLT0hN8n8","n8RMGnc8v_o"
-          ];
-
-          let ytPlayer, ytIndex = 0, autoplayTried = false;
-
-          const $prev   = document.getElementById('yt-prev');
-          const $play   = document.getElementById('yt-play');
-          const $next   = document.getElementById('yt-next');
-          const $mute   = document.getElementById('yt-mute');
-          const $thumbs = document.getElementById('yt-thumbs');
-          const $title  = document.getElementById('yt-title');
-
-          // Miniaturas clicables
-          function renderThumbs(){
-            $thumbs.innerHTML = "";
-            YT_IDS.forEach((id, i)=>{
-              const url = https://i.ytimg.com/vi/${id}/hqdefault.jpg;
-              const a = document.createElement('a');
-              a.href = "javascript:void(0)";
-              a.onclick = ()=> loadVideo(i, true);
-              a.style.display="inline-block";
-              a.style.borderRadius="10px";
-              a.style.overflow="hidden";
-              a.style.boxShadow = i===ytIndex ? "0 0 0 3px #00e0ff" : "none";
-              a.style.transition = "box-shadow .2s ease";
-              const img = document.createElement('img');
-              img.src = url; img.loading="lazy";
-              img.style.height="90px"; img.style.display="block";
-              a.appendChild(img);
-              $thumbs.appendChild(a);
-            });
-          }
-
-          function updateTitle(){
-            if (!ytPlayer || !ytPlayer.getVideoData) return;
-            const data = ytPlayer.getVideoData();
-            $title.textContent = data && data.title ? data.title : "";
-            renderThumbs();
-          }
-
-          // Requerido por la IFrame API (global)
-          window.onYouTubeIframeAPIReady = function(){
-            ytPlayer = new YT.Player('yt-player', {
-              videoId: YT_IDS[ytIndex],
-              playerVars: { rel:0, modestbranding:1 },
-              events: { 'onReady': onReady, 'onStateChange': onStateChange }
-            });
-          };
-
-          function onReady(){
-            renderThumbs();
-            bindControls();
-            tryAutoplayMuted();
-            updateTitle();
-          }
-
-          // Autoplay (mute) para que el navegador no lo bloquee
-          function tryAutoplayMuted(){
-            if (autoplayTried) return;
-            autoplayTried = true;
-            try{ ytPlayer.mute(); ytPlayer.playVideo(); }catch(e){}
-          }
-
-          // Auto-siguiente al terminar + actualizar título
-          function onStateChange(e){
-            if (e.data === YT.PlayerState.ENDED) nextVideo();
-            if (e.data === YT.PlayerState.PLAYING || e.data === YT.PlayerState.CUED) updateTitle();
-          }
-
-          function loadVideo(i, autoplay){
-            ytIndex = (i + YT_IDS.length) % YT_IDS.length;
-            ytPlayer.loadVideoById(YT_IDS[ytIndex]);
-            if (!autoplay) ytPlayer.pauseVideo();
-            updateTitle();
-          }
-          function prevVideo(){ loadVideo(ytIndex - 1, true); }
-          function nextVideo(){ loadVideo(ytIndex + 1, true); }
-
-          function bindControls(){
-            $prev.onclick = prevVideo;
-            $next.onclick = nextVideo;
-            $play.onclick = ()=>{
-              const s = ytPlayer.getPlayerState();
-              if (s === YT.PlayerState.PLAYING) ytPlayer.pauseVideo();
-              else ytPlayer.playVideo();
-            };
-            $mute.onclick = ()=>{
-              if (ytPlayer.isMuted()) ytPlayer.unMute();
-              else ytPlayer.mute();
-            };
-          }
-        })();
-      </script>
     </section>
-    <!-- =================== FIN VIDEOS =================== -->
 
-    <!-- ===================== PLAYLIST VIP (lee /musica/) ===================== -->
+    <!-- ===================== PLAYLIST VIP 1 (lee /musica/) ===================== -->
     <section class="playlist-box">
-      <h2>🎶 Playlist VIP</h2>
+      <h2>🎶 Playlist VIP 1</h2>
 
-      <audio id="audio1" controls style="width:100%;max-width:900px;display:block;margin:8px auto;" preload="metadata">
+      <audio id="audio1" controls style="width:100%;max-width:720px;display:block;margin:8px auto;" preload="metadata">
         Tu navegador no soporta audio HTML5.
       </audio>
 
@@ -358,24 +120,24 @@
       <div id="status1" class="status"></div>
 
       <script>
-        // Carpeta donde subiste los MP3
-        const BASE = "../musica/";
+        // RUTA base a tus MP3
+        const base1 = "../musica/"; // <- están fuera de /Privado/ en /musica/
 
-        // Tus 10 temas: usa exactamente estos nombres en /musica/
+        // TUS 10 TEMAS con nombres LIMPIOS (renómbralos así al subir a /musica/)
         const raw1 = [
-          { title: "Luis Fonsi & Yomo – Aquí Estoy Yo (Urban Remix)", file: "aqui_estoy_yo.mp3" },
-          { title: "DJ Mario Andretti – Mix Merengue Romántico",     file: "dj_mario_andretti_merengue_romantico.mp3" },
-          { title: "Karis – La Amas Como Yo",                         file: "la_amas_como_yo.mp3" },
-          { title: "Que Me Lo De En Vida",                            file: "que_me_lo_de_en_vida.mp3" },
-          { title: "Grupo Caneo – Qué Voy A Hacer Sin Ti",            file: "que_voy_a_hacer_sin_ti.mp3" },
-          { title: "Omega – Si No Me Ama",                            file: "si_no_me_ama.mp3" },
-          { title: "MC Hammer – U Can't Touch This",                  file: "u_cant_touch_this.mp3" },
-          { title: "Grupo Manía feat. Olga Tañón – Carita Linda",     file: "carita_linda.mp3" },
-          { title: "Omega – Amor Urbano 2",                           file: "amor_urbano_2.mp3" },
-          { title: "Si La Ves (Mix)",                                 file: "si_la_ves_mix.mp3" }
+          { title: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3", file: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3" },
+          { title: "02 - dj mario andretti - mix merengue romantico.mp3",     file: "02 - dj mario andretti - mix merengue romantico.mp3" },
+          { title: "03 - La Amas Como Yo - Karis.Mp3",                         file: "03 - La Amas Como Yo - Karis.Mp3" },
+          { title: "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3",                            file: "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3" },
+          { title: "05 - Hey Dude! - Elvis Crespo.mp3",            file: "05 - Hey Dude! - Elvis Crespo.mp3" },
+          { title: "06 - Te Regalo Amores - Ken-Yrkm.mp3",                            file: "06 - Te Regalo Amores - Ken-Yrkm.mp3" },
+          { title: "07 - What Is Love - Haddaway.Mp3",                  file: "08 - What Is Love - Haddaway.Mp3" },
+          { title: "08 - Boricua Como El Gran Combo.mp3",     file: "09 - Boricua Como El Gran Combo.mp3" },
+          { title: "09 - Me Gusta, Me Gusta - Elvis Crespo.mp3",                           file: "10 - Me Gusta, Me Gusta - Elvis Crespo.mp3" },
+          { title: "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3",                                 file: "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3" }
         ];
 
-        const tracks1 = raw1.map(t => ({ title: t.title, src: BASE + encodeURIComponent(t.file) }));
+        const t1 = raw1.map(t => ({ title: t.title, src: base1 + encodeURIComponent(t.file) }));
 
         const A1 = {
           audio:  document.getElementById('audio1'),
@@ -391,10 +153,9 @@
 
         function render1(){
           A1.list.innerHTML = "";
-          tracks1.forEach((it, idx)=>{
+          t1.forEach((it, idx)=>{
             const li = document.createElement('li');
-            const num = (idx+1).toString().padStart(2,'0');
-            li.textContent = ${num} - ${it.title};
+            li.textContent = (idx===A1.i ? "▶ " : "") + it.title;
             li.style.padding="8px 10px"; li.style.borderRadius="8px"; li.style.cursor="pointer";
             li.style.background = idx===A1.i ? "rgba(0,191,255,.35)" : "transparent";
             li.onclick = () => { A1.i = idx; load1(true); };
@@ -403,27 +164,115 @@
         }
 
         function load1(autoplay){
-          A1.audio.src = tracks1[A1.i].src;
+          A1.audio.src = t1[A1.i].src;
           render1();
-          s1("Listo: "+tracks1[A1.i].title+" ✓","ok");
+          s1("Cargando: "+t1[A1.i].title+"…","ok");
           if (autoplay) A1.audio.play().catch(()=>{});
         }
 
-        A1.prev.onclick = ()=>{ A1.i = (A1.i - 1 + tracks1.length) % tracks1.length; load1(true); };
-        A1.next.onclick = ()=>{ A1.i = (A1.i + 1) % tracks1.length; load1(true); };
+        A1.prev.onclick = ()=>{ A1.i = (A1.i - 1 + t1.length) % t1.length; load1(true); };
+        A1.next.onclick = ()=>{ A1.i = (A1.i + 1) % t1.length; load1(true); };
         A1.play.onclick = ()=>{ if (A1.audio.paused) A1.audio.play().catch(()=>{}); else A1.audio.pause(); };
 
-        A1.audio.addEventListener('ended', ()=>{ A1.i = (A1.i + 1) % tracks1.length; load1(true); });
-        A1.audio.addEventListener('error', ()=> s1("⚠ No se pudo cargar: "+decodeURIComponent(tracks1[A1.i].src)+" (¿/musica/ y nombre correcto?)","warn"));
+        A1.audio.addEventListener('ended', ()=>{ A1.i = (A1.i + 1) % t1.length; load1(true); });
+        A1.audio.addEventListener('loadedmetadata', ()=> s1("Listo: "+t1[A1.i].title+" ✓","ok"));
+        A1.audio.addEventListener('error', ()=> s1("⚠ No se pudo cargar: "+decodeURIComponent(t1[A1.i].src)+" (¿/musica/ y nombre correcto?)","warn"));
 
-        load1(false); // en móvil: tocar Play la primera vez
+        load1(false);
       </script>
 
       <p style="color:#ccc;font-size:.9rem;margin-top:8px;">
-        Sube tus MP3 a <code>/musica/</code> con esos nombres. Si algún tema marca 0:00, abre su URL directo para confirmar.
+        Sube los 10 MP3 a <code>/musica/</code> con esos nombres. Si alguno marca 0:00, abre su URL para confirmar.
       </p>
     </section>
-    <!-- =================== FIN PLAYLIST VIP =================== -->
+    <!-- =================== FIN PLAYLIST VIP 1 =================== -->
+
+    <!-- ===================== PLAYLIST VIP 2 (lee /musica2/) ===================== -->
+    <section class="playlist-box">
+      <h2>🎶 Playlist VIP 2</h2>
+
+      <audio id="audio2" controls style="width:100%;max-width:720px;display:block;margin:8px auto;" preload="metadata">
+        Tu navegador no soporta audio HTML5.
+      </audio>
+
+      <div style="text-align:center;margin:10px 0;">
+        <button id="prev2" class="btn">⏮ Anterior</button>
+        <button id="play2" class="btn">▶ / ⏸</button>
+        <button id="next2" class="btn">⏭ Siguiente</button>
+      </div>
+
+      <ul id="list2" class="plist"></ul>
+      <div id="status2" class="status"></div>
+
+      <script>
+        // Carpeta para tu segunda tanda de temas
+        const base2 = "../musica2/";
+
+        // EDITA con tus archivos reales en /musica2/
+        const raw2 = [
+          // Ejemplos:
+          // { title: "Tema Nuevo 1", file: "tema_nuevo_1.mp3" },
+          // { title: "Tema Nuevo 2", file: "tema_nuevo_2.mp3" }
+        ];
+
+        const t2 = raw2.map(t => ({ title: t.title, src: base2 + encodeURIComponent(t.file) }));
+
+        const A2 = {
+          audio:  document.getElementById('audio2'),
+          list:   document.getElementById('list2'),
+          prev:   document.getElementById('prev2'),
+          play:   document.getElementById('play2'),
+          next:   document.getElementById('next2'),
+          status: document.getElementById('status2'),
+          i: 0
+        };
+
+        function s2(msg, cls="ok"){ A2.status.className="status "+cls; A2.status.textContent=msg; }
+
+        function render2(){
+          A2.list.innerHTML = "";
+          if (t2.length === 0) {
+            const empty = document.createElement('li');
+            empty.textContent = "Sube canciones a /musica2/ y agrégalas al listado.";
+            empty.style.opacity = .7;
+            A2.list.appendChild(empty);
+            return;
+          }
+          t2.forEach((it, idx)=>{
+            const li = document.createElement('li');
+            li.textContent = (idx===A2.i ? "▶ " : "") + it.title;
+            li.style.padding="8px 10px"; li.style.borderRadius="8px"; li.style.cursor="pointer";
+            li.style.background = idx===A2.i ? "rgba(0,191,255,.35)" : "transparent";
+            li.onclick = () => { A2.i = idx; load2(true); };
+            A2.list.appendChild(li);
+          });
+        }
+
+        function load2(autoplay){
+          if (!t2.length) return;
+          A2.audio.src = t2[A2.i].src;
+          render2();
+          s2("Cargando: "+t2[A2.i].title+"…","ok");
+          if (autoplay) A2.audio.play().catch(()=>{});
+        }
+
+        A2.prev.onclick = ()=>{ if(!t2.length) return; A2.i = (A2.i - 1 + t2.length) % t2.length; load2(true); };
+        A2.next.onclick = ()=>{ if(!t2.length) return; A2.i = (A2.i + 1) % t2.length; load2(true); };
+        A2.play.onclick = ()=>{ if(!t2.length) return; if (A2.audio.paused) A2.audio.play().catch(()=>{}); else A2.audio.pause(); };
+
+        A2.audio.addEventListener('ended', ()=>{ if(!t2.length) return; A2.i = (A2.i + 1) % t2.length; load2(true); });
+        A2.audio.addEventListener('loadedmetadata', ()=>{ if(!t2.length) return; s2("Listo: "+t2[A2.i].title+" ✓","ok"); });
+        A2.audio.addEventListener('error', ()=> s2("⚠ No se pudo cargar (¿/musica2/ y nombre correcto?)","warn"));
+
+        render2();
+        load2(false);
+      </script>
+
+      <p style="color:#ccc;font-size:.9rem;margin-top:8px;">
+        Crea la carpeta <code>/musica2/</code>, sube MP3 (≤25MB) y agrégalos al array <code>raw2</code>.
+      </p>
+    </section>
+    <!-- =================== FIN PLAYLIST VIP 2 =================== -->
 
     <!-- PODCAST (opcional) -->
     <section>
@@ -450,4 +299,3 @@
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
-
