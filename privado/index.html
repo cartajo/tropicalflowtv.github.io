@@ -276,70 +276,53 @@
 
   
 
-<!-- ===================== PODCAST (Audio) + VIDEO PROMO SECUENCIAL ===================== -->
+<!-- ===================== PODCAST (Audio + Video Promo Tropical) ===================== -->
 <section id="podcast">
   <h2>🎙 Podcast</h2>
 
-  <!-- ===== AUDIO PODCAST (archivos en /podcast/) ===== -->
+  <!-- ===== AUDIO PODCAST (MP3 en /podcast/) ===== -->
   <h3 style="text-align:center;margin-top:0;">Episodios (audio)</h3>
   <div id="podcast-audio-list" style="max-width:900px;margin:0 auto"></div>
 
-  <!-- ===== VIDEO PROMO (Tropical Flow TVRadio Presenta, autoplay/mute/auto-siguiente) ===== -->
+  <!-- ===== VIDEO PROMO TROPICAL (YouTube, autoplay loop sin API) ===== -->
   <h3 style="text-align:center;margin-top:24px;">Video Promo Tropical</h3>
   <div style="max-width:900px;margin:0 auto;border-radius:12px;overflow:hidden;background:#000">
     <div style="position:relative;width:100%;padding-top:56.25%; /* 16:9 */">
-      <div id="promo-player" style="position:absolute;inset:0;"></div>
+      <iframe
+        src="https://www.youtube.com/embed/oD2ZKUSYG-g?autoplay=1&mute=1&controls=1&rel=0&modestbranding=1&loop=1&playlist=oD2ZKUSYG-g"
+        title="Video promo tropical"
+        allow="autoplay; encrypted-media"
+        allowfullscreen
+        style="position:absolute;inset:0;border:0;width:100%;height:100%;"
+      ></iframe>
     </div>
   </div>
-  <div id="promo-title" style="max-width:900px;margin:8px auto 0;text-align:center;font-weight:700;"></div>
 </section>
 
 <script>
+  /* ========== AUDIO PODCAST ==========
+     1) Sube estos MP3 a /podcast/
+     2) Cambia títulos si quieres (deja los nombres de archivo tal cual subas)
+  */
+  const PODCAST_AUDIO = [
+    { title: "Episodio 1 – Bienvenida",           file: "episodio1.mp3" },
+    { title: "Episodio 2 – Entrevista a DJ",       file: "episodio2.mp3" },
+    { title: "Episodio 3 – Noticias Tropicales",   file: "episodio3.mp3" },
+    { title: "Episodio 4 – Detrás de la Mezcla",   file: "episodio4.mp3" },
+    { title: "Episodio 5 – Preguntas de la Audiencia", file: "episodio5.mp3" }
+  ].map(e => ({ title: e.title, src: "podcast/" + encodeURIComponent(e.file) }));
 
-
-/* ================== VIDEO PROMO (Tropical Flow TVRadio Presenta) ==================
-   Reproduce dos videos en secuencia. Cambia los IDs si quieres otros.
-   IDs elegidos:
-   - "https://youtu.be/FCu8-sim5F4?si=IPdpN5O94ql9om2X" 
-*/
-const PROMO_IDS = ["https://youtu.be/FCu8-sim5F4?si=IPdpN5O94ql9om2X"];
-let promoIndex = 0, promoPlayer;
-
-function setupPromoPlayer(){
-  promoPlayer = new YT.Player('promo-player', {
-    videoId: PROMO_IDS[promoIndex],
-    playerVars: { rel:0, modestbranding:1, playsinline:1 },
-    events: {
-      onReady: e => { try { e.target.mute(); e.target.playVideo(); } catch(_){} updatePromoTitle(); },
-      onStateChange: e => {
-        if (e.data === YT.PlayerState.ENDED) {
-          promoIndex = (promoIndex + 1) % PROMO_IDS.length;
-          promoPlayer.loadVideoById(PROMO_IDS[promoIndex]);
-        }
-        if (e.data === YT.PlayerState.PLAYING || e.data === YT.PlayerState.CUED) updatePromoTitle();
-      }
-    }
-  });
-}
-function updatePromoTitle(){
-  const d = promoPlayer?.getVideoData?.() || {};
-  const el = document.getElementById('promo-title');
-  if (el) el.textContent = d.title || "";
-}
-
-/* Carga segura de la API de YouTube (sin duplicarla) */
-(function loadYT(){
-  if (window.YT && window.YT.Player) { setupPromoPlayer(); return; }
-  const prev = window.onYouTubeIframeAPIReady;
-  window.onYouTubeIframeAPIReady = function(){ if (typeof prev === 'function') prev(); setupPromoPlayer(); };
-  if (![...document.scripts].some(s => (s.src||'').includes('iframe_api'))) {
-    const tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    document.body.appendChild(tag);
-  }
-})();
+  const audioList = document.getElementById("podcast-audio-list");
+  audioList.innerHTML = PODCAST_AUDIO.map(ep => `
+    <div style="background:rgba(255,255,255,.08);padding:10px;border-radius:10px;margin:10px 0;">
+      <div style="font-weight:700;margin-bottom:6px;">${ep.title}</div>
+      <audio controls preload="metadata" style="width:100%;">
+        <source src="${ep.src}" type="audio/mpeg">
+      </audio>
+    </div>
+  `).join("");
 </script>
-<!-- =================== FIN PODCAST + PROMO =================== -->
+<!-- =================== FIN PODCAST =================== -->
  
     <!-- BOTONES -->
     <div class="social-buttons">
