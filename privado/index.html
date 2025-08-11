@@ -282,19 +282,97 @@
   <h3 style="text-align:center;margin-top:0;">Episodios (audio)</h3>
   <div id="podcast-audio-list" style="max-width:900px;margin:0 auto"></div>
 
-<!-- VIDEO PROMO SECUENCIAL: Merengue y Salsa -->
-<div style="max-width:900px;margin:0 auto;border-radius:12px;overflow:hidden;background:#000">
-  <div style="position:relative;width:100%;padding-top:56.25%;">
-    <iframe
-      id="promoVideo"
-      src="https://www.youtube.com/embed/DZU5U-Fksfk?autoplay=1&mute=1&controls=1&rel=0&modestbranding=1"
-      title="Merengue Promo Mix"
-      allow="autoplay; encrypted-media"
-      allowfullscreen
-      style="position:absolute;inset:0;border:0;width:100%;height:100%;"
-    ></iframe>
+<!-- ===================== PODCAST (Audio) + VIDEO PROMO SECUENCIAL ===================== -->
+<section id="podcast">
+  <h2>🎙 Podcast</h2>
+
+  <!-- ===== AUDIO PODCAST (archivos en /podcast/) ===== -->
+  <h3 style="text-align:center;margin-top:0;">Episodios (audio)</h3>
+  <div id="podcast-audio-list" style="max-width:900px;margin:0 auto"></div>
+
+  <!-- ===== VIDEO PROMO (Merengue → Salsa, autoplay/mute/auto-siguiente) ===== -->
+  <h3 style="text-align:center;margin-top:24px;">Video Promo Tropical</h3>
+  <div style="max-width:900px;margin:0 auto;border-radius:12px;overflow:hidden;background:#000">
+    <div style="position:relative;width:100%;padding-top:56.25%; /* 16:9 */">
+      <div id="promo-player" style="position:absolute;inset:0;"></div>
+    </div>
   </div>
-</div>
+  <div id="promo-title" style="max-width:900px;margin:8px auto 0;text-align:center;font-weight:700;"></div>
+</section>
+
+<script>
+/* ================== PODCAST (Audio) ==================
+   Sube tus archivos a /podcast/ como episodio1.mp3 (o .wav), episodio2...
+   Este bloque intenta MP3 y si no, usa WAV.
+*/
+const PODCAST_BASE = [
+  { title: "Episodio 1 – Bienvenida",                base: "episodio1" },
+  { title: "Episodio 2 – Entrevista a DJ",           base: "episodio2" },
+  { title: "Episodio 3 – Noticias Tropicales",       base: "episodio3" },
+  { title: "Episodio 4 – Detrás de la Mezcla",       base: "episodio4" },
+  { title: "Episodio 5 – Preguntas de la Audiencia", base: "episodio5" }
+];
+const audioList = document.getElementById("podcast-audio-list");
+audioList.innerHTML = PODCAST_BASE.map(ep => {
+  const mp3 = "podcast/" + ep.base + ".mp3";
+  const wav = "podcast/" + ep.base + ".wav";
+  return `
+    <div style="background:rgba(255,255,255,.08);padding:10px;border-radius:10px;margin:10px 0;">
+      <div style="font-weight:700;margin-bottom:6px;">${ep.title}</div>
+      <audio controls preload="metadata" style="width:100%;">
+        <source src="${mp3}" type="audio/mpeg">
+        <source src="${wav}">
+        Tu navegador no pudo cargar ${mp3} ni ${wav}.
+      </audio>
+    </div>
+  `;
+}).join("");
+
+
+/* ================== VIDEO PROMO (Merengue → Salsa) ==================
+   Reproduce dos videos en secuencia. Cambia los IDs si quieres otros.
+   IDs elegidos:
+   - "DZU5U-Fksfk"  (Merengue Mix)
+   - "-C1PacqcyNw"  (Merengue/Salsa Promo)
+*/
+const PROMO_IDS = ["DZU5U-Fksfk", "-C1PacqcyNw"];
+let promoIndex = 0, promoPlayer;
+
+function setupPromoPlayer(){
+  promoPlayer = new YT.Player('promo-player', {
+    videoId: PROMO_IDS[promoIndex],
+    playerVars: { rel:0, modestbranding:1, playsinline:1 },
+    events: {
+      onReady: e => { try { e.target.mute(); e.target.playVideo(); } catch(_){} updatePromoTitle(); },
+      onStateChange: e => {
+        if (e.data === YT.PlayerState.ENDED) {
+          promoIndex = (promoIndex + 1) % PROMO_IDS.length;
+          promoPlayer.loadVideoById(PROMO_IDS[promoIndex]);
+        }
+        if (e.data === YT.PlayerState.PLAYING || e.data === YT.PlayerState.CUED) updatePromoTitle();
+      }
+    }
+  });
+}
+function updatePromoTitle(){
+  const d = promoPlayer?.getVideoData?.() || {};
+  const el = document.getElementById('promo-title');
+  if (el) el.textContent = d.title || "";
+}
+
+/* Carga segura de la API de YouTube (sin duplicarla) */
+(function loadYT(){
+  if (window.YT && window.YT.Player) { setupPromoPlayer(); return; }
+  const prev = window.onYouTubeIframeAPIReady;
+  window.onYouTubeIframeAPIReady = function(){ if (typeof prev === 'function') prev(); setupPromoPlayer(); };
+  if (![...document.scripts].some(s => (s.src||'').includes('iframe_api'))) {
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(tag);
+  }
+})();
+</script>
+<!-- =================== FIN PODCAST + PROMO =================== -->
 
 
 
