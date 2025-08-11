@@ -296,34 +296,7 @@
   </div>
 </div>
 
-<script>
-  // Lista de videos (IDs de YouTube)
-  const videos = [
-    "DZU5U-Fksfk", // Merengue
-    "-C1PacqcyNw"  // Salsa/Tropical
-  ];
-  let current = 0;
-  const iframe = document.getElementById("promoVideo");
 
-  // Escuchar cuando el video termine usando la API de YouTube
-  function onYouTubeIframeAPIReady() {
-    new YT.Player("promoVideo", {
-      events: {
-        'onStateChange': function (event) {
-          if (event.data === YT.PlayerState.ENDED) {
-            current = (current + 1) % videos.length;
-            iframe.src = https://www.youtube.com/embed/${videos[current]}?autoplay=1&mute=1&controls=1&rel=0&modestbranding=1;
-          }
-        }
-      }
-    });
-  }
-
-  // Cargar API de YouTube
-  const tag = document.createElement("script");
-  tag.src = "https://www.youtube.com/iframe_api";
-  document.body.appendChild(tag);
-</script>
 
   /* ========== AUDIO PODCAST ==========
      1) Sube estos MP3 a /podcast/
