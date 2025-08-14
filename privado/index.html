@@ -10,7 +10,7 @@
       --accent:#00e0ff;
       --bg:rgba(0,0,0,.6);
       --maxw:1100px;
-      --aspect:42.857%; /* 21:9 -> si quieres 16:9 usa 56.25% */
+      --aspect:42.857%; /* 21:9 (si prefieres 16:9 usa 56.25%) */
     }
     *{box-sizing:border-box}
     body{
@@ -23,14 +23,9 @@
     .wrap{max-width:var(--maxw);margin:0 auto;padding:16px;background:var(--bg);border-radius:14px}
     section{margin:22px 0;padding:16px;background:rgba(255,255,255,.08);border-radius:12px}
     h2{margin:0 0 12px;text-align:center}
-    audio, video{ width:100%; max-width:100%; display:block; margin:8px auto; border-radius:10px }
+    audio{ width:100%; display:block; margin:8px auto; border-radius:10px }
 
-    /* Botones generales */
-    .btn{ background:var(--accent); color:#000; font-weight:700; border:none; border-radius:10px; padding:10px 14px; cursor:pointer }
-    .btn.alt{ background:#2dd4bf }
-    .btn.warn{ background:#fbbf24 }
-
-    /* Player responsive video (21:9 por defecto) */
+    /* Player video responsive 21:9 */
     .video-shell { width:100%; margin:0 auto; border-radius:12px; overflow:hidden; background:#000; max-width:var(--maxw); }
     .video-aspect { position:relative; width:100%; padding-top:var(--aspect); }
     .video-aspect > div, .video-aspect iframe { position:absolute; inset:0; width:100% !important; height:100% !important; }
@@ -39,6 +34,11 @@
     #yt-thumbs{ display:flex;gap:10px;overflow-x:auto;padding:12px;margin:6px auto 0;max-width:var(--maxw) }
     #yt-thumbs img{ height:90px;border-radius:10px;display:block }
     @media (max-width:600px){ #yt-thumbs img{ height:70px } }
+
+    /* Botones */
+    .btn{ background:var(--accent); color:#000; font-weight:700; border:none; border-radius:10px; padding:10px 14px; cursor:pointer }
+    .btn.alt{ background:#2dd4bf }
+    .btn.warn{ background:#fbbf24 }
 
     /* Fade suave */
     .fade { transition: opacity .35s ease; }
@@ -53,6 +53,8 @@
 
     footer{ text-align:center; padding:1rem; background:rgba(0,0,0,.6); color:#ccc }
   </style>
+  <!-- Carga explícita de la API de YouTube (por si el loader dinámico falla) -->
+  <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
   <header>
@@ -60,7 +62,6 @@
   </header>
 
   <div class="wrap">
-
     <!-- RADIO -->
     <section id="radio">
       <h2>🎧 Escúchanos en Vivo 24/7</h2>
@@ -89,21 +90,19 @@
       </script>
     </section>
 
-    <!-- ============ VIDEOS RECIENTES (Auto-siguiente + Thumbs + Prev/Next + Título + Fade, 21:9) ============ -->
+    <!-- ===================== VIDEOS RECIENTES (con fallback) ===================== -->
     <section id="videos">
       <h2>🎬 Videos Recientes</h2>
 
-      <!-- Player principal -->
       <div class="video-shell">
         <div class="video-aspect">
+          <!-- Aquí insertaremos el player YT (o el fallback) -->
           <div id="yt-carousel-player" class="fade show"></div>
         </div>
       </div>
 
-      <!-- Título del video actual -->
       <div id="yt-current-title" style="max-width:var(--maxw);margin:10px auto 0;text-align:center;font-weight:700;"></div>
 
-      <!-- Controles -->
       <div style="max-width:var(--maxw);margin:10px auto 0;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
         <button id="btnPrevVid" class="btn">⏮ Anterior</button>
         <button id="btnPlayPauseVid" class="btn alt">▶ / ⏸</button>
@@ -111,7 +110,6 @@
         <button id="btnFs" class="btn warn">⤢ Pantalla completa</button>
       </div>
 
-      <!-- Miniaturas -->
       <div id="yt-thumbs"></div>
     </section>
 
@@ -131,8 +129,6 @@
       </p>
     </section>
 
-    <!-- (Opcional) PODCAST + PROMO puedes dejarlo como ya lo tienes -->
-
     <!-- BOTONES -->
     <div class="social-buttons">
       <a class="whatsapp" href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
@@ -148,14 +144,14 @@
     &copy; <span id="year"></span> Tropical Flow TV📺Radio - Todos los derechos reservados
   </footer>
 
-  <!-- ========= SCRIPTS ========= -->
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+
   <script>
-    /***************** 1) CONTROL CENTRAL: pausa todo menos la fuente activa *****************/
+    /******** 1) Control central: pausar el resto ********/
     const registry = {
       radio: () => document.getElementById('radioPlayer'),
       playlist: () => document.getElementById('audio1'),
-      yt: () => window._ytCarouselPlayerInstance  // se define al crear el player
+      yt: () => window._ytCarouselPlayerInstance
     };
     function pauseAllExcept(source){
       try{
@@ -167,11 +163,9 @@
         }
       }catch(e){}
     }
-
-    // Si el usuario manualmente pone la radio, pausamos los demás
     document.getElementById('radioPlayer').addEventListener('play', ()=>pauseAllExcept('radio'));
 
-    /***************** 2) VIDEOS RECIENTES (auto-siguiente, thumbs, 21:9, título, fullscreen, pausa otros) *****************/
+    /******** 2) Videos recientes con fallback ********/
     const CAROUSEL_IDS = [
       "tpi8zLE3Kqw","RBE8A9rAj8Y","XYe0ZHVvVig","h86xW_G-j4s","5pKPlIlQa_8",
       "wgqGHqhEZ8M","auTHP2prrxw","CL7m60BISiw","4jdbpZVzlf4","X_Df1rsXBjE",
@@ -192,35 +186,55 @@
         </button>
       `).join("");
       strip.querySelectorAll("button").forEach(btn=>{
-        btn.onclick = ()=>{ goTo(+btn.dataset.i); };
+        btn.onclick = ()=> goTo(+btn.dataset.i);
       });
     }
     function highlight(){
-      const imgs = document.querySelectorAll("#yt-thumbs img");
-      imgs.forEach((img,idx)=>{
+      document.querySelectorAll("#yt-thumbs img").forEach((img,idx)=>{
         img.style.opacity = (idx===cIndex? "1" : ".55");
         img.style.outline = (idx===cIndex? "3px solid #00e0ff" : "none");
       });
     }
     function updateTitleSoon(){ setTimeout(()=>{
-      try{
-        const d = cPlayer.getVideoData();
-        document.getElementById("yt-current-title").textContent = d?.title || "";
-      }catch(_){}
+      try{ const d = cPlayer.getVideoData(); document.getElementById("yt-current-title").textContent = d?.title || ""; }catch(_){}
     }, 300);}
 
     function fadeSwap(loadFn){
       const box = document.getElementById('yt-carousel-player');
-      box.classList.remove('show'); box.classList.add('hide');   // fade out
-      setTimeout(()=>{ loadFn(); box.classList.remove('hide'); box.classList.add('show'); }, 180); // fade in
+      box.classList.remove('show'); box.classList.add('hide');
+      setTimeout(()=>{ loadFn(); box.classList.remove('hide'); box.classList.add('show'); }, 180);
+    }
+
+    function renderFallback(){
+      // Fallback simple: iframe estándar
+      const box = document.getElementById('yt-carousel-player');
+      box.innerHTML = `<iframe src="https://www.youtube.com/embed/${CAROUSEL_IDS[cIndex]}?rel=0&modestbranding=1&playsinline=1"
+                           title="YouTube video" frameborder="0"
+                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                           allowfullscreen></iframe>`;
+      document.getElementById("yt-current-title").textContent = "";
+      buildThumbs(); highlight();
+      // Botones prev/next siguen funcionando: solo recargan el iframe
+      document.getElementById("btnPrevVid").onclick = ()=>{ cIndex=(cIndex-1+CAROUSEL_IDS.length)%CAROUSEL_IDS.length; pauseAllExcept('yt'); renderFallback(); };
+      document.getElementById("btnNextVid").onclick = ()=>{ cIndex=(cIndex+1)%CAROUSEL_IDS.length; pauseAllExcept('yt'); renderFallback(); };
+      document.getElementById("btnPlayPauseVid").onclick = ()=>{}; // No control posible en iframe simple
+      document.getElementById("btnFs").onclick = ()=>{
+        const shell = document.querySelector('.video-shell');
+        if (document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.();
+      };
     }
 
     function goTo(idx){
       cIndex = (idx + CAROUSEL_IDS.length) % CAROUSEL_IDS.length;
-      pauseAllExcept('yt'); // al cambiar video, pausamos radio/playlist
-      fadeSwap(()=> cPlayer.loadVideoById(CAROUSEL_IDS[cIndex]));
-      highlight(); updateTitleSoon();
+      pauseAllExcept('yt');
+      if (cPlayer && cPlayer.loadVideoById) {
+        fadeSwap(()=> cPlayer.loadVideoById(CAROUSEL_IDS[cIndex]));
+        highlight(); updateTitleSoon();
+      } else {
+        renderFallback();
+      }
     }
+
     function prevVideo(){ goTo(cIndex - 1); }
     function nextVideo(){ goTo(cIndex + 1); }
     function togglePlay(){
@@ -232,6 +246,9 @@
     }
 
     function createCarouselPlayer(){
+      // Si no existe YT.Player, salimos al fallback
+      if (!(window.YT && window.YT.Player)) { renderFallback(); return; }
+
       cPlayer = new YT.Player('yt-carousel-player', {
         videoId: CAROUSEL_IDS[cIndex],
         playerVars: { rel:0, modestbranding:1, playsinline:1, controls:1 },
@@ -244,38 +261,33 @@
           }
         }
       });
-      window._ytCarouselPlayerInstance = cPlayer; // registro global
-      buildThumbs(); highlight();
+      window._ytCarouselPlayerInstance = cPlayer;
 
-      // Botones
+      buildThumbs(); highlight();
       document.getElementById("btnPrevVid").onclick = prevVideo;
       document.getElementById("btnNextVid").onclick = nextVideo;
       document.getElementById("btnPlayPauseVid").onclick = togglePlay;
 
-      // Fullscreen
-      (function setupFS(){
-        const btn = document.getElementById('btnFs');
-        const shell = document.querySelector('.video-shell');
-        function toggleFs(){ if (document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.(); }
-        function onFsChange(){ btn.textContent = document.fullscreenElement ? "⤢ Salir de pantalla completa" : "⤢ Pantalla completa"; }
-        btn?.addEventListener('click', toggleFs);
-        document.addEventListener('fullscreenchange', onFsChange);
-      })();
-
-      // Teclas
-      window.addEventListener('keydown', (ev)=>{
-        if (ev.target.tagName === 'INPUT' || ev.target.tagName === 'TEXTAREA') return;
-        if (ev.key === 'ArrowLeft') prevVideo();
-        if (ev.key === 'ArrowRight') nextVideo();
-        if (ev.code === 'Space') { ev.preventDefault(); togglePlay(); }
-      });
+      const btn = document.getElementById('btnFs');
+      const shell = document.querySelector('.video-shell');
+      function toggleFs(){ if (document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.(); }
+      function onFsChange(){ btn.textContent = document.fullscreenElement ? "⤢ Salir de pantalla completa" : "⤢ Pantalla completa"; }
+      btn?.addEventListener('click', toggleFs);
+      document.addEventListener('fullscreenchange', onFsChange);
     }
 
-    // Cargar la API de YouTube 1 sola vez
-    (function loadYT(){
-      if (window.YT && window.YT.Player) { createCarouselPlayer(); return; }
+    // Inicialización robusta (API + fallback)
+    (function initYT(){
+      let started = false;
+      function startOnce(){ if (started) return; started = true; createCarouselPlayer(); }
+      // 1) Si la API ya está, arrancamos
+      if (window.YT && window.YT.Player) { startOnce(); }
+      // 2) Hook de la API (sobre-escribimos preservando si existía)
       const prev = window.onYouTubeIframeAPIReady;
-      window.onYouTubeIframeAPIReady = function(){ if (typeof prev==='function') prev(); createCarouselPlayer(); };
+      window.onYouTubeIframeAPIReady = function(){ if (typeof prev==='function') prev(); startOnce(); };
+      // 3) Si en 2000ms no llegó la API, usamos fallback
+      setTimeout(()=>{ if (!started) { renderFallback(); } }, 2000);
+      // 4) Carga dinámica por si el <script> de arriba no se cargó (doble seguro)
       if (![...document.scripts].some(s => (s.src||'').includes('iframe_api'))) {
         const tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
@@ -283,13 +295,13 @@
       }
     })();
 
-    /***************** 3) PLAYLIST VIP (pausa radio y videos) *****************/
-    const BASE = "../musica/"; // ajusta si tu index está en Privado/
+    /******** 3) Playlist VIP (pausa radio y videos) ********/
+    const BASE = "../musica/"; // si index.html está en /Privado/
     const raw1 = [
       { title: "Tema 1", file: "tema1.mp3" },
       { title: "Tema 2", file: "tema2.mp3" },
       { title: "Tema 3", file: "tema3.mp3" }
-      // agrega más...
+      // agrega más…
     ];
     const tracks1 = raw1.map(t => ({ title: t.title, src: BASE + encodeURIComponent(t.file) }));
 
@@ -303,7 +315,7 @@
       i: 0
     };
 
-    function s1(msg, cls="color:#7CFC00"){ A1.status.style=cls; A1.status.textContent=msg; }
+    function s1(msg, css="color:#7CFC00"){ A1.status.style=css; A1.status.textContent=msg; }
 
     function render1(){
       A1.list.innerHTML = "";
@@ -332,8 +344,7 @@
     A1.audio.addEventListener('play', ()=> pauseAllExcept('playlist'));
     A1.audio.addEventListener('error', ()=> s1("⚠ No se pudo cargar: "+decodeURIComponent(tracks1[A1.i].src)+" (¿ruta/nombre?)","color:#ffd166"));
 
-    render1();
-    // No auto-play al cargar: el usuario decide
+    render1(); // sin auto play
   </script>
 </body>
 </html>
