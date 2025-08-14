@@ -104,8 +104,37 @@
     </section>
 
    <script>
-  // === PLAYLIST VIP 1 (siempre dibuja la lista, aunque los MP3 falten) ===
-  const BASE = "../musica/"; // este index está en /Privado/
+  <!-- PLAYLIST VIP 1 -->
+    <section class="playlist-box">
+      <h2>🎶 Playlist VIP 1</h2>
+      <audio id="audio1" controls preload="metadata"></audio>
+      <div style="text-align:center;margin:10px 0;">
+        <button id="prev1" class="btn">⏮ Anterior</button>
+        <button id="play1" class="btn alt">▶ / ⏸</button>
+        <button id="next1" class="btn">⏭ Siguiente</button>
+      </div>
+      <ul id="list1" class="plist"></ul>
+      <div id="status1" class="status"></div>
+      <p style="color:#ccc;font-size:.9rem;margin-top:8px;">
+        Tus MP3 van en <code>/musica/</code> (este archivo está en <code>/Privado/</code>, por eso apuntamos a <code>../musica/</code>).
+      </p>
+    </section>
+
+    <!-- PLAYLIST VIP 2 -->
+    <section class="playlist-box">
+      <h2>🎶 Playlist VIP 2</h2>
+      <audio id="audio2" controls preload="metadata"></audio>
+      <div style="text-align:center;margin:10px 0;">
+        <button id="prev2" class="btn">⏮ Anterior</button>
+        <button id="play2" class="btn alt">▶ / ⏸</button>
+        <button id="next2" class="btn">⏭ Siguiente</button>
+      </div>
+      <ul id="list2" class="plist"></ul>
+      <div id="status2" class="status"></div>
+      <p style="color:#ccc;font-size:.9rem;margin-top:8px;">
+        Si quieres usarla, crea <code>/musica2/</code>, sube MP3 (≤25MB) y edita la lista en el código.
+      </p>
+
 
   // NOMBRES EXACTOS como están en /musica/
   const raw1 = [
