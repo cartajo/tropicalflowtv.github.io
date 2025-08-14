@@ -103,178 +103,107 @@
       <div id="yt-thumbs"></div>
     </section>
 
-   <!-- ===================== PLAYLIST VIP 1 (lee /musica/) ===================== -->
-    <section class="playlist-box">
-      <h2>🎶 Playlist VIP 1</h2>
+   <!-- ======================= PLAYLIST VIP (robusto) ======================= -->
+<section id="playlist" class="playlist-box">
+  <h2>🎶 Playlist VIP</h2>
 
-      <audio id="audio1" controls style="width:100%;max-width:720px;display:block;margin:8px auto;" preload="metadata">
-        Tu navegador no soporta audio HTML5.
-      </audio>
+  <audio id="audio1" controls preload="metadata" style="width:100%;max-width:720px;display:block;margin:8px auto;"></audio>
 
-      <div style="text-align:center;margin:10px 0;">
-        <button id="prev1" class="btn">⏮ Anterior</button>
-        <button id="play1" class="btn">▶ / ⏸</button>
-        <button id="next1" class="btn">⏭ Siguiente</button>
-      </div>
+  <div style="text-align:center;margin:10px 0;">
+    <button id="prev1" class="btn">⏮ Anterior</button>
+    <button id="play1" class="btn alt">▶ / ⏸</button>
+    <button id="next1" class="btn">⏭ Siguiente</button>
+  </div>
 
-      <ul id="list1" class="plist"></ul>
-      <div id="status1" class="status"></div>
+  <ul id="list1" class="list"></ul>
+  <div id="status1" class="status"></div>
 
-      <script>
-        // RUTA base a tus MP3
-        const base1 = "../musica/"; // <- están fuera de /Privado/ en /musica/
+  <p style="color:#ccc;font-size:.9rem;margin-top:8px;">
+    Los MP3 deben estar en <code>/musica/</code> (raíz). Este archivo vive en <code>/Privado/</code>, por eso el código apunta a <code>../musica/</code>.
+  </p>
+</section>
 
-        // TUS 10 TEMAS con nombres LIMPIOS (renómbralos así al subir a /musica/)
-        const raw1 = [
-          { title: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3", file: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3" },
-          { title: "02 - dj mario andretti - mix merengue romantico.mp3",     file: "02 - dj mario andretti - mix merengue romantico.mp3" },
-          { title: "03 - La Amas Como Yo - Karis.Mp3",                         file: "03 - La Amas Como Yo - Karis.Mp3" },
-          { title: "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3",                            file: "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3" },
-          { title: "05 - Hey Dude! - Elvis Crespo.mp3",            file: "05 - Hey Dude! - Elvis Crespo.mp3" },
-          { title: "06 - Te Regalo Amores - Ken-Yrkm.mp3",                            file: "06 - Te Regalo Amores - Ken-Yrkm.mp3" },
-          { title: "07 - What Is Love - Haddaway.Mp3",                  file: "08 - What Is Love - Haddaway.Mp3" },
-          { title: "08 - Boricua Como El Gran Combo.mp3",     file: "09 - Boricua Como El Gran Combo.mp3" },
-          { title: "09 - Me Gusta, Me Gusta - Elvis Crespo.mp3",                           file: "10 - Me Gusta, Me Gusta - Elvis Crespo.mp3" },
-          { title: "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3",                                 file: "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3" }
-        ];
+<script>
+(() => {
+  // Pausar lo demás cuando el playlist suene
+  function pauseAllExceptPlaylist(){
+    try{
+      const r = document.getElementById('radioPlayer'); if (r && !r.paused) r.pause();
+      const y = window._ytCarouselPlayerInstance; if (y?.getPlayerState && y.getPlayerState() === (window.YT?.PlayerState?.PLAYING)) y.pauseVideo();
+      const pr = window._promoPlayerInstance;     if (pr?.getPlayerState && pr.getPlayerState() === (window.YT?.PlayerState?.PLAYING)) pr.pauseVideo();
+    }catch(e){}
+  }
 
-        const t1 = raw1.map(t => ({ title: t.title, src: base1 + encodeURIComponent(t.file) }));
+  const BASE = "../musica/"; // ← IMPORTANTE (index está en /Privado/)
 
-        const A1 = {
-          audio:  document.getElementById('audio1'),
-          list:   document.getElementById('list1'),
-          prev:   document.getElementById('prev1'),
-          play:   document.getElementById('play1'),
-          next:   document.getElementById('next1'),
-          status: document.getElementById('status1'),
-          i: 0
-        };
+  // ⚠ NOMBRES EXACTOS de tus archivos en /musica/
+  const raw1 = [
+    { title: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3", file: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3" },
+    { title: "02 - dj mario andretti - mix merengue romantico.mp3",     file: "02 - dj mario andretti - mix merengue romantico.mp3" },
+    { title: "03 - La Amas Como Yo - Karis.Mp3",                         file: "03 - La Amas Como Yo - Karis.Mp3" },
+    { title: "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3",            file: "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3" },
+    { title: "05 - Hey Dude! - Elvis Crespo.mp3",                        file: "05 - Hey Dude! - Elvis Crespo.mp3" },
+    { title: "06 - Te Regalo Amores - Ken-Yrkm.mp3",                     file: "06 - Te Regalo Amores - Ken-Yrkm.mp3" },
+    { title: "07 - What Is Love - Haddaway.Mp3",                         file: "07 - What Is Love - Haddaway.Mp3" },
+    { title: "08 - Boricua Como El Gran Combo.mp3",                      file: "08 - Boricua Como El Gran Combo.mp3" },
+    { title: "09 - Me Gusta, Me Gusta - Elvis Crespo.mp3",               file: "09 - Me Gusta, Me Gusta - Elvis Crespo.mp3" },
+    { title: "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3",         file: "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3" }
+  ];
 
-        function s1(msg, cls="ok"){ A1.status.className="status "+cls; A1.status.textContent=msg; }
+  const tracks = raw1.map(t => ({ title: t.title, src: BASE + encodeURIComponent(t.file) }));
 
-        function render1(){
-          A1.list.innerHTML = "";
-          t1.forEach((it, idx)=>{
-            const li = document.createElement('li');
-            li.textContent = (idx===A1.i ? "▶ " : "") + it.title;
-            li.style.padding="8px 10px"; li.style.borderRadius="8px"; li.style.cursor="pointer";
-            li.style.background = idx===A1.i ? "rgba(0,191,255,.35)" : "transparent";
-            li.onclick = () => { A1.i = idx; load1(true); };
-            A1.list.appendChild(li);
-          });
-        }
+  const A = {
+    audio:  document.getElementById('audio1'),
+    list:   document.getElementById('list1'),
+    prev:   document.getElementById('prev1'),
+    play:   document.getElementById('play1'),
+    next:   document.getElementById('next1'),
+    status: document.getElementById('status1'),
+    i: 0
+  };
 
-        function load1(autoplay){
-          A1.audio.src = t1[A1.i].src;
-          render1();
-          s1("Cargando: "+t1[A1.i].title+"…","ok");
-          if (autoplay) A1.audio.play().catch(()=>{});
-        }
+  function status(msg, cls="ok"){ A.status.className = "status "+cls; A.status.textContent = msg; }
 
-        A1.prev.onclick = ()=>{ A1.i = (A1.i - 1 + t1.length) % t1.length; load1(true); };
-        A1.next.onclick = ()=>{ A1.i = (A1.i + 1) % t1.length; load1(true); };
-        A1.play.onclick = ()=>{ if (A1.audio.paused) A1.audio.play().catch(()=>{}); else A1.audio.pause(); };
+  function render(){
+    A.list.innerHTML = "";
+    if (!tracks.length){
+      const li = document.createElement('li');
+      li.textContent = "No hay canciones. Sube MP3 a /musica/ y edita la lista.";
+      li.style.opacity = .8;
+      A.list.appendChild(li);
+      return;
+    }
+    tracks.forEach((it, idx)=>{
+      const li = document.createElement('li');
+      const num = (idx+1).toString().padStart(2,'0');
+      li.textContent = ${num} - ${it.title};
+      li.style.background = idx===A.i ? "rgba(0,191,255,.35)" : "transparent";
+      li.onclick = () => { A.i = idx; load(true); };
+      A.list.appendChild(li);
+    });
+  }
 
-        A1.audio.addEventListener('ended', ()=>{ A1.i = (A1.i + 1) % t1.length; load1(true); });
-        A1.audio.addEventListener('loadedmetadata', ()=> s1("Listo: "+t1[A1.i].title+" ✓","ok"));
-        A1.audio.addEventListener('error', ()=> s1("⚠ No se pudo cargar: "+decodeURIComponent(t1[A1.i].src)+" (¿/musica/ y nombre correcto?)","warn"));
+  function load(autoplay){
+    if (!tracks.length) return;
+    A.audio.src = tracks[A.i].src;
+    render();
+    status("Listo: "+tracks[A.i].title+" ✓","ok");
+    if (autoplay) { pauseAllExceptPlaylist(); A.audio.play().catch(()=>{}); }
+  }
 
-        load1(false);
-      </script>
+  A.prev.onclick = ()=>{ if(!tracks.length) return; A.i = (A.i - 1 + tracks.length) % tracks.length; load(true); };
+  A.next.onclick = ()=>{ if(!tracks.length) return; A.i = (A.i + 1) % tracks.length; load(true); };
+  A.play.onclick = ()=>{ if(!tracks.length) return; if (A.audio.paused) { pauseAllExceptPlaylist(); A.audio.play().catch(()=>{}); } else A.audio.pause(); };
 
-      <p style="color:#ccc;font-size:.9rem;margin-top:8px;">
-        Sube los 10 MP3 a <code>/musica/</code> con esos nombres. Si alguno marca 0:00, abre su URL para confirmar.
-      </p>
-    </section>
-    <!-- =================== FIN PLAYLIST VIP 1 =================== -->
+  A.audio.addEventListener('ended', ()=>{ if(!tracks.length) return; A.i = (A.i + 1) % tracks.length; load(true); });
+  A.audio.addEventListener('play',  pauseAllExceptPlaylist);
+  A.audio.addEventListener('error', ()=> status("⚠ No se pudo cargar: "+decodeURIComponent(tracks[A.i].src),"warn"));
 
-    <!-- ===================== PLAYLIST VIP 2 (lee /musica2/) ===================== -->
-    <section class="playlist-box">
-      <h2>🎶 Playlist VIP 2</h2>
-
-      <audio id="audio2" controls style="width:100%;max-width:720px;display:block;margin:8px auto;" preload="metadata">
-        Tu navegador no soporta audio HTML5.
-      </audio>
-
-      <div style="text-align:center;margin:10px 0;">
-        <button id="prev2" class="btn">⏮ Anterior</button>
-        <button id="play2" class="btn">▶ / ⏸</button>
-        <button id="next2" class="btn">⏭ Siguiente</button>
-      </div>
-
-      <ul id="list2" class="plist"></ul>
-      <div id="status2" class="status"></div>
-
-      <script>
-        // Carpeta para tu segunda tanda de temas
-        const base2 = "../musica2/";
-
-        // EDITA con tus archivos reales en /musica2/
-        const raw2 = [
-          // Ejemplos:
-          // { title: "Tema Nuevo 1", file: "tema_nuevo_1.mp3" },
-          // { title: "Tema Nuevo 2", file: "tema_nuevo_2.mp3" }
-        ];
-
-        const t2 = raw2.map(t => ({ title: t.title, src: base2 + encodeURIComponent(t.file) }));
-
-        const A2 = {
-          audio:  document.getElementById('audio2'),
-          list:   document.getElementById('list2'),
-          prev:   document.getElementById('prev2'),
-          play:   document.getElementById('play2'),
-          next:   document.getElementById('next2'),
-          status: document.getElementById('status2'),
-          i: 0
-        };
-
-        function s2(msg, cls="ok"){ A2.status.className="status "+cls; A2.status.textContent=msg; }
-
-        function render2(){
-          A2.list.innerHTML = "";
-          if (t2.length === 0) {
-            const empty = document.createElement('li');
-            empty.textContent = "Sube canciones a /musica2/ y agrégalas al listado.";
-            empty.style.opacity = .7;
-            A2.list.appendChild(empty);
-            return;
-          }
-          t2.forEach((it, idx)=>{
-            const li = document.createElement('li');
-            li.textContent = (idx===A2.i ? "▶ " : "") + it.title;
-            li.style.padding="8px 10px"; li.style.borderRadius="8px"; li.style.cursor="pointer";
-            li.style.background = idx===A2.i ? "rgba(0,191,255,.35)" : "transparent";
-            li.onclick = () => { A2.i = idx; load2(true); };
-            A2.list.appendChild(li);
-          });
-        }
-
-        function load2(autoplay){
-          if (!t2.length) return;
-          A2.audio.src = t2[A2.i].src;
-          render2();
-          s2("Cargando: "+t2[A2.i].title+"…","ok");
-          if (autoplay) A2.audio.play().catch(()=>{});
-        }
-
-        A2.prev.onclick = ()=>{ if(!t2.length) return; A2.i = (A2.i - 1 + t2.length) % t2.length; load2(true); };
-        A2.next.onclick = ()=>{ if(!t2.length) return; A2.i = (A2.i + 1) % t2.length; load2(true); };
-        A2.play.onclick = ()=>{ if(!t2.length) return; if (A2.audio.paused) A2.audio.play().catch(()=>{}); else A2.audio.pause(); };
-
-        A2.audio.addEventListener('ended', ()=>{ if(!t2.length) return; A2.i = (A2.i + 1) % t2.length; load2(true); });
-        A2.audio.addEventListener('loadedmetadata', ()=>{ if(!t2.length) return; s2("Listo: "+t2[A2.i].title+" ✓","ok"); });
-        A2.audio.addEventListener('error', ()=> s2("⚠ No se pudo cargar (¿/musica2/ y nombre correcto?)","warn"));
-
-        render2();
-        load2(false);
-      </script>
-
-      <p style="color:#ccc;font-size:.9rem;margin-top:8px;">
-        Crea la carpeta <code>/musica2/</code>, sube MP3 (≤25MB) y agrégalos al array <code>raw2</code>.
-      </p>
-    </section>
-    <!-- =================== FIN PLAYLIST VIP 2 =================== -->
-
+  render();
+  load(false);
+})();
+</script>
+<!-- ===================== FIN PLAYLIST VIP ===================== -->
 
     <!-- VIDEO PROMO -->
     <section id="promo" style="margin-top:24px;">
