@@ -79,35 +79,34 @@
     </section>
 
  
-     <!-- ============ VIDEOS RECIENTES (Auto-siguiente + Thumbs + Prev/Next + Título) ============ -->
+     <!-- ============ VIDEOS RECIENTES (Auto-siguiente + Thumbs + Prev/Next + Título + Fade) ============ -->
 <section id="videos">
   <h2 style="text-align:center;">🎬 Videos Recientes</h2>
 
-  <!-- Player principal -->
-  <div style="max-width:900px;margin:0 auto;border-radius:12px;overflow:hidden;background:#000">
-    <div style="position:relative;width:100%;padding-top:56.25%;"> <!-- 16:9 -->
-      <div id="yt-carousel-player" style="position:absolute;inset:0;"></div>
+  <!-- Player -->
+  <div class="video-shell">
+    <div class="video-aspect">
+      <div id="yt-carousel-player" class="fade show"></div>
     </div>
   </div>
 
-  <!-- Título del video actual -->
+  <!-- Título actual -->
   <div id="yt-current-title" style="max-width:900px;margin:10px auto 0;text-align:center;font-weight:700;"></div>
 
   <!-- Controles -->
-  <div style="max-width:900px;margin:10px auto 0;display:flex;gap:10px;justify-content:center;">
+  <div style="max-width:900px;margin:10px auto 0;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
     <button id="btnPrevVid" style="padding:10px 14px;border:0;border-radius:10px;font-weight:700;cursor:pointer;background:#00e0ff;color:#000">⏮ Anterior</button>
     <button id="btnPlayPauseVid" style="padding:10px 14px;border:0;border-radius:10px;font-weight:700;cursor:pointer;background:#2dd4bf;color:#000">▶ / ⏸</button>
     <button id="btnNextVid" style="padding:10px 14px;border:0;border-radius:10px;font-weight:700;cursor:pointer;background:#00e0ff;color:#000">⏭ Siguiente</button>
+    <button id="btnFs" style="padding:10px 14px;border:0;border-radius:10px;font-weight:700;cursor:pointer;background:#fbbf24;color:#000">⤢ Pantalla completa</button>
   </div>
 
-  <!-- Tira de miniaturas -->
-  <div id="yt-thumbs"
-       style="display:flex;gap:10px;overflow-x:auto;padding:12px;margin:6px auto 0;max-width:900px;">
-  </div>
+  <!-- Miniaturas -->
+  <div id="yt-thumbs" style="display:flex;gap:10px;overflow-x:auto;padding:12px;margin:6px auto 0;max-width:900px;"></div>
 </section>
 
 <script>
-  /* IDs de YouTube en el orden que quieres reproducir */
+  // IDs de YouTube (no URLs). Edita si quieres cambiar/añadir.
   const CAROUSEL_IDS = [
     "tpi8zLE3Kqw","RBE8A9rAj8Y","XYe0ZHVvVig","h86xW_G-j4s","5pKPlIlQa_8",
     "wgqGHqhEZ8M","auTHP2prrxw","CL7m60BISiw","4jdbpZVzlf4","X_Df1rsXBjE",
@@ -115,28 +114,21 @@
     "4tXLT0hN8n8","n8RMGnc8v_o"
   ];
 
-  let cIndex = 0;      // índice actual
-  let cPlayer = null;  // instancia del player
+  let cIndex = 0;
+  let cPlayer = null;
 
   function buildThumbs(){
     const strip = document.getElementById("yt-thumbs");
     strip.innerHTML = CAROUSEL_IDS.map((id,idx)=>`
-      <button data-i="${idx}"
-        style="border:0;background:transparent;cursor:pointer;flex:0 0 auto">
+      <button data-i="${idx}" style="border:0;background:transparent;cursor:pointer;flex:0 0 auto">
         <img src="https://img.youtube.com/vi/${id}/hqdefault.jpg"
              alt="thumb ${idx+1}"
              style="height:90px;border-radius:10px;opacity:${idx===cIndex?1:.55};
                     outline:${idx===cIndex?'3px solid #00e0ff':'none'}">
       </button>
     `).join("");
-    // click en miniaturas
     strip.querySelectorAll("button").forEach(btn=>{
-      btn.onclick = ()=>{
-        cIndex = +btn.dataset.i;
-        cPlayer.loadVideoById(CAROUSEL_IDS[cIndex]);
-        highlight();
-        updateTitleSoon();
-      }
+      btn.onclick = ()=>{ goTo(+btn.dataset.i); };
     });
   }
 
@@ -148,36 +140,34 @@
     });
   }
 
-  function prevVideo(){
-    cIndex = (cIndex - 1 + CAROUSEL_IDS.length) % CAROUSEL_IDS.length;
-    cPlayer.loadVideoById(CAROUSEL_IDS[cIndex]);
-    highlight();
-    updateTitleSoon();
+  function updateTitleSoon(){ setTimeout(()=>{
+    try{
+      const d = cPlayer.getVideoData();
+      document.getElementById("yt-current-title").textContent = d?.title || "";
+    }catch(_){}
+  }, 300);}
+
+  function fadeSwap(loadFn){
+    const box = document.getElementById('yt-carousel-player');
+    box.classList.remove('show'); box.classList.add('hide');   // fade out
+    setTimeout(()=>{ loadFn(); box.classList.remove('hide'); box.classList.add('show'); }, 180); // fade in
   }
-  function nextVideo(){
-    cIndex = (cIndex + 1) % CAROUSEL_IDS.length;
-    cPlayer.loadVideoById(CAROUSEL_IDS[cIndex]);
-    highlight();
-    updateTitleSoon();
+
+  function goTo(idx){
+    cIndex = (idx + CAROUSEL_IDS.length) % CAROUSEL_IDS.length;
+    fadeSwap(()=> cPlayer.loadVideoById(CAROUSEL_IDS[cIndex]));
+    highlight(); updateTitleSoon();
   }
+  function prevVideo(){ goTo(cIndex - 1); }
+  function nextVideo(){ goTo(cIndex + 1); }
+
   function togglePlay(){
     try{
-      const state = cPlayer.getPlayerState();
-      if (state === YT.PlayerState.PLAYING) cPlayer.pauseVideo();
+      const s = cPlayer.getPlayerState();
+      if (s === YT.PlayerState.PLAYING) cPlayer.pauseVideo();
       else cPlayer.playVideo();
     }catch(_){}
   }
-
-  function updateTitle(){
-    try{
-      const data = cPlayer.getVideoData();
-      document.getElementById("yt-current-title").textContent = data?.title || "";
-    }catch(_){
-      // ignore
-    }
-  }
-  // pequeño delay porque YouTube tarda un tick en exponer el título del nuevo video
-  function updateTitleSoon(){ setTimeout(updateTitle, 300); }
 
   function createCarouselPlayer(){
     cPlayer = new YT.Player('yt-carousel-player', {
@@ -191,14 +181,24 @@
         }
       }
     });
-    buildThumbs();
+    buildThumbs(); highlight();
 
     // Botones
     document.getElementById("btnPrevVid").onclick = prevVideo;
     document.getElementById("btnNextVid").onclick = nextVideo;
     document.getElementById("btnPlayPauseVid").onclick = togglePlay;
 
-    // Teclas ← → espacio
+    // Fullscreen
+    (function setupFS(){
+      const btn = document.getElementById('btnFs');
+      const shell = document.querySelector('.video-shell');
+      function toggleFs(){ if (document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.(); }
+      function onFsChange(){ btn.textContent = document.fullscreenElement ? "⤢ Salir de pantalla completa" : "⤢ Pantalla completa"; }
+      btn?.addEventListener('click', toggleFs);
+      document.addEventListener('fullscreenchange', onFsChange);
+    })();
+
+    // Teclas
     window.addEventListener('keydown', (ev)=>{
       if (ev.target.tagName === 'INPUT' || ev.target.tagName === 'TEXTAREA') return;
       if (ev.key === 'ArrowLeft') prevVideo();
@@ -207,7 +207,7 @@
     });
   }
 
-  // Cargar la API de YouTube una sola vez (si ya existe, la reutiliza)
+  // Cargar API de YouTube una sola vez
   (function loadYT(){
     if (window.YT && window.YT.Player) { createCarouselPlayer(); return; }
     const prev = window.onYouTubeIframeAPIReady;
