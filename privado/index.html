@@ -276,21 +276,59 @@
     <!-- =================== FIN PLAYLIST VIP 2 =================== -->
 
 
-    <!-- VIDEO PROMO -->
-    <section id="promo" style="margin-top:24px;">
-      <h2>🎬 Video Promo Tropical</h2>
-      <div class="video-shell">
-        <div class="video-aspect">
-          <div id="promo-player"></div>
-        </div>
-      </div>
-      <div id="promo-title" style="max-width:var(--maxw);margin:8px auto 0;text-align:center;font-weight:700;"></div>
-      <div style="max-width:var(--maxw);margin:10px auto 0;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-        <button id="promoPrev" class="btn">⏮ Anterior</button>
-        <button id="promoToggle" class="btn alt">▶ / ⏸</button>
-        <button id="promoNext" class="btn">⏭ Siguiente</button>
-      </div>
-    </section>
+     <!-- ======== VIDEO PROMO (dos videos en secuencia) ======== -->
+  <script>
+    const PROMO_IDS = ["U0V7ATX_2CY","5ZVTbahB5CM"]; // Merengue → Salsa
+    let promoIndex = 0, promoPlayer = null;
+
+    function crearPromoPlayer(){
+      if (!(window.YT && window.YT.Player)) return;
+      promoPlayer = new YT.Player('promo-player', {
+        videoId: PROMO_IDS[promoIndex],
+        playerVars: { rel:0, modestbranding:1, playsinline:1, controls:1 },
+        events: {
+          onReady: e => { try{ e.target.mute(); e.target.playVideo(); }catch(_){} actualizarTitulo(); },
+          onStateChange: e => {
+            if (e.data===YT.PlayerState.PLAYING) pauseAllExcept('promo');
+            if (e.data===YT.PlayerState.ENDED){
+              promoIndex = (promoIndex+1)%PROMO_IDS.length;
+              promoPlayer.loadVideoById(PROMO_IDS[promoIndex]);
+            }
+            if (e.data===YT.PlayerState.PLAYING || e.data===YT.PlayerState.CUED) actualizarTitulo();
+          }
+        }
+      });
+      window._promoPlayerInstance = promoPlayer;
+
+      // Controles
+      document.getElementById('btnPromoPrev').onclick = ()=>{ promoIndex=(promoIndex-1+PROMO_IDS.length)%PROMO_IDS.length; pauseAllExcept('promo'); promoPlayer.loadVideoById(PROMO_IDS[promoIndex]); };
+      document.getElementById('btnPromoNext').onclick = ()=>{ promoIndex=(promoIndex+1)%PROMO_IDS.length; pauseAllExcept('promo'); promoPlayer.loadVideoById(PROMO_IDS[promoIndex]); };
+      document.getElementById('btnPromoPlay').onclick = ()=>{
+        const s = promoPlayer.getPlayerState?.();
+        if (s===YT.PlayerState.PLAYING) promoPlayer.pauseVideo();
+        else { pauseAllExcept('promo'); promoPlayer.playVideo(); }
+      };
+
+      // Fullscreen
+      (function promoFS(){
+        const btn  = document.getElementById('btnPromoFs');
+        const box  = document.querySelector('#promo-player')?.parentElement?.parentElement;
+        function toggleFs(){ if (document.fullscreenElement) document.exitFullscreen?.(); else box?.requestFullscreen?.(); }
+        function onFsChange(){ btn.textContent = document.fullscreenElement ? "⤢ Salir de pantalla completa" : "⤢ Pantalla completa"; }
+        btn?.addEventListener('click', toggleFs);
+        document.addEventListener('fullscreenchange', onFsChange);
+      })();
+    }
+    function actualizarTitulo(){ const d=promoPlayer?.getVideoData?.()||{}; const el=document.getElementById('promo-title'); if(el) el.textContent=d.title||""; }
+
+    (function startPromo(){
+      if (window.YT && window.YT.Player) { crearPromoPlayer(); return; }
+      const prev = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = function(){ if (typeof prev==='function') prev(); crearPromoPlayer(); };
+    })();
+  </script>
+</body>
+</html>
 
     <!-- BOTONES -->
     <div class="social-buttons">
