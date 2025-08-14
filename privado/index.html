@@ -103,7 +103,147 @@
         <iframe src="https://www.youtube.com/embed/n8RMGnc8v_o" allowfullscreen></iframe>
       </div>
     </section>
+     <!-- ============ VIDEOS RECIENTES (Auto-siguiente + Thumbs + Prev/Next + Título) ============ -->
+<section id="videos">
+  <h2 style="text-align:center;">🎬 Videos Recientes</h2>
 
+  <!-- Player principal -->
+  <div style="max-width:900px;margin:0 auto;border-radius:12px;overflow:hidden;background:#000">
+    <div style="position:relative;width:100%;padding-top:56.25%;"> <!-- 16:9 -->
+      <div id="yt-carousel-player" style="position:absolute;inset:0;"></div>
+    </div>
+  </div>
+
+  <!-- Título del video actual -->
+  <div id="yt-current-title" style="max-width:900px;margin:10px auto 0;text-align:center;font-weight:700;"></div>
+
+  <!-- Controles -->
+  <div style="max-width:900px;margin:10px auto 0;display:flex;gap:10px;justify-content:center;">
+    <button id="btnPrevVid" style="padding:10px 14px;border:0;border-radius:10px;font-weight:700;cursor:pointer;background:#00e0ff;color:#000">⏮ Anterior</button>
+    <button id="btnPlayPauseVid" style="padding:10px 14px;border:0;border-radius:10px;font-weight:700;cursor:pointer;background:#2dd4bf;color:#000">▶ / ⏸</button>
+    <button id="btnNextVid" style="padding:10px 14px;border:0;border-radius:10px;font-weight:700;cursor:pointer;background:#00e0ff;color:#000">⏭ Siguiente</button>
+  </div>
+
+  <!-- Tira de miniaturas -->
+  <div id="yt-thumbs"
+       style="display:flex;gap:10px;overflow-x:auto;padding:12px;margin:6px auto 0;max-width:900px;">
+  </div>
+</section>
+
+<script>
+  /* IDs de YouTube en el orden que quieres reproducir */
+  const CAROUSEL_IDS = [
+    "tpi8zLE3Kqw","RBE8A9rAj8Y","XYe0ZHVvVig","h86xW_G-j4s","5pKPlIlQa_8",
+    "wgqGHqhEZ8M","auTHP2prrxw","CL7m60BISiw","4jdbpZVzlf4","X_Df1rsXBjE",
+    "RWp76Pj0RUo","M9wQdkQicbk","FCu8-sim5F4","O6xVXaBcOac","jTqKxMTtVEI",
+    "4tXLT0hN8n8","n8RMGnc8v_o"
+  ];
+
+  let cIndex = 0;      // índice actual
+  let cPlayer = null;  // instancia del player
+
+  function buildThumbs(){
+    const strip = document.getElementById("yt-thumbs");
+    strip.innerHTML = CAROUSEL_IDS.map((id,idx)=>`
+      <button data-i="${idx}"
+        style="border:0;background:transparent;cursor:pointer;flex:0 0 auto">
+        <img src="https://img.youtube.com/vi/${id}/hqdefault.jpg"
+             alt="thumb ${idx+1}"
+             style="height:90px;border-radius:10px;opacity:${idx===cIndex?1:.55};
+                    outline:${idx===cIndex?'3px solid #00e0ff':'none'}">
+      </button>
+    `).join("");
+    // click en miniaturas
+    strip.querySelectorAll("button").forEach(btn=>{
+      btn.onclick = ()=>{
+        cIndex = +btn.dataset.i;
+        cPlayer.loadVideoById(CAROUSEL_IDS[cIndex]);
+        highlight();
+        updateTitleSoon();
+      }
+    });
+  }
+
+  function highlight(){
+    const imgs = document.querySelectorAll("#yt-thumbs img");
+    imgs.forEach((img,idx)=>{
+      img.style.opacity = (idx===cIndex? "1" : ".55");
+      img.style.outline = (idx===cIndex? "3px solid #00e0ff" : "none");
+    });
+  }
+
+  function prevVideo(){
+    cIndex = (cIndex - 1 + CAROUSEL_IDS.length) % CAROUSEL_IDS.length;
+    cPlayer.loadVideoById(CAROUSEL_IDS[cIndex]);
+    highlight();
+    updateTitleSoon();
+  }
+  function nextVideo(){
+    cIndex = (cIndex + 1) % CAROUSEL_IDS.length;
+    cPlayer.loadVideoById(CAROUSEL_IDS[cIndex]);
+    highlight();
+    updateTitleSoon();
+  }
+  function togglePlay(){
+    try{
+      const state = cPlayer.getPlayerState();
+      if (state === YT.PlayerState.PLAYING) cPlayer.pauseVideo();
+      else cPlayer.playVideo();
+    }catch(_){}
+  }
+
+  function updateTitle(){
+    try{
+      const data = cPlayer.getVideoData();
+      document.getElementById("yt-current-title").textContent = data?.title || "";
+    }catch(_){
+      // ignore
+    }
+  }
+  // pequeño delay porque YouTube tarda un tick en exponer el título del nuevo video
+  function updateTitleSoon(){ setTimeout(updateTitle, 300); }
+
+  function createCarouselPlayer(){
+    cPlayer = new YT.Player('yt-carousel-player', {
+      videoId: CAROUSEL_IDS[cIndex],
+      playerVars: { rel:0, modestbranding:1, playsinline:1, controls:1 },
+      events: {
+        onReady: e => { try{ e.target.mute(); e.target.playVideo(); }catch(_){} updateTitleSoon(); },
+        onStateChange: e => {
+          if (e.data === YT.PlayerState.ENDED) nextVideo();
+          if (e.data === YT.PlayerState.PLAYING || e.data === YT.PlayerState.CUED) updateTitleSoon();
+        }
+      }
+    });
+    buildThumbs();
+
+    // Botones
+    document.getElementById("btnPrevVid").onclick = prevVideo;
+    document.getElementById("btnNextVid").onclick = nextVideo;
+    document.getElementById("btnPlayPauseVid").onclick = togglePlay;
+
+    // Teclas ← → espacio
+    window.addEventListener('keydown', (ev)=>{
+      if (ev.target.tagName === 'INPUT' || ev.target.tagName === 'TEXTAREA') return;
+      if (ev.key === 'ArrowLeft') prevVideo();
+      if (ev.key === 'ArrowRight') nextVideo();
+      if (ev.code === 'Space') { ev.preventDefault(); togglePlay(); }
+    });
+  }
+
+  // Cargar la API de YouTube una sola vez (si ya existe, la reutiliza)
+  (function loadYT(){
+    if (window.YT && window.YT.Player) { createCarouselPlayer(); return; }
+    const prev = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = function(){ if (typeof prev==='function') prev(); createCarouselPlayer(); };
+    if (![...document.scripts].some(s => (s.src||'').includes('iframe_api'))) {
+      const tag = document.createElement('script');
+      tag.src = "https://www.youtube.com/iframe_api";
+      document.body.appendChild(tag);
+    }
+  })();
+</script>
+<!-- ========================== FIN VIDEOS RECIENTES ========================== -->
     <!-- ===================== PLAYLIST VIP 1 (lee /musica/) ===================== -->
     <section class="playlist-box">
       <h2>🎶 Playlist VIP 1</h2>
