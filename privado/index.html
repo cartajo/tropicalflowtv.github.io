@@ -22,6 +22,8 @@
     .wrap{max-width:var(--maxw);margin:0 auto;padding:16px;background:var(--bg);border-radius:14px}
     section{margin:22px 0;padding:16px;background:rgba(255,255,255,.08);border-radius:12px}
     h2{margin:0 0 12px;text-align:center}
+
+    /* Audio general */
     audio{ width:100%; display:block; margin:8px auto; border-radius:10px }
 
     /* Video 21:9 + fade */
@@ -30,23 +32,26 @@
     .video-aspect > div, .video-aspect iframe{ position:absolute; inset:0; width:100%!important; height:100%!important }
     .fade{ transition:opacity .3s ease } .hide{opacity:0} .show{opacity:1}
 
-    /* Thumbs */
+    /* Tira de miniaturas */
     #yt-thumbs{ display:flex;gap:10px;overflow-x:auto;padding:12px;margin:6px auto 0;max-width:var(--maxw) }
     #yt-thumbs img{ height:90px;border-radius:10px;display:block }
     @media (max-width:600px){ #yt-thumbs img{ height:70px } }
 
     /* Botones */
     .btn{ background:var(--accent); color:#000; font-weight:700; border:none; border-radius:10px; padding:10px 14px; cursor:pointer }
-    .btn.alt{ background:#2dd4bf } .btn.warn{ background:#fbbf24 } /* amarillo con texto negro */
+    .btn.alt{ background:#2dd4bf }
+    .btn.warn{ background:#fbbf24; color:#000 } /* negro como pediste */
 
     /* Playlist */
-    .playlist-box{ text-align:center; padding:20px; background:rgba(0,0,0,0.3); border-radius:15px }
-    ul.list{ list-style:none; padding:0; max-width:var(--maxw); margin:0 auto; color:#fff }
+    .playlist-box{ text-align:center; padding:20px; background:transparent; border-radius:15px } /* transparente */
+    ul.list{ list-style:none; padding:0; max-width:var(--maxw); margin:0 auto; color:#fff; text-align:left }
     ul.list li{ padding:8px 10px; border-radius:8px; cursor:pointer }
     ul.list li:hover{ background:rgba(255,255,255,.18) }
+    .status{max-width:var(--maxw);margin:6px auto 0;font-size:.92rem}
+    .ok{color:#7CFC00} .warn{color:#ffd166}
 
     /* Social */
-    .social-buttons{ text-align:center; margin:16px 0 }
+    .social-buttons{ text-align:center; margin: 16px 0 }
     .social-buttons a{ display:inline-block; margin:.4rem; padding:.6rem 1rem; color:#fff; text-decoration:none; border-radius:8px; background:#444 }
     .whatsapp{ background:#25d366 } .youtube{ background:#FF0000 } .facebook{ background:#3b5998 }
     .paypal{ background:#0070ba } .athmovil{ background:#6f42c1 }
@@ -54,7 +59,7 @@
     footer{ text-align:center; padding:1rem; background:rgba(0,0,0,.6); color:#ccc }
   </style>
 
-  <!-- API YouTube -->
+  <!-- API YouTube (primario) -->
   <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
@@ -98,37 +103,193 @@
       <div id="yt-thumbs"></div>
     </section>
 
-    <!-- PLAYLIST -->
+   <!-- ===================== PLAYLIST VIP 1 (lee /musica/) ===================== -->
     <section class="playlist-box">
-      <h2>🎶 Playlist VIP</h2>
-      <audio id="audio1" controls preload="metadata"></audio>
+      <h2>🎶 Playlist VIP 1</h2>
+
+      <audio id="audio1" controls style="width:100%;max-width:720px;display:block;margin:8px auto;" preload="metadata">
+        Tu navegador no soporta audio HTML5.
+      </audio>
+
       <div style="text-align:center;margin:10px 0;">
         <button id="prev1" class="btn">⏮ Anterior</button>
-        <button id="play1" class="btn alt">▶ / ⏸</button>
+        <button id="play1" class="btn">▶ / ⏸</button>
         <button id="next1" class="btn">⏭ Siguiente</button>
       </div>
-      <ul id="list1" class="list"></ul>
-      <div id="status1" style="max-width:var(--maxw);margin:6px auto 0;font-size:.92rem"></div>
+
+      <ul id="list1" class="plist"></ul>
+      <div id="status1" class="status"></div>
+
+      <script>
+        // RUTA base a tus MP3
+        const base1 = "../musica/"; // <- están fuera de /Privado/ en /musica/
+
+        // TUS 10 TEMAS con nombres LIMPIOS (renómbralos así al subir a /musica/)
+        const raw1 = [
+          { title: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3", file: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3" },
+          { title: "02 - dj mario andretti - mix merengue romantico.mp3",     file: "02 - dj mario andretti - mix merengue romantico.mp3" },
+          { title: "03 - La Amas Como Yo - Karis.Mp3",                         file: "03 - La Amas Como Yo - Karis.Mp3" },
+          { title: "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3",                            file: "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3" },
+          { title: "05 - Hey Dude! - Elvis Crespo.mp3",            file: "05 - Hey Dude! - Elvis Crespo.mp3" },
+          { title: "06 - Te Regalo Amores - Ken-Yrkm.mp3",                            file: "06 - Te Regalo Amores - Ken-Yrkm.mp3" },
+          { title: "07 - What Is Love - Haddaway.Mp3",                  file: "08 - What Is Love - Haddaway.Mp3" },
+          { title: "08 - Boricua Como El Gran Combo.mp3",     file: "09 - Boricua Como El Gran Combo.mp3" },
+          { title: "09 - Me Gusta, Me Gusta - Elvis Crespo.mp3",                           file: "10 - Me Gusta, Me Gusta - Elvis Crespo.mp3" },
+          { title: "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3",                                 file: "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3" }
+        ];
+
+        const t1 = raw1.map(t => ({ title: t.title, src: base1 + encodeURIComponent(t.file) }));
+
+        const A1 = {
+          audio:  document.getElementById('audio1'),
+          list:   document.getElementById('list1'),
+          prev:   document.getElementById('prev1'),
+          play:   document.getElementById('play1'),
+          next:   document.getElementById('next1'),
+          status: document.getElementById('status1'),
+          i: 0
+        };
+
+        function s1(msg, cls="ok"){ A1.status.className="status "+cls; A1.status.textContent=msg; }
+
+        function render1(){
+          A1.list.innerHTML = "";
+          t1.forEach((it, idx)=>{
+            const li = document.createElement('li');
+            li.textContent = (idx===A1.i ? "▶ " : "") + it.title;
+            li.style.padding="8px 10px"; li.style.borderRadius="8px"; li.style.cursor="pointer";
+            li.style.background = idx===A1.i ? "rgba(0,191,255,.35)" : "transparent";
+            li.onclick = () => { A1.i = idx; load1(true); };
+            A1.list.appendChild(li);
+          });
+        }
+
+        function load1(autoplay){
+          A1.audio.src = t1[A1.i].src;
+          render1();
+          s1("Cargando: "+t1[A1.i].title+"…","ok");
+          if (autoplay) A1.audio.play().catch(()=>{});
+        }
+
+        A1.prev.onclick = ()=>{ A1.i = (A1.i - 1 + t1.length) % t1.length; load1(true); };
+        A1.next.onclick = ()=>{ A1.i = (A1.i + 1) % t1.length; load1(true); };
+        A1.play.onclick = ()=>{ if (A1.audio.paused) A1.audio.play().catch(()=>{}); else A1.audio.pause(); };
+
+        A1.audio.addEventListener('ended', ()=>{ A1.i = (A1.i + 1) % t1.length; load1(true); });
+        A1.audio.addEventListener('loadedmetadata', ()=> s1("Listo: "+t1[A1.i].title+" ✓","ok"));
+        A1.audio.addEventListener('error', ()=> s1("⚠ No se pudo cargar: "+decodeURIComponent(t1[A1.i].src)+" (¿/musica/ y nombre correcto?)","warn"));
+
+        load1(false);
+      </script>
+
       <p style="color:#ccc;font-size:.9rem;margin-top:8px;">
-        Sube tus MP3 a <code>/musica/</code> (en la raíz). Este archivo está en <code>/Privado/</code>, por eso apunta a <code>../musica/</code>.
+        Sube los 10 MP3 a <code>/musica/</code> con esos nombres. Si alguno marca 0:00, abre su URL para confirmar.
       </p>
     </section>
+    <!-- =================== FIN PLAYLIST VIP 1 =================== -->
+
+    <!-- ===================== PLAYLIST VIP 2 (lee /musica2/) ===================== -->
+    <section class="playlist-box">
+      <h2>🎶 Playlist VIP 2</h2>
+
+      <audio id="audio2" controls style="width:100%;max-width:720px;display:block;margin:8px auto;" preload="metadata">
+        Tu navegador no soporta audio HTML5.
+      </audio>
+
+      <div style="text-align:center;margin:10px 0;">
+        <button id="prev2" class="btn">⏮ Anterior</button>
+        <button id="play2" class="btn">▶ / ⏸</button>
+        <button id="next2" class="btn">⏭ Siguiente</button>
+      </div>
+
+      <ul id="list2" class="plist"></ul>
+      <div id="status2" class="status"></div>
+
+      <script>
+        // Carpeta para tu segunda tanda de temas
+        const base2 = "../musica2/";
+
+        // EDITA con tus archivos reales en /musica2/
+        const raw2 = [
+          // Ejemplos:
+          // { title: "Tema Nuevo 1", file: "tema_nuevo_1.mp3" },
+          // { title: "Tema Nuevo 2", file: "tema_nuevo_2.mp3" }
+        ];
+
+        const t2 = raw2.map(t => ({ title: t.title, src: base2 + encodeURIComponent(t.file) }));
+
+        const A2 = {
+          audio:  document.getElementById('audio2'),
+          list:   document.getElementById('list2'),
+          prev:   document.getElementById('prev2'),
+          play:   document.getElementById('play2'),
+          next:   document.getElementById('next2'),
+          status: document.getElementById('status2'),
+          i: 0
+        };
+
+        function s2(msg, cls="ok"){ A2.status.className="status "+cls; A2.status.textContent=msg; }
+
+        function render2(){
+          A2.list.innerHTML = "";
+          if (t2.length === 0) {
+            const empty = document.createElement('li');
+            empty.textContent = "Sube canciones a /musica2/ y agrégalas al listado.";
+            empty.style.opacity = .7;
+            A2.list.appendChild(empty);
+            return;
+          }
+          t2.forEach((it, idx)=>{
+            const li = document.createElement('li');
+            li.textContent = (idx===A2.i ? "▶ " : "") + it.title;
+            li.style.padding="8px 10px"; li.style.borderRadius="8px"; li.style.cursor="pointer";
+            li.style.background = idx===A2.i ? "rgba(0,191,255,.35)" : "transparent";
+            li.onclick = () => { A2.i = idx; load2(true); };
+            A2.list.appendChild(li);
+          });
+        }
+
+        function load2(autoplay){
+          if (!t2.length) return;
+          A2.audio.src = t2[A2.i].src;
+          render2();
+          s2("Cargando: "+t2[A2.i].title+"…","ok");
+          if (autoplay) A2.audio.play().catch(()=>{});
+        }
+
+        A2.prev.onclick = ()=>{ if(!t2.length) return; A2.i = (A2.i - 1 + t2.length) % t2.length; load2(true); };
+        A2.next.onclick = ()=>{ if(!t2.length) return; A2.i = (A2.i + 1) % t2.length; load2(true); };
+        A2.play.onclick = ()=>{ if(!t2.length) return; if (A2.audio.paused) A2.audio.play().catch(()=>{}); else A2.audio.pause(); };
+
+        A2.audio.addEventListener('ended', ()=>{ if(!t2.length) return; A2.i = (A2.i + 1) % t2.length; load2(true); });
+        A2.audio.addEventListener('loadedmetadata', ()=>{ if(!t2.length) return; s2("Listo: "+t2[A2.i].title+" ✓","ok"); });
+        A2.audio.addEventListener('error', ()=> s2("⚠ No se pudo cargar (¿/musica2/ y nombre correcto?)","warn"));
+
+        render2();
+        load2(false);
+      </script>
+
+      <p style="color:#ccc;font-size:.9rem;margin-top:8px;">
+        Crea la carpeta <code>/musica2/</code>, sube MP3 (≤25MB) y agrégalos al array <code>raw2</code>.
+      </p>
+    </section>
+    <!-- =================== FIN PLAYLIST VIP 2 =================== -->
+
 
     <!-- VIDEO PROMO -->
     <section id="promo" style="margin-top:24px;">
       <h2>🎬 Video Promo Tropical</h2>
-      <div style="max-width:var(--maxw);margin:0 auto;border-radius:12px;overflow:hidden;background:#000">
-        <div style="position:relative;width:100%;padding-top:56.25%;"> <!-- 16:9 -->
-          <div id="promo-player" style="position:absolute;inset:0;"></div>
+      <div class="video-shell">
+        <div class="video-aspect">
+          <div id="promo-player"></div>
         </div>
       </div>
-      <div style="max-width:var(--maxw);margin:8px auto 0;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-        <button id="btnPromoPrev" class="btn">⏮ Anterior</button>
-        <button id="btnPromoPlay" class="btn alt">▶ / ⏸</button>
-        <button id="btnPromoNext" class="btn">⏭ Siguiente</button>
-        <button id="btnPromoFs" class="btn warn">⤢ Pantalla completa</button>
-      </div>
       <div id="promo-title" style="max-width:var(--maxw);margin:8px auto 0;text-align:center;font-weight:700;"></div>
+      <div style="max-width:var(--maxw);margin:10px auto 0;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <button id="promoPrev" class="btn">⏮ Anterior</button>
+        <button id="promoToggle" class="btn alt">▶ / ⏸</button>
+        <button id="promoNext" class="btn">⏭ Siguiente</button>
+      </div>
     </section>
 
     <!-- BOTONES -->
@@ -143,10 +304,9 @@
 
   <footer>&copy; <span id="year"></span> Tropical Flow TV📺Radio - Todos los derechos reservados</footer>
 
-  <!-- utilidades mínimas -->
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-    // Falso “conectados” si el badge no respondió
+    // “Conectados” de respaldo si el badge no responde
     setTimeout(()=>{
       const box=document.getElementById('onlineBox');
       if(box && !box.textContent.trim()){
@@ -156,26 +316,32 @@
     },2000);
   </script>
 
-  <!-- ======== GESTOR: Pausar todo excepto el que suena ======== -->
   <script>
-    const MediaHub = {
-      get radio() { return document.getElementById('radioPlayer'); },
-      get music() { return document.getElementById('audio1'); },
-      get yt()    { return window._ytCarouselPlayerInstance || null; },
-      get promo() { return window._promoPlayerInstance || null; }
+    /*********** Control central: pausar el resto ***********/
+    const registry = {
+      radio: () => document.getElementById('radioPlayer'),
+      playlist: () => document.getElementById('audio1'),
+      yt: () => window._ytCarouselPlayerInstance,
+      promo: () => window._promoPlayerInstance
     };
-    function pauseAllExcept(who){
+    function pauseAllExcept(source){
       try{
-        if (who!=='radio'){ const r = MediaHub.radio; if (r && !r.paused) r.pause(); }
-        if (who!=='music'){ const m = MediaHub.music; if (m && !m.paused) m.pause(); }
-        if (who!=='yt'){    const y = MediaHub.yt; if (y?.getPlayerState && y.getPlayerState()===YT.PlayerState.PLAYING) y.pauseVideo(); }
-        if (who!=='promo'){ const p = MediaHub.promo; if (p?.getPlayerState && p.getPlayerState()===YT.PlayerState.PLAYING) p.pauseVideo(); }
+        if (source!=='radio'){ const r = registry.radio(); r && !r.paused && r.pause(); }
+        if (source!=='playlist'){ const p = registry.playlist(); p && !p.paused && p.pause(); }
+        if (source!=='yt'){
+          const y = registry.yt && registry.yt();
+          if (y && y.getPlayerState && y.getPlayerState() === YT.PlayerState.PLAYING) y.pauseVideo();
+        }
+        if (source!=='promo'){
+          const pr = registry.promo && registry.promo();
+          if (pr && pr.getPlayerState && pr.getPlayerState() === YT.PlayerState.PLAYING) pr.pauseVideo();
+        }
       }catch(e){}
     }
-    document.getElementById('radioPlayer')?.addEventListener('play', ()=>pauseAllExcept('radio'));
+    document.getElementById('radioPlayer').addEventListener('play', ()=>pauseAllExcept('radio'));
   </script>
 
-  <!-- ======== VIDEOS RECIENTES (carrusel YouTube) ======== -->
+  <!-- ======================= VIDEOS RECIENTES ======================= -->
   <script>
     const CAROUSEL_IDS = [
       "tpi8zLE3Kqw","RBE8A9rAj8Y","XYe0ZHVvVig","h86xW_G-j4s","5pKPlIlQa_8",
@@ -183,7 +349,8 @@
       "RWp76Pj0RUo","M9wQdkQicbk","FCu8-sim5F4","O6xVXaBcOac","jTqKxMTtVEI",
       "4tXLT0hN8n8","n8RMGnc8v_o"
     ];
-    let cIndex = 0, cPlayer = null;
+    let cIndex = 0;
+    let cPlayer = null;
 
     function buildThumbs(){
       const strip = document.getElementById("yt-thumbs");
@@ -203,25 +370,31 @@
       });
     }
     function updateTitleSoon(){ setTimeout(()=>{
-      try{ const d=cPlayer.getVideoData(); document.getElementById("yt-current-title").textContent=d?.title||""; }catch(_){}
+      try{ const d = cPlayer.getVideoData(); document.getElementById("yt-current-title").textContent = d?.title || ""; }catch(_){}
     }, 300);}
+
     function fadeSwap(loadFn){
       const box = document.getElementById('yt-carousel-player');
       box.classList.remove('show'); box.classList.add('hide');
       setTimeout(()=>{ loadFn(); box.classList.remove('hide'); box.classList.add('show'); }, 180);
     }
+
     function goTo(idx){
-      cIndex=(idx+CAROUSEL_IDS.length)%CAROUSEL_IDS.length;
+      cIndex = (idx + CAROUSEL_IDS.length) % CAROUSEL_IDS.length;
       pauseAllExcept('yt');
-      if (cPlayer?.loadVideoById){ fadeSwap(()=> cPlayer.loadVideoById(CAROUSEL_IDS[cIndex])); highlight(); updateTitleSoon(); }
+      if (cPlayer && cPlayer.loadVideoById) {
+        fadeSwap(()=> cPlayer.loadVideoById(CAROUSEL_IDS[cIndex]));
+        highlight(); updateTitleSoon();
+      }
     }
-    function prevVideo(){ goTo(cIndex-1); }
-    function nextVideo(){ goTo(cIndex+1); }
+    function prevVideo(){ goTo(cIndex - 1); }
+    function nextVideo(){ goTo(cIndex + 1); }
     function togglePlay(){
-      if (!cPlayer?.getPlayerState) return;
-      const s = cPlayer.getPlayerState();
-      if (s===YT.PlayerState.PLAYING) cPlayer.pauseVideo();
-      else { pauseAllExcept('yt'); cPlayer.playVideo(); }
+      try{
+        const s = cPlayer.getPlayerState();
+        if (s === YT.PlayerState.PLAYING) cPlayer.pauseVideo();
+        else { pauseAllExcept('yt'); cPlayer.playVideo(); }
+      }catch(_){}
     }
 
     function createCarouselPlayer(){
@@ -232,9 +405,9 @@
         events: {
           onReady: e => { try{ e.target.mute(); e.target.playVideo(); }catch(_){} updateTitleSoon(); },
           onStateChange: e => {
-            if (e.data===YT.PlayerState.PLAYING) pauseAllExcept('yt');
-            if (e.data===YT.PlayerState.ENDED)   nextVideo();
-            if (e.data===YT.PlayerState.PLAYING || e.data===YT.PlayerState.CUED) updateTitleSoon();
+            if (e.data === YT.PlayerState.PLAYING) pauseAllExcept('yt');
+            if (e.data === YT.PlayerState.ENDED) nextVideo();
+            if (e.data === YT.PlayerState.PLAYING || e.data === YT.PlayerState.CUED) updateTitleSoon();
           }
         }
       });
@@ -253,31 +426,33 @@
       document.addEventListener('fullscreenchange', onFsChange);
     }
 
+    // Inicializa YouTube
     (function initYT(){
-      let started=false;
-      function startOnce(){ if(started) return; started=true; createCarouselPlayer(); }
-      if (window.YT && window.YT.Player) startOnce();
+      function start(){ createCarouselPlayer(); }
+      if (window.YT && window.YT.Player) start();
       const prev = window.onYouTubeIframeAPIReady;
-      window.onYouTubeIframeAPIReady = function(){ if (typeof prev==='function') prev(); startOnce(); };
-      setTimeout(()=>{ if (!started){ /* fallback simple opcional */ } }, 2000);
+      window.onYouTubeIframeAPIReady = function(){ if (typeof prev==='function') prev(); start(); };
     })();
   </script>
 
-  <!-- ======== PLAYLIST (lee /musica/) ======== -->
+  <!-- ======================= PLAYLIST MP3 ======================= -->
   <script>
-    const BASE = "../musica/"; // este index está en /Privado/
+    const BASE = "../musica/"; // porque este index está en /Privado/
+
+    // EDITA a tus nombres reales en /musica/
     const raw1 = [
-      { title:"01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3", file:"01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3" },
-      { title:"02 - dj mario andretti - mix merengue romantico.mp3",     file:"02 - dj mario andretti - mix merengue romantico.mp3" },
-      { title:"03 - La Amas Como Yo - Karis.Mp3",                         file:"03 - La Amas Como Yo - Karis.Mp3" },
-      { title:"04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3",            file:"04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3" },
-      { title:"05 - Hey Dude! - Elvis Crespo.mp3",                        file:"05 - Hey Dude! - Elvis Crespo.mp3" },
-      { title:"06 - Te Regalo Amores - Ken-Yrkm.mp3",                     file:"06 - Te Regalo Amores - Ken-Yrkm.mp3" },
-      { title:"07 - What Is Love - Haddaway.Mp3",                         file:"07 - What Is Love - Haddaway.Mp3" },
-      { title:"08 - Boricua Como El Gran Combo.mp3",                      file:"08 - Boricua Como El Gran Combo.mp3" },
-      { title:"09 - Me Gusta, Me Gusta - Elvis Crespo.mp3",               file:"09 - Me Gusta, Me Gusta - Elvis Crespo.mp3" },
-      { title:"10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3",         file:"10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3" }
+      { title: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3", file: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3" },
+      { title: "02 - dj mario andretti - mix merengue romantico.mp3",     file: "02 - dj mario andretti - mix merengue romantico.mp3" },
+      { title: "03 - La Amas Como Yo - Karis.Mp3",                         file: "03 - La Amas Como Yo - Karis.Mp3" },
+      { title: "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3",            file: "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3" },
+      { title: "05 - Hey Dude! - Elvis Crespo.mp3",                        file: "05 - Hey Dude! - Elvis Crespo.mp3" },
+      { title: "06 - Te Regalo Amores - Ken-Yrkm.mp3",                     file: "06 - Te Regalo Amores - Ken-Yrkm.mp3" },
+      { title: "07 - What Is Love - Haddaway.Mp3",                         file: "07 - What Is Love - Haddaway.Mp3" },
+      { title: "08 - Boricua Como El Gran Combo.mp3",                      file: "08 - Boricua Como El Gran Combo.mp3" },
+      { title: "09 - Me Gusta, Me Gusta - Elvis Crespo.mp3",               file: "09 - Me Gusta, Me Gusta - Elvis Crespo.mp3" },
+      { title: "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3",         file: "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3" }
     ];
+
     const tracks1 = raw1.map(t => ({ title: t.title, src: BASE + encodeURIComponent(t.file) }));
 
     const A1 = {
@@ -289,7 +464,7 @@
       status: document.getElementById('status1'),
       i: 0
     };
-    function s1(msg, css="color:#7CFC00"){ A1.status.style=css; A1.status.textContent=msg; }
+    function s1(msg, cls="ok"){ A1.status.className="status "+cls; A1.status.textContent=msg; }
 
     function render1(){
       A1.list.innerHTML = "";
@@ -305,14 +480,14 @@
     function load1(autoplay){
       A1.audio.src = tracks1[A1.i].src;
       render1(); s1("Listo: "+tracks1[A1.i].title+" ✓");
-      if (autoplay) { pauseAllExcept('music'); A1.audio.play().catch(()=>{}); }
+      if (autoplay) { pauseAllExcept('playlist'); A1.audio.play().catch(()=>{}); }
     }
     A1.prev.onclick = ()=>{ A1.i = (A1.i - 1 + tracks1.length) % tracks1.length; load1(true); };
     A1.next.onclick = ()=>{ A1.i = (A1.i + 1) % tracks1.length; load1(true); };
-    A1.play.onclick = ()=>{ if (A1.audio.paused) { pauseAllExcept('music'); A1.audio.play().catch(()=>{}); } else A1.audio.pause(); };
+    A1.play.onclick = ()=>{ if (A1.audio.paused) { pauseAllExcept('playlist'); A1.audio.play().catch(()=>{}); } else A1.audio.pause(); };
     A1.audio.addEventListener('ended', ()=>{ A1.i = (A1.i + 1) % tracks1.length; load1(true); });
-    A1.audio.addEventListener('play', ()=> pauseAllExcept('music'));
-    A1.audio.addEventListener('error', ()=> s1("⚠ No se pudo cargar: "+decodeURIComponent(tracks1[A1.i].src),"color:#ffd166"));
+    A1.audio.addEventListener('play', ()=> pauseAllExcept('playlist'));
+    A1.audio.addEventListener('error', ()=> s1("⚠ No se pudo cargar: "+decodeURIComponent(tracks1[A1.i].src),"warn"));
     render1();
   </script>
 
