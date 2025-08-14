@@ -103,21 +103,86 @@
       <div id="yt-thumbs"></div>
     </section>
 
-    <!-- PLAYLIST -->
-    <section id="playlist">
-      <h2>🎶 Playlist VIP 1</h2>
-      <audio id="audio1" controls preload="metadata"></audio>
-      <div style="text-align:center;margin:10px 0;">
-        <button id="prev1" class="btn">⏮ Anterior</button>
-        <button id="play1" class="btn alt">▶ / ⏸</button>
-        <button id="next1" class="btn">⏭ Siguiente</button>
-      </div>
-      <ul id="list1" class="list"></ul>
-      <div id="status1" class="status"></div>
-      <p style="color:#ccc;font-size:.9rem;margin-top:8px;">
-        Sube tus MP3 a <code>/musica/</code> (raíz). Este archivo está en <code>/Privado/</code>, por eso apunta a <code>../musica/</code>.
-      </p>
-    </section>
+   <script>
+  // === PLAYLIST VIP 1 (siempre dibuja la lista, aunque los MP3 falten) ===
+  const BASE = "../musica/"; // este index está en /Privado/
+
+  // NOMBRES EXACTOS como están en /musica/
+  const raw1 = [
+    { title: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3", file: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3" },
+    { title: "02 - dj mario andretti - mix merengue romantico.mp3",     file: "02 - dj mario andretti - mix merengue romantico.mp3" },
+    { title: "03 - La Amas Como Yo - Karis.Mp3",                         file: "03 - La Amas Como Yo - Karis.Mp3" },
+    { title: "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3",            file: "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3" },
+    { title: "05 - Hey Dude! - Elvis Crespo.mp3",                        file: "05 - Hey Dude! - Elvis Crespo.mp3" },
+    { title: "06 - Te Regalo Amores - Ken-Yrkm.mp3",                     file: "06 - Te Regalo Amores - Ken-Yrkm.mp3" },
+    { title: "07 - What Is Love - Haddaway.Mp3",                         file: "07 - What Is Love - Haddaway.Mp3" },
+    { title: "08 - Boricua Como El Gran Combo.mp3",                      file: "08 - Boricua Como El Gran Combo.mp3" },
+    { title: "09 - Me Gusta, Me Gusta - Elvis Crespo.mp3",               file: "09 - Me Gusta, Me Gusta - Elvis Crespo.mp3" },
+    { title: "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3",         file: "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3" }
+  ];
+
+  const tracks1 = raw1.map(t => ({
+    title: t.title,
+    // Añadimos ?v= para evitar caché si el archivo cambió
+    src: BASE + encodeURIComponent(t.file) + "?v=" + Date.now()
+  }));
+
+  const A1 = {
+    audio:  document.getElementById('audio1'),
+    list:   document.getElementById('list1'),
+    prev:   document.getElementById('prev1'),
+    play:   document.getElementById('play1'),
+    next:   document.getElementById('next1'),
+    status: document.getElementById('status1'),
+    i: 0
+  };
+
+  function s1(msg, cls="ok"){ A1.status.className="status "+cls; A1.status.textContent=msg; }
+
+  function render1(){
+    // Siempre dibuja la lista (aunque luego un MP3 falle, al menos la ves)
+    A1.list.innerHTML = "";
+    tracks1.forEach((it, idx)=>{
+      const li = document.createElement('li');
+      const num = (idx+1).toString().padStart(2,'0');
+      li.textContent = ${num} - ${it.title};
+      li.style.background = idx===A1.i ? "rgba(0,191,255,.35)" : "transparent";
+      li.style.cursor = "pointer";
+      li.onclick = () => { A1.i = idx; load1(true); };
+      A1.list.appendChild(li);
+    });
+  }
+
+  function load1(autoplay){
+    A1.audio.src = tracks1[A1.i].src;
+    render1();
+    s1("Cargando: "+tracks1[A1.i].title+"…","ok");
+    if (autoplay) { 
+      // pausa todo lo demás y reproduce
+      if (typeof pauseOthers === "function") pauseOthers('audio', A1.audio);
+      A1.audio.play().catch(()=>{});
+    }
+  }
+
+  // Botones
+  A1.prev.onclick = ()=>{ A1.i = (A1.i - 1 + tracks1.length) % tracks1.length; load1(true); };
+  A1.next.onclick = ()=>{ A1.i = (A1.i + 1) % tracks1.length; load1(true); };
+  A1.play.onclick = ()=>{ 
+    if (A1.audio.paused) { 
+      if (typeof pauseOthers === "function") pauseOthers('audio', A1.audio);
+      A1.audio.play().catch(()=>{}); 
+    } else A1.audio.pause(); 
+  };
+
+  // Auto-siguiente y mensajes
+  A1.audio.addEventListener('ended', ()=>{ A1.i = (A1.i + 1) % tracks1.length; load1(true); });
+  A1.audio.addEventListener('loadedmetadata', ()=> s1("Listo: "+tracks1[A1.i].title+" ✓","ok"));
+  A1.audio.addEventListener('error', ()=> s1("⚠ No se pudo cargar: "+decodeURIComponent(tracks1[A1.i].src),"warn"));
+
+  // Arranque
+  render1(); // ← esto garantiza que veas la lista aun antes de cargar audio
+  // load1(false); // Si prefieres que NO cargue nada hasta tocar Play, deja comentado
+</script>
 
     <!-- VIDEO PROMO -->
     <section id="promo" style="margin-top:24px;">
