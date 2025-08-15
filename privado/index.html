@@ -70,23 +70,51 @@
         <button id="btnForce" class="btn warn">🔁 Forzar respaldo</button>
       </div>
 
-      <!-- Oficial Caster -->
-      <div id="casterWrap" style="max-width:900px;margin:0 auto;text-align:center;background:rgba(255,255,255,.06);padding:12px;border-radius:10px">
-        <div style="font-weight:700;margin-bottom:6px">🔊 Radio oficial (Caster.fm)</div>
+      <!-- 🎵 RADIO OFICIAL CASTER -->
+<section id="radio-oficial">
+  <h2>🔊 Radio Oficial Tropical Flow TV📺Radio</h2>
 
-        <!-- 👇 Pega aquí el WIDGET DE CASTER (con tu UID) 👇 -->
-        <div id="casterPlayerArea">
-          <!-- EJEMPLO (NO funciona sin tu UID, solo ilustrativo):
-          <script type="text/javascript">
-            var cstrpuid = "TU_UID"; var cstrpwidth = "500"; var cstrpheight = "325";
-          </script>
-          <script type="text/javascript" src="https://cdn.caster.fm/0070B7/widgets/player.js"></script>
-          <a id="cstrplb" href="https://www.caster.fm/">Free Shoutcast Hosting</a>
-          <a id="cstrplb2" href="https://www.caster.fm/">Radio Stream Hosting</a>
-          <div id="cstrpdiv"></div>
-          -->
-        </div>
-        <!-- ☝ FIN zona de pegado -->
+  <!-- Widget de Caster.fm -->
+  <div id="casterPlayerArea">
+    <div data-type="newStreamPlayer"
+         data-publicToken="173d1740-5216-4cbe-8e2b-cb45338d9e19"
+         data-theme="light"
+         data-color="e81e4d"
+         data-channelId=""
+         data-rendered="false"
+         class="cstrEmbed">
+      <a href="https://www.caster.fm">Shoutcast Hosting</a>
+      <a href="https://www.caster.fm">Stream Hosting</a>
+      <a href="https://www.caster.fm">Radio Server Hosting</a>
+    </div>
+    <script src="https://cdn.cloud.caster.fm/widgets/embed.js"></script>
+  </div>
+</section>
+
+<script>
+  // Pausar playlist y videos cuando la radio empiece
+  function pauseOtherMedia() {
+    // Pausar playlist de audio
+    document.querySelectorAll('audio').forEach(a => a.pause());
+
+    // Pausar videos de YouTube en iframe
+    document.querySelectorAll('iframe').forEach(frame => {
+      if (frame.src.includes('youtube.com/embed')) {
+        frame.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      }
+    });
+
+    // Pausar cualquier video HTML5
+    document.querySelectorAll('video').forEach(v => v.pause());
+  }
+
+  // Detecta clicks en el widget de Caster para pausar el resto
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('.cstrEmbed')) {
+      pauseOtherMedia();
+    }
+  });
+</script>
 
         <div id="casterStatus" style="color:#ccc;font-size:.92rem;margin-top:6px">
           Si el player oficial no carga o no suena, activamos el respaldo automático ↓
