@@ -95,26 +95,7 @@
     <p class="hint">Si el player oficial no carga, usa “Forzar respaldo”.</p>
   </section>
 <script>
-     
-  function showBackup(){
-    radioOfficial.style.display = 'none';
-    radioBackup.style.display   = 'block';
-    mountCasterWidget();
-  }
-  function showOfficial(){
-    radioBackup.style.display   = 'none';
-    radioOfficial.style.display = 'block';
-    // refrescar iframe del sitio oficial para limpiar “session token expired”
-    const ifr = document.getElementById('radioIframe');
-    ifr.src = ifr.src;
-  }
 
-  // Botones globales
-  btnBak.onclick = showBackup;
-  btnOff.onclick = showOfficial;
-
-  // 👉 Arrancar por defecto con el RESPALDO (evita errores iniciales)
-  showBackup();
 </script>
   <!-- ============ CONECTADOS ============ -->
   <section>
