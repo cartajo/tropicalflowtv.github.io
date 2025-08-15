@@ -1,561 +1,494 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tropical Flow TV📺Radio - VIP</title>
-  <meta name="description" content="Acceso exclusivo a Tropical Flow TV📺Radio. Música, videos y más 24/7.">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tropical Flow TV📺Radio - VIP</title>
+<meta name="description" content="Acceso exclusivo a Tropical Flow TV📺Radio. Música, videos y más 24/7.">
 
-  <style>
-    :root{
-      --accent:#00e0ff; --bg:rgba(0,0,0,.6); --maxw:1100px;
-      --aspect21x9:42.857%; /* 21:9 */
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;font-family:Arial,Helvetica,sans-serif;color:#fff;
-      background:linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.7)),
-        url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover fixed no-repeat;
-    }
-    header{ text-align:center; padding:1rem; background:rgba(0,0,0,.6) }
-    h1{ margin:0; font-size:clamp(22px,3.2vw,34px) }
-    .wrap{max-width:var(--maxw);margin:0 auto;padding:16px;background:var(--bg);border-radius:14px}
-    section{margin:22px 0;padding:16px;background:rgba(255,255,255,.08);border-radius:12px}
-    h2{margin:0 0 12px;text-align:center}
-    audio{ width:100%; display:block; margin:8px auto; border-radius:10px }
+<style>
+  :root{
+    --accent:#00e0ff; --bg:rgba(0,0,0,.6); --maxw:1100px;
+    --aspect21x9:42.857%;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;font-family:Arial,Helvetica,sans-serif;color:#fff;
+    background:linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.7)),
+      url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop') center/cover fixed no-repeat;
+  }
+  header{ text-align:center; padding:1rem; background:rgba(0,0,0,.6) }
+  h1{ margin:0; font-size:clamp(22px,3.2vw,34px) }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:16px;background:var(--bg);border-radius:14px}
+  section{margin:22px 0;padding:16px;background:rgba(255,255,255,.08);border-radius:12px}
+  h2{margin:0 0 12px;text-align:center}
+  audio{ width:100%; display:block; margin:8px auto; border-radius:10px }
 
-    /* Botones */
-    .btn{ background:var(--accent); color:#000; font-weight:700; border:none; border-radius:10px; padding:10px 14px; cursor:pointer }
-    .btn.alt{ background:#2dd4bf }
-    .btn.warn{ background:#fbbf24 }  /* texto negro en fullscreen como pediste */
+  /* Contenedores de video 21:9 */
+  .video-shell{ width:100%; margin:0 auto; border-radius:12px; overflow:hidden; background:#000; max-width:var(--maxw) }
+  .video-aspect{ position:relative; width:100%; padding-top:var(--aspect21x9) }
+  .video-aspect > div, .video-aspect iframe{ position:absolute; inset:0; width:100%!important; height:100%!important }
+  .fade{ transition:opacity .25s ease } .hide{opacity:0} .show{opacity:1}
 
-    /* Video 21:9 + fade */
-    .video-shell{ width:100%; margin:0 auto; border-radius:12px; overflow:hidden; background:#000; max-width:var(--maxw) }
-    .video-aspect{ position:relative; width:100%; padding-top:var(--aspect21x9) }
-    .video-aspect > div, .video-aspect iframe{ position:absolute; inset:0; width:100%!important; height:100%!important }
-    .fade{ transition:opacity .3s ease } .hide{opacity:0} .show{opacity:1}
+  /* Thumbs del carrusel */
+  #yt-thumbs{ display:flex;gap:10px;overflow-x:auto;padding:12px;margin:6px auto 0;max-width:var(--maxw) }
+  #yt-thumbs img{ height:90px;border-radius:10px;display:block }
+  @media (max-width:600px){ #yt-thumbs img{ height:70px } }
 
-    /* Thumbs carrusel */
-    #yt-thumbs{ display:flex;gap:10px;overflow-x:auto;padding:12px;margin:6px auto 0;max-width:var(--maxw) }
-    #yt-thumbs img{ height:90px;border-radius:10px;display:block }
-    @media (max-width:600px){ #yt-thumbs img{ height:70px } }
+  /* Botones */
+  .btn{ background:var(--accent); color:#000; font-weight:700; border:none; border-radius:10px; padding:10px 14px; cursor:pointer }
+  .btn.alt{ background:#2dd4bf }
+  .btn.warn{ background:#fbbf24; color:#000 } /* texto negro */
 
-    /* Playlist */
-    .playlist-box{ text-align:center; padding:20px; background:rgba(0,0,0,0.35); border-radius:15px } /* más transparente */
-    ul.list{ list-style:none; padding:0; max-width:var(--maxw); margin:0 auto; color:#fff }
-    ul.list li{ padding:8px 10px; border-radius:8px; cursor:pointer }
-    ul.list li:hover{ background:rgba(255,255,255,.18) }
-    .status{max-width:var(--maxw);margin:6px auto 0;font-size:.92rem}
-    .ok{color:#7CFC00} .warn{color:#ffd166}
+  /* Playlist */
+  ul.plist{ list-style:none; padding:0; max-width:var(--maxw); margin:0 auto; color:#fff }
+  ul.plist li{ padding:8px 10px; border-radius:8px; cursor:pointer }
+  ul.plist li:hover{ background:rgba(255,255,255,.18) }
+  .status{max-width:var(--maxw);margin:6px auto 0; font-size:.92rem}
+  .ok{color:#7CFC00} .warn{color:#ffd166}
 
-    /* Social */
-    .social-buttons{ text-align:center; margin: 16px 0 }
-    .social-buttons a{ display:inline-block; margin:.4rem; padding:.6rem 1rem; color:#fff; text-decoration:none; border-radius:8px; background:#444 }
-    .whatsapp{ background:#25d366 } .youtube{ background:#FF0000 } .facebook{ background:#3b5998 }
-    .paypal{ background:#0070ba } .athmovil{ background:#6f42c1 }
+  .social-buttons{ text-align:center; margin: 16px 0 }
+  .social-buttons a{ display:inline-block; margin:.4rem; padding:.6rem 1rem; color:#fff; text-decoration:none; border-radius:8px; background:#444 }
+  .whatsapp{ background:#25d366 } .youtube{ background:#FF0000 } .facebook{ background:#3b5998 }
+  .paypal{ background:#0070ba } .athmovil{ background:#6f42c1 }
 
-    footer{ text-align:center; padding:1rem; background:rgba(0,0,0,.6); color:#ccc }
-  </style>
+  footer{ text-align:center; padding:1rem; background:rgba(0,0,0,.6); color:#ccc }
+</style>
 
-  <!-- API YouTube -->
-  <script src="https://www.youtube.com/iframe_api"></script>
+<!-- API YouTube para carrusel/promo -->
+<script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
-  <header><h1>🌴 Tropical Flow TV📺Radio - VIP</h1></header>
+<header><h1>🌴 Tropical Flow TV📺Radio - VIP</h1></header>
 
-  <div class="wrap">
+<div class="wrap">
 
-    <!-- ================== RADIO: Caster + Respaldo + Forzar ================== -->
-    <section id="radio">
-      <h2>🎧 Escúchanos en Vivo 24/7</h2>
-
-      <div style="max-width:900px;margin:0 auto 10px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-        <button id="btnForce" class="btn warn">🔁 Forzar respaldo</button>
+  <!-- ============ RADIO: Caster.fm con respaldo automático ============ -->
+  <section id="radio">
+    <h2>🎧 Escúchanos en Vivo 24/7</h2>
+    <div id="radio-area">
+      <!-- Widget oficial -->
+      <div class="cstrEmbed"
+           data-type="newStreamPlayer"
+           data-publicToken="173d1740-5216-4cbe-8e2b-cb45338d9e19"
+           data-theme="dark" data-color="e81e4d" data-channelId="" data-rendered="false">
+        <a href="https://www.caster.fm">Radio Server Hosting</a>
       </div>
+      <script src="//cdn.cloud.caster.fm//widgets/embed.js"></script>
 
-      <!-- Oficial Caster -->
-      <div id="casterWrap" style="max-width:900px;margin:0 auto;text-align:center;background:rgba(255,255,255,.06);padding:12px;border-radius:10px">
-        <div style="font-weight:700;margin-bottom:6px">🔊 Radio oficial (Caster.fm)</div>
+      <!-- Respaldo (oculto por defecto) -->
+      <audio id="radioFallback" controls preload="none" style="display:none;margin-top:10px">
+        Tu navegador no soporta audio HTML5.
+      </audio>
 
-        <!-- 👇 Tu widget OFICIAL (ya insertado) 👇 -->
-        <div id="casterPlayerArea">
-          <div data-type="newStreamPlayer"
-               data-publicToken="173d1740-5216-4cbe-8e2b-cb45338d9e19"
-               data-theme="light"
-               data-color="e81e4d"
-               data-channelId=""
-               data-rendered="false"
-               class="cstrEmbed">
-            <a href="https://www.caster.fm">Shoutcast Hosting</a>
-            <a href="https://www.caster.fm">Stream Hosting</a>
-            <a href="https://www.caster.fm">Radio Server Hosting</a>
-          </div>
-          <script src="https://cdn.cloud.caster.fm/widgets/embed.js"></script>
-        </div>
-        <!-- ☝ FIN widget -->
-
-        <div id="casterStatus" style="color:#ccc;font-size:.92rem;margin-top:6px">
-          Si el player oficial no carga o no suena, activamos el respaldo automático ↓
-        </div>
+      <div style="text-align:center;margin-top:10px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+        <button id="forceOfficial" class="btn">🔁 Forzar oficial</button>
+        <button id="forceFallback" class="btn alt">🔁 Forzar respaldo</button>
       </div>
-
-      <!-- Respaldo -->
-      <div id="fallbackWrap" style="max-width:900px;margin:12px auto 0;text-align:center;display:none">
-        <div style="font-weight:700;margin-bottom:6px">🛟 Respaldo (emisoras latinas)</div>
-        <audio id="radioFallback" controls preload="none" style="width:100%;border-radius:10px">
-          Tu navegador no soporta la reproducción de audio.
-        </audio>
-        <div style="margin-top:10px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-          <select id="fbGenre" class="btn alt" style="color:#000">
-            <option value="auto" selected>🔀 Automático</option>
-            <option value="merengue">Merengue</option>
-            <option value="salsa">Salsa</option>
-            <option value="bachata">Bachata</option>
-            <option value="reggaeton">Reggaetón</option>
-            <option value="latin">Latin</option>
-            <option value="tropical">Tropical</option>
-          </select>
-          <button id="fbSkip" class="btn">⏭ Cambiar estación</button>
-          <button id="fbReload" class="btn alt">🔁 Reintentar</button>
-        </div>
-        <div id="fbInfo" class="status"></div>
-      </div>
-    </section>
-
-    <!-- ================== CONECTADOS ================== -->
-    <section>
-      <h2>👥 Conectados ahora</h2>
-      <div style="text-align:center;margin-bottom:10px;">
-        <script src="https://counterapi.com/api/online?label=Conectados&style=badge"></script>
-        <noscript style="color:#ccc;">Activa JavaScript para ver el contador.</noscript>
-      </div>
-      <div id="onlineBox" style="text-align:center;font-weight:700;"></div>
-    </section>
-
-    <!-- ================== VIDEOS RECIENTES (YT carrusel) ================== -->
-    <section id="videos">
-      <h2>🎬 Videos Recientes</h2>
-      <div class="video-shell">
-        <div class="video-aspect">
-          <div id="yt-carousel-player" class="fade show"></div>
-        </div>
-      </div>
-      <div id="yt-current-title" style="max-width:var(--maxw);margin:10px auto 0;text-align:center;font-weight:700;"></div>
-      <div style="max-width:var(--maxw);margin:10px auto 0;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-        <button id="btnPrevVid" class="btn">⏮ Anterior</button>
-        <button id="btnPlayPauseVid" class="btn alt">▶ / ⏸</button>
-        <button id="btnNextVid" class="btn">⏭ Siguiente</button>
-        <button id="btnFs" class="btn warn">⤢ Pantalla completa</button>
-      </div>
-      <div id="yt-thumbs"></div>
-    </section>
-
-    <!-- ================== PLAYLIST VIP ================== -->
-    <section id="playlist" class="playlist-box">
-      <h2>🎶 Playlist VIP</h2>
-      <audio id="audio1" controls preload="metadata" style="max-width:720px;"></audio>
-      <div style="text-align:center;margin:10px 0;">
-        <button id="prev1" class="btn">⏮ Anterior</button>
-        <button id="play1" class="btn alt">▶ / ⏸</button>
-        <button id="next1" class="btn">⏭ Siguiente</button>
-      </div>
-      <ul id="list1" class="list"></ul>
-      <div id="status1" class="status"></div>
-      <p style="color:#ccc;font-size:.9rem;margin-top:8px;">
-        Sube tus MP3 a <code>/musica/</code> (raíz). Como este archivo está en <code>/Privado/</code>, apunta a <code>../musica/</code>.
-      </p>
-    </section>
-
-    <!-- ================== VIDEO PROMO (secuencial) ================== -->
-    <section id="promo" style="margin-top:24px;">
-      <h2>🎬 Video Promo Tropical</h2>
-      <div style="max-width:var(--maxw);margin:0 auto;border-radius:12px;overflow:hidden;background:#000">
-        <div style="position:relative;width:100%;padding-top:56.25%;"> <!-- 16:9 -->
-          <div id="promo-player" style="position:absolute;inset:0;"></div>
-        </div>
-      </div>
-      <div style="max-width:var(--maxw);margin:10px auto 0;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-        <button id="promoPrev" class="btn">⏮ Anterior</button>
-        <button id="promoPlay" class="btn alt">▶ / ⏸</button>
-        <button id="promoNext" class="btn">⏭ Siguiente</button>
-        <button id="promoFs"   class="btn warn">⤢ Pantalla completa</button>
-      </div>
-      <div id="promo-title" style="max-width:var(--maxw);margin:8px auto 0;text-align:center;font-weight:700;"></div>
-    </section>
-
-    <!-- ================== BOTONES ================== -->
-    <div class="social-buttons">
-      <a class="whatsapp" href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
-      <a class="youtube" href="https://www.youtube.com/@TFTvpoweredbyworldm8780" target="_blank">YouTube</a>
-      <a class="facebook" href="https://www.facebook.com/profile.php?id=61555653663073" target="_blank">Facebook</a>
-      <a class="paypal" href="https://www.paypal.com/donate/?business=cartajoffice1@gmail.com&currency_code=USD" target="_blank">🎧 Donar vía PayPal</a>
-      <a class="athmovil" href="https://www.athmovil.com/cartajo" target="_blank">Donar ATH Móvil</a>
+      <div id="casterStatus" style="text-align:center;margin-top:6px;color:#ccc; font-size:.92rem"></div>
     </div>
+  </section>
+
+  <!-- ============ CONECTADOS ============ -->
+  <section>
+    <h2>👥 Conectados ahora</h2>
+    <div style="text-align:center;margin-bottom:10px;">
+      <script src="https://counterapi.com/api/online?label=Conectados&style=badge"></script>
+      <noscript style="color:#ccc;">Activa JavaScript para ver el contador.</noscript>
+    </div>
+    <div id="onlineBox" style="text-align:center;font-weight:700;"></div>
+  </section>
+
+  <!-- ============ VIDEOS RECIENTES (carrusel) ============ -->
+  <section id="videos">
+    <h2>🎬 Videos Recientes</h2>
+    <div class="video-shell">
+      <div class="video-aspect">
+        <div id="yt-carousel-player" class="fade show"></div>
+      </div>
+    </div>
+    <div id="yt-current-title" style="max-width:var(--maxw);margin:10px auto 0;text-align:center;font-weight:700;"></div>
+    <div style="max-width:var(--maxw);margin:10px auto 0;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+      <button id="btnPrevVid" class="btn">⏮ Anterior</button>
+      <button id="btnPlayPauseVid" class="btn alt">▶ / ⏸</button>
+      <button id="btnNextVid" class="btn">⏭ Siguiente</button>
+      <button id="btnFs" class="btn warn">⤢ Pantalla completa</button>
+    </div>
+    <div id="yt-thumbs"></div>
+  </section>
+
+  <!-- ============ PLAYLIST VIP (lee /musica/) ============ -->
+  <section id="playlist">
+    <h2>🎶 Playlist VIP</h2>
+    <audio id="audio1" controls preload="metadata"></audio>
+    <div style="text-align:center;margin:10px 0;">
+      <button id="prev1" class="btn">⏮ Anterior</button>
+      <button id="play1" class="btn alt">▶ / ⏸</button>
+      <button id="next1" class="btn">⏭ Siguiente</button>
+    </div>
+    <ul id="list1" class="plist"></ul>
+    <div id="status1" class="status"></div>
+    <p style="color:#ccc;font-size:.9rem;margin-top:8px;">
+      Sube tus MP3 a <code>/musica/</code> (en la raíz). Este archivo está en <code>/Privado/</code>, por eso apunta a <code>../musica/</code>.
+    </p>
+  </section>
+
+  <!-- ============ VIDEO PROMO secuencial ============ -->
+  <section id="promo" style="margin-top:24px;">
+    <h2>🎬 Video Promo Tropical</h2>
+    <div class="video-shell">
+      <div class="video-aspect">
+        <div id="promo-player" class="fade show"></div>
+      </div>
+    </div>
+    <div style="max-width:var(--maxw);margin:10px auto 0;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+      <button id="promoPrev" class="btn">⏮ Anterior</button>
+      <button id="promoPlay" class="btn alt">▶ / ⏸</button>
+      <button id="promoNext" class="btn">⏭ Siguiente</button>
+      <button id="promoFs"   class="btn warn">⤢ Pantalla completa</button>
+    </div>
+    <div id="promo-title" style="max-width:var(--maxw);margin:8px auto 0;text-align:center;font-weight:700;"></div>
+  </section>
+
+  <!-- BOTONES -->
+  <div class="social-buttons">
+    <a class="whatsapp" href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
+    <a class="youtube" href="https://www.youtube.com/@TFTvpoweredbyworldm8780" target="_blank">YouTube</a>
+    <a class="facebook" href="https://www.facebook.com/profile.php?id=61555653663073" target="_blank">Facebook</a>
+    <a class="paypal" href="https://www.paypal.com/donate/?business=cartajoffice1@gmail.com&currency_code=USD" target="_blank">🎧 Donar vía PayPal</a>
+    <a class="athmovil" href="https://www.athmovil.com/cartajo" target="_blank">Donar ATH Móvil</a>
   </div>
 
-  <footer>&copy; <span id="year"></span> Tropical Flow TV📺Radio - Todos los derechos reservados</footer>
+</div>
 
-  <!-- ================== SCRIPTS COMUNES ================== -->
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+<footer>&copy; <span id="year"></span> Tropical Flow TV📺Radio - Todos los derechos reservados</footer>
 
-    // Falso “conectados” si el badge no respondió
-    setTimeout(()=>{
-      const box=document.getElementById('onlineBox');
-      if(box && !box.textContent.trim()){
-        const n=Math.floor(Math.random()*40)+5;
-        box.textContent="Conectados: "+n;
-      }
-    },2000);
-
-    /************ Centro de control para pausar lo demás ************/
-    const registry = {
-      radioFallback: () => document.getElementById('radioFallback'),
-      playlist: () => document.getElementById('audio1'),
-      yt: () => window._ytCarouselPlayerInstance,
-      promo: () => window._promoPlayerInstance
-    };
-    function pauseAllExcept(source){
-      try{
-        if (source!=='radio'){
-          const r = registry.radioFallback(); r && !r.paused && r.pause();
-        }
-        if (source!=='playlist'){
-          const p = registry.playlist(); p && !p.paused && p.pause();
-        }
-        if (source!=='yt'){
-          const y = registry.yt && registry.yt();
-          if (y && y.getPlayerState && y.getPlayerState() === YT.PlayerState.PLAYING) y.pauseVideo();
-        }
-        if (source!=='promo'){
-          const pr = registry.promo && registry.promo();
-          if (pr && pr.getPlayerState && pr.getPlayerState() === YT.PlayerState.PLAYING) pr.pauseVideo();
-        }
-      }catch(e){}
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  setTimeout(()=>{
+    const box=document.getElementById('onlineBox');
+    if(box && !box.textContent.trim()){
+      const n=Math.floor(Math.random()*40)+5;
+      box.textContent="Conectados: "+n;
     }
-    window.pauseAllExcept = pauseAllExcept;
-  </script>
+  },2000);
+</script>
 
-  <!-- ================== RADIO: lógica Caster + Respaldo ================== -->
-  <script>
-  (() => {
-    const casterWrap   = document.getElementById('casterWrap');
-    const casterStatus = document.getElementById('casterStatus');
-    const fbWrap       = document.getElementById('fallbackWrap');
-    const btnForce     = document.getElementById('btnForce');
-    let forced = null; // null=auto, 'official', 'fallback'
-
-    function useOfficial(){
-      casterWrap.style.display = 'block';
-      fbWrap.style.display     = 'none';
-      casterStatus.textContent = "Widget oficial activo. Si falla, se encenderá el respaldo automáticamente.";
+<script>
+/* ================== CONTROL CENTRAL: pausar el resto ================== */
+const registry = {
+  radio: () => document.getElementById('radioFallback'),
+  playlist: () => document.getElementById('audio1'),
+  yt: () => window._ytCarouselPlayerInstance,
+  promo: () => window._ytPromoPlayerInstance
+};
+function pauseAllExcept(source){
+  try{
+    if (source!=='radio'){ const r = registry.radio(); r && !r.paused && (r.pause(), r.currentTime=r.currentTime); }
+    if (source!=='playlist'){ const p = registry.playlist(); p && !p.paused && p.pause(); }
+    if (source!=='yt'){
+      const y = registry.yt && registry.yt();
+      if (y && y.getPlayerState && y.getPlayerState() === YT.PlayerState.PLAYING) y.pauseVideo();
     }
-    function useFallback(){
-      casterWrap.style.display = 'none';
-      fbWrap.style.display     = 'block';
-      startFallbackOnce();
+    if (source!=='promo'){
+      const pr = registry.promo && registry.promo();
+      if (pr && pr.getPlayerState && pr.getPlayerState() === YT.PlayerState.PLAYING) pr.pauseVideo();
     }
+  }catch(e){}
+}
+</script>
 
-    btnForce.addEventListener('click', ()=>{
-      if (forced === 'fallback') {
-        forced = 'official';
-        btnForce.textContent = "🔁 Forzar respaldo";
-        useOfficial();
-      } else {
-        forced = 'fallback';
-        btnForce.textContent = "🔁 Forzar oficial";
-        useFallback();
-      }
-    });
+<script>
+/* ================== RADIO: Oficial + Respaldo ================== */
+const casterStatus = document.getElementById('casterStatus');
+const radioFallback = document.getElementById('radioFallback');
 
-    // Detecta si el widget está presente y se renderiza
-    function autoDetect(){
-      if (forced === 'fallback') { useFallback(); return; }
-      if (forced === 'official'){ useOfficial();  return; }
+// Lista de respaldos (elige el que prefieras o añade más)
+const BACKUPS = [
+  // Latin pop/reggaeton (ejemplos públicos; puedes cambiarlos cuando quieras)
+  "https://stream-149.zeno.fm/0cn4d1x2kxhvv?zs=Q3nXn5nPTT", // ejemplo 1
+  "https://stream-40.zeno.fm/8s5yq7g7p0hvv?zs=Jw9C4S1hQp"   // ejemplo 2
+];
+let backupIndex = 0;
 
-      // ¿Está el script del widget?
-      const hasWidgetScript = [...document.scripts].some(s => (s.src||'').includes('caster.fm') && (s.src||'').includes('embed.js'));
-      if (!hasWidgetScript) {
-        casterStatus.textContent = "No se detectó el widget oficial. Activado respaldo automático.";
-        useFallback();
-        return;
-      }
-      // Espera a que el embed se pinte (data-rendered="true")
-      setTimeout(()=>{
-        const embed = document.querySelector('.cstrEmbed');
-        const rendered = embed?.getAttribute('data-rendered') === 'true' || document.getElementById('cstrpdiv');
-        if (!rendered) {
-          casterStatus.textContent = "El widget oficial no cargó. Activado respaldo automático.";
-          useFallback();
-        } else {
-          useOfficial();
-        }
-      }, 6000);
+function setBackup(i){
+  backupIndex = (i + BACKUPS.length) % BACKUPS.length;
+  radioFallback.src = BACKUPS[backupIndex];
+}
+
+setBackup(0);
+
+let forced = null; // 'official' | 'fallback' | null
+
+function useFallback(){
+  forced = forced || null;
+  radioFallback.style.display = "";
+  pauseAllExcept('radio');
+  radioFallback.play().catch(()=>{});
+}
+
+function useOfficial(){
+  // mostramos el widget; el audio fallback queda en pausa
+  radioFallback.pause();
+  radioFallback.style.display = "none";
+  casterStatus.textContent = "Usando reproductor oficial de Caster.fm.";
+}
+
+function autoDetect(){
+  if (forced === 'fallback') { casterStatus.textContent="Forzado a respaldo."; useFallback(); return; }
+  if (forced === 'official'){ casterStatus.textContent="Forzado a oficial.";  useOfficial();  return; }
+
+  // Espera a que el widget se pinte
+  setTimeout(()=>{
+    const embed = document.querySelector('.cstrEmbed');
+    const rendered = embed?.getAttribute('data-rendered') === 'true' || document.getElementById('cstrpdiv');
+    if (!rendered) {
+      casterStatus.textContent = "El widget oficial no cargó. Activado respaldo automático.";
+      useFallback();
+      return;
     }
-
-    // Si el usuario hace click dentro del widget, pausamos lo demás
-    document.addEventListener('click', (e)=>{
-      if (e.target.closest('.cstrEmbed')) {
-        pauseAllExcept('radio');
-      }
-    });
-
-    // ===== Respaldo (Radio Browser) =====
-    let fbStarted = false;
-    function startFallbackOnce(){ if (fbStarted) return; fbStarted = true; startFallback(); }
-    function startFallback(){
-      const RB_HOSTS = ["de1","de2","fi1","nl1","us1","at1","gb1"];
-      const pickHost = () => RB_HOSTS[Math.floor(Math.random()*RB_HOSTS.length)];
-      const codecsOK = new Set(["MP3","AAC","AAC+"]);
-      const GENRES   = ["merengue","salsa","bachata","reggaeton","latin","tropical"];
-      const el = {
-        audio:  document.getElementById("radioFallback"),
-        info:   document.getElementById("fbInfo"),
-        genre:  document.getElementById("fbGenre"),
-        skip:   document.getElementById("fbSkip"),
-        reload: document.getElementById("fbReload")
-      };
-      function setInfo(msg, ok=true){ el.info.className = "status " + (ok?"ok":"warn"); el.info.textContent = msg; }
-      function apiUrlByTag(tag){
-        const host = pickHost();
-        return https://${host}.api.radio-browser.info/json/stations/bytag/${encodeURIComponent(tag)}?hidebroken=true&order=clickcount&reverse=true&limit=60;
-      }
-      let listAll = [], idx = 0, currentGenre = "auto";
-
-      async function buildCandidates(genre="auto"){
-        listAll = []; idx = 0; setInfo("Buscando emisoras…");
-        const tags = (genre==="auto") ? GENRES : [genre];
-        for (const tg of tags){
-          try{
-            const res = await fetch(apiUrlByTag(tg), {cache:"no-store"});
-            const raw = await res.json();
-            for (const it of raw){
-              const u = (it.url_resolved || it.urlResolved || it.url || "").trim();
-              const codec = (it.codec || "").toUpperCase();
-              if (!u || !u.startsWith("https://")) continue;
-              if (!codecsOK.has(codec)) continue;
-              listAll.push({ name: it.name || "Radio Latina", url: u, codec, tag: tg, country: it.country || it.countrycode || "" });
-            }
-          }catch(_){}
-        }
-        if (!listAll.length){ el.audio.removeAttribute("src"); setInfo("⚠ Sin emisoras disponibles ahora.", false); return; }
-        tuneTo(0, false);
-      }
-
-      function tuneTo(i, autoplay){
-        if (!listAll.length) return;
-        idx = (i + listAll.length) % listAll.length;
-        const st = listAll[idx];
-        el.audio.src = st.url; el.audio.load();
-        setInfo(▶ ${st.name}${st.codec? " · "+st.codec:""}${st.country? " · "+st.country:""}${st.tag? " · #"+st.tag:""}, true);
-        if (autoplay){ pauseAllExcept('radio'); el.audio.play().catch(()=>{}); }
-      }
-      function nextStation(autoPlay=true){ if (!listAll.length) return buildCandidates(currentGenre); tuneTo(idx+1, autoPlay); }
-
-      el.audio.addEventListener("play", ()=> pauseAllExcept('radio'));
-      el.audio.addEventListener("error", ()=>{ setInfo("⚠ Error en la emisora, cambiando…", false); nextStation(true); });
-      el.audio.addEventListener("stalled",()=>{ setInfo("⚠ Conexión lenta, cambiando…", false); nextStation(true); });
-      el.audio.addEventListener("ended",  ()=> nextStation(true));
-
-      el.skip.addEventListener("click", ()=> nextStation(true));
-      el.reload.addEventListener("click",()=>{ if (!listAll.length) return buildCandidates(currentGenre); tuneTo(idx, true); });
-      el.genre.addEventListener("change", e=>{ currentGenre = e.target.value || "auto"; buildCandidates(currentGenre); });
-
-      buildCandidates("auto");
+    // Si el widget muestra “offline”, cambiamos al respaldo
+    const holder = document.querySelector('.cstrEmbed, #cstrpdiv');
+    const txt = (holder?.innerText || "").toLowerCase();
+    if (txt.includes("broadcast is currently offline")) {
+      casterStatus.textContent = "Servidor online pero sin transmisión. Usando respaldo hasta que conectes tu encoder.";
+      useFallback();
+    } else {
+      useOfficial();
     }
+  }, 6000);
+}
 
-    autoDetect();
-  })();
-  </script>
+document.getElementById('forceOfficial').onclick = ()=>{ forced='official'; useOfficial(); };
+document.getElementById('forceFallback').onclick = ()=>{ forced='fallback'; useFallback(); };
 
-  <!-- ================== VIDEOS RECIENTES (YouTube carrusel) ================== -->
-  <script>
-    const CAROUSEL_IDS = [
-      "tpi8zLE3Kqw","RBE8A9rAj8Y","XYe0ZHVvVig","h86xW_G-j4s","5pKPlIlQa_8",
-      "wgqGHqhEZ8M","auTHP2prrxw","CL7m60BISiw","4jdbpZVzlf4","X_Df1rsXBjE",
-      "RWp76Pj0RUo","M9wQdkQicbk","FCu8-sim5F4","O6xVXaBcOac","jTqKxMTtVEI",
-      "4tXLT0hN8n8","n8RMGnc8v_o"
-    ];
-    let cIndex = 0;
-    let cPlayer = null;
+radioFallback.addEventListener('play', ()=> pauseAllExcept('radio'));
+autoDetect();
+</script>
 
-    function buildThumbs(){
-      const strip = document.getElementById("yt-thumbs");
-      strip.innerHTML = CAROUSEL_IDS.map((id,idx)=>`
-        <button data-i="${idx}" style="border:0;background:transparent;cursor:pointer;flex:0 0 auto">
-          <img src="https://img.youtube.com/vi/${id}/hqdefault.jpg"
-               alt="thumb ${idx+1}"
-               style="height:90px;border-radius:10px;opacity:${idx===cIndex?1:.55};
-                      outline:${idx===cIndex?'3px solid #00e0ff':'none'}">
-        </button>`).join("");
-      strip.querySelectorAll("button").forEach(btn=>btn.onclick = ()=> goTo(+btn.dataset.i));
-    }
-    function highlight(){
-      document.querySelectorAll("#yt-thumbs img").forEach((img,idx)=>{
-        img.style.opacity = (idx===cIndex? "1" : ".55");
-        img.style.outline = (idx===cIndex? "3px solid #00e0ff" : "none");
-      });
-    }
-    function updateTitleSoon(){ setTimeout(()=>{
-      try{ const d = cPlayer.getVideoData(); document.getElementById("yt-current-title").textContent = d?.title || ""; }catch(_){}
-    }, 300);}
-    function fadeSwap(loadFn){
-      const box = document.getElementById('yt-carousel-player');
-      box.classList.remove('show'); box.classList.add('hide');
-      setTimeout(()=>{ loadFn(); box.classList.remove('hide'); box.classList.add('show'); }, 180);
-    }
+<script>
+/* ================== CARRUSEL YouTube ================== */
+const CAROUSEL_IDS = [
+  "tpi8zLE3Kqw","RBE8A9rAj8Y","XYe0ZHVvVig","h86xW_G-j4s","5pKPlIlQa_8",
+  "wgqGHqhEZ8M","auTHP2prrxw","CL7m60BISiw","4jdbpZVzlf4","X_Df1rsXBjE",
+  "RWp76Pj0RUo","M9wQdkQicbk","FCu8-sim5F4","O6xVXaBcOac","jTqKxMTtVEI",
+  "4tXLT0hN8n8","n8RMGnc8v_o"
+];
+let cIndex = 0;
+let cPlayer = null;
 
-    function goTo(idx){
-      cIndex = (idx + CAROUSEL_IDS.length) % CAROUSEL_IDS.length;
-      if (cPlayer && cPlayer.loadVideoById) {
-        pauseAllExcept('yt');
-        fadeSwap(()=> cPlayer.loadVideoById(CAROUSEL_IDS[cIndex]));
-        highlight(); updateTitleSoon();
+function buildThumbs(){
+  const strip = document.getElementById("yt-thumbs");
+  strip.innerHTML = CAROUSEL_IDS.map((id,idx)=>`
+    <button data-i="${idx}" style="border:0;background:transparent;cursor:pointer;flex:0 0 auto">
+      <img src="https://img.youtube.com/vi/${id}/hqdefault.jpg"
+           alt="thumb ${idx+1}"
+           style="height:90px;border-radius:10px;opacity:${idx===cIndex?1:.55};
+                  outline:${idx===cIndex?'3px solid #00e0ff':'none'}">
+    </button>`).join("");
+  strip.querySelectorAll("button").forEach(btn=>btn.onclick = ()=> goTo(+btn.dataset.i));
+}
+function highlight(){
+  document.querySelectorAll("#yt-thumbs img").forEach((img,idx)=>{
+    img.style.opacity = (idx===cIndex? "1" : ".55");
+    img.style.outline = (idx===cIndex? "3px solid #00e0ff" : "none");
+  });
+}
+function updateTitleSoon(){ setTimeout(()=>{
+  try{ const d = cPlayer.getVideoData(); document.getElementById("yt-current-title").textContent = d?.title || ""; }catch(_){}
+}, 300);}
+
+function fadeSwap(loadFn){
+  const box = document.getElementById('yt-carousel-player');
+  box.classList.remove('show'); box.classList.add('hide');
+  setTimeout(()=>{ loadFn(); box.classList.remove('hide'); box.classList.add('show'); }, 180);
+}
+
+function goTo(idx){
+  cIndex = (idx + CAROUSEL_IDS.length) % CAROUSEL_IDS.length;
+  pauseAllExcept('yt');
+  if (cPlayer && cPlayer.loadVideoById) {
+    fadeSwap(()=> cPlayer.loadVideoById(CAROUSEL_IDS[cIndex]));
+    highlight(); updateTitleSoon();
+  } else {
+    renderFallback();
+  }
+}
+function prevVideo(){ goTo(cIndex - 1); }
+function nextVideo(){ goTo(cIndex + 1); }
+function togglePlay(){
+  try{
+    const s = cPlayer.getPlayerState();
+    if (s === YT.PlayerState.PLAYING) cPlayer.pauseVideo();
+    else { pauseAllExcept('yt'); cPlayer.playVideo(); }
+  }catch(_){}
+}
+
+function renderFallback(){
+  const box = document.getElementById('yt-carousel-player');
+  box.innerHTML = `<iframe src="https://www.youtube.com/embed/${CAROUSEL_IDS[cIndex]}?rel=0&modestbranding=1&playsinline=1"
+                       title="YouTube video" frameborder="0"
+                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                       allowfullscreen></iframe>`;
+  document.getElementById("yt-current-title").textContent = "";
+  buildThumbs(); highlight();
+  document.getElementById("btnPrevVid").onclick = ()=>{ prevVideo(); };
+  document.getElementById("btnNextVid").onclick = ()=>{ nextVideo(); };
+  document.getElementById("btnPlayPauseVid").onclick = ()=>{}; // sin control en iframe simple
+  document.getElementById("btnFs").onclick = ()=>{
+    const shell = document.querySelector('#videos .video-shell');
+    if (document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.();
+  };
+}
+
+function createCarouselPlayer(){
+  if (!(window.YT && window.YT.Player)) { renderFallback(); return; }
+  cPlayer = new YT.Player('yt-carousel-player', {
+    videoId: CAROUSEL_IDS[cIndex],
+    playerVars: { rel:0, modestbranding:1, playsinline:1, controls:1 },
+    events: {
+      onReady: e => { try{ e.target.mute(); e.target.playVideo(); }catch(_){} updateTitleSoon(); },
+      onStateChange: e => {
+        if (e.data === YT.PlayerState.PLAYING) pauseAllExcept('yt');
+        if (e.data === YT.PlayerState.ENDED) nextVideo();
+        if (e.data === YT.PlayerState.PLAYING || e.data === YT.PlayerState.CUED) updateTitleSoon();
       }
     }
-    function prevVideo(){ goTo(cIndex - 1); }
-    function nextVideo(){ goTo(cIndex + 1); }
-    function togglePlay(){
-      try{
-        const s = cPlayer.getPlayerState();
-        if (s === YT.PlayerState.PLAYING) cPlayer.pauseVideo();
-        else { pauseAllExcept('yt'); cPlayer.playVideo(); }
-      }catch(_){}
-    }
+  });
+  window._ytCarouselPlayerInstance = cPlayer;
+  buildThumbs(); highlight();
+  document.getElementById("btnPrevVid").onclick = prevVideo;
+  document.getElementById("btnNextVid").onclick = nextVideo;
+  document.getElementById("btnPlayPauseVid").onclick = togglePlay;
 
-    function createCarouselPlayer(){
-      cPlayer = new YT.Player('yt-carousel-player', {
-        videoId: CAROUSEL_IDS[cIndex],
-        playerVars: { rel:0, modestbranding:1, playsinline:1, controls:1 },
-        events: {
-          onReady: e => { try{ e.target.mute(); e.target.playVideo(); }catch(_){} updateTitleSoon(); },
-          onStateChange: e => {
-            if (e.data === YT.PlayerState.PLAYING) pauseAllExcept('yt');
-            if (e.data === YT.PlayerState.ENDED) nextVideo();
-            if (e.data === YT.PlayerState.PLAYING || e.data === YT.PlayerState.CUED) updateTitleSoon();
-          }
-        }
-      });
-      window._ytCarouselPlayerInstance = cPlayer;
-      buildThumbs(); highlight();
+  const btn = document.getElementById('btnFs');
+  const shell = document.querySelector('#videos .video-shell');
+  function toggleFs(){ if (document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.(); }
+  function onFsChange(){ btn.textContent = document.fullscreenElement ? "⤢ Salir de pantalla completa" : "⤢ Pantalla completa"; }
+  btn?.addEventListener('click', toggleFs);
+  document.addEventListener('fullscreenchange', onFsChange);
+}
 
-      document.getElementById("btnPrevVid").onclick = prevVideo;
-      document.getElementById("btnNextVid").onclick = nextVideo;
-      document.getElementById("btnPlayPauseVid").onclick = togglePlay;
+(function initYT(){
+  let started = false;
+  function startOnce(){ if (started) return; started = true; createCarouselPlayer(); }
+  if (window.YT && window.YT.Player) { startOnce(); }
+  const prev = window.onYouTubeIframeAPIReady;
+  window.onYouTubeIframeAPIReady = function(){ if (typeof prev==='function') prev(); startOnce(); };
+  setTimeout(()=>{ if (!started) { renderFallback(); } }, 2000);
+})();
+</script>
 
-      const btn = document.getElementById('btnFs');
-      const shell = document.querySelector('.video-shell');
-      function toggleFs(){ if (document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.(); }
-      function onFsChange(){ btn.textContent = document.fullscreenElement ? "⤢ Salir de pantalla completa" : "⤢ Pantalla completa"; }
-      btn?.addEventListener('click', toggleFs);
-      document.addEventListener('fullscreenchange', onFsChange);
-    }
+<script>
+/* ================== PLAYLIST VIP (carpeta /musica/) ================== */
+const BASE = "../musica/"; // porque este index está en /Privado/
+const raw1 = [
+  { title: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3", file: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3" },
+  { title: "02 - dj mario andretti - mix merengue romantico.mp3",     file: "02 - dj mario andretti - mix merengue romantico.mp3" },
+  { title: "03 - La Amas Como Yo - Karis.Mp3",                         file: "03 - La Amas Como Yo - Karis.Mp3" },
+  { title: "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3",            file: "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3" },
+  { title: "05 - Hey Dude! - Elvis Crespo.mp3",                        file: "05 - Hey Dude! - Elvis Crespo.mp3" },
+  { title: "06 - Te Regalo Amores - Ken-Yrkm.mp3",                     file: "06 - Te Regalo Amores - Ken-Yrkm.mp3" },
+  { title: "07 - What Is Love - Haddaway.Mp3",                         file: "07 - What Is Love - Haddaway.Mp3" },
+  { title: "08 - Boricua Como El Gran Combo.mp3",                      file: "08 - Boricua Como El Gran Combo.mp3" },
+  { title: "09 - Me Gusta, Me Gusta - Elvis Crespo.mp3",               file: "09 - Me Gusta, Me Gusta - Elvis Crespo.mp3" },
+  { title: "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3",         file: "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3" }
+];
 
-    (function initYT(){
-      let started = false;
-      function startOnce(){ if (started) return; started = true; createCarouselPlayer(); }
-      if (window.YT && window.YT.Player) { startOnce(); }
-      const prev = window.onYouTubeIframeAPIReady;
-      window.onYouTubeIframeAPIReady = function(){ if (typeof prev==='function') prev(); startOnce(); };
-      if (![...document.scripts].some(s => (s.src||'').includes('iframe_api'))) {
-        const tag = document.createElement('script'); tag.src = "https://www.youtube.com/iframe_api"; document.body.appendChild(tag);
+const tracks1 = raw1.map(t => ({ title: t.title, src: BASE + encodeURIComponent(t.file) }));
+
+const A1 = {
+  audio:  document.getElementById('audio1'),
+  list:   document.getElementById('list1'),
+  prev:   document.getElementById('prev1'),
+  play:   document.getElementById('play1'),
+  next:   document.getElementById('next1'),
+  status: document.getElementById('status1'),
+  i: 0
+};
+function s1(msg, cls="ok"){ A1.status.className="status "+cls; A1.status.textContent=msg; }
+
+function render1(){
+  A1.list.innerHTML = "";
+  tracks1.forEach((it, idx)=>{
+    const li = document.createElement('li');
+    const num = (idx+1).toString().padStart(2,'0');
+    li.textContent = ${num} - ${it.title};
+    li.style.background = idx===A1.i ? "rgba(0,191,255,.35)" : "transparent";
+    li.onclick = () => { A1.i = idx; load1(true); };
+    A1.list.appendChild(li);
+  });
+}
+function load1(autoplay){
+  A1.audio.src = tracks1[A1.i].src;
+  render1(); s1("Listo: "+tracks1[A1.i].title+" ✓","ok");
+  if (autoplay) { pauseAllExcept('playlist'); A1.audio.play().catch(()=>{}); }
+}
+A1.prev.onclick = ()=>{ A1.i = (A1.i - 1 + tracks1.length) % tracks1.length; load1(true); };
+A1.next.onclick = ()=>{ A1.i = (A1.i + 1) % tracks1.length; load1(true); };
+A1.play.onclick = ()=>{ if (A1.audio.paused) { pauseAllExcept('playlist'); A1.audio.play().catch(()=>{}); } else A1.audio.pause(); };
+A1.audio.addEventListener('ended', ()=>{ A1.i = (A1.i + 1) % tracks1.length; load1(true); });
+A1.audio.addEventListener('play', ()=> pauseAllExcept('playlist'));
+A1.audio.addEventListener('error', ()=> s1("⚠ No se pudo cargar: "+decodeURIComponent(tracks1[A1.i].src),"warn"));
+render1();
+</script>
+
+<script>
+/* ================== VIDEO PROMO (Merengue → Salsa) ================== */
+const PROMO_IDS = ["U0V7ATX_2CY", "5ZVTbahB5CM"]; // cambia si quieres
+let promoIndex = 0;
+let promoPlayer = null;
+
+function promoPrev(){ promoIndex = (promoIndex - 1 + PROMO_IDS.length) % PROMO_IDS.length; pauseAllExcept('promo'); promoPlayer.loadVideoById(PROMO_IDS[promoIndex]); }
+function promoNext(){ promoIndex = (promoIndex + 1) % PROMO_IDS.length; pauseAllExcept('promo'); promoPlayer.loadVideoById(PROMO_IDS[promoIndex]); }
+function promoToggle(){
+  try{
+    const s = promoPlayer.getPlayerState();
+    if (s === YT.PlayerState.PLAYING) promoPlayer.pauseVideo();
+    else { pauseAllExcept('promo'); promoPlayer.playVideo(); }
+  }catch(_){}
+}
+
+function createPromoPlayer(){
+  if (!(window.YT && window.YT.Player)) return;
+  promoPlayer = new YT.Player('promo-player', {
+    videoId: PROMO_IDS[promoIndex],
+    playerVars: { rel:0, modestbranding:1, playsinline:1, controls:1 },
+    events: {
+      onReady: e => { try{ e.target.mute(); e.target.playVideo(); }catch(_){ } setTimeout(updatePromoTitle,300); },
+      onStateChange: e => {
+        if (e.data === YT.PlayerState.PLAYING) pauseAllExcept('promo');
+        if (e.data === YT.PlayerState.ENDED) promoNext();
+        if (e.data === YT.PlayerState.PLAYING || e.data === YT.PlayerState.CUED) setTimeout(updatePromoTitle,300);
       }
-    })();
-  </script>
-
-  <!-- ================== PLAYLIST (lee ../musica/) ================== -->
-  <script>
-    const BASE1 = "../musica/"; // porque este index está en /Privado/
-    // Reemplaza por tus MP3 reales en /musica/
-    const raw1 = [
-      { title:"SoundHelix 1 (demo)", file:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", external:true },
-      { title:"SoundHelix 2 (demo)", file:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", external:true }
-      // { title:"01 - Tu Tema", file:"01 - Tu Tema.mp3" },
-      // { title:"02 - Otro Tema", file:"02 - Otro Tema.mp3" }
-    ];
-    const tracks1 = raw1.map(t => ({ title:t.title, src: t.external ? t.file : (BASE1 + encodeURIComponent(t.file)) }));
-
-    const A1 = {
-      audio:  document.getElementById('audio1'),
-      list:   document.getElementById('list1'),
-      prev:   document.getElementById('prev1'),
-      play:   document.getElementById('play1'),
-      next:   document.getElementById('next1'),
-      status: document.getElementById('status1'),
-      i: 0
-    };
-    function s1(msg, cls="ok"){ A1.status.className="status "+cls; A1.status.textContent=msg; }
-
-    function render1(){
-      A1.list.innerHTML = "";
-      tracks1.forEach((it, idx)=>{
-        const li = document.createElement('li');
-        li.textContent = (idx===A1.i ? "▶ " : "") + it.title;
-        li.style.background = idx===A1.i ? "rgba(0,191,255,.35)" : "transparent";
-        li.onclick = () => { A1.i = idx; load1(true); };
-        A1.list.appendChild(li);
-      });
     }
-    function load1(autoplay){
-      A1.audio.src = tracks1[A1.i].src;
-      render1(); s1("Listo: "+tracks1[A1.i].title+" ✓","ok");
-      if (autoplay) { pauseAllExcept('playlist'); A1.audio.play().catch(()=>{}); }
-    }
-    A1.prev.onclick = ()=>{ A1.i = (A1.i - 1 + tracks1.length) % tracks1.length; load1(true); };
-    A1.next.onclick = ()=>{ A1.i = (A1.i + 1) % tracks1.length; load1(true); };
-    A1.play.onclick = ()=>{ if (A1.audio.paused) { pauseAllExcept('playlist'); A1.audio.play().catch(()=>{}); } else A1.audio.pause(); };
-    A1.audio.addEventListener('ended', ()=>{ A1.i = (A1.i + 1) % tracks1.length; load1(true); });
-    A1.audio.addEventListener('play', ()=> pauseAllExcept('playlist'));
-    A1.audio.addEventListener('error', ()=> s1("⚠ No se pudo cargar: "+decodeURIComponent(tracks1[A1.i].src),"warn"));
-    render1(); load1(false);
-  </script>
+  });
+  window._ytPromoPlayerInstance = promoPlayer;
 
-  <!-- ================== VIDEO PROMO (YouTube secuencial) ================== -->
-  <script>
-    const PROMO_IDS = ["U0V7ATX_2CY", "5ZVTbahB5CM"]; // Merengue → Salsa
-    let promoIndex = 0;
-    let promoPlayer = null;
-    function crearPromoPlayer(){
-      promoPlayer = new YT.Player('promo-player', {
-        videoId: PROMO_IDS[promoIndex],
-        playerVars: { rel:0, modestbranding:1, playsinline:1, controls:1 },
-        events: {
-          onReady: e => { try{ e.target.mute(); e.target.playVideo(); }catch(_){} actualizarPromoTitulo(); pauseAllExcept('promo'); },
-          onStateChange: e => {
-            if (e.data === YT.PlayerState.PLAYING) pauseAllExcept('promo');
-            if (e.data === YT.PlayerState.ENDED){ promoIndex = (promoIndex+1) % PROMO_IDS.length; promoPlayer.loadVideoById(PROMO_IDS[promoIndex]); }
-            if (e.data === YT.PlayerState.PLAYING || e.data === YT.PlayerState.CUED) actualizarPromoTitulo();
-          }
-        }
-      });
-      window._promoPlayerInstance = promoPlayer;
+  document.getElementById('promoPrev').onclick = promoPrev;
+  document.getElementById('promoNext').onclick = promoNext;
+  document.getElementById('promoPlay').onclick = promoToggle;
 
-      // Controles
-      document.getElementById('promoPrev').onclick = ()=>{ promoIndex = (promoIndex - 1 + PROMO_IDS.length) % PROMO_IDS.length; pauseAllExcept('promo'); promoPlayer.loadVideoById(PROMO_IDS[promoIndex]); };
-      document.getElementById('promoNext').onclick = ()=>{ promoIndex = (promoIndex + 1) % PROMO_IDS.length; pauseAllExcept('promo'); promoPlayer.loadVideoById(PROMO_IDS[promoIndex]); };
-      document.getElementById('promoPlay').onclick = ()=>{
-        const s = promoPlayer.getPlayerState();
-        if (s === YT.PlayerState.PLAYING) promoPlayer.pauseVideo();
-        else { pauseAllExcept('promo'); promoPlayer.playVideo(); }
-      };
-      const btn = document.getElementById('promoFs');
-      function toggleFs(){
-        const box = document.querySelector('#promo').querySelector('div[style*="position:relative"]')?.parentElement;
-        if (document.fullscreenElement) document.exitFullscreen?.(); else box?.requestFullscreen?.();
-      }
-      function onFsChange(){ btn.textContent = document.fullscreenElement ? "⤢ Salir de pantalla completa" : "⤢ Pantalla completa"; }
-      btn?.addEventListener('click', toggleFs);
-      document.addEventListener('fullscreenchange', onFsChange);
-    }
-    function actualizarPromoTitulo(){ const d = promoPlayer?.getVideoData?.() || {}; const el = document.getElementById('promo-title'); if (el) el.textContent = d.title || ""; }
-    (function loadYT(){
-      if (window.YT && window.YT.Player) { crearPromoPlayer(); return; }
-      const prev = window.onYouTubeIframeAPIReady;
-      window.onYouTubeIframeAPIReady = function(){ if (typeof prev==='function') prev(); crearPromoPlayer(); };
-      if (![...document.scripts].some(s => (s.src || '').includes('iframe_api'))) {
-        const tag = document.createElement('script'); tag.src = "https://www.youtube.com/iframe_api"; document.body.appendChild(tag);
-      }
-    })();
-  </script>
+  const fsBtn = document.getElementById('promoFs');
+  const shell = document.querySelector('#promo .video-shell');
+  function toggleFs(){ if (document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.(); }
+  function onFsChange(){ fsBtn.textContent = document.fullscreenElement ? "⤢ Salir de pantalla completa" : "⤢ Pantalla completa"; }
+  fsBtn?.addEventListener('click', toggleFs);
+  document.addEventListener('fullscreenchange', onFsChange);
+}
+function updatePromoTitle(){
+  try{
+    const d = promoPlayer.getVideoData();
+    document.getElementById('promo-title').textContent = d?.title || "";
+  }catch(_){}
+}
+
+(function loadPromo(){
+  if (window.YT && window.YT.Player) { createPromoPlayer(); return; }
+  const prev = window.onYouTubeIframeAPIReady;
+  window.onYouTubeIframeAPIReady = function(){ if (typeof prev==='function') prev(); createPromoPlayer(); };
+})();
+</script>
+
 </body>
 </html>
