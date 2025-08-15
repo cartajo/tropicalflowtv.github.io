@@ -241,7 +241,23 @@
 
         load1(false);
       </script>
+      <script>
+/* ===== Control maestro: solo una cosa suena a la vez ===== */
+(function () {
+  const refs = {
+    radio: document.getElementById('radioPlayer'),   // <audio> de la radio
+    plist: document.getElementById('audio1'),        // <audio> del Playlist VIP
+    get yt()    { return window._ytCarouselPlayerInstance || null; }, // carrusel YouTube
+    get promo() { return window._promoPlayerInstance    || null; }    // video promo
+  };
 
+  function ytIsPlaying(p){
+    try { return p && p.getPlayerState && p.getPlayerState() === YT.PlayerState.PLAYING; }
+    catch { return false; }
+  }
+
+  function pauseAllExcept(which){
+    // Pausa aud
       <p style="color:#ccc;font-size:.9rem;margin-top:8px;">
         Sube los 10 MP3 a <code>/musica/</code> con esos nombres. Si alguno marca 0:00, abre su URL para confirmar.
       </p>
