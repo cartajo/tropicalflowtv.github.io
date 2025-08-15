@@ -63,6 +63,38 @@
 
 <div class="wrap">
  <script>
+<!-- ============ RADIO (Caster.fm + Respaldo) ============ -->
+  <section id="radio">
+    <h2>🎧 Escúchanos en Vivo 24/7</h2>
+
+    <!-- Player oficial (iframe web de tu emisora) -->
+    <div id="radio-official" class="video-shell" style="max-width:var(--maxw);">
+      <div class="video-aspect" style="padding-top:120px"> <!-- alto fijo tipo barra -->
+        <iframe id="radioIframe" src="https://tropicalflowradio.ismyradio.com" title="Tropical Flow Radio"
+                frameborder="0" scrolling="no"></iframe>
+      </div>
+    </div>
+
+    <!-- Respaldo: widget de Caster.fm (se muestra al pulsar “Forzar respaldo”) -->
+    <div id="radio-backup" style="display:none;max-width:var(--maxw);margin:10px auto;">
+      <div data-type="newStreamPlayer"
+           data-publicToken="173d1740-5216-4cbe-8e2b-cb45338d9e19"
+           data-theme="dark"
+           data-color="e81e4d"
+           class="cstrEmbed">
+        <a href="https://www.caster.fm">Shoutcast Hosting</a>
+      </div>
+      <script src="//cdn.cloud.caster.fm//widgets/embed.js"></script>
+    </div>
+
+    <div style="display:flex;gap:10px;justify-content:center;margin-top:10px;">
+      <button id="btnRadioOfficial" class="btn alt">☑ Forzar oficial</button>
+      <button id="btnRadioBackup" class="btn">🛟 Forzar respaldo</button>
+    </div>
+
+    <p class="hint">Si el player oficial no carga, usa “Forzar respaldo”.</p>
+  </section>
+<script>
   // --- RADIO: arrancar con el widget (respaldo) y reintentar si hay error ---
   const radioOfficial = document.getElementById('radio-official');
   const radioBackup   = document.getElementById('radio-backup');
@@ -114,7 +146,6 @@
   // 👉 Arrancar por defecto con el RESPALDO (evita errores iniciales)
   showBackup();
 </script>
-
   <!-- ============ CONECTADOS ============ -->
   <section>
     <h2>👥 Conectados ahora</h2>
