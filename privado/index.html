@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Tropical Flow TV📺Radio - VIP</title>
   <meta name="description" content="Acceso exclusivo a Tropical Flow TV📺Radio. Música, videos y más 24/7.">
+
   <style>
     :root{
       --accent:#00e0ff; --bg:rgba(0,0,0,.6); --maxw:1100px;
@@ -55,6 +56,7 @@
 
     footer{ text-align:center; padding:1rem; background:rgba(0,0,0,.6); color:#ccc }
   </style>
+
   <!-- API YouTube -->
   <script src="https://www.youtube.com/iframe_api"></script>
 </head>
@@ -62,6 +64,7 @@
   <header><h1>🌴 Tropical Flow TV📺Radio - VIP</h1></header>
 
   <div class="wrap">
+
     <!-- ================== RADIO: Caster + Respaldo + Forzar ================== -->
     <section id="radio">
       <h2>🎧 Escúchanos en Vivo 24/7</h2>
@@ -70,51 +73,26 @@
         <button id="btnForce" class="btn warn">🔁 Forzar respaldo</button>
       </div>
 
-      <!-- 🎵 RADIO OFICIAL CASTER -->
-<section id="radio-oficial">
-  <h2>🔊 Radio Oficial Tropical Flow TV📺Radio</h2>
+      <!-- Oficial Caster -->
+      <div id="casterWrap" style="max-width:900px;margin:0 auto;text-align:center;background:rgba(255,255,255,.06);padding:12px;border-radius:10px">
+        <div style="font-weight:700;margin-bottom:6px">🔊 Radio oficial (Caster.fm)</div>
 
-  <!-- Widget de Caster.fm -->
-  <div id="casterPlayerArea">
-    <div data-type="newStreamPlayer"
-         data-publicToken="173d1740-5216-4cbe-8e2b-cb45338d9e19"
-         data-theme="light"
-         data-color="e81e4d"
-         data-channelId=""
-         data-rendered="false"
-         class="cstrEmbed">
-      <a href="https://www.caster.fm">Shoutcast Hosting</a>
-      <a href="https://www.caster.fm">Stream Hosting</a>
-      <a href="https://www.caster.fm">Radio Server Hosting</a>
-    </div>
-    <script src="https://cdn.cloud.caster.fm/widgets/embed.js"></script>
-  </div>
-</section>
-
-<script>
-  // Pausar playlist y videos cuando la radio empiece
-  function pauseOtherMedia() {
-    // Pausar playlist de audio
-    document.querySelectorAll('audio').forEach(a => a.pause());
-
-    // Pausar videos de YouTube en iframe
-    document.querySelectorAll('iframe').forEach(frame => {
-      if (frame.src.includes('youtube.com/embed')) {
-        frame.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
-      }
-    });
-
-    // Pausar cualquier video HTML5
-    document.querySelectorAll('video').forEach(v => v.pause());
-  }
-
-  // Detecta clicks en el widget de Caster para pausar el resto
-  document.addEventListener('click', function (e) {
-    if (e.target.closest('.cstrEmbed')) {
-      pauseOtherMedia();
-    }
-  });
-</script>
+        <!-- 👇 Tu widget OFICIAL (ya insertado) 👇 -->
+        <div id="casterPlayerArea">
+          <div data-type="newStreamPlayer"
+               data-publicToken="173d1740-5216-4cbe-8e2b-cb45338d9e19"
+               data-theme="light"
+               data-color="e81e4d"
+               data-channelId=""
+               data-rendered="false"
+               class="cstrEmbed">
+            <a href="https://www.caster.fm">Shoutcast Hosting</a>
+            <a href="https://www.caster.fm">Stream Hosting</a>
+            <a href="https://www.caster.fm">Radio Server Hosting</a>
+          </div>
+          <script src="https://cdn.cloud.caster.fm/widgets/embed.js"></script>
+        </div>
+        <!-- ☝ FIN widget -->
 
         <div id="casterStatus" style="color:#ccc;font-size:.92rem;margin-top:6px">
           Si el player oficial no carga o no suena, activamos el respaldo automático ↓
@@ -217,7 +195,7 @@
 
   <footer>&copy; <span id="year"></span> Tropical Flow TV📺Radio - Todos los derechos reservados</footer>
 
-  <!-- ================== SCRIPTS ================== -->
+  <!-- ================== SCRIPTS COMUNES ================== -->
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -255,7 +233,7 @@
         }
       }catch(e){}
     }
-    window.pauseAllExcept = pauseAllExcept; // lo exponemos por si otros lo llaman
+    window.pauseAllExcept = pauseAllExcept;
   </script>
 
   <!-- ================== RADIO: lógica Caster + Respaldo ================== -->
@@ -290,17 +268,23 @@
       }
     });
 
+    // Detecta si el widget está presente y se renderiza
     function autoDetect(){
       if (forced === 'fallback') { useFallback(); return; }
       if (forced === 'official'){ useOfficial();  return; }
-      const hasWidget = [...document.scripts].some(s => (s.src||'').includes('caster.fm') && (s.src||'').includes('player.js'));
-      if (!hasWidget) {
+
+      // ¿Está el script del widget?
+      const hasWidgetScript = [...document.scripts].some(s => (s.src||'').includes('caster.fm') && (s.src||'').includes('embed.js'));
+      if (!hasWidgetScript) {
         casterStatus.textContent = "No se detectó el widget oficial. Activado respaldo automático.";
         useFallback();
         return;
       }
+      // Espera a que el embed se pinte (data-rendered="true")
       setTimeout(()=>{
-        if (!document.getElementById('cstrpdiv')) {
+        const embed = document.querySelector('.cstrEmbed');
+        const rendered = embed?.getAttribute('data-rendered') === 'true' || document.getElementById('cstrpdiv');
+        if (!rendered) {
           casterStatus.textContent = "El widget oficial no cargó. Activado respaldo automático.";
           useFallback();
         } else {
@@ -308,6 +292,13 @@
         }
       }, 6000);
     }
+
+    // Si el usuario hace click dentro del widget, pausamos lo demás
+    document.addEventListener('click', (e)=>{
+      if (e.target.closest('.cstrEmbed')) {
+        pauseAllExcept('radio');
+      }
+    });
 
     // ===== Respaldo (Radio Browser) =====
     let fbStarted = false;
@@ -475,13 +466,12 @@
   <!-- ================== PLAYLIST (lee ../musica/) ================== -->
   <script>
     const BASE1 = "../musica/"; // porque este index está en /Privado/
-    // Pon aquí tus nombres REALES (renombrados simples, sin caracteres raros si puedes)
+    // Reemplaza por tus MP3 reales en /musica/
     const raw1 = [
-      // { title:"01 - Tema 1", file:"01 - Tema 1.mp3" },
-      // { title:"02 - Tema 2", file:"02 - Tema 2.mp3" }
-      // De prueba:
       { title:"SoundHelix 1 (demo)", file:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", external:true },
       { title:"SoundHelix 2 (demo)", file:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", external:true }
+      // { title:"01 - Tu Tema", file:"01 - Tu Tema.mp3" },
+      // { title:"02 - Otro Tema", file:"02 - Otro Tema.mp3" }
     ];
     const tracks1 = raw1.map(t => ({ title:t.title, src: t.external ? t.file : (BASE1 + encodeURIComponent(t.file)) }));
 
@@ -522,7 +512,7 @@
 
   <!-- ================== VIDEO PROMO (YouTube secuencial) ================== -->
   <script>
-    const PROMO_IDS = ["U0V7ATX_2CY", "5ZVTbahB5CM"]; // Merengue → Salsa (cámbialos cuando quieras)
+    const PROMO_IDS = ["U0V7ATX_2CY", "5ZVTbahB5CM"]; // Merengue → Salsa
     let promoIndex = 0;
     let promoPlayer = null;
     function crearPromoPlayer(){
@@ -549,8 +539,10 @@
         else { pauseAllExcept('promo'); promoPlayer.playVideo(); }
       };
       const btn = document.getElementById('promoFs');
-      const shell = document.querySelector('#promo').previousElementSibling?.querySelector?.('.video-shell') || document.querySelector('#promo');
-      function toggleFs(){ const box = document.querySelector('#promo').querySelector('div[style*="position:relative"]')?.parentElement; if (document.fullscreenElement) document.exitFullscreen?.(); else box?.requestFullscreen?.(); }
+      function toggleFs(){
+        const box = document.querySelector('#promo').querySelector('div[style*="position:relative"]')?.parentElement;
+        if (document.fullscreenElement) document.exitFullscreen?.(); else box?.requestFullscreen?.();
+      }
       function onFsChange(){ btn.textContent = document.fullscreenElement ? "⤢ Salir de pantalla completa" : "⤢ Pantalla completa"; }
       btn?.addEventListener('click', toggleFs);
       document.addEventListener('fullscreenchange', onFsChange);
