@@ -63,31 +63,38 @@
 
 <div class="wrap">
 
-  <!-- ============ RADIO: Caster.fm con respaldo automático ============ -->
+ <!-- ============ RADIO (Caster.fm + Respaldo) ============ -->
   <section id="radio">
     <h2>🎧 Escúchanos en Vivo 24/7</h2>
-    <div id="radio-area">
-      <!-- Widget oficial -->
-      <div class="cstrEmbed"
-           data-type="newStreamPlayer"
+
+    <!-- Player oficial (iframe web de tu emisora) -->
+    <div id="radio-official" class="video-shell" style="max-width:var(--maxw);">
+      <div class="video-aspect" style="padding-top:120px"> <!-- alto fijo tipo barra -->
+        <iframe id="radioIframe" src="https://tropicalflowradio.ismyradio.com" title="Tropical Flow Radio"
+                frameborder="0" scrolling="no"></iframe>
+      </div>
+    </div>
+
+    <!-- Respaldo: widget de Caster.fm (se muestra al pulsar “Forzar respaldo”) -->
+    <div id="radio-backup" style="display:none;max-width:var(--maxw);margin:10px auto;">
+      <div data-type="newStreamPlayer"
            data-publicToken="173d1740-5216-4cbe-8e2b-cb45338d9e19"
-           data-theme="dark" data-color="e81e4d" data-channelId="" data-rendered="false">
-        <a href="https://www.caster.fm">Radio Server Hosting</a>
+           data-theme="dark"
+           data-color="e81e4d"
+           class="cstrEmbed">
+        <a href="https://www.caster.fm">Shoutcast Hosting</a>
       </div>
       <script src="//cdn.cloud.caster.fm//widgets/embed.js"></script>
-
-      <!-- Respaldo (oculto por defecto) -->
-      <audio id="radioFallback" controls preload="none" style="display:none;margin-top:10px">
-        Tu navegador no soporta audio HTML5.
-      </audio>
-
-      <div style="text-align:center;margin-top:10px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
-        <button id="forceOfficial" class="btn">🔁 Forzar oficial</button>
-        <button id="forceFallback" class="btn alt">🔁 Forzar respaldo</button>
-      </div>
-      <div id="casterStatus" style="text-align:center;margin-top:6px;color:#ccc; font-size:.92rem"></div>
     </div>
+
+    <div style="display:flex;gap:10px;justify-content:center;margin-top:10px;">
+      <button id="btnRadioOfficial" class="btn alt">☑ Forzar oficial</button>
+      <button id="btnRadioBackup" class="btn">🛟 Forzar respaldo</button>
+    </div>
+
+    <p class="hint">Si el player oficial no carga, usa “Forzar respaldo”.</p>
   </section>
+  
 
   <!-- ============ CONECTADOS ============ -->
   <section>
