@@ -494,23 +494,7 @@ function createCarouselPlayer(){
   setTimeout(()=>{ if (!started) { renderFallback(); } }, 2000);
 })();
 </script>
-<script>
-/* ===== Control maestro: solo una cosa suena a la vez ===== */
-(function () {
-  const refs = {
-    radio: document.getElementById('radioPlayer'),   // <audio> de la radio
-    plist: document.getElementById('audio1'),        // <audio> del Playlist VIP
-    get yt()    { return window._ytCarouselPlayerInstance || null; }, // carrusel YouTube
-    get promo() { return window._promoPlayerInstance    || null; }    // video promo
-  };
 
-  function ytIsPlaying(p){
-    try { return p && p.getPlayerState && p.getPlayerState() === YT.PlayerState.PLAYING; }
-    catch { return false; }
-  }
-
-  function pauseAllExcept(which){
-    // Pausa aud
 <script>
 /* ================== PLAYLIST VIP (carpeta /musica/) ================== */
 const BASE = "../musica/"; // porque este index está en /Privado/
