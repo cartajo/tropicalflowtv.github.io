@@ -63,80 +63,32 @@
 
 <div class="wrap">
 
-<script>
-<!-- RADIO – Caster.fm (respaldo estable) -->
-<section id="radio">
-  <h2>🎧 Escúchanos en Vivo 24/7</h2>
-
-  <div id="radioWrap" style="max-width:1100px;margin:0 auto">
-    <!-- Controles -->
-    <div style="display:flex;gap:10px;justify-content:center;margin:10px 0;flex-wrap:wrap">
-      <button id="radioRetry" style="background:#2dd4bf;color:#000;border:0;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer">🔁 Reintentar</button>
-      <button id="radioOpen"  style="background:#fbbf24;color:#000;border:0;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer">🌐 Abrir en pestaña</button>
-    </div>
-
-    <!-- Contenedor del widget -->
-    <div id="casterContainer" class="radio-player" style="border-radius:12px;overflow:hidden;background:#000">
-      <!-- El “embed” se inyecta por JS para poder reintentar -->
-    </div>
-
-    <p style="color:#ccc;text-align:center;font-size:.9rem;margin-top:8px">
-      Si ves “Powered by links are missing” o “Session timeout”, toca <b>Reintentar</b>. 
-      Asegúrate de que tu emisora esté <b>ON AIR</b> en el panel de Caster.fm (y que BUTT esté enviando audio).
-    </p>
-  </div>
-</section>
-
-<script>
-(function(){
-  const PUBLIC_TOKEN = "173d1740-5216-4cbe-8e2b-cb45338d9e19"; // tu token
-  const EMBED_SRC = "https://cdn.cloud.caster.fm/widgets/embed.js";
-
-  const cont = document.getElementById("casterContainer");
-  const btnRetry = document.getElementById("radioRetry");
-  const btnOpen  = document.getElementById("radioOpen");
-
-  function mountCaster(){
-    // Limpia para recargar desde cero
-    cont.innerHTML = `
-      <div data-type="newStreamPlayer"
-           data-publicToken="${PUBLIC_TOKEN}"
-           data-theme="dark"
-           data-color="e81e4d"
-           class="cstrEmbed"
-           style="min-height:360px">
-        <!-- Estos 3 enlaces SON OBLIGATORIOS. No los borres. -->
-        <a href="https://www.caster.fm">Shoutcast Hosting</a>
-        <a href="https://www.caster.fm">Stream Hosting</a>
+  <!-- ============ RADIO: Caster.fm con respaldo automático ============ -->
+  <section id="radio">
+    <h2>🎧 Escúchanos en Vivo 24/7</h2>
+    <div id="radio-area">
+      <!-- Widget oficial -->
+      <div class="cstrEmbed"
+           data-type="newStreamPlayer"
+           data-publicToken="173d1740-5216-4cbe-8e2b-cb45338d9e19"
+           data-theme="dark" data-color="e81e4d" data-channelId="" data-rendered="false">
         <a href="https://www.caster.fm">Radio Server Hosting</a>
       </div>
-    `;
+      <script src="//cdn.cloud.caster.fm//widgets/embed.js"></script>
 
-    // El script debe cargarse “nuevo” cada vez
-    const s = document.createElement("script");
-    s.src = EMBED_SRC;
-    s.async = true;
-    // Para forzar recarga si el navegador lo cachea fuerte:
-    s.src = EMBED_SRC + "?t=" + Date.now();
-    cont.appendChild(s);
+      <!-- Respaldo (oculto por defecto) -->
+      <audio id="radioFallback" controls preload="none" style="display:none;margin-top:10px">
+        Tu navegador no soporta audio HTML5.
+      </audio>
 
-    // Señal básica para tu pausa global (si la usas)
-    window._radioPlaying = true;
-    window._radioPause = ()=>{ 
-      try{
-        const ifr = cont.querySelector("iframe");
-        if (ifr && ifr.contentWindow) ifr.contentWindow.postMessage({event:"command",func:"pauseVideo"}, "*");
-      }catch(e){}
-    };
-  }
+      <div style="text-align:center;margin-top:10px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+        <button id="forceOfficial" class="btn">🔁 Forzar oficial</button>
+        <button id="forceFallback" class="btn alt">🔁 Forzar respaldo</button>
+      </div>
+      <div id="casterStatus" style="text-align:center;margin-top:6px;color:#ccc; font-size:.92rem"></div>
+    </div>
+  </section>
 
-  btnRetry.onclick = mountCaster;
-  btnOpen.onclick  = () => window.open("https://tropicalflowradio.ismyradio.com", "_blank");
-
-  // Monta al cargar
-  mountCaster();
-})();
-</script>
   <!-- ============ CONECTADOS ============ -->
   <section>
     <h2>👥 Conectados ahora</h2>
