@@ -64,38 +64,79 @@
 <div class="wrap">
 
 <script>
- <!-- ============ RADIO (Caster.fm + Respaldo) ============ -->
-  <section id="radio">
-    <h2>🎧 Escúchanos en Vivo 24/7</h2>
+<!-- RADIO – Caster.fm (respaldo estable) -->
+<section id="radio">
+  <h2>🎧 Escúchanos en Vivo 24/7</h2>
 
-    <!-- Player oficial (iframe web de tu emisora) -->
-    <div id="radio-official" class="video-shell" style="max-width:var(--maxw);">
-      <div class="video-aspect" style="padding-top:120px"> <!-- alto fijo tipo barra -->
-        <iframe id="radioIframe" src="https://tropicalflowradio.ismyradio.com" title="Tropical Flow Radio"
-                frameborder="0" scrolling="no"></iframe>
-      </div>
+  <div id="radioWrap" style="max-width:1100px;margin:0 auto">
+    <!-- Controles -->
+    <div style="display:flex;gap:10px;justify-content:center;margin:10px 0;flex-wrap:wrap">
+      <button id="radioRetry" style="background:#2dd4bf;color:#000;border:0;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer">🔁 Reintentar</button>
+      <button id="radioOpen"  style="background:#fbbf24;color:#000;border:0;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer">🌐 Abrir en pestaña</button>
     </div>
 
-    <!-- Respaldo: widget de Caster.fm (se muestra al pulsar “Forzar respaldo”) -->
-    <div id="radio-backup" style="display:none;max-width:var(--maxw);margin:10px auto;">
+    <!-- Contenedor del widget -->
+    <div id="casterContainer" class="radio-player" style="border-radius:12px;overflow:hidden;background:#000">
+      <!-- El “embed” se inyecta por JS para poder reintentar -->
+    </div>
+
+    <p style="color:#ccc;text-align:center;font-size:.9rem;margin-top:8px">
+      Si ves “Powered by links are missing” o “Session timeout”, toca <b>Reintentar</b>. 
+      Asegúrate de que tu emisora esté <b>ON AIR</b> en el panel de Caster.fm (y que BUTT esté enviando audio).
+    </p>
+  </div>
+</section>
+
+<script>
+(function(){
+  const PUBLIC_TOKEN = "173d1740-5216-4cbe-8e2b-cb45338d9e19"; // tu token
+  const EMBED_SRC = "https://cdn.cloud.caster.fm/widgets/embed.js";
+
+  const cont = document.getElementById("casterContainer");
+  const btnRetry = document.getElementById("radioRetry");
+  const btnOpen  = document.getElementById("radioOpen");
+
+  function mountCaster(){
+    // Limpia para recargar desde cero
+    cont.innerHTML = `
       <div data-type="newStreamPlayer"
-           data-publicToken="173d1740-5216-4cbe-8e2b-cb45338d9e19"
+           data-publicToken="${PUBLIC_TOKEN}"
            data-theme="dark"
            data-color="e81e4d"
-           class="cstrEmbed">
+           class="cstrEmbed"
+           style="min-height:360px">
+        <!-- Estos 3 enlaces SON OBLIGATORIOS. No los borres. -->
         <a href="https://www.caster.fm">Shoutcast Hosting</a>
+        <a href="https://www.caster.fm">Stream Hosting</a>
+        <a href="https://www.caster.fm">Radio Server Hosting</a>
       </div>
-      <script src="//cdn.cloud.caster.fm//widgets/embed.js"></script>
-    </div>
+    `;
 
-    <div style="display:flex;gap:10px;justify-content:center;margin-top:10px;">
-      <button id="btnRadioOfficial" class="btn alt">☑ Forzar oficial</button>
-      <button id="btnRadioBackup" class="btn">🛟 Forzar respaldo</button>
-    </div>
+    // El script debe cargarse “nuevo” cada vez
+    const s = document.createElement("script");
+    s.src = EMBED_SRC;
+    s.async = true;
+    // Para forzar recarga si el navegador lo cachea fuerte:
+    s.src = EMBED_SRC + "?t=" + Date.now();
+    cont.appendChild(s);
 
-    <p class="hint">Si el player oficial no carga, usa “Forzar respaldo”.</p>
-  </section>
+    // Señal básica para tu pausa global (si la usas)
+    window._radioPlaying = true;
+    window._radioPause = ()=>{ 
+      try{
+        const ifr = cont.querySelector("iframe");
+        if (ifr && ifr.contentWindow) ifr.contentWindow.postMessage({event:"command",func:"pauseVideo"}, "*");
+      }catch(e){}
+    };
+  }
 
+  btnRetry.onclick = mountCaster;
+  btnOpen.onclick  = () => window.open("https://tropicalflowradio.ismyradio.com", "_blank");
+
+  // Monta al cargar
+  mountCaster();
+})();
+</script>
   <!-- ============ CONECTADOS ============ -->
   <section>
     <h2>👥 Conectados ahora</h2>
