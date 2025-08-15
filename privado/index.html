@@ -24,13 +24,13 @@
   h2{margin:0 0 12px;text-align:center}
   audio{ width:100%; display:block; margin:8px auto; border-radius:10px }
 
-  /* Contenedores de video 21:9 */
+  /* Video containers */
   .video-shell{ width:100%; margin:0 auto; border-radius:12px; overflow:hidden; background:#000; max-width:var(--maxw) }
   .video-aspect{ position:relative; width:100%; padding-top:var(--aspect21x9) }
   .video-aspect > div, .video-aspect iframe{ position:absolute; inset:0; width:100%!important; height:100%!important }
   .fade{ transition:opacity .25s ease } .hide{opacity:0} .show{opacity:1}
 
-  /* Thumbs del carrusel */
+  /* Thumbs carrusel */
   #yt-thumbs{ display:flex;gap:10px;overflow-x:auto;padding:12px;margin:6px auto 0;max-width:var(--maxw) }
   #yt-thumbs img{ height:90px;border-radius:10px;display:block }
   @media (max-width:600px){ #yt-thumbs img{ height:70px } }
@@ -38,7 +38,7 @@
   /* Botones */
   .btn{ background:var(--accent); color:#000; font-weight:700; border:none; border-radius:10px; padding:10px 14px; cursor:pointer }
   .btn.alt{ background:#2dd4bf }
-  .btn.warn{ background:#fbbf24; color:#000 } /* texto negro */
+  .btn.warn{ background:#fbbf24; color:#000 } /* texto negro en amarillo */
 
   /* Playlist */
   ul.plist{ list-style:none; padding:0; max-width:var(--maxw); margin:0 auto; color:#fff }
@@ -47,15 +47,21 @@
   .status{max-width:var(--maxw);margin:6px auto 0; font-size:.92rem}
   .ok{color:#7CFC00} .warn{color:#ffd166}
 
+  /* Social */
   .social-buttons{ text-align:center; margin: 16px 0 }
   .social-buttons a{ display:inline-block; margin:.4rem; padding:.6rem 1rem; color:#fff; text-decoration:none; border-radius:8px; background:#444 }
   .whatsapp{ background:#25d366 } .youtube{ background:#FF0000 } .facebook{ background:#3b5998 }
   .paypal{ background:#0070ba } .athmovil{ background:#6f42c1 }
 
   footer{ text-align:center; padding:1rem; background:rgba(0,0,0,.6); color:#ccc }
+
+  /* En móviles usa 16:9 para que el video “llene” más */
+  @media (max-width:640px){
+    .video-aspect{ padding-top:56.25% } /* 16:9 */
+  }
 </style>
 
-<!-- API YouTube para carrusel/promo -->
+<!-- API YouTube -->
 <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
@@ -63,79 +69,33 @@
 
 <div class="wrap">
 
-  <!-- RADIO – Caster.fm (respaldo estable) -->
-<section id="radio">
-  <h2>🎧 Escúchanos en Vivo 24/7</h2>
+  <!-- ===================== RADIO Caster + Respaldo ===================== -->
+  <section id="radio">
+    <h2>🎧 Escúchanos en Vivo 24/7</h2>
 
-  <div id="radioWrap" style="max-width:1100px;margin:0 auto">
     <!-- Controles -->
     <div style="display:flex;gap:10px;justify-content:center;margin:10px 0;flex-wrap:wrap">
-      <button id="radioRetry" style="background:#2dd4bf;color:#000;border:0;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer">🔁 Reintentar</button>
-      <button id="radioOpen"  style="background:#fbbf24;color:#000;border:0;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer">🌐 Abrir en pestaña</button>
+      <button id="forceOfficial" class="btn alt">🎛 Usar reproductor oficial</button>
+      <button id="forceFallback" class="btn">🔊 Usar respaldo</button>
+      <button id="radioRetry" class="btn alt">🔁 Recargar widget</button>
+      <button id="radioOpen"  class="btn warn">🌐 Abrir web de la radio</button>
     </div>
 
-    <!-- Contenedor del widget -->
-    <div id="casterContainer" class="radio-player" style="border-radius:12px;overflow:hidden;background:#000">
-      <!-- El “embed” se inyecta por JS para poder reintentar -->
-    </div>
+    <!-- Estado -->
+    <div id="casterStatus" style="text-align:center;color:#ccc;margin-bottom:8px">Cargando widget…</div>
+
+    <!-- Widget Caster -->
+    <div id="casterContainer" style="border-radius:12px;overflow:hidden;background:#000"></div>
+
+    <!-- Respaldo HTML5 (visible sólo cuando se activa) -->
+    <audio id="radioBackup" controls preload="none" style="display:none;max-width:720px;margin:10px auto 0"></audio>
 
     <p style="color:#ccc;text-align:center;font-size:.9rem;margin-top:8px">
-      
-  </div>
-</section>
+      Si el reproductor oficial no carga o aparece “offline”, el respaldo se activará automáticamente.
+    </p>
+  </section>
 
-<script>
-(function(){
-  const PUBLIC_TOKEN = "173d1740-5216-4cbe-8e2b-cb45338d9e19"; // tu token
-  const EMBED_SRC = "https://cdn.cloud.caster.fm/widgets/embed.js";
-
-  const cont = document.getElementById("casterContainer");
-  const btnRetry = document.getElementById("radioRetry");
-  const btnOpen  = document.getElementById("radioOpen");
-
-  function mountCaster(){
-    // Limpia para recargar desde cero
-    cont.innerHTML = `
-      <div data-type="newStreamPlayer"
-           data-publicToken="${PUBLIC_TOKEN}"
-           data-theme="dark"
-           data-color="e81e4d"
-           class="cstrEmbed"
-           style="min-height:360px">
-        <!-- Estos 3 enlaces SON OBLIGATORIOS. No los borres. -->
-        <a href="https://www.caster.fm">Shoutcast Hosting</a>
-        <a href="https://www.caster.fm">Stream Hosting</a>
-        <a href="https://www.caster.fm">Radio Server Hosting</a>
-      </div>
-    `;
-
-    // El script debe cargarse “nuevo” cada vez
-    const s = document.createElement("script");
-    s.src = EMBED_SRC;
-    s.async = true;
-    // Para forzar recarga si el navegador lo cachea fuerte:
-    s.src = EMBED_SRC + "?t=" + Date.now();
-    cont.appendChild(s);
-
-    // Señal básica para tu pausa global (si la usas)
-    window._radioPlaying = true;
-    window._radioPause = ()=>{ 
-      try{
-        const ifr = cont.querySelector("iframe");
-        if (ifr && ifr.contentWindow) ifr.contentWindow.postMessage({event:"command",func:"pauseVideo"}, "*");
-      }catch(e){}
-    };
-  }
-
-  btnRetry.onclick = mountCaster;
-  btnOpen.onclick  = () => window.open("https://tropicalflowradio.ismyradio.com", "_blank");
-
-  // Monta al cargar
-  mountCaster();
-})();
-</script>
-
-  <!-- ============ CONECTADOS ============ -->
+  <!-- ===================== CONECTADOS ===================== -->
   <section>
     <h2>👥 Conectados ahora</h2>
     <div style="text-align:center;margin-bottom:10px;">
@@ -145,7 +105,7 @@
     <div id="onlineBox" style="text-align:center;font-weight:700;"></div>
   </section>
 
-  <!-- ============ VIDEOS RECIENTES (carrusel) ============ -->
+  <!-- ===================== VIDEOS RECIENTES (Carrusel) ===================== -->
   <section id="videos">
     <h2>🎬 Videos Recientes</h2>
     <div class="video-shell">
@@ -163,93 +123,29 @@
     <div id="yt-thumbs"></div>
   </section>
 
-  <!-- ===================== PLAYLIST VIP 1 (lee /musica/) ===================== -->
-    <section class="playlist-box">
-      <h2>🎶 Playlist VIP 1</h2>
+  <!-- ===================== PLAYLIST VIP 1 ===================== -->
+  <section class="playlist-box" style="background:rgba(0,0,0,.35);border-radius:12px;">
+    <h2>🎶 Playlist VIP 1</h2>
 
-      <audio id="audio1" controls style="width:100%;max-width:720px;display:block;margin:8px auto;" preload="metadata">
-        Tu navegador no soporta audio HTML5.
-      </audio>
+    <audio id="audio1" controls preload="metadata" style="width:100%;max-width:720px;display:block;margin:8px auto;">
+      Tu navegador no soporta audio HTML5.
+    </audio>
 
-      <div style="text-align:center;margin:10px 0;">
-        <button id="prev1" class="btn">⏮ Anterior</button>
-        <button id="play1" class="btn">▶ / ⏸</button>
-        <button id="next1" class="btn">⏭ Siguiente</button>
-      </div>
+    <div style="text-align:center;margin:10px 0;">
+      <button id="prev1" class="btn">⏮ Anterior</button>
+      <button id="play1" class="btn alt">▶ / ⏸</button>
+      <button id="next1" class="btn">⏭ Siguiente</button>
+    </div>
 
-      <ul id="list1" class="plist"></ul>
-      <div id="status1" class="status"></div>
+    <ul id="list1" class="plist"></ul>
+    <div id="status1" class="status"></div>
 
-      <script>
-        // RUTA base a tus MP3
-        const base1 = "../musica/"; // <- están fuera de /Privado/ en /musica/
+    <p style="color:#ccc;font-size:.9rem;margin-top:8px;">
+      Sube los 10 MP3 a <code>/musica/</code> (este archivo está en <code>/Privado/</code>, por eso apunta a <code>../musica/</code>).
+    </p>
+  </section>
 
-        // TUS 10 TEMAS con nombres LIMPIOS (renómbralos así al subir a /musica/)
-        const raw1 = [
-          { title: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3", file: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3" },
-          { title: "02 - dj mario andretti - mix merengue romantico.mp3",     file: "02 - dj mario andretti - mix merengue romantico.mp3" },
-          { title: "03 - La Amas Como Yo - Karis.Mp3",                         file: "03 - La Amas Como Yo - Karis.Mp3" },
-          { title: "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3",                            file: "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3" },
-          { title: "05 - Hey Dude! - Elvis Crespo.mp3",            file: "05 - Hey Dude! - Elvis Crespo.mp3" },
-          { title: "06 - Te Regalo Amores - Ken-Yrkm.mp3",                            file: "06 - Te Regalo Amores - Ken-Yrkm.mp3" },
-          { title: "07 - What Is Love - Haddaway.Mp3",                  file: "08 - What Is Love - Haddaway.Mp3" },
-          { title: "08 - Boricua Como El Gran Combo.mp3",     file: "09 - Boricua Como El Gran Combo.mp3" },
-          { title: "09 - Me Gusta, Me Gusta - Elvis Crespo.mp3",                           file: "10 - Me Gusta, Me Gusta - Elvis Crespo.mp3" },
-          { title: "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3",                                 file: "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3" }
-        ];
-
-        const t1 = raw1.map(t => ({ title: t.title, src: base1 + encodeURIComponent(t.file) }));
-
-        const A1 = {
-          audio:  document.getElementById('audio1'),
-          list:   document.getElementById('list1'),
-          prev:   document.getElementById('prev1'),
-          play:   document.getElementById('play1'),
-          next:   document.getElementById('next1'),
-          status: document.getElementById('status1'),
-          i: 0
-        };
-
-        function s1(msg, cls="ok"){ A1.status.className="status "+cls; A1.status.textContent=msg; }
-
-        function render1(){
-          A1.list.innerHTML = "";
-          t1.forEach((it, idx)=>{
-            const li = document.createElement('li');
-            li.textContent = (idx===A1.i ? "▶ " : "") + it.title;
-            li.style.padding="8px 10px"; li.style.borderRadius="8px"; li.style.cursor="pointer";
-            li.style.background = idx===A1.i ? "rgba(0,191,255,.35)" : "transparent";
-            li.onclick = () => { A1.i = idx; load1(true); };
-            A1.list.appendChild(li);
-          });
-        }
-
-        function load1(autoplay){
-          A1.audio.src = t1[A1.i].src;
-          render1();
-          s1("Cargando: "+t1[A1.i].title+"…","ok");
-          if (autoplay) A1.audio.play().catch(()=>{});
-        }
-
-        A1.prev.onclick = ()=>{ A1.i = (A1.i - 1 + t1.length) % t1.length; load1(true); };
-        A1.next.onclick = ()=>{ A1.i = (A1.i + 1) % t1.length; load1(true); };
-        A1.play.onclick = ()=>{ if (A1.audio.paused) A1.audio.play().catch(()=>{}); else A1.audio.pause(); };
-
-        A1.audio.addEventListener('ended', ()=>{ A1.i = (A1.i + 1) % t1.length; load1(true); });
-        A1.audio.addEventListener('loadedmetadata', ()=> s1("Listo: "+t1[A1.i].title+" ✓","ok"));
-        A1.audio.addEventListener('error', ()=> s1("⚠ No se pudo cargar: "+decodeURIComponent(t1[A1.i].src)+" (¿/musica/ y nombre correcto?)","warn"));
-
-        load1(false);
-      </script>
-     
-      <p style="color:#ccc;font-size:.9rem;margin-top:8px;">
-        Sube los 10 MP3 a <code>/musica/</code> con esos nombres. Si alguno marca 0:00, abre su URL para confirmar.
-      </p>
-    </section>
-    <!-- =================== FIN PLAYLIST VIP 1 =================== -->
-
-
-  <!-- ============ VIDEO PROMO secuencial ============ -->
+  <!-- ===================== VIDEO PROMO (Secuencial) ===================== -->
   <section id="promo" style="margin-top:24px;">
     <h2>🎬 Video Promo Tropical</h2>
     <div class="video-shell">
@@ -266,7 +162,7 @@
     <div id="promo-title" style="max-width:var(--maxw);margin:8px auto 0;text-align:center;font-weight:700;"></div>
   </section>
 
-  <!-- BOTONES -->
+  <!-- ===================== BOTONES / FOOTER ===================== -->
   <div class="social-buttons">
     <a class="whatsapp" href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
     <a class="youtube" href="https://www.youtube.com/@TFTvpoweredbyworldm8780" target="_blank">YouTube</a>
@@ -293,14 +189,14 @@
 <script>
 /* ================== CONTROL CENTRAL: pausar el resto ================== */
 const registry = {
-  radio: () => document.getElementById('radioFallback'),
+  radio: () => document.getElementById('radioBackup'),
   playlist: () => document.getElementById('audio1'),
   yt: () => window._ytCarouselPlayerInstance,
   promo: () => window._ytPromoPlayerInstance
 };
 function pauseAllExcept(source){
   try{
-    if (source!=='radio'){ const r = registry.radio(); r && !r.paused && (r.pause(), r.currentTime=r.currentTime); }
+    if (source!=='radio'){ const r = registry.radio(); r && !r.paused && r.pause(); }
     if (source!=='playlist'){ const p = registry.playlist(); p && !p.paused && p.pause(); }
     if (source!=='yt'){
       const y = registry.yt && registry.yt();
@@ -316,70 +212,86 @@ function pauseAllExcept(source){
 
 <script>
 /* ================== RADIO: Oficial + Respaldo ================== */
-const casterStatus = document.getElementById('casterStatus');
-const radioFallback = document.getElementById('radioFallback');
+const PUBLIC_TOKEN = "173d1740-5216-4cbe-8e2b-cb45338d9e19";
+const EMBED_SRC = "https://cdn.cloud.caster.fm/widgets/embed.js";
 
-// Lista de respaldos (elige el que prefieras o añade más)
+const casterContainer = document.getElementById("casterContainer");
+const casterStatus = document.getElementById("casterStatus");
+const radioBackup   = document.getElementById("radioBackup");
+
 const BACKUPS = [
-  // Latin pop/reggaeton (ejemplos públicos; puedes cambiarlos cuando quieras)
-  "https://stream-149.zeno.fm/0cn4d1x2kxhvv?zs=Q3nXn5nPTT", // ejemplo 1
-  "https://stream-40.zeno.fm/8s5yq7g7p0hvv?zs=Jw9C4S1hQp"   // ejemplo 2
+  "https://stream-149.zeno.fm/0cn4d1x2kxhvv?zs=Q3nXn5nPTT",
+  "https://stream-40.zeno.fm/8s5yq7g7p0hvv?zs=Jw9C4S1hQp"
 ];
 let backupIndex = 0;
-
 function setBackup(i){
   backupIndex = (i + BACKUPS.length) % BACKUPS.length;
-  radioFallback.src = BACKUPS[backupIndex];
+  radioBackup.src = BACKUPS[backupIndex];
 }
-
 setBackup(0);
+
+function mountCaster(){
+  casterContainer.innerHTML = `
+    <div data-type="newStreamPlayer"
+         data-publicToken="${PUBLIC_TOKEN}"
+         data-theme="dark"
+         data-color="e81e4d"
+         class="cstrEmbed"
+         style="min-height:360px">
+      <a href="https://www.caster.fm">Shoutcast Hosting</a>
+      <a href="https://www.caster.fm">Stream Hosting</a>
+      <a href="https://www.caster.fm">Radio Server Hosting</a>
+    </div>`;
+  const s = document.createElement("script");
+  s.src = EMBED_SRC + "?t=" + Date.now();
+  s.async = true;
+  casterContainer.appendChild(s);
+  casterStatus.textContent = "Cargando reproductor oficial…";
+}
+mountCaster();
 
 let forced = null; // 'official' | 'fallback' | null
 
 function useFallback(){
   forced = forced || null;
-  radioFallback.style.display = "";
+  radioBackup.style.display = "";
   pauseAllExcept('radio');
-  radioFallback.play().catch(()=>{});
+  casterStatus.textContent = "Usando respaldo.";
+  radioBackup.play().catch(()=>{});
 }
-
 function useOfficial(){
-  // mostramos el widget; el audio fallback queda en pausa
-  radioFallback.pause();
-  radioFallback.style.display = "none";
+  radioBackup.pause();
+  radioBackup.style.display = "none";
   casterStatus.textContent = "Usando reproductor oficial de Caster.fm.";
 }
 
 function autoDetect(){
-  if (forced === 'fallback') { casterStatus.textContent="Forzado a respaldo."; useFallback(); return; }
-  if (forced === 'official'){ casterStatus.textContent="Forzado a oficial.";  useOfficial();  return; }
+  if (forced === 'fallback'){ useFallback(); return; }
+  if (forced === 'official'){ useOfficial(); return; }
 
-  // Espera a que el widget se pinte
   setTimeout(()=>{
-    const embed = document.querySelector('.cstrEmbed');
-    const rendered = embed?.getAttribute('data-rendered') === 'true' || document.getElementById('cstrpdiv');
-    if (!rendered) {
-      casterStatus.textContent = "El widget oficial no cargó. Activado respaldo automático.";
-      useFallback();
-      return;
+    const rendered = document.querySelector('.cstrEmbed iframe') || document.getElementById('cstrpdiv');
+    if (!rendered){
+      casterStatus.textContent = "No cargó el widget. Activando respaldo.";
+      useFallback(); return;
     }
-    // Si el widget muestra “offline”, cambiamos al respaldo
-    const holder = document.querySelector('.cstrEmbed, #cstrpdiv');
-    const txt = (holder?.innerText || "").toLowerCase();
-    if (txt.includes("broadcast is currently offline")) {
-      casterStatus.textContent = "Servidor online pero sin transmisión. Usando respaldo hasta que conectes tu encoder.";
+    const txt = (document.querySelector('.cstrEmbed')?.innerText || "").toLowerCase();
+    if (txt.includes("broadcast is currently offline")){
+      casterStatus.textContent = "Servidor online pero OFF AIR. Respaldo en marcha.";
       useFallback();
-    } else {
+    }else{
       useOfficial();
     }
-  }, 6000);
+  }, 7000);
 }
+autoDetect();
 
 document.getElementById('forceOfficial').onclick = ()=>{ forced='official'; useOfficial(); };
 document.getElementById('forceFallback').onclick = ()=>{ forced='fallback'; useFallback(); };
+document.getElementById('radioRetry').onclick   = ()=>{ forced=null; mountCaster(); autoDetect(); };
+document.getElementById('radioOpen').onclick    = ()=> window.open("https://tropicalflowradio.ismyradio.com","_blank");
 
-radioFallback.addEventListener('play', ()=> pauseAllExcept('radio'));
-autoDetect();
+radioBackup.addEventListener('play', ()=> pauseAllExcept('radio'));
 </script>
 
 <script>
@@ -419,7 +331,6 @@ function fadeSwap(loadFn){
   box.classList.remove('show'); box.classList.add('hide');
   setTimeout(()=>{ loadFn(); box.classList.remove('hide'); box.classList.add('show'); }, 180);
 }
-
 function goTo(idx){
   cIndex = (idx + CAROUSEL_IDS.length) % CAROUSEL_IDS.length;
   pauseAllExcept('yt');
@@ -439,7 +350,6 @@ function togglePlay(){
     else { pauseAllExcept('yt'); cPlayer.playVideo(); }
   }catch(_){}
 }
-
 function renderFallback(){
   const box = document.getElementById('yt-carousel-player');
   box.innerHTML = `<iframe src="https://www.youtube.com/embed/${CAROUSEL_IDS[cIndex]}?rel=0&modestbranding=1&playsinline=1"
@@ -448,15 +358,14 @@ function renderFallback(){
                        allowfullscreen></iframe>`;
   document.getElementById("yt-current-title").textContent = "";
   buildThumbs(); highlight();
-  document.getElementById("btnPrevVid").onclick = ()=>{ prevVideo(); };
-  document.getElementById("btnNextVid").onclick = ()=>{ nextVideo(); };
-  document.getElementById("btnPlayPauseVid").onclick = ()=>{}; // sin control en iframe simple
+  document.getElementById("btnPrevVid").onclick = prevVideo;
+  document.getElementById("btnNextVid").onclick = nextVideo;
+  document.getElementById("btnPlayPauseVid").onclick = ()=>{}; // sin control
   document.getElementById("btnFs").onclick = ()=>{
     const shell = document.querySelector('#videos .video-shell');
     if (document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.();
   };
 }
-
 function createCarouselPlayer(){
   if (!(window.YT && window.YT.Player)) { renderFallback(); return; }
   cPlayer = new YT.Player('yt-carousel-player', {
@@ -484,7 +393,6 @@ function createCarouselPlayer(){
   btn?.addEventListener('click', toggleFs);
   document.addEventListener('fullscreenchange', onFsChange);
 }
-
 (function initYT(){
   let started = false;
   function startOnce(){ if (started) return; started = true; createCarouselPlayer(); }
@@ -496,8 +404,8 @@ function createCarouselPlayer(){
 </script>
 
 <script>
-/* ================== PLAYLIST VIP (carpeta /musica/) ================== */
-const BASE = "../musica/"; // porque este index está en /Privado/
+/* ================== PLAYLIST VIP (/musica/) ================== */
+const BASE = "../musica/";
 const raw1 = [
   { title: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3", file: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3" },
   { title: "02 - dj mario andretti - mix merengue romantico.mp3",     file: "02 - dj mario andretti - mix merengue romantico.mp3" },
@@ -510,7 +418,6 @@ const raw1 = [
   { title: "09 - Me Gusta, Me Gusta - Elvis Crespo.mp3",               file: "09 - Me Gusta, Me Gusta - Elvis Crespo.mp3" },
   { title: "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3",         file: "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3" }
 ];
-
 const tracks1 = raw1.map(t => ({ title: t.title, src: BASE + encodeURIComponent(t.file) }));
 
 const A1 = {
@@ -530,6 +437,7 @@ function render1(){
     const li = document.createElement('li');
     const num = (idx+1).toString().padStart(2,'0');
     li.textContent = ${num} - ${it.title};
+    li.style.padding="8px 10px"; li.style.borderRadius="8px"; li.style.cursor="pointer";
     li.style.background = idx===A1.i ? "rgba(0,191,255,.35)" : "transparent";
     li.onclick = () => { A1.i = idx; load1(true); };
     A1.list.appendChild(li);
@@ -551,7 +459,7 @@ render1();
 
 <script>
 /* ================== VIDEO PROMO (Merengue → Salsa) ================== */
-const PROMO_IDS = ["U0V7ATX_2CY", "5ZVTbahB5CM"]; // cambia si quieres
+const PROMO_IDS = ["U0V7ATX_2CY", "5ZVTbahB5CM"];
 let promoIndex = 0;
 let promoPlayer = null;
 
@@ -564,7 +472,6 @@ function promoToggle(){
     else { pauseAllExcept('promo'); promoPlayer.playVideo(); }
   }catch(_){}
 }
-
 function createPromoPlayer(){
   if (!(window.YT && window.YT.Player)) return;
   promoPlayer = new YT.Player('promo-player', {
@@ -598,7 +505,6 @@ function updatePromoTitle(){
     document.getElementById('promo-title').textContent = d?.title || "";
   }catch(_){}
 }
-
 (function loadPromo(){
   if (window.YT && window.YT.Player) { createPromoPlayer(); return; }
   const prev = window.onYouTubeIframeAPIReady;
@@ -608,3 +514,4 @@ function updatePromoTitle(){
 
 </body>
 </html>
+ 
