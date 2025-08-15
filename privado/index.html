@@ -95,27 +95,7 @@
     <p class="hint">Si el player oficial no carga, usa “Forzar respaldo”.</p>
   </section>
 <script>
-
-
-  
-      <div id="casterWrap">
-        <div data-type="newStreamPlayer"
-             data-publicToken="173d1740-5216-4cbe-8e2b-cb45338d9e19"
-             data-theme="dark" data-color="e81e4d" class="cstrEmbed">
-          <a href="https://www.caster.fm">Shoutcast Hosting</a>
-          <a href="https://www.caster.fm">Stream Hosting</a>
-          <a href="https://www.caster.fm">Radio Server Hosting</a>
-        </div>
-      </div>`;
-    // Reinyectar el script SIEMPRE que reinstalamos el widget
-    const s = document.createElement('script');
-    s.src = 'https://cdn.cloud.caster.fm/widgets/embed.js';
-    radioBackup.appendChild(s);
-    // Botones internos
-    radioBackup.querySelector('#casterRetry').onclick = mountCasterWidget;
-    radioBackup.querySelector('#goOfficial').onclick = showOfficial;
-  }
-
+     
   function showBackup(){
     radioOfficial.style.display = 'none';
     radioBackup.style.display   = 'block';
