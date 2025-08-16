@@ -391,19 +391,19 @@ function createCarouselPlayer(){
 </script>
 
 <script>
-/* ===== PLAYLIST VIP (carpeta /musica/) ===== */
-const BASE = "../musica/"; // este index está en /Privado/
+/* ================== PLAYLIST VIP (carpeta /musica/) ================== */
+const BASE = "../musica/"; // porque este index está en /Privado/
 const raw1 = [
-  { title: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3", 
-  { title: "02 - dj mario andretti - mix merengue romantico.mp3",     
-  { title: "03 - La Amas Como Yo - Karis.Mp3",                         
-  { title: "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3",            
-  { title: "05 - Hey Dude! - Elvis Crespo.mp3",                        
-  { title: "06 - Te Regalo Amores - Ken-Yrkm.mp3",                     
-  { title: "07 - What Is Love - Haddaway.Mp3",                         
-  { title: "08 - Boricua Como El Gran Combo.mp3",                      
-  { title: "09 - Me Gusta, Me Gusta - Elvis Crespo.mp3",               
-  { title: "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3",        
+  { title: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3", file: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3" },
+  { title: "02 - dj mario andretti - mix merengue romantico.mp3",     file: "02 - dj mario andretti - mix merengue romantico.mp3" },
+  { title: "03 - La Amas Como Yo - Karis.Mp3",                         file: "03 - La Amas Como Yo - Karis.Mp3" },
+  { title: "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3",            file: "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3" },
+  { title: "05 - Hey Dude! - Elvis Crespo.mp3",                        file: "05 - Hey Dude! - Elvis Crespo.mp3" },
+  { title: "06 - Te Regalo Amores - Ken-Yrkm.mp3",                     file: "06 - Te Regalo Amores - Ken-Yrkm.mp3" },
+  { title: "07 - What Is Love - Haddaway.Mp3",                         file: "07 - What Is Love - Haddaway.Mp3" },
+  { title: "08 - Boricua Como El Gran Combo.mp3",                      file: "08 - Boricua Como El Gran Combo.mp3" },
+  { title: "09 - Me Gusta, Me Gusta - Elvis Crespo.mp3",               file: "09 - Me Gusta, Me Gusta - Elvis Crespo.mp3" },
+  { title: "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3",         file: "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3" }
 ];
 const tracks1 = raw1.map(t => ({ title: t.title, src: BASE + encodeURIComponent(t.file) }));
 
@@ -424,7 +424,6 @@ function render1(){
     const li = document.createElement('li');
     const num = (idx+1).toString().padStart(2,'0');
     li.textContent = ${num} - ${it.title};
-    li.style.padding="8px 10px"; li.style.borderRadius="8px"; li.style.cursor="pointer";
     li.style.background = idx===A1.i ? "rgba(0,191,255,.35)" : "transparent";
     li.onclick = () => { A1.i = idx; load1(true); };
     A1.list.appendChild(li);
