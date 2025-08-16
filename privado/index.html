@@ -85,16 +85,13 @@
         <span class="badge">Tropical Flow TV Radio</span>
       </div>
 
-    <script>
-
-<!-- Fallback HTML5 -->
+      <!-- Fallback HTML5 -->
       <audio id="radioFallback" controls preload="none" style="width:100%;margin-top:10px;display:none;"></audio>
 
       <div id="casterStatus" style="text-align:center;color:#ccc;margin-top:6px;font-size:.9rem;"></div>
     </div>
   </section>
-  
- 
+
   <!-- ============ CONECTADOS ============ -->
   <section>
     <h2>👥 Conectados ahora</h2>
@@ -397,16 +394,16 @@ function createCarouselPlayer(){
 /* ===== PLAYLIST VIP (carpeta /musica/) ===== */
 const BASE = "../musica/"; // este index está en /Privado/
 const raw1 = [
-  { title: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3", file: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3" },
-  { title: "02 - dj mario andretti - mix merengue romantico.mp3",     file: "02 - dj mario andretti - mix merengue romantico.mp3" },
-  { title: "03 - La Amas Como Yo - Karis.Mp3",                         file: "03 - La Amas Como Yo - Karis.Mp3" },
-  { title: "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3",            file: "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3" },
-  { title: "05 - Hey Dude! - Elvis Crespo.mp3",                        file: "05 - Hey Dude! - Elvis Crespo.mp3" },
-  { title: "06 - Te Regalo Amores - Ken-Yrkm.mp3",                     file: "06 - Te Regalo Amores - Ken-Yrkm.mp3" },
-  { title: "07 - What Is Love - Haddaway.Mp3",                         file: "07 - What Is Love - Haddaway.Mp3" },
-  { title: "08 - Boricua Como El Gran Combo.mp3",                      file: "08 - Boricua Como El Gran Combo.mp3" },
-  { title: "09 - Me Gusta, Me Gusta - Elvis Crespo.mp3",               file: "09 - Me Gusta, Me Gusta - Elvis Crespo.mp3" },
-  { title: "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3",         file: "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3" }
+  { title: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3", 
+  { title: "02 - dj mario andretti - mix merengue romantico.mp3",     
+  { title: "03 - La Amas Como Yo - Karis.Mp3",                         
+  { title: "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3",            
+  { title: "05 - Hey Dude! - Elvis Crespo.mp3",                        
+  { title: "06 - Te Regalo Amores - Ken-Yrkm.mp3",                     
+  { title: "07 - What Is Love - Haddaway.Mp3",                         
+  { title: "08 - Boricua Como El Gran Combo.mp3",                      
+  { title: "09 - Me Gusta, Me Gusta - Elvis Crespo.mp3",               
+  { title: "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3",        
 ];
 const tracks1 = raw1.map(t => ({ title: t.title, src: BASE + encodeURIComponent(t.file) }));
 
@@ -499,3 +496,4 @@ function updatePromoTitle(){ try{ const d = promoPlayer.getVideoData(); document
 
 </body>
 </html>
+ 
