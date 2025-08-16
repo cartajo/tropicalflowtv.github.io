@@ -85,12 +85,27 @@
         <span class="badge">Tropical Flow TV Radio</span>
       </div>
 
-      <!-- Fallback HTML5 -->
-      <audio id="radioFallback" controls preload="none" style="width:100%;margin-top:10px;display:none;"></audio>
+     Fallback...<script>
+/* ===== RADIO: Caster + Fallback ===== */
+(function(){
+  const PUBLIC_TOKEN = "173d1740-5216-4cbe-8e2b-cb45338d9e19";
+  const EMBED_SRC = "https://cdn.cloud.caster.fm/widgets/embed.js";
 
-      <div id="casterStatus" style="text-align:center;color:#ccc;margin-top:6px;font-size:.9rem;"></div>
-    </div>
-  </section>
+  const cont   = document.getElementById("casterContainer");
+  const aBack  = document.getElementById("radioFallback");
+  const status = document.getElementById("casterStatus");
+
+  const btnRetry    = document.getElementById("radioRetry");
+  const btnOpen     = document.getElementById("radioOpen");
+  const btnOfficial = document.getElementById("forceOfficial");
+  const btnFallback = document.getElementById("forceFallback");
+  const btnChange   = document.getElementById("changeBackup");
+
+  /* Streams con CORS OK (salsa/merengue/latin) */
+  const BACKUPS = [
+    {name:"Salsa/Latin Mix",   url:"https://us2freenew.listen2myradio.com/live.mp3?typeportmount=s1_29746_stream_595680718"},
+    {name:"Bachata Hits",      url:"https://stream-ssl.xcast.com.br:7066/live"},
+    {name:"Merengue/Latino",   url:"https://stream.zeno.fm/0s4r8t5p 
 
   <!-- ============ CONECTADOS ============ -->
   <section>
