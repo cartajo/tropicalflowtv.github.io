@@ -90,7 +90,12 @@
 (function(){
   const PUBLIC_TOKEN = "173d1740-5216-4cbe-8e2b-cb45338d9e19";
   const EMBED_SRC = "https://cdn.cloud.caster.fm/widgets/embed.js";
+<!-- Fallback HTML5 -->
+      <audio id="radioFallback" controls preload="none" style="width:100%;margin-top:10px;display:none;"></audio>
 
+      <div id="casterStatus" style="text-align:center;color:#ccc;margin-top:6px;font-size:.9rem;"></div>
+    </div>
+  </section>
   const cont   = document.getElementById("casterContainer");
   const aBack  = document.getElementById("radioFallback");
   const status = document.getElementById("casterStatus");
