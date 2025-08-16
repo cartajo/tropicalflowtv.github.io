@@ -391,8 +391,8 @@ function createCarouselPlayer(){
 </script>
 
 <script>
-/* ================== PLAYLIST VIP (carpeta /musica/) ================== */
-const BASE = "../musica/"; // porque este index está en /Privado/
+/* ================== PLAYLIST VIP (/musica/) ================== */
+const BASE = "../musica/";
 const raw1 = [
   { title: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3", file: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3" },
   { title: "02 - dj mario andretti - mix merengue romantico.mp3",     file: "02 - dj mario andretti - mix merengue romantico.mp3" },
@@ -424,6 +424,7 @@ function render1(){
     const li = document.createElement('li');
     const num = (idx+1).toString().padStart(2,'0');
     li.textContent = ${num} - ${it.title};
+    li.style.padding="8px 10px"; li.style.borderRadius="8px"; li.style.cursor="pointer";
     li.style.background = idx===A1.i ? "rgba(0,191,255,.35)" : "transparent";
     li.onclick = () => { A1.i = idx; load1(true); };
     A1.list.appendChild(li);
@@ -442,6 +443,8 @@ A1.audio.addEventListener('play', ()=> pauseAllExcept('playlist'));
 A1.audio.addEventListener('error', ()=> s1("⚠ No se pudo cargar: "+decodeURIComponent(tracks1[A1.i].src),"warn"));
 render1();
 </script>
+
+
 
 <script>
 /* ===== VIDEO PROMO (Merengue → Salsa) ===== */
