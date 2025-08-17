@@ -66,7 +66,101 @@
 <header><h1>🌴 Tropical Flow TV📺Radio - VIP</h1></header>
 
 <div class="wrap">
-http://tropicalflowtv.radio12345.com/
+<!-- =======================================
+     𝗥𝗲𝗽𝗿𝗼𝗱𝘂𝗰𝘁𝗼𝗿 𝗧𝗿𝗼𝗽𝗶𝗰𝗮𝗹 𝗙𝗹𝗼𝘄 𝗧𝗩 𝗥𝗮𝗱𝗶𝗼
+   ======================================= -->
+<div style="max-width: 900px; margin: 30px auto; text-align: center;">
+
+  <h2 style="color: white; font-family: Arial, sans-serif; font-size: 1.8rem;">
+    🎶 Tropical Flow TV 📺 Radio 🎶
+  </h2>
+
+  <!-- Audio Player oculto inicialmente para desbloquear en móvil -->
+  <audio
+    id="radioPlayer"
+    controls
+    autoplay
+    preload="none"
+    playsinline
+    style="width: 100%; max-width: 600px; background: #222; color: white; border-radius: 10px; display: none;"
+  >
+    <source src="http://tropicalflowtv.radio12345.com/" type="audio/mpeg" />
+    Tu navegador no soporta audio HTML5.
+  </audio>
+
+  <br />
+
+  <!-- Botón grande para iniciar / pausar la radio -->
+  <button
+    id="radioToggle"
+    style="
+      margin-top: 15px;
+      padding: 15px 30px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      background: #00bfff;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    "
+  >
+    ▶ Empezar Radio
+  </button>
+
+  <p id="radioMsg" style="color: white; margin-top: 10px; font-size: 0.95rem;">
+    Toca el botón si no arranca automáticamente.
+  </p>
+
+</div>
+
+<script>
+  (function() {
+    const player = document.getElementById('radioPlayer');
+    const btn = document.getElementById('radioToggle');
+    const msg = document.getElementById('radioMsg');
+
+    function startRadio() {
+      player.style.display = 'block';
+      player.play().then(() => {
+        btn.textContent = '⏸ Pausar Radio';
+        msg.textContent = 'La radio suena. ¡Dale play cada vez que quieras!';
+      }).catch(err => {
+        msg.textContent = 'Presiona ▶ nuevamente para iniciar (bloqueo de autoplay).';
+        console.warn('Error al intentar reproducir:', err);
+      });
+    }
+
+    btn.addEventListener('click', () => {
+      if (player.paused) startRadio();
+      else {
+        player.pause();
+        btn.textContent = '▶ Empezar Radio';
+        msg.textContent = 'Radio en pausa.';
+      }
+    });
+
+    // Sincronizar estado si el usuario usa controles nativos
+    player.addEventListener('play', () => {
+      btn.textContent = '⏸ Pausar Radio';
+      msg.textContent = 'La radio suena. ¡Dale play cada vez que quieras!';
+    });
+    player.addEventListener('pause', () => {
+      btn.textContent = '▶ Empezar Radio';
+      msg.textContent = 'Radio en pausa.';
+    });
+    player.addEventListener('error', () => {
+      msg.textContent = 'Error de conexión. Verifica que tu encoder esté ON.';
+    });
+
+    // Al cargar la página, mostramos el player y tratamos de iniciar si hay interacción previa
+    window.addEventListener('touchend', function once() {
+      if (player.paused) player.load();
+      window.removeEventListener('touchend', once);
+    }, { once: true });
+  })();
+</script>
   <!-- ============ VIDEOS RECIENTES (Carrusel) ============ -->
   <section id="videos">
     <h2>🎬 Videos Recientes</h2>
