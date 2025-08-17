@@ -66,27 +66,84 @@
 <header><h1>🌴 Tropical Flow TV📺Radio - VIP</h1></header>
 
 <div class="wrap">
-<!-- Reproductor Tropical Flow TV📺Radio -->
-<div style="text-align:center; margin:20px;">
-  <h2>🎶 Tropical Flow TV📺Radio 🎶</h2>
-  <audio controls autoplay>
-    <source src="http://uk25freenew.listen2myradio.com:32403/;" type="audio/mpeg">
-    Tu navegador no soporta audio en vivo.
-  </audio>
-  <p><a href="http://tropicalflowtv.radio12345.com" target="_blank">
-    Escuchar en ventana aparte
-  </a></p>
-</div>
+<!-- === RADIO: Listen2MyRadio (con botón de inicio) === -->
+<section id="radio" style="color:#fff;">
+  <h2 style="color:#fff;">🎧 Escúchanos en Vivo 24/7</h2>
 
-  <!-- ============ CONECTADOS ============ -->
-  <section>
-    <h2>👥 Conectados ahora</h2>
-    <div style="text-align:center;margin-bottom:10px;">
-      <script src="https://counterapi.com/api/online?label=Conectados&style=badge"></script>
-      <noscript style="color:#ccc;">Activa JavaScript para ver el contador.</noscript>
+  <div style="max-width:900px;margin:0 auto;text-align:center;background:rgba(255,255,255,.06);padding:16px;border-radius:12px">
+    <!-- Botón para iniciar (desbloquea autoplay en móviles) -->
+    <button id="radioStart"
+            style="background:#00e0ff;color:#000;border:0;border-radius:12px;
+                   padding:12px 18px;font-weight:800;cursor:pointer;font-size:1rem;">
+      ▶ Empezar Radio
+    </button>
+
+    <!-- Barra nativa (oculta hasta que el usuario pulse el botón) -->
+    <audio id="radioLive"
+           style="width:100%;max-width:900px;display:none;margin-top:12px;border-radius:10px"
+           preload="none" playsinline>
+      <!-- Stream principal (Listen2MyRadio) -->
+      <source src="http://uk25freenew.listen2myradio.com:32403/;" type="audio/mpeg">
+      Tu navegador no soporta audio en vivo.
+    </audio>
+
+    <div id="radioMsg" style="margin-top:8px;font-size:.95rem;color:#fff;opacity:.9">
+      Pulsa “Empezar Radio” si la barra no reproduce automáticamente.
     </div>
-    <div id="onlineBox" style="text-align:center;font-weight:700;"></div>
-  </section>
+
+    <div style="margin-top:10px">
+      <a href="http://tropicalflowtv.radio12345.com" target="_blank"
+         style="display:inline-block;margin:.3rem;padding:.55rem .9rem;border-radius:10px;
+                background:#fbbf24;color:#000;text-decoration:none;font-weight:700">
+        🌐 Abrir en pestaña
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+(() => {
+  const btn  = document.getElementById('radioStart');
+  const au   = document.getElementById('radioLive');
+  const msg  = document.getElementById('radioMsg');
+
+  // Arrancar por gesto del usuario
+  function startRadio(){
+    // muestra la barra y reproduce
+    au.style.display = 'block';
+    au.play().then(()=>{
+      btn.textContent = '⏸ Pausar';
+      msg.textContent = 'Reproduciendo Tropical Flow TV Radio 🔊';
+    }).catch(err=>{
+      msg.textContent = 'No se pudo iniciar automáticamente. Toca de nuevo el botón.';
+      console.warn(err);
+    });
+  }
+
+  // Alternar play/pausa con el mismo botón
+  btn.addEventListener('click', ()=>{
+    if (au.paused) startRadio();
+    else {
+      au.pause();
+      btn.textContent = '▶ Empezar Radio';
+      msg.textContent = 'Radio en pausa.';
+    }
+  });
+
+  // Si el usuario toca la barra nativa, sincronizamos el texto del botón
+  au.addEventListener('play',  ()=>{ btn.textContent = '⏸ Pausar'; msg.textContent='Reproduciendo Tropical Flow TV Radio 🔊'; });
+  au.addEventListener('pause', ()=>{ btn.textContent = '▶ Empezar Radio'; msg.textContent='Radio en pausa.'; });
+  au.addEventListener('error', ()=>{ msg.textContent='⚠ Error de conexión con el stream. Reintenta o abre en pestaña.'; });
+
+  // “Desbloqueo” extra: si el usuario presiona cualquier tecla/gesto, intentamos iniciar
+  ['touchend','keydown'].forEach(ev=>{
+    window.addEventListener(ev, function once(){
+      if (au.paused) au.load(); // prepara el stream
+      window.removeEventListener(ev, once, {capture:true});
+    }, {capture:true, once:true});
+  });
+})();
+</script>
 
   <!-- ============ VIDEOS RECIENTES (Carrusel) ============ -->
   <section id="videos">
