@@ -66,84 +66,17 @@
 <header><h1>🌴 Tropical Flow TV📺Radio - VIP</h1></header>
 
 <div class="wrap">
-<!-- ================= RADIO Listen2MyRadio – TEST SIMPLE ================= -->
-<section id="radio">
-  <h2>🎧 Escúchanos en Vivo 24/7</h2>
-
-  <div style="display:flex;gap:10px;justify-content:center;margin:10px 0;flex-wrap:wrap">
-    <button id="rRetry" style="padding:10px 14px;border:0;border-radius:10px;font-weight:700;background:#2dd4bf;color:#000">🔁 Reintentar</button>
-    <button id="rSwap"  style="padding:10px 14px;border:0;border-radius:10px;font-weight:700;background:#00e0ff;color:#000">🔀 Cambiar respaldo</button>
-    <button id="rOpen"  style="padding:10px 14px;border:0;border-radius:10px;font-weight:700;background:#fbbf24;color:#000">🌐 Abrir en pestaña</button>
-  </div>
-
-  <audio id="radioHTML5" controls preload="none" playsinline
-         style="width:100%;max-width:900px;display:block;margin:8px auto;border-radius:12px"></audio>
-
-  <div id="radioMsg" style="text-align:center;color:#ccc;font-size:.9rem;margin-top:6px"></div>
-</section>
-
-<script>
-(function(){
-  // ===== AJUSTA ESTOS DATOS A TU CANAL =====
-  const HOST = "uk25freewow.listen2myradio.com"; // del panel (tu captura)
-  const PORT = 32403;                            // del panel
-  // URLs candidatas (orden: proxys https -> http -> directo):
-  const CANDIDATES = [
-    "https://tropicalflowtv.listen2myshow.com/;",      // proxy https (si existe para tu slug)
-    "https://tropicalflowtv.radiostream123.com/;",     // proxy https (a veces no habilitado)
-    "http://tropicalflowtv.radiostream123.com/;",      // proxy http
-    http://${HOST}:${PORT}/;,                        // directo (http)
-    http://${HOST}:${PORT}/stream                    // directo variante (http)
-  ];
-  const PUBLIC_PAGE = "https://tropicalflowtv.listen2myshow.com";
-
-  const a = document.getElementById("radioHTML5");
-  const msg = document.getElementById("radioMsg");
-  const bRetry = document.getElementById("rRetry");
-  const bSwap  = document.getElementById("rSwap");
-  const bOpen  = document.getElementById("rOpen");
-
-  let i = 0, tried = new Set();
-
-  function setMsg(t){ msg.textContent = t; console.log("[RADIO]", t); }
-
-  function loadCurrent(autoplay=true){
-    const url = CANDIDATES[i];
-    a.src = url;
-    setMsg("Intentando: " + url);
-    if (autoplay){
-      a.play().then(()=> setMsg("Reproduciendo ✓ " + url))
-       .catch(e => setMsg("Listo para reproducir. Toca ▶ (autoplay bloqueado / mixed content)."));
-    }
-  }
-  function next(){
-    tried.add(i);
-    i = (i + 1) % CANDIDATES.length;
-    if (tried.size >= CANDIDATES.length){
-      setMsg("No se pudo reproducir ningún endpoint. Verifica encoder y prueba Reintentar.");
-      tried.clear();
-      return;
-    }
-    loadCurrent(true);
-  }
-
-  a.addEventListener("error", next);
-  ["stalled","abort","emptied"].forEach(ev => a.addEventListener(ev, next));
-
-  // Botones
-  bRetry.onclick = () => { tried.clear(); loadCurrent(true); };
-  bSwap.onclick  = () => { i = (i + 1) % CANDIDATES.length; tried.clear(); loadCurrent(true); };
-  bOpen.onclick  = () => window.open(PUBLIC_PAGE, "_blank");
-
-  // Pista si tu sitio está en HTTPS y el stream sólo en HTTP
-  if (location.protocol === "https:" && CANDIDATES.every(u => u.startsWith("http://"))){
-    setMsg("Tu página es HTTPS y todos los streams son HTTP (bloqueo de navegador). Necesitas un proxy HTTPS.");
-  }
-
-  loadCurrent(false);
-})();
-</script>
-<!-- =============== FIN RADIO TEST =============== -->
+<!-- Reproductor Tropical Flow TV📺Radio -->
+<div style="text-align:center; margin:20px;">
+  <h2>🎶 Tropical Flow TV📺Radio 🎶</h2>
+  <audio controls autoplay>
+    <source src="http://uk25freenew.listen2myradio.com:32403/;" type="audio/mpeg">
+    Tu navegador no soporta audio en vivo.
+  </audio>
+  <p><a href="http://tropicalflowtv.radio12345.com" target="_blank">
+    Escuchar en ventana aparte
+  </a></p>
+</div>
 
   <!-- ============ CONECTADOS ============ -->
   <section>
