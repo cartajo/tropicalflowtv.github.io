@@ -66,31 +66,114 @@
 <header><h1>🌴 Tropical Flow TV📺Radio - VIP</h1></header>
 
 <div class="wrap">
-  <!-- ============ RADIO Caster + Respaldo ============ -->
-  <section id="radio">
-    <h2>🎧 Escúchanos en Vivo 24/7</h2>
-    <div id="radioWrap" style="max-width:1100px;margin:0 auto;position:relative">
-      <!-- Controles -->
-      <div style="display:flex;gap:10px;justify-content:center;margin:10px 0;flex-wrap:wrap">
-        <button id="radioRetry" class="btn alt">🔁 Reintentar</button>
-        <button id="radioOpen"  class="btn warn">🌐 Abrir en pestaña</button>
-        <button id="forceOfficial" class="btn">🎛 Forzar oficial</button>
-        <button id="forceFallback" class="btn">🎵 Forzar respaldo</button>
-        <button id="changeBackup" class="btn alt">🔀 Cambiar respaldo</button>
-      </div>
+ <!-- ============ RADIO – Listen2MyRadio (Shoutcast) ============ -->
+<section id="radio">
+  <h2>🎧 Escúchanos en Vivo 24/7</h2>
 
-      <!-- Contenedor del widget + badge -->
-      <div id="casterContainer" style="border-radius:12px;overflow:hidden;background:#000;min-height:360px;position:relative">
-        <!-- se inyecta por JS -->
-        <span class="badge">Tropical Flow TV Radio</span>
-      </div>
+  <!-- Controles -->
+  <div style="display:flex;gap:10px;justify-content:center;margin:10px 0;flex-wrap:wrap">
+    <button id="rRetry" class="btn alt">🔁 Reintentar</button>
+    <button id="rSwap"  class="btn">🔀 Cambiar respaldo</button>
+    <button id="rOpen"  class="btn warn">🌐 Abrir en pestaña</button>
+  </div>
 
-      <!-- Fallback HTML5 -->
-      <audio id="radioFallback" controls preload="none" style="width:100%;margin-top:10px;display:none;"></audio>
+  <!-- Player visible (HTML5) -->
+  <audio id="radioHTML5" controls preload="none" playsinline style="width:100%;max-width:900px;display:block;margin:8px auto;border-radius:12px"></audio>
 
-      <div id="casterStatus" style="text-align:center;color:#ccc;margin-top:6px;font-size:.9rem;"></div>
-    </div>
-  </section>
+  <!-- Estado / depuración simple -->
+  <div id="radioMsg" style="text-align:center;color:#ccc;font-size:.9rem;margin-top:6px"></div>
+</section>
+
+<script>
+(() => {
+  // ====== 1) CANDIDATOS A PROBAR (ajusta si te pasan otros) ======
+  // Directo (Shoutcast):
+  const HOST = "uk25freewow.listen2myradio.com";  // el que ves en el panel
+  const PORT = 32403;                              // el que ves en el panel
+  const direct1 = http://${HOST}:${PORT}/;;      // v1 típico
+  const direct2 = http://${HOST}:${PORT}/stream; // a veces L2MR usa /stream
+
+  // Proxys de L2MR que suelen dar CORS correcto (cambia “tropicalflowtv” si tu canal URL es otro):
+  const proxy1 = "http://tropicalflowtv.radiostream123.com/;";     // suele ser el principal
+  const proxy2 = "https://tropicalflowtv.radiostream123.com/;";    // mismo pero https (a veces no habilitado)
+  const proxy3 = "https://tropicalflowtv.listen2myshow.com/;";     // otro de la familia
+
+  const CANDIDATES = [proxy1, proxy2, proxy3, direct1, direct2];
+
+  // Abrir en pestaña: usa la página pública del canal (corrige si tu slug cambia)
+  const PUBLIC_PAGE = "https://tropicalflowtv.listen2myshow.com";
+
+  // ====== 2) ELEMENTOS ======
+  const el = {
+    audio: document.getElementById("radioHTML5"),
+    msg:   document.getElementById("radioMsg"),
+    retry: document.getElementById("rRetry"),
+    swap:  document.getElementById("rSwap"),
+    open:  document.getElementById("rOpen")
+  };
+
+  // ====== 3) INTEGRACIÓN con tu “pausa global” (si existe) ======
+  function pauseAllExceptRadio(){
+    try{
+      if (typeof pauseAllExcept === "function") pauseAllExcept("radio");
+    }catch(_){}
+  }
+
+  // ====== 4) LÓGICA DE PRUEBA/SELECCIÓN ======
+  let i = 0; // índice del candidato actual
+  let tried = new Set();
+
+  function setMsg(t){ el.msg.textContent = t; }
+
+  function loadCurrent(autoplay=true){
+    const url = CANDIDATES[i];
+    el.audio.src = url;
+    setMsg(Intentando: ${url});
+    if (autoplay){
+      pauseAllExceptRadio();
+      el.audio.play().then(()=>{
+        setMsg(Reproduciendo ✓ (${url}));
+      }).catch(err=>{
+        setMsg(No pudo iniciar automáticamente (${url}). Toca ▶ para intentar.);
+      });
+    }
+  }
+
+  // Si falla carga/decodificación, probar el siguiente
+  function tryNext(){
+    tried.add(i);
+    let prev = i;
+    i = (i + 1) % CANDIDATES.length;
+    if (tried.size >= CANDIDATES.length){
+      tried.clear(); // ya probamos todos, volvemos a empezar
+      setMsg("No se pudo reproducir ninguno de los endpoints por ahora. Verifica que el encoder esté ON o pulsa Reintentar.");
+    } else {
+      setMsg("Probando otro enlace de respaldo…");
+      loadCurrent(true);
+    }
+  }
+
+  // ====== 5) EVENTOS ======
+  el.audio.addEventListener("play", pauseAllExceptRadio);
+  el.audio.addEventListener("error", tryNext);
+  // Algunos navegadores disparan 'stalled'/'abort' cuando el endpoint no entrega audio
+  ["stalled","abort","emptied"].forEach(ev => el.audio.addEventListener(ev, tryNext));
+
+  el.retry.onclick = () => {
+    tried.clear();
+    loadCurrent(true);
+  };
+  el.swap.onclick = () => {
+    i = (i + 1) % CANDIDATES.length;
+    tried.clear();
+    loadCurrent(true);
+  };
+  el.open.onclick = () => window.open(PUBLIC_PAGE, "_blank");
+
+  // ====== 6) ARRANQUE ======
+  loadCurrent(false);
+})();
+</script>
 
   <!-- ============ CONECTADOS ============ -->
   <section>
