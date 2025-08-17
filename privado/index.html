@@ -66,14 +66,14 @@
 <header><h1>🌴 Tropical Flow TV📺Radio - VIP</h1></header>
 
 <div class="wrap">
-<!-- ======== RADIO Listen2MyRadio (Player Pro – FIX) ======== -->
-<section id="radio" style="margin-bottom:22px; position:relative; z-index:1">
+<!-- ========= RADIO Listen2MyRadio (versión con handlers inline) ========= -->
+<section id="radio" style="margin-bottom:22px; position:relative; z-index:5">
   <h2 style="text-align:center;margin:0 0 10px">🎧 Tropical Flow TV📺 Radio</h2>
 
   <div id="radioCard" style="
       max-width:1100px;margin:0 auto;padding:16px;border-radius:14px;
       background:linear-gradient(135deg,rgba(15,23,42,.9),rgba(2,6,23,.92));
-      border:1px solid rgba(255,255,255,.08); position:relative; z-index:2">
+      border:1px solid rgba(255,255,255,.08); position:relative;">
     <div style="display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap">
       <div style="display:flex;align-items:center;gap:12px">
         <div style="width:56px;height:56px;border-radius:12px;background:#0ea5e9;display:flex;align-items:center;justify-content:center;font-weight:900">TF</div>
@@ -84,114 +84,102 @@
         </div>
       </div>
 
-      <div style="display:flex;gap:10px;flex-wrap:wrap; position:relative; z-index:3; pointer-events:auto">
-        <button id="btnStart" type="button" style="background:#22d3ee;color:#000;border:0;border-radius:12px;padding:12px 16px;font-weight:800;cursor:pointer">▶ Empezar Radio</button>
-        <button id="btnPause" type="button" style="background:#334155;color:#fff;border:0;border-radius:12px;padding:12px 16px;font-weight:700;cursor:pointer" disabled>⏸ Pausar</button>
-        <button id="btnRetry" type="button" style="background:#334155;color:#fff;border:0;border-radius:12px;padding:12px 16px;font-weight:700;cursor:pointer">🔁 Reintentar</button>
-        <button id="btnSwap"  type="button" style="background:#334155;color:#fff;border:0;border-radius:12px;padding:12px 16px;font-weight:700;cursor:pointer">🔀 Cambiar respaldo</button>
-        <button id="btnOpen"  type="button" style="background:#fbbf24;color:#000;border:0;border-radius:12px;padding:12px 16px;font-weight:800;cursor:pointer">🌐 Abrir en pestaña</button>
+      <div style="display:flex;gap:10px;flex-wrap:wrap; z-index:10">
+        <button type="button" onclick="TF.start()"  style="background:#22d3ee;color:#000;border:0;border-radius:12px;padding:12px 16px;font-weight:800;cursor:pointer">▶ Empezar Radio</button>
+        <button id="btnPause" type="button" onclick="TF.pause()" style="background:#334155;color:#fff;border:0;border-radius:12px;padding:12px 16px;font-weight:700;cursor:pointer" disabled>⏸ Pausar</button>
+        <button type="button" onclick="TF.retry()" style="background:#334155;color:#fff;border:0;border-radius:12px;padding:12px 16px;font-weight:700;cursor:pointer">🔁 Reintentar</button>
+        <button type="button" onclick="TF.swap()"  style="background:#334155;color:#fff;border:0;border-radius:12px;padding:12px 16px;font-weight:700;cursor:pointer">🔀 Cambiar respaldo</button>
+        <button type="button" onclick="TF.open()"  style="background:#fbbf24;color:#000;border:0;border-radius:12px;padding:12px 16px;font-weight:800;cursor:pointer">🌐 Abrir en pestaña</button>
       </div>
     </div>
 
-    <!-- barra nativa (se muestra al iniciar) -->
     <audio id="radioAudio" preload="none" style="width:100%;margin-top:12px;display:none" controls></audio>
 
     <div id="httpsWarning" style="display:none;margin-top:10px;padding:10px;border-radius:10px;background:#7c2d12;color:#fff">
-      ⚠ El navegador bloquea el audio porque esta página está en <b>HTTPS</b> y el stream es <b>HTTP</b> (contenido mixto).
-      Usa <b>“Abrir en pestaña”</b> o sirve la página en HTTP / consigue URL HTTPS del proveedor.
+      ⚠ Esta página está en <b>HTTPS</b> y el stream es <b>HTTP</b>. Muchos navegadores bloquean el audio incrustado.
+      Usa <b>“Abrir en pestaña”</b> o consigue una URL HTTPS del proveedor.
     </div>
   </div>
 </section>
 
 <script>
-(() => {
-  // === Host/puerto de tu cuenta (de tus capturas) ===
+/* ====== Player global (TF) – handlers inline garantizan que los botones respondan ====== */
+window.TF = (() => {
+  // Datos de tu servidor (tus capturas)
   const HOST = "uk25freenew.listen2myradio.com";
   const PORT = 32403;
 
-  // Candidatos Shoutcast (el script probará el que funcione)
+  // Candidatos de Shoutcast / Icecast
   const STREAMS = [
     http://${HOST}:${PORT}/stream,
     http://${HOST}:${PORT}/;stream.mp3,
     http://${HOST}:${PORT}/;,
     http://${HOST}:${PORT}/1
   ];
-
-  // Página pública de Listen2MyRadio
   const PUBLIC_PAGE = "http://tropicalflowtv.radio12345.com/";
 
   const elAudio  = document.getElementById("radioAudio");
   const statusEl = document.getElementById("radioStatus");
-  const btnStart = document.getElementById("btnStart");
   const btnPause = document.getElementById("btnPause");
-  const btnRetry = document.getElementById("btnRetry");
-  const btnSwap  = document.getElementById("btnSwap");
-  const btnOpen  = document.getElementById("btnOpen");
   const httpsWarn= document.getElementById("httpsWarning");
 
-  // Aviso de contenido mixto
-  if (location.protocol === "https:" && STREAMS.some(u => u.startsWith("http://"))) {
+  if (location.protocol === "https:" && STREAMS.some(u=>u.startsWith("http://"))) {
     httpsWarn.style.display = "block";
   }
 
-  let current = 0, trying = false;
+  let i = 0, trying = false;
 
-  function pauseOthers(){ try{ if (typeof pauseAllExcept==='function') pauseAllExcept('radio'); }catch(e){} }
-  function setStatus(txt, ok=true){ statusEl.textContent = txt; statusEl.style.color = ok ? "#A7F3D0" : "#FFD166"; }
-  function setControls(started){ btnPause.disabled = !started; elAudio.style.display = started ? "block" : "none"; }
+  function setStatus(t, ok=true){ statusEl.textContent=t; statusEl.style.color = ok ? "#A7F3D0" : "#FFD166"; }
+  function showBar(on){ elAudio.style.display = on ? "block" : "none"; btnPause.disabled = !on; }
+  function pauseOthers(){ try{ if (typeof pauseAllExcept==='function') pauseAllExcept('radio'); }catch(_){} }
 
-  async function tryPlayFrom(idx){
-    current = (idx + STREAMS.length) % STREAMS.length;
-    const url = STREAMS[current];
-    trying = true; setStatus(Conectando: ${url} …, true);
-
+  async function tryPlay(idx){
+    i = (idx + STREAMS.length) % STREAMS.length;
+    const url = STREAMS[i];
+    setStatus("Conectando: "+url+" …");
     elAudio.src = url; elAudio.crossOrigin = "anonymous"; elAudio.load();
     pauseOthers();
-
-    const playPromise = elAudio.play().catch(()=>{});
-    const timeout = new Promise((_,rej)=>setTimeout(()=>rej(new Error("timeout")), 6000));
-
-    try { await Promise.race([playPromise, timeout]); }
-    catch { trying = false; return false; }
-
-    setStatus("✅ Reproduciendo (AutoDJ/stream activo).", true);
-    try{
+    try {
+      const p = elAudio.play();
+      await Promise.race([p, new Promise((_,r)=>setTimeout(()=>r(new Error("timeout")),6000))]);
+      setStatus("✅ Reproduciendo.");
+      showBar(true);
       if ('mediaSession' in navigator){
-        navigator.mediaSession.metadata = new MediaMetadata({
-          title:"Tropical Flow TV Radio",
-          artist:"24/7 Salsa • Merengue • Bachata • Reggaetón",
-          album:"Live"
-        });
-        navigator.mediaSession.setActionHandler('play', ()=>{ pauseOthers(); elAudio.play(); });
-        navigator.mediaSession.setActionHandler('pause', ()=> elAudio.pause());
+        try{
+          navigator.mediaSession.metadata = new MediaMetadata({
+            title:"Tropical Flow TV Radio",
+            artist:"24/7 Salsa • Merengue • Bachata • Reggaetón",
+            album:"Live"
+          });
+        }catch(_){}
       }
-    }catch(_){}
-    setControls(true);
-    trying = false;
-    return true;
+      return true;
+    } catch(e){ return false; }
   }
 
-  async function startSequence(){
+  async function start(){
     if (trying) return;
+    trying = true;
+    showBar(false);
     for (let k=0;k<STREAMS.length;k++){
-      const ok = await tryPlayFrom(current+k);
-      if (ok){ btnStart.textContent="⏸ Reproducir"; return; }
+      if (await tryPlay(i+k)){ trying=false; return; }
     }
-    setStatus("⚠ No se pudo conectar. Revisa que el AutoDJ esté encendido o usa “Abrir en pestaña”.", false);
+    trying=false;
+    setStatus("⚠ No se pudo conectar. Revisa AutoDJ/encoder o usa “Abrir en pestaña”.", false);
   }
 
-  btnStart.addEventListener('click', ()=> elAudio.paused ? startSequence() : elAudio.pause(), {passive:true});
-  btnPause.addEventListener('click', ()=> elAudio.pause(), {passive:true});
-  btnRetry.addEventListener('click', ()=>{ if(!elAudio.paused) elAudio.pause(); setControls(false); startSequence(); }, {passive:true});
-  btnSwap .addEventListener('click', ()=>{ current=(current+1)%STREAMS.length; if(!elAudio.paused) tryPlayFrom(current); else setStatus("Respaldo seleccionado. Pulsa ▶.", true); }, {passive:true});
-  btnOpen .addEventListener('click', ()=> window.open(PUBLIC_PAGE, "_blank"), {passive:true});
+  function pause(){ elAudio.pause(); setStatus("En pausa. Pulsa ▶ para continuar."); }
+  function retry(){ elAudio.pause(); showBar(false); start(); }
+  function swap(){ i=(i+1)%STREAMS.length; setStatus("Respaldo seleccionado. Pulsa ▶."); if(!elAudio.paused) tryPlay(i); }
+  function open(){ window.open(PUBLIC_PAGE,"_blank"); }
 
-  elAudio.addEventListener('play',  ()=>{ pauseOthers(); btnStart.textContent="⏸ Reproducir"; setControls(true); });
-  elAudio.addEventListener('pause', ()=>{ btnStart.textContent="▶ Empezar Radio"; setStatus("En pausa. Pulsa ▶ para continuar.", true); });
-  elAudio.addEventListener('error', ()=>{ setStatus("Error de reproducción. Cambiando respaldo…", false); tryPlayFrom(current+1); });
+  elAudio.addEventListener('play',  ()=>{ showBar(true); setStatus("✅ Reproduciendo."); });
+  elAudio.addEventListener('pause', ()=>{ setStatus("En pausa. Pulsa ▶ para continuar."); });
+  elAudio.addEventListener('error', ()=>{ setStatus("Error de reproducción. Probando otra ruta…", false); tryPlay(i+1); });
+
+  return { start, pause, retry, swap, open };
 })();
 </script>
-<!-- ======== /RADIO ======== -->
   <!-- ============ VIDEOS RECIENTES (Carrusel) ============ -->
   <section id="videos">
     <h2>🎬 Videos Recientes</h2>
