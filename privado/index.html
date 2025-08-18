@@ -115,33 +115,16 @@
   #radioMini button.tab{ background:#fbbf24; }
 </style>
 
-<!-- Mini barra nativa -->
-<div id="tf-player" style="display:flex;gap:10px;align-items:center;justify-content:center">
-  <button id="tf-play"  class="btn alt">▶ Play</button>
-  <button id="tf-stop"  class="btn">⏸ Pausa</button>
-  <span id="tf-status" style="opacity:.8">Listo para iniciar</span>
-  <audio id="tf-audio" preload="none" crossorigin="anonymous"></audio>
+<!-- Barra mini (siempre visible al inicio) -->
+<div id="radioMini">
+  <span>🔊 Tropical Flow Radio — listo para reproducir…</span>
+  <div style="display:flex;gap:8px">
+    <button id="miniOpen">Abrir player</button>
+    <button id="miniTab" class="tab">Pestaña</button>
+  </div>
 </div>
 
-<script>
-(function(){
-  const STREAM_URL = "https://TU_URL_STREAM_SSL_AQUI"; // ← pega aquí la URL HTTPS del stream
-  const a   = document.getElementById('tf-audio');
-  const bP  = document.getElementById('tf-play');
-  const bS  = document.getElementById('tf-stop');
-  const st  = document.getElementById('tf-status');
-
-  a.src = STREAM_URL;
-  function set(msg){ st.textContent = msg; }
-  bP.onclick = () => { a.play().then(()=>set("Reproduciendo…")).catch(()=>set("Pulsa nuevamente para iniciar")); };
-  bS.onclick = () => { a.pause(); set("Pausado"); };
-
-  a.addEventListener('playing', ()=> set("Reproduciendo…"));
-  a.addEventListener('pause',   ()=> set("Pausado"));
-  a.addEventListener('stalled', ()=> set("Conectando…"));
-  a.addEventListener('error',   ()=> set("No se pudo conectar. Revisa el stream o intenta en pestaña."));
-})();
-</script>
+<script> 
 (function(){
   // ⚠ Si consigues un stream HTTPS (mp3/aac), ponlo aquí para mostrar la barra nativa <audio>
   // Ejemplo: const STREAM_DIRECT = "https://tu-dominio/stream.mp3";
