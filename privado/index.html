@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Tropical Flow TV📺Radio - VIP</title>
 <meta name="description" content="Acceso exclusivo a Tropical Flow TV📺Radio. Música, videos y más 24/7.">
-
 <style>
   :root{
-    --accent:#00e0ff; --bg:rgba(0,0,0,.6); --maxw:1100px; --aspect21x9:42.857%;
+    --accent:#00e0ff; --bg:rgba(0,0,0,.6); --maxw:1100px;
+    --aspect21x9:42.857%;
   }
   *{box-sizing:border-box}
   body{
@@ -40,28 +40,17 @@
   .btn.warn{ background:#fbbf24; color:#000 } /* amarillo con texto negro */
 
   /* Playlist */
-  .playlist-box{ text-align:center; padding:20px; background:rgba(0,0,0,0.5); border-radius:15px }
   ul.plist{ list-style:none; padding:0; max-width:var(--maxw); margin:0 auto; color:#fff }
   ul.plist li{ padding:8px 10px; border-radius:8px; cursor:pointer }
   ul.plist li:hover{ background:rgba(255,255,255,.18) }
   .status{max-width:var(--maxw);margin:6px auto 0; font-size:.92rem}
   .ok{color:#7CFC00} .warn{color:#ffd166}
 
-  /* Radio Card + mini bar */
-  .radio-card{max-width:950px;margin:0 auto;padding:14px;border-radius:14px;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);position:relative;overflow:hidden}
-  .radio-brand{
-    position:absolute; inset:auto 10px 10px 10px; display:flex; align-items:center; gap:8px;
-    background:rgba(0,0,0,.55); padding:.35rem .6rem; border-radius:8px; font-weight:700; backdrop-filter: blur(2px);
+  /* Badge sobre el player */
+  .badge{
+    position:absolute; left:10px; bottom:10px; background:rgba(0,0,0,.55);
+    padding:.35rem .6rem; border-radius:8px; font-weight:700; backdrop-filter: blur(2px);
   }
-  .radio-brand small{opacity:.85}
-  #radioMini {
-    position: fixed; left: 10px; right: 10px; bottom: 10px; z-index: 50;
-    background: rgba(0,0,0,.88); color:#fff; border:1px solid rgba(255,255,255,.15);
-    border-radius:12px; display:flex; align-items:center; justify-content:space-between;
-    padding:8px 12px; backdrop-filter: blur(4px); box-shadow:0 8px 24px rgba(0,0,0,.35);
-  }
-  #radioMini button{ background:#2dd4bf; color:#000; border:0; border-radius:10px; padding:7px 10px; font-weight:700; }
-  #radioMini button.tab{ background:#fbbf24; color:#000; }
 
   .social-buttons{ text-align:center; margin: 16px 0 }
   .social-buttons a{ display:inline-block; margin:.4rem; padding:.6rem 1rem; color:#fff; text-decoration:none; border-radius:8px; background:#444 }
@@ -77,49 +66,229 @@
 <header><h1>🌴 Tropical Flow TV📺Radio - VIP</h1></header>
 
 <div class="wrap">
-  <!-- ================== RADIO ================== -->
-  <section id="radio" style="margin-top:12px">
-    <h2 style="text-align:center;margin:0 0 10px">🎧 Tropical Flow TV Radio</h2>
+<!-- ============ RADIO TROPICAL FLOW (PRO) ============ -->
+<style>
+  .radio-card{max-width:1100px;margin:20px auto;padding:18px;border-radius:16px;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.75)),
+      url('https://images.unsplash.com/photo-1526470608268-f674ce90ebd4?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
+    color:#fff; box-shadow:0 10px 30px rgba(0,0,0,.35)}
+  .radio-head{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+  .radio-logo{width:56px;height:56px;border-radius:12px;flex:0 0 56px;background:#111 url('https://i.imgur.com/0k1z0pK.png') center/70% no-repeat}
+  .radio-title{font-size:clamp(18px,3vw,26px);font-weight:800;letter-spacing:.3px}
+  .radio-sub{opacity:.8;font-size:.95rem}
+  .radio-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0}
+  .rbtn{border:0;border-radius:12px;padding:10px 14px;font-weight:800;cursor:pointer}
+  .rbtn.primary{background:#00e0ff;color:#001018}
+  .rbtn.alt{background:#2dd4bf;color:#001814}
+  .rbtn.warn{background:#fbbf24;color:#000}
+  .rbtn.ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.25)}
+  .vol{appearance:none;width:160px;height:10px;border-radius:999px;background:#ffffff26;outline:none}
+  .vol::-webkit-slider-thumb{appearance:none;width:18px;height:18px;border-radius:50%;background:#00e0ff;border:2px solid #01333a}
+  .radio-status{display:flex;align-items:center;gap:10px;justify-content:space-between;background:rgba(255,255,255,.08);padding:10px;border-radius:12px}
+  .np{font-weight:700;min-height:1.4em}
+  .vu{display:flex;gap:4px;height:18px;align-items:flex-end}
+  .vu i{width:5px;background:#00e0ff;border-radius:2px;opacity:.9;animation:vu 1s linear infinite}
+  .vu i:nth-child(2){animation-delay:.12s} .vu i:nth-child(3){animation-delay:.24s}
+  .vu i:nth-child(4){animation-delay:.36s} .vu i:nth-child(5){animation-delay:.48s}
+  @keyframes vu{0%{height:20%} 25%{height:80%} 50%{height:35%} 75%{height:65%} 100%{height:25%}}
+  .start-overlay{display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(0,0,0,.35);border:2px dashed #00e0ff66;border-radius:14px;margin-top:6px}
+  .help{font-size:.9rem;opacity:.8}
+</style>
 
-    <div class="radio-card">
-      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:10px">
-        <button id="btnOpenTab" class="btn warn">🌐 Abrir en pestaña</button>
-        <button id="btnToggle"  class="btn alt">▶ Abrir player</button>
-      </div>
-
-      <!-- IFRAME Listen2MyRadio (minimizado por defecto) -->
-      <div id="radioViewport" style="display:none; position:relative; width:100%; height:320px;">
-        <iframe id="l2mrFrame"
-                src="https://tropicalflow.listen2myshow.com/?autoplay=1"
-                title="Tropical Flow Radio"
-                allow="autoplay"
-                style="position:absolute;inset:0;width:100%;height:100%;border:0;background:#000;">
-        </iframe>
-        <div class="radio-brand">📻 Tropical Flow Radio <small>by RadioTV</small></div>
-      </div>
-
-      <!-- Barra nativa (opcional si tienes URL HTTPS directa) -->
-      <div id="nativeWrap" style="display:none;max-width:820px;margin:8px auto 0">
-        <audio id="nativeAudio" controls preload="none" style="width:100%;border-radius:10px;"></audio>
-        <p style="margin:6px 0 0;text-align:center;color:#bbb;font-size:.9rem">Si no suena, toca “Abrir en pestaña”.</p>
-      </div>
-
-      <p id="radioNote" style="margin:10px 0 0;text-align:center;color:#bbb;font-size:.92rem">
-        Si no escuchas, pulsa <b>Abrir en pestaña</b> (evita bloqueos del navegador).
-      </p>
-    </div>
-  </section>
-
-  <!-- Barra mini (al inicio para que Android NO abra a pantalla completa) -->
-  <div id="radioMini">
-    <span>🔊 Tropical Flow Radio — listo para reproducir…</span>
-    <div style="display:flex;gap:8px">
-      <button id="miniOpen">Abrir player</button>
-      <button id="miniTab" class="tab">Pestaña</button>
+<section class="radio-card" id="radioPro">
+  <div class="radio-head">
+    <div class="radio-logo" aria-hidden="true"></div>
+    <div>
+      <div class="radio-title">Tropical Flow TV 📻 Radio</div>
+      <div class="radio-sub">Salsa • Merengue • Bachata • Reggaetón 24/7</div>
     </div>
   </div>
 
-  <!-- ================== VIDEOS RECIENTES (Carrusel) ================== -->
+  <div class="radio-controls">
+    <button id="rPlay" class="rbtn primary">▶ Empezar Radio</button>
+    <button id="rPause" class="rbtn ghost" disabled>⏸ Pausar</button>
+    <button id="rRetry" class="rbtn alt">🔁 Reintentar</button>
+    <button id="rSwap"  class="rbtn alt">⤴ Cambiar respaldo</button>
+    <button id="rOpen"  class="rbtn warn">🌐 Abrir en pestaña</button>
+    <input id="rVol" class="vol" type="range" min="0" max="1" step="0.01" value="0.9" />
+  </div>
+
+  <div class="radio-status">
+    <div class="np" id="rNow">Listo. Presiona <b>Empezar Radio</b> (autoplay bloqueado).</div>
+    <div class="vu" id="rVu" style="opacity:.2"><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+
+  <div class="start-overlay help">
+    Si tu móvil apaga la pantalla, la radio seguirá sonando porque tú la iniciaste.
+    Usa el control del sistema o vuelve aquí para pausar.
+  </div>
+
+  <!-- El elemento de audio se inyecta por JS -->
+</section>
+
+<script>
+(function(){
+  // ========= 1) URLs del stream =========
+  // Variantes del servidor principal (Listen2MyRadio / Shoutcast)
+  const MAIN_VARIANTS = [
+    "https://tropicalflow.listen2myshow.com/;stream.mp3",     // proxy HTTPS (si tu canal lo tiene)
+    "http://tropicalflowtv.radio12345.com/;stream.mp3",       // dominio radio12345
+    "http://uk25freenew.listen2myradio.com:32403/;stream.mp3",
+    "http://uk25freenew.listen2myradio.com:32403/;"
+  ];
+  // Respaldos (pon aquí emisoras latinas que quieras, o deja vacío)
+  const BACKUPS = [
+    // "https://stream-ssl.com/tu-backup-1.mp3",
+    // "https://stream-ssl.com/tu-backup-2.mp3"
+  ];
+
+  // ========= 2) DOM =========
+  const $ = s => document.querySelector(s);
+  const card = $("#radioPro");
+  const btnPlay  = $("#rPlay");
+  const btnPause = $("#rPause");
+  const btnRetry = $("#rRetry");
+  const btnSwap  = $("#rSwap");
+  const btnOpen  = $("#rOpen");
+  const vol      = $("#rVol");
+  const vu       = $("#rVu");
+  const nowTxt   = $("#rNow");
+
+  // Crea <audio> de forma controlada
+  const audio = new Audio();
+  audio.preload = "none";
+  audio.crossOrigin = "anonymous"; // intenta habilitar Media Session/analizadores
+  audio.volume = parseFloat(vol.value || "0.9");
+  card.appendChild(audio);
+
+  // ========= 3) Estado =========
+  let currentList = [...MAIN_VARIANTS]; // array de URLs que vamos a probar
+  let listIndex = 0;
+  let isPlaying = false;
+  let usingBackup = false;
+  let tryTimer = null;
+
+  // ========= 4) Helpers =========
+  function setStatus(txt){ nowTxt.textContent = txt; }
+  function setVU(on){ vu.style.opacity = on ? "1" : ".2"; }
+  function pauseOthers(){ try{ if (window.pauseAllExcept) pauseAllExcept("radio"); }catch(_){} }
+
+  // Intenta reproducir cada variante con timeout
+  function tryNextURL(startFromZero){
+    if (startFromZero) listIndex = 0;
+    if (!currentList.length){ setStatus("No hay URLs configuradas."); return; }
+    if (listIndex >= currentList.length){
+      setStatus("No se pudo conectar. Revisa el servidor o usa respaldo.");
+      return;
+    }
+    const url = currentList[listIndex++];
+    audio.src = url;
+    audio.load();
+
+    // Si en 6s no hay 'canplay', prueba la siguiente
+    clearTimeout(tryTimer);
+    tryTimer = setTimeout(()=>{
+      setStatus("Sin respuesta, probando otra URL…");
+      tryNextURL(false);
+    }, 6000);
+
+    audio.play().then(()=>{
+      clearTimeout(tryTimer);
+      connected(url);
+    }).catch(()=>{
+      // algunos navegadores solo permiten play tras interacción;
+      // el botón "Empezar Radio" ya da esa interacción.
+      // Aun así, si falla inmediato, probamos otra URL.
+      setTimeout(()=>tryNextURL(false), 400);
+    });
+  }
+
+  function connected(url){
+    isPlaying = true;
+    btnPause.disabled = false;
+    btnPlay.textContent = "▶ Reproducir";
+    setStatus((usingBackup?"(Respaldo) ":"")+"Conectado ✓");
+    setVU(true);
+    pauseOthers();
+    // Media Session (bloqueo pantalla)
+    if ("mediaSession" in navigator){
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: "Tropical Flow Radio",
+        artist: "24/7",
+        album: "Salsa · Merengue · Bachata · Reggaetón",
+        artwork: [{src:"https://i.imgur.com/0k1z0pK.png", sizes:"512x512", type:"image/png"}]
+      });
+      navigator.mediaSession.playbackState = "playing";
+      navigator.mediaSession.setActionHandler("pause", ()=> audio.pause());
+      navigator.mediaSession.setActionHandler("play",  ()=> { pauseOthers(); audio.play().catch(()=>{}); });
+      navigator.mediaSession.setActionHandler("stop",  ()=> audio.pause());
+    }
+  }
+
+  function stopPlayback(msg){
+    isPlaying = false;
+    btnPause.disabled = true;
+    setVU(false);
+    audio.pause();
+    if (msg) setStatus(msg);
+    if ("mediaSession" in navigator){ navigator.mediaSession.playbackState = "paused"; }
+  }
+
+  function useMainList(){
+    currentList = [...MAIN_VARIANTS];
+    usingBackup = false;
+  }
+  function useBackupList(){
+    if (!BACKUPS.length){ setStatus("No hay respaldos configurados."); return; }
+    currentList = [...BACKUPS];
+    usingBackup = true;
+    listIndex = 0;
+    tryNextURL(true);
+  }
+
+  // ========= 5) Eventos UI =========
+  btnPlay.addEventListener("click", ()=>{
+    if (isPlaying){ pauseOthers(); audio.play().catch(()=>{}); return; }
+    useMainList();
+    setStatus("Conectando…");
+    tryNextURL(true);
+  });
+
+  btnPause.addEventListener("click", ()=> stopPlayback("En pausa."));
+
+  btnRetry.addEventListener("click", ()=>{
+    stopPlayback();
+    setStatus("Reintentando conexión…");
+    tryNextURL(true);
+  });
+
+  btnSwap.addEventListener("click", ()=>{
+    if (usingBackup){ useMainList(); setStatus("Volviendo a servidor principal…"); }
+    else { setStatus("Cambiando a respaldo…"); }
+    stopPlayback();
+    tryNextURL(true);
+  });
+
+  btnOpen.addEventListener("click", ()=>{
+    // Abre tu página pública del canal (ajústala si deseas otra)
+    window.open("https://tropicalflow.listen2myshow.com", "_blank");
+  });
+
+  vol.addEventListener("input", ()=> audio.volume = parseFloat(vol.value||"0.9"));
+
+  // ========= 6) Eventos del <audio> =========
+  audio.addEventListener("playing", ()=>{ isPlaying = true; setVU(true); });
+  audio.addEventListener("pause",   ()=>{ isPlaying = false; setVU(false); });
+  audio.addEventListener("error",   ()=>{
+    setStatus("Error de reproducción. Probando otra variante…");
+    tryNextURL(false);
+  });
+})();
+</script>
+<!-- ========== /RADIO PRO ========== -->
+ 
+  <!-- ============ VIDEOS RECIENTES (Carrusel) ============ -->
   <section id="videos">
     <h2>🎬 Videos Recientes</h2>
     <div class="video-shell"><div class="video-aspect">
@@ -135,29 +304,94 @@
     <div id="yt-thumbs"></div>
   </section>
 
-  <!-- ================== PLAYLIST VIP (lee /musica/) ================== -->
-  <section class="playlist-box">
-    <h2>🎶 Playlist VIP 1</h2>
+   <!-- ===================== PLAYLIST VIP 1 (lee /musica/) ===================== -->
+    <section class="playlist-box">
+      <h2>🎶 Playlist VIP 1</h2>
 
-    <audio id="audio1" controls preload="metadata" style="width:100%;max-width:720px;display:block;margin:8px auto;">
-      Tu navegador no soporta audio HTML5.
-    </audio>
+      <audio id="audio1" controls style="width:100%;max-width:720px;display:block;margin:8px auto;" preload="metadata">
+        Tu navegador no soporta audio HTML5.
+      </audio>
 
-    <div style="text-align:center;margin:10px 0;">
-      <button id="prev1" class="btn">⏮ Anterior</button>
-      <button id="play1" class="btn">▶ / ⏸</button>
-      <button id="next1" class="btn">⏭ Siguiente</button>
-    </div>
+      <div style="text-align:center;margin:10px 0;">
+        <button id="prev1" class="btn">⏮ Anterior</button>
+        <button id="play1" class="btn">▶ / ⏸</button>
+        <button id="next1" class="btn">⏭ Siguiente</button>
+      </div>
 
-    <ul id="list1" class="plist"></ul>
-    <div id="status1" class="status"></div>
+      <ul id="list1" class="plist"></ul>
+      <div id="status1" class="status"></div>
 
-    <p style="color:#ccc;font-size:.9rem;margin-top:8px;">
-      Sube tus MP3 a <code>/musica/</code> (en la raíz). Este archivo está en <code>/Privado/</code>, por eso apunta a <code>../musica/</code>.
-    </p>
-  </section>
+      <script>
+        // RUTA base a tus MP3
+        const base1 = "../musica/"; // <- están fuera de /Privado/ en /musica/
 
-  <!-- ================== VIDEO PROMO (Merengue → Salsa) ================== -->
+        // TUS 10 TEMAS con nombres LIMPIOS (renómbralos así al subir a /musica/)
+        const raw1 = [
+          { title: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3", file: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3" },
+          { title: "02 - dj mario andretti - mix merengue romantico.mp3",     file: "02 - dj mario andretti - mix merengue romantico.mp3" },
+          { title: "03 - La Amas Como Yo - Karis.Mp3",                         file: "03 - La Amas Como Yo - Karis.Mp3" },
+          { title: "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3",                            file: "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3" },
+          { title: "05 - Hey Dude! - Elvis Crespo.mp3",            file: "05 - Hey Dude! - Elvis Crespo.mp3" },
+          { title: "06 - Te Regalo Amores - Ken-Yrkm.mp3",                            file: "06 - Te Regalo Amores - Ken-Yrkm.mp3" },
+          { title: "07 - What Is Love - Haddaway.Mp3",                  file: "08 - What Is Love - Haddaway.Mp3" },
+          { title: "08 - Boricua Como El Gran Combo.mp3",     file: "09 - Boricua Como El Gran Combo.mp3" },
+          { title: "09 - Me Gusta, Me Gusta - Elvis Crespo.mp3",                           file: "10 - Me Gusta, Me Gusta - Elvis Crespo.mp3" },
+          { title: "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3",                                 file: "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3" }
+        ];
+
+        const t1 = raw1.map(t => ({ title: t.title, src: base1 + encodeURIComponent(t.file) }));
+
+        const A1 = {
+          audio:  document.getElementById('audio1'),
+          list:   document.getElementById('list1'),
+          prev:   document.getElementById('prev1'),
+          play:   document.getElementById('play1'),
+          next:   document.getElementById('next1'),
+          status: document.getElementById('status1'),
+          i: 0
+        };
+
+        function s1(msg, cls="ok"){ A1.status.className="status "+cls; A1.status.textContent=msg; }
+
+        function render1(){
+          A1.list.innerHTML = "";
+          t1.forEach((it, idx)=>{
+            const li = document.createElement('li');
+            li.textContent = (idx===A1.i ? "▶ " : "") + it.title;
+            li.style.padding="8px 10px"; li.style.borderRadius="8px"; li.style.cursor="pointer";
+            li.style.background = idx===A1.i ? "rgba(0,191,255,.35)" : "transparent";
+            li.onclick = () => { A1.i = idx; load1(true); };
+            A1.list.appendChild(li);
+          });
+        }
+
+        function load1(autoplay){
+          A1.audio.src = t1[A1.i].src;
+          render1();
+          s1("Cargando: "+t1[A1.i].title+"…","ok");
+          if (autoplay) A1.audio.play().catch(()=>{});
+        }
+
+        A1.prev.onclick = ()=>{ A1.i = (A1.i - 1 + t1.length) % t1.length; load1(true); };
+        A1.next.onclick = ()=>{ A1.i = (A1.i + 1) % t1.length; load1(true); };
+        A1.play.onclick = ()=>{ if (A1.audio.paused) A1.audio.play().catch(()=>{}); else A1.audio.pause(); };
+
+        A1.audio.addEventListener('ended', ()=>{ A1.i = (A1.i + 1) % t1.length; load1(true); });
+        A1.audio.addEventListener('loadedmetadata', ()=> s1("Listo: "+t1[A1.i].title+" ✓","ok"));
+        A1.audio.addEventListener('error', ()=> s1("⚠ No se pudo cargar: "+decodeURIComponent(t1[A1.i].src)+" (¿/musica/ y nombre correcto?)","warn"));
+
+        load1(false);
+      </script>
+     
+     
+    <!-- =================== FIN PLAYLIST VIP 1 =================== -->
+
+
+  <!-- ============ VIDEO PROMO secuencial ============ -->
+  <section id="promo" style="margin-top:24px;">
+
+
+  <!-- ============ VIDEO PROMO ============ -->
   <section id="promo" style="margin-top:24px;">
     <h2>🎬 Video Promo Tropical</h2>
     <div class="video-shell"><div class="video-aspect">
@@ -172,7 +406,7 @@
     <div id="promo-title" style="max-width:var(--maxw);margin:8px auto 0;text-align:center;font-weight:700;"></div>
   </section>
 
-  <!-- ================== BOTONES SOCIALES ================== -->
+  <!-- ============ BOTONES SOCIALES ============ -->
   <div class="social-buttons">
     <a class="whatsapp" href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
     <a class="youtube" href="https://www.youtube.com/@TFTvpoweredbyworldm8780" target="_blank">YouTube</a>
@@ -184,22 +418,25 @@
 
 <footer>&copy; <span id="year"></span> Tropical Flow TV📺Radio - Todos los derechos reservados</footer>
 
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  setTimeout(()=>{ const box=document.getElementById('onlineBox');
+    if(box && !box.textContent.trim()){ const n=Math.floor(Math.random()*40)+5; box.textContent="Conectados: "+n; }
+  },2000);
+</script>
 
 <script>
-/* ================== CONTROL CENTRAL: pausar el resto ================== */
+/* ===== Control central: pausar el resto ===== */
 const registry = {
-  // Radio nativa si llegamos a usar <audio> HTTPS
-  radioNative: () => document.getElementById('nativeAudio'),
-  // Playlist
+  radio: () => document.getElementById('radioFallback'),
   playlist: () => document.getElementById('audio1'),
-  // YouTube
   yt: () => window._ytCarouselPlayerInstance,
   promo: () => window._ytPromoPlayerInstance
 };
 function pauseAllExcept(source){
   try{
-    if (source!=='playlist'){ const p = registry.playlist(); if (p && !p.paused) p.pause(); }
+    if (source!=='radio'){ const r = registry.radio(); r && !r.paused && r.pause(); }
+    if (source!=='playlist'){ const p = registry.playlist(); p && !p.paused && p.pause(); }
     if (source!=='yt'){
       const y = registry.yt && registry.yt();
       if (y && y.getPlayerState && y.getPlayerState() === YT.PlayerState.PLAYING) y.pauseVideo();
@@ -208,76 +445,106 @@ function pauseAllExcept(source){
       const pr = registry.promo && registry.promo();
       if (pr && pr.getPlayerState && pr.getPlayerState() === YT.PlayerState.PLAYING) pr.pauseVideo();
     }
-    if (source!=='radio'){
-      const r = registry.radioNative && registry.radioNative();
-      if (r && !r.paused) r.pause();
-    }
   }catch(e){}
 }
 </script>
 
 <script>
-/* ================== RADIO (Listen2MyRadio) ================== */
+/* ===== RADIO: Caster + Fallback ===== */
 (function(){
-  // Si consigues un stream DIRECTO HTTPS (mp3/aac), colócalo aquí:
-  const STREAM_DIRECT = ""; // ejemplo: "https://tu-dominio/stream.mp3"
+  const PUBLIC_TOKEN = "173d1740-5216-4cbe-8e2b-cb45338d9e19"; // tu token
+  const EMBED_SRC = "https://cdn.cloud.caster.fm/widgets/embed.js";
 
-  const viewport   = document.getElementById('radioViewport');
-  const frame      = document.getElementById('l2mrFrame');
-  const btnTab     = document.getElementById('btnOpenTab');
-  const btnToggle  = document.getElementById('btnToggle');
-  const miniBar    = document.getElementById('radioMini');
-  const miniOpen   = document.getElementById('miniOpen');
-  const miniTab    = document.getElementById('miniTab');
-  const nativeWrap = document.getElementById('nativeWrap');
-  const nativeAud  = document.getElementById('nativeAudio');
+  const cont   = document.getElementById("casterContainer");
+  const aBack  = document.getElementById("radioFallback");
+  const status = document.getElementById("casterStatus");
 
-  btnTab.onclick = ()=> window.open('https://tropicalflow.listen2myshow.com','_blank');
-  miniTab.onclick = btnTab.onclick;
+  const btnRetry   = document.getElementById("radioRetry");
+  const btnOpen    = document.getElementById("radioOpen");
+  const btnOfficial= document.getElementById("forceOfficial");
+  const btnFallback= document.getElementById("forceFallback");
+  const btnChange  = document.getElementById("changeBackup");
 
-  function showIframePlayer(){
-    nativeWrap.style.display = 'none';
-    viewport.style.display = '';
-    miniBar.style.display = 'none';
-    btnToggle.textContent = '➖ Minimizar';
-    pauseAllExcept('radio'); // al abrir radio, pausamos lo demás
+  // Streams de respaldo (pon los tuyos de merengue/bachata/reggaetón)
+  const BACKUPS = [
+    "https://stream-149.zeno.fm/0cn4d1x2kxhvv?zs=Q3nXn5nPTT",
+    "https://stream-40.zeno.fm/8s5yq7g7p0hvv?zs=Jw9C4S1hQp",
+    "https://stream-61.zeno.fm/9x4n4v2t9uhvv?zs=1h2kJc" // ejemplo extra
+  ];
+  let backupIndex = 0;
+  function setBackup(i){
+    backupIndex = (i + BACKUPS.length) % BACKUPS.length;
+    aBack.src = BACKUPS[backupIndex];
   }
-  function hidePlayer(){
-    viewport.style.display = 'none';
-    nativeWrap.style.display = 'none';
-    miniBar.style.display = 'flex';
-    btnToggle.textContent = '▶ Abrir player';
-  }
-  function showNative(){
-    if (!STREAM_DIRECT) return false;
-    try{
-      nativeAud.src = STREAM_DIRECT;
-      nativeWrap.style.display = '';
-      viewport.style.display = 'none';
-      miniBar.style.display = 'none';
-      btnToggle.textContent = '➖ Minimizar';
-      pauseAllExcept('radio'); // pausamos otros
-      nativeAud.play?.().catch(()=>{});
-      return true;
-    }catch(_){ return false; }
+  setBackup(0);
+
+  let forced = null; // 'official' | 'fallback' | null
+
+  function mountCaster(){
+    cont.innerHTML = `
+      <div data-type="newStreamPlayer" data-publicToken="${PUBLIC_TOKEN}"
+           data-theme="dark" data-color="e81e4d" class="cstrEmbed"
+           style="min-height:360px">
+        <!-- Enlaces obligatorios de Caster.fm -->
+        <a href="https://www.caster.fm">Shoutcast Hosting</a>
+        <a href="https://www.caster.fm">Stream Hosting</a>
+        <a href="https://www.caster.fm">Radio Server Hosting</a>
+      </div>
+      <span class="badge">Tropical Flow TV Radio</span>
+    `;
+    const s = document.createElement("script");
+    s.src = EMBED_SRC + "?t=" + Date.now(); // recarga forzada
+    s.async = true;
+    cont.appendChild(s);
+    status.textContent = "Cargando reproductor oficial…";
   }
 
-  btnToggle.onclick = ()=> {
-    if (viewport.style.display === 'none' && nativeWrap.style.display === 'none'){
-      if (!showNative()) showIframePlayer();
-    } else {
-      hidePlayer();
-    }
-  };
-  miniOpen.onclick = btnToggle.onclick;
+  function useFallback(autoMsg){
+    forced = forced || null;
+    aBack.style.display = "";
+    pauseAllExcept('radio');
+    aBack.play().catch(()=>{});
+    status.textContent = autoMsg || "Usando respaldo HTML5.";
+  }
+  function useOfficial(){
+    aBack.pause();
+    aBack.style.display = "none";
+    status.textContent = "Usando reproductor oficial de Caster.fm.";
+  }
 
-  // Siempre arrancar MINIMIZADO (evita pantalla completa en Android)
-  hidePlayer();
+  function autoDetect(){
+    if (forced === 'fallback'){ return useFallback("Forzado a respaldo."); }
+    if (forced === 'official'){ return useOfficial(); }
+
+    setTimeout(()=>{
+      const embed = document.querySelector('.cstrEmbed');
+      const rendered = embed?.getAttribute('data-rendered') === 'true' || document.getElementById('cstrpdiv');
+      if (!rendered) return useFallback("El widget no cargó. Respaldo automático.");
+      const holder = document.querySelector('.cstrEmbed, #cstrpdiv');
+      const txt = (holder?.innerText || "").toLowerCase();
+      if (txt.includes("broadcast is currently offline")){
+        useFallback("Servidor sin transmisión. Usando respaldo hasta que conectes el encoder.");
+      } else {
+        useOfficial();
+      }
+    }, 6000);
+  }
+
+  btnRetry.onclick    = ()=>{ mountCaster(); autoDetect(); };
+  btnOpen.onclick     = ()=> window.open("https://tropicalflowradio.ismyradio.com", "_blank");
+  btnOfficial.onclick = ()=>{ forced='official'; useOfficial(); };
+  btnFallback.onclick = ()=>{ forced='fallback'; useFallback(); };
+  btnChange.onclick   = ()=>{ setBackup(backupIndex+1); useFallback("Cambiado respaldo."); };
+
+  aBack.addEventListener('play', ()=> pauseAllExcept('radio'));
+
+  mountCaster();
+  autoDetect();
 })();
 </script>
 
 <script>
-/* ================== CARRUSEL YouTube ================== */
+/* ===== CARRUSEL YouTube ===== */
 const CAROUSEL_IDS = [
   "tpi8zLE3Kqw","RBE8A9rAj8Y","XYe0ZHVvVig","h86xW_G-j4s","5pKPlIlQa_8",
   "wgqGHqhEZ8M","auTHP2prrxw","CL7m60BISiw","4jdbpZVzlf4","X_Df1rsXBjE",
@@ -380,65 +647,10 @@ function createCarouselPlayer(){
 })();
 </script>
 
+
+       
 <script>
-/* ================== PLAYLIST VIP (carpeta /musica/) ================== */
-const BASE = "../musica/"; // porque este index está en /Privado/
-
-// Pon aquí los nombres EXACTOS que subiste a /musica/ (puedes cambiarlos):
-const raw1 = [
-  { title: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo", file: "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3" },
-  { title: "02 - dj mario andretti - mix merengue romantico",     file: "02 - dj mario andretti - mix merengue romantico.mp3" },
-  { title: "03 - La Amas Como Yo - Karis",                         file: "03 - La Amas Como Yo - Karis.Mp3" },
-  { title: "04 - Que Voy A Hacer Sin Ti - Grupo Caneo",            file: "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3" },
-  { title: "05 - Hey Dude! - Elvis Crespo",                        file: "05 - Hey Dude! - Elvis Crespo.mp3" },
-  { title: "06 - Te Regalo Amores - Ken-Yrkm",                     file: "06 - Te Regalo Amores - Ken-Yrkm.mp3" },
-  { title: "07 - What Is Love - Haddaway",                         file: "07 - What Is Love - Haddaway.Mp3" },
-  { title: "08 - Boricua Como El Gran Combo",                      file: "08 - Boricua Como El Gran Combo.mp3" },
-  { title: "09 - Me Gusta, Me Gusta - Elvis Crespo",               file: "09 - Me Gusta, Me Gusta - Elvis Crespo.mp3" },
-  { title: "10 - Alexis & Fido Ft Daddy Yankee - Rescate",         file: "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3" }
-];
-
-const tracks1 = raw1.map(t => ({ title: t.title, src: BASE + encodeURIComponent(t.file) }));
-
-const A1 = {
-  audio:  document.getElementById('audio1'),
-  list:   document.getElementById('list1'),
-  prev:   document.getElementById('prev1'),
-  play:   document.getElementById('play1'),
-  next:   document.getElementById('next1'),
-  status: document.getElementById('status1'),
-  i: 0
-};
-function s1(msg, cls="ok"){ A1.status.className="status "+cls; A1.status.textContent=msg; }
-
-function render1(){
-  A1.list.innerHTML = "";
-  tracks1.forEach((it, idx)=>{
-    const li = document.createElement('li');
-    const num = (idx+1).toString().padStart(2,'0');
-    li.textContent = ${num} - ${it.title};
-    li.style.padding="8px 10px"; li.style.borderRadius="8px"; li.style.cursor="pointer";
-    li.style.background = idx===A1.i ? "rgba(0,191,255,.35)" : "transparent";
-    li.onclick = () => { A1.i = idx; load1(true); };
-    A1.list.appendChild(li);
-  });
-}
-function load1(autoplay){
-  A1.audio.src = tracks1[A1.i].src;
-  render1(); s1("Listo: "+tracks1[A1.i].title+" ✓","ok");
-  if (autoplay) { pauseAllExcept('playlist'); A1.audio.play().catch(()=>{}); }
-}
-A1.prev.onclick = ()=>{ A1.i = (A1.i - 1 + tracks1.length) % tracks1.length; load1(true); };
-A1.next.onclick = ()=>{ A1.i = (A1.i + 1) % tracks1.length; load1(true); };
-A1.play.onclick = ()=>{ if (A1.audio.paused) { pauseAllExcept('playlist'); A1.audio.play().catch(()=>{}); } else A1.audio.pause(); };
-A1.audio.addEventListener('ended', ()=>{ A1.i = (A1.i + 1) % tracks1.length; load1(true); });
-A1.audio.addEventListener('play', ()=> pauseAllExcept('playlist'));
-A1.audio.addEventListener('error', ()=> s1("⚠ No se pudo cargar: "+decodeURIComponent(tracks1[A1.i].src),"warn"));
-render1();
-</script>
-
-<script>
-/* ================== VIDEO PROMO (Merengue → Salsa) ================== */
+/* ===== VIDEO PROMO (Merengue → Salsa) ===== */
 const PROMO_IDS = ["U0V7ATX_2CY", "5ZVTbahB5CM"];
 let promoIndex = 0, promoPlayer = null;
 
@@ -489,4 +701,3 @@ function updatePromoTitle(){ try{ const d = promoPlayer.getVideoData(); document
 
 </body>
 </html>
- 
