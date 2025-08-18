@@ -177,11 +177,22 @@
 <script>
 (function(){
   const STREAM_PAGE   = "https://tropicalflow.listen2myshow.com"; // página oficial
-  // posibles endpoints de audio (probamos en este orden)
+
+  // >>> AGREGA TUS ENLACES DE ESCUCHA AQUÍ (pon todos los que tengas)
   const STREAM_TRIES  = [
+    // Canal Listen2MyShow (si tuviera endpoint directo)
     "https://tropicalflow.listen2myshow.com/live.mp3",
     "https://tropicalflow.listen2myshow.com/;stream.mp3",
-    "https://tropicalflow.listen2myshow.com/stream" // fallback genérico
+
+    // Dominios de “Radio Station Links” (prueba ambas variantes)
+    "https://tropicalflowtv.radio12345.com/;stream.mp3",
+    "http://tropicalflowtv.radio12345.com/;stream.mp3",
+
+    "https://tropicalflowtv.radiostream321.com/;stream.mp3",
+    "http://tropicalflowtv.radiostream321.com/;stream.mp3",
+
+    "https://tropicalflowtv.radiostream123.com/;stream.mp3",
+    "http://tropicalflowtv.radiostream123.com/;stream.mp3"
   ];
 
   const audio  = document.getElementById("tfAudio");
