@@ -66,219 +66,47 @@
 <header><h1>🌴 Tropical Flow TV📺Radio - VIP</h1></header>
 
 <div class="wrap">
-<!-- ====== TROPICAL FLOW RADIO – BLOQUE PRO ====== -->
-<section id="tf-radio" class="tf-wrap">
-  <div class="tf-card">
-    <div class="tf-brand">TF</div>
+<!-- RADIO – Player oficial L2MR en HTTPS -->
+<section id="radio" style="margin-top:12px">
+  <h2 style="text-align:center;margin:0 0 10px">🎧 Tropical Flow TV <span style="opacity:.7">Radio</span></h2>
 
-    <div class="tf-head">
-      <h3>Tropical Flow <span>RadioTV</span></h3>
-      <p class="tf-sub">Salsa · Merengue · Bachata · Reggaetón 24/7</p>
+  <div style="max-width:950px;margin:0 auto;padding:14px;border-radius:14px;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);">
+    <!-- Botones compactos -->
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:10px">
+      <button id="btnOpenTab" style="background:#fbbf24;color:#000;border:0;border-radius:10px;padding:8px 12px;font-weight:700;cursor:pointer">🌐 Abrir en pestaña</button>
+      <button id="btnReload"  style="background:#2dd4bf;color:#000;border:0;border-radius:10px;padding:8px 12px;font-weight:700;cursor:pointer">🔁 Reintentar</button>
     </div>
 
-    <!-- Controles compactos -->
-    <div class="tf-controls">
-      <button id="tfStart" class="tf-btn primary">▶ Empezar radio</button>
-      <button id="tfPause" class="tf-btn">⏸ Pausar</button>
-      <button id="tfRetry" class="tf-btn">🔁 Reintentar</button>
-      <button id="tfOpen"  class="tf-btn warn">🌐 Abrir en pestaña</button>
+    <!-- Marca de agua -->
+    <div style="position:relative;border-radius:12px;overflow:hidden;background:#000">
+      <div style="position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;opacity:.08;font-weight:900;
+                  font-size:clamp(28px,7vw,64px);letter-spacing:.5px;text-transform:uppercase;">
+        Tropical Flow RadioTV
+      </div>
+
+      <!-- IFRAME del canal (HTTPS) -->
+      <iframe id="l2mrFrame"
+              src="https://tropicalflow.listen2myshow.com/?autoplay=1"
+              title="Tropical Flow Radio"
+              allow="autoplay"
+              style="position:relative;width:100%;height:min(70vh,520px);border:0;">
+      </iframe>
     </div>
 
-    <!-- Barra de volumen compacta -->
-    <div class="tf-vol">
-      <button id="tfVolDown" class="tf-icon" aria-label="Bajar volumen">🔉</button>
-      <input id="tfVolume" type="range" min="0" max="1" step="0.01" value="0.8" />
-      <button id="tfVolUp" class="tf-icon" aria-label="Subir volumen">🔊</button>
-    </div>
-
-    <!-- Estado -->
-    <div id="tfStatus" class="tf-status">Listo para iniciar.</div>
-
-    <!-- Audio oculto (usamos nuestros propios botones) -->
-    <audio id="tfAudio" preload="none" playsinline></audio>
+    <p id="radioNote" style="margin:10px 0 0;text-align:center;color:#bbb;font-size:.92rem">
+      Si no escuchas, pulsa <b>Abrir en pestaña</b>. El player oficial usa HTTPS y evita el bloqueo por contenido mixto.
+    </p>
   </div>
 </section>
 
-<style>
-  :root{
-    --tf-accent:#00e0ff;
-    --tf-bg:rgba(0,0,0,.65);
-    --tf-text:#eaf6ff;
-    --tf-muted:#9db4c0;
-    --tf-yellow:#fbbf24;
-    --tf-card:#0b1220;
-  }
-  /* Contenedor con fondo + marca de agua */
-  .tf-wrap{
-    position:relative; isolation:isolate;
-    padding:18px; border-radius:16px; margin:18px auto;
-    background:linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,.75)), 
-      url('https://images.unsplash.com/photo-1533560904424-0df6e7e93b9f?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
-    max-width:900px; color:var(--tf-text);
-    overflow:hidden;
-  }
-  /* Marca de agua “Tropical Flow RadioTV” */
-  .tf-wrap::before{
-    content:"Tropical Flow RadioTV • Tropical Flow RadioTV • ";
-    position:absolute; inset:0; z-index:-1;
-    font:700 9vw/1.1 system-ui,Segoe UI,Helvetica,Arial,sans-serif;
-    color:rgba(255,255,255,.06);
-    letter-spacing:.04em; text-transform:uppercase;
-    transform:rotate(-18deg) translateY(-10%);
-    white-space:nowrap; pointer-events:none;
-  }
-
-  .tf-card{
-    background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-    border:1px solid rgba(255,255,255,.08);
-    box-shadow:0 10px 35px rgba(0,0,0,.35);
-    border-radius:16px; padding:16px;
-    backdrop-filter: blur(4px);
-  }
-  .tf-brand{
-    width:42px;height:42px;border-radius:12px;
-    display:flex;align-items:center;justify-content:center;
-    font-weight:800;background:var(--tf-accent);color:#001018;
-    box-shadow:0 6px 18px rgba(0,224,255,.35); margin-bottom:10px;
-  }
-  .tf-head h3{ margin:0; font-size:clamp(20px,2.8vw,28px) }
-  .tf-head h3 span{ color:var(--tf-accent) }
-  .tf-sub{ margin:.25rem 0 0; color:var(--tf-muted); font-size:.95rem }
-
-  .tf-controls{
-    display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 6px;
-  }
-  .tf-btn{
-    background:#1f2a44; color:#fff; border:1px solid rgba(255,255,255,.12);
-    border-radius:10px; padding:8px 12px; cursor:pointer; font-weight:700;
-    font-size:.95rem; transition:transform .08s ease, background .2s ease;
-  }
-  .tf-btn:hover{ transform:translateY(-1px); background:#263258 }
-  .tf-btn.primary{ background:var(--tf-accent); color:#001018; border-color:transparent }
-  .tf-btn.warn{ background:var(--tf-yellow); color:#000; border-color:transparent }
-
-  .tf-vol{ display:flex; align-items:center; gap:10px; margin:6px 0 8px }
-  .tf-icon{
-    width:36px;height:36px;border-radius:9px;border:1px solid rgba(255,255,255,.12);
-    background:#162036; color:#fff; cursor:pointer;
-  }
-  #tfVolume{ flex:1; appearance:none; height:6px; border-radius:6px; background:#26334f; }
-  #tfVolume::-webkit-slider-thumb{ appearance:none; width:16px;height:16px;border-radius:50%; background:var(--tf-accent); border:0; box-shadow:0 0 0 4px rgba(0,224,255,.25) }
-  #tfVolume::-moz-range-thumb{ width:16px;height:16px;border:0;border-radius:50%; background:var(--tf-accent) }
-
-  .tf-status{ font-size:.92rem; color:var(--tf-muted); margin-top:4px }
-  @media (max-width:640px){
-    .tf-controls{ gap:6px }
-    .tf-btn{ padding:8px 10px; font-size:.9rem }
-    .tf-icon{ width:34px;height:34px }
-  }
-</style>
-
 <script>
-(function(){
-  const STREAM_PAGE   = "https://tropicalflow.listen2myshow.com"; // página oficial
-
-  // >>> AGREGA TUS ENLACES DE ESCUCHA AQUÍ (pon todos los que tengas)
-  const STREAM_TRIES  = [
-    // Canal Listen2MyShow (si tuviera endpoint directo)
-    "https://tropicalflow.listen2myshow.com/live.mp3",
-    "https://tropicalflow.listen2myshow.com/;stream.mp3",
-
-    // Dominios de “Radio Station Links” (prueba ambas variantes)
-    "https://tropicalflowtv.radio12345.com/;stream.mp3",
-    "http://tropicalflowtv.radio12345.com/;stream.mp3",
-
-    "https://tropicalflowtv.radiostream321.com/;stream.mp3",
-    "http://tropicalflowtv.radiostream321.com/;stream.mp3",
-
-    "https://tropicalflowtv.radiostream123.com/;stream.mp3",
-    "http://tropicalflowtv.radiostream123.com/;stream.mp3"
-  ];
-
-  const audio  = document.getElementById("tfAudio");
-  const btnGo  = document.getElementById("tfStart");
-  const btnPs  = document.getElementById("tfPause");
-  const btnRt  = document.getElementById("tfRetry");
-  const btnOp  = document.getElementById("tfOpen");
-  const vol    = document.getElementById("tfVolume");
-  const vUp    = document.getElementById("tfVolUp");
-  const vDn    = document.getElementById("tfVolDown");
-  const out    = document.getElementById("tfStatus");
-
-  let tryIndex = 0;
-
-  function setStatus(msg){ out.textContent = msg; }
-
-  function setSrc(i){
-    tryIndex = (i + STREAM_TRIES.length) % STREAM_TRIES.length;
-    audio.src = STREAM_TRIES[tryIndex];
-    setStatus("Cargando stream… ("+(tryIndex+1)+"/"+STREAM_TRIES.length+")");
-  }
-
-  async function start(){
-    // si ya tiene src, intenta reproducir; si no, define fuente
-    if(!audio.src) setSrc(0);
-    try{
-      await audio.play();
-      setStatus("🔴 En vivo (escuchando). Si apagas la pantalla, la música sigue.");
-    }catch(e){
-      // si el primer intento falla, prueba la siguiente URL
-      setStatus("No pudo iniciar automáticamente, toca nuevamente ▶. Probando otra fuente…");
-      nextSource();
-    }
-  }
-
-  function pause(){
-    audio.pause();
-    setStatus("Pausado. Presiona ▶ para continuar.");
-  }
-
-  function retry(){
-    // fuerza recarga de la fuente actual
-    if(!audio.src) setSrc(0);
-    const cur = audio.src;
-    audio.src = "";
-    setTimeout(()=>{ audio.src = cur; start(); }, 50);
-  }
-
-  function nextSource(){
-    setSrc(tryIndex+1);
-    // no autoplays en iOS, así que intentamos play y si falla, pedimos toque
-    audio.play().then(()=>{
-      setStatus("🔴 En vivo (fuente alternativa #"+(tryIndex+1)+").");
-    }).catch(()=>{
-      setStatus("Fuente #"+(tryIndex+1)+" lista. Presiona ▶ para iniciar (autoplay bloqueado).");
-    });
-  }
-
-  // Volumen
-  vol.addEventListener("input", ()=> audio.volume = +vol.value);
-  vUp.onclick = ()=>{ vol.value = Math.min(1, (+vol.value + 0.1)).toFixed(2); audio.volume = +vol.value; };
-  vDn.onclick = ()=>{ vol.value = Math.max(0, (+vol.value - 0.1)).toFixed(2); audio.volume = +vol.value; };
-
-  // Eventos y botones
-  btnGo.onclick = start;
-  btnPs.onclick = pause;
-  btnRt.onclick = retry;
-  btnOp.onclick = ()=> window.open(STREAM_PAGE, "_blank");
-
-  // Reacciones del <audio>
-  audio.addEventListener("playing", ()=> setStatus("🔴 En vivo."));
-  audio.addEventListener("pause",   ()=> setStatus("Pausado."));
-  audio.addEventListener("error",   ()=> { setStatus("Error de reproducción. Cambiando de fuente…"); nextSource(); });
-  audio.addEventListener("stalled", ()=> { setStatus("Conexión inestable. Reintentando…"); retry(); });
-
-  // Sugerencia: intenta arrancar tras la primera interacción con la página
-  window.addEventListener("pointerdown", function once(){
-    window.removeEventListener("pointerdown", once);
-    if (!audio.src) setSrc(0);
-  });
-
-  // Valor de volumen inicial
-  audio.volume = +vol.value;
-})();
+  // Botones
+  document.getElementById('btnOpenTab').onclick = ()=> window.open('https://tropicalflow.listen2myshow.com','_blank');
+  document.getElementById('btnReload').onclick  = ()=>{
+    const f = document.getElementById('l2mrFrame');
+    try{ f.contentWindow.location.reload(); }catch(_){ f.src = f.src.split('#')[0].split('?')[0]+'?t='+Date.now(); }
+  };
 </script>
-<!-- ====== /FIN BLOQUE RADIO ====== -->
   <!-- ============ VIDEOS RECIENTES (Carrusel) ============ -->
   <section id="videos">
     <h2>🎬 Videos Recientes</h2>
