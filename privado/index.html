@@ -66,227 +66,101 @@
 <header><h1>🌴 Tropical Flow TV📺Radio - VIP</h1></header>
 
 <div class="wrap">
-<!-- ============ RADIO TROPICAL FLOW (PRO) ============ -->
-<style>
-  .radio-card{max-width:1100px;margin:20px auto;padding:18px;border-radius:16px;
-    background:
-      linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.75)),
-      url('https://images.unsplash.com/photo-1526470608268-f674ce90ebd4?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
-    color:#fff; box-shadow:0 10px 30px rgba(0,0,0,.35)}
-  .radio-head{display:flex;align-items:center;gap:12px;margin-bottom:10px}
-  .radio-logo{width:56px;height:56px;border-radius:12px;flex:0 0 56px;background:#111 url('https://i.imgur.com/0k1z0pK.png') center/70% no-repeat}
-  .radio-title{font-size:clamp(18px,3vw,26px);font-weight:800;letter-spacing:.3px}
-  .radio-sub{opacity:.8;font-size:.95rem}
-  .radio-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0}
-  .rbtn{border:0;border-radius:12px;padding:10px 14px;font-weight:800;cursor:pointer}
-  .rbtn.primary{background:#00e0ff;color:#001018}
-  .rbtn.alt{background:#2dd4bf;color:#001814}
-  .rbtn.warn{background:#fbbf24;color:#000}
-  .rbtn.ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.25)}
-  .vol{appearance:none;width:160px;height:10px;border-radius:999px;background:#ffffff26;outline:none}
-  .vol::-webkit-slider-thumb{appearance:none;width:18px;height:18px;border-radius:50%;background:#00e0ff;border:2px solid #01333a}
-  .radio-status{display:flex;align-items:center;gap:10px;justify-content:space-between;background:rgba(255,255,255,.08);padding:10px;border-radius:12px}
-  .np{font-weight:700;min-height:1.4em}
-  .vu{display:flex;gap:4px;height:18px;align-items:flex-end}
-  .vu i{width:5px;background:#00e0ff;border-radius:2px;opacity:.9;animation:vu 1s linear infinite}
-  .vu i:nth-child(2){animation-delay:.12s} .vu i:nth-child(3){animation-delay:.24s}
-  .vu i:nth-child(4){animation-delay:.36s} .vu i:nth-child(5){animation-delay:.48s}
-  @keyframes vu{0%{height:20%} 25%{height:80%} 50%{height:35%} 75%{height:65%} 100%{height:25%}}
-  .start-overlay{display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(0,0,0,.35);border:2px dashed #00e0ff66;border-radius:14px;margin-top:6px}
-  .help{font-size:.9rem;opacity:.8}
-</style>
+<!-- =======================================
+     𝗥𝗲𝗽𝗿𝗼𝗱𝘂𝗰𝘁𝗼𝗿 𝗧𝗿𝗼𝗽𝗶𝗰𝗮𝗹 𝗙𝗹𝗼𝘄 𝗧𝗩 𝗥𝗮𝗱𝗶𝗼
+   ======================================= -->
+<div style="max-width: 900px; margin: 30px auto; text-align: center;">
 
-<section class="radio-card" id="radioPro">
-  <div class="radio-head">
-    <div class="radio-logo" aria-hidden="true"></div>
-    <div>
-      <div class="radio-title">Tropical Flow TV 📻 Radio</div>
-      <div class="radio-sub">Salsa • Merengue • Bachata • Reggaetón 24/7</div>
-    </div>
-  </div>
+  <h2 style="color: white; font-family: Arial, sans-serif; font-size: 1.8rem;">
+    🎶 Tropical Flow TV 📺 Radio 🎶
+  </h2>
 
-  <div class="radio-controls">
-    <button id="rPlay" class="rbtn primary">▶ Empezar Radio</button>
-    <button id="rPause" class="rbtn ghost" disabled>⏸ Pausar</button>
-    <button id="rRetry" class="rbtn alt">🔁 Reintentar</button>
-    <button id="rSwap"  class="rbtn alt">⤴ Cambiar respaldo</button>
-    <button id="rOpen"  class="rbtn warn">🌐 Abrir en pestaña</button>
-    <input id="rVol" class="vol" type="range" min="0" max="1" step="0.01" value="0.9" />
-  </div>
+  <!-- Audio Player oculto inicialmente para desbloquear en móvil -->
+  <audio
+    id="radioPlayer"
+    controls
+    autoplay
+    preload="none"
+    playsinline
+    style="width: 100%; max-width: 600px; background: #222; color: white; border-radius: 10px; display: none;"
+  >
+    <source src="http://tropicalflowtv.radio12345.com/" type="audio/mpeg" />
+    Tu navegador no soporta audio HTML5.
+  </audio>
 
-  <div class="radio-status">
-    <div class="np" id="rNow">Listo. Presiona <b>Empezar Radio</b> (autoplay bloqueado).</div>
-    <div class="vu" id="rVu" style="opacity:.2"><i></i><i></i><i></i><i></i><i></i></div>
-  </div>
+  <br />
 
-  <div class="start-overlay help">
-    Si tu móvil apaga la pantalla, la radio seguirá sonando porque tú la iniciaste.
-    Usa el control del sistema o vuelve aquí para pausar.
-  </div>
+  <!-- Botón grande para iniciar / pausar la radio -->
+  <button
+    id="radioToggle"
+    style="
+      margin-top: 15px;
+      padding: 15px 30px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      background: #00bfff;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    "
+  >
+    ▶ Empezar Radio
+  </button>
 
-  <!-- El elemento de audio se inyecta por JS -->
-</section>
+  <p id="radioMsg" style="color: white; margin-top: 10px; font-size: 0.95rem;">
+    Toca el botón si no arranca automáticamente.
+  </p>
+
+</div>
 
 <script>
-(function(){
-  // ========= 1) URLs del stream =========
-  // Variantes del servidor principal (Listen2MyRadio / Shoutcast)
-  const MAIN_VARIANTS = [
-    "https://tropicalflow.listen2myshow.com/;stream.mp3",     // proxy HTTPS (si tu canal lo tiene)
-    "http://tropicalflowtv.radio12345.com/;stream.mp3",       // dominio radio12345
-    "http://uk25freenew.listen2myradio.com:32403/;stream.mp3",
-    "http://uk25freenew.listen2myradio.com:32403/;"
-  ];
-  // Respaldos (pon aquí emisoras latinas que quieras, o deja vacío)
-  const BACKUPS = [
-    // "https://stream-ssl.com/tu-backup-1.mp3",
-    // "https://stream-ssl.com/tu-backup-2.mp3"
-  ];
+  (function() {
+    const player = document.getElementById('radioPlayer');
+    const btn = document.getElementById('radioToggle');
+    const msg = document.getElementById('radioMsg');
 
-  // ========= 2) DOM =========
-  const $ = s => document.querySelector(s);
-  const card = $("#radioPro");
-  const btnPlay  = $("#rPlay");
-  const btnPause = $("#rPause");
-  const btnRetry = $("#rRetry");
-  const btnSwap  = $("#rSwap");
-  const btnOpen  = $("#rOpen");
-  const vol      = $("#rVol");
-  const vu       = $("#rVu");
-  const nowTxt   = $("#rNow");
-
-  // Crea <audio> de forma controlada
-  const audio = new Audio();
-  audio.preload = "none";
-  audio.crossOrigin = "anonymous"; // intenta habilitar Media Session/analizadores
-  audio.volume = parseFloat(vol.value || "0.9");
-  card.appendChild(audio);
-
-  // ========= 3) Estado =========
-  let currentList = [...MAIN_VARIANTS]; // array de URLs que vamos a probar
-  let listIndex = 0;
-  let isPlaying = false;
-  let usingBackup = false;
-  let tryTimer = null;
-
-  // ========= 4) Helpers =========
-  function setStatus(txt){ nowTxt.textContent = txt; }
-  function setVU(on){ vu.style.opacity = on ? "1" : ".2"; }
-  function pauseOthers(){ try{ if (window.pauseAllExcept) pauseAllExcept("radio"); }catch(_){} }
-
-  // Intenta reproducir cada variante con timeout
-  function tryNextURL(startFromZero){
-    if (startFromZero) listIndex = 0;
-    if (!currentList.length){ setStatus("No hay URLs configuradas."); return; }
-    if (listIndex >= currentList.length){
-      setStatus("No se pudo conectar. Revisa el servidor o usa respaldo.");
-      return;
-    }
-    const url = currentList[listIndex++];
-    audio.src = url;
-    audio.load();
-
-    // Si en 6s no hay 'canplay', prueba la siguiente
-    clearTimeout(tryTimer);
-    tryTimer = setTimeout(()=>{
-      setStatus("Sin respuesta, probando otra URL…");
-      tryNextURL(false);
-    }, 6000);
-
-    audio.play().then(()=>{
-      clearTimeout(tryTimer);
-      connected(url);
-    }).catch(()=>{
-      // algunos navegadores solo permiten play tras interacción;
-      // el botón "Empezar Radio" ya da esa interacción.
-      // Aun así, si falla inmediato, probamos otra URL.
-      setTimeout(()=>tryNextURL(false), 400);
-    });
-  }
-
-  function connected(url){
-    isPlaying = true;
-    btnPause.disabled = false;
-    btnPlay.textContent = "▶ Reproducir";
-    setStatus((usingBackup?"(Respaldo) ":"")+"Conectado ✓");
-    setVU(true);
-    pauseOthers();
-    // Media Session (bloqueo pantalla)
-    if ("mediaSession" in navigator){
-      navigator.mediaSession.metadata = new MediaMetadata({
-        title: "Tropical Flow Radio",
-        artist: "24/7",
-        album: "Salsa · Merengue · Bachata · Reggaetón",
-        artwork: [{src:"https://i.imgur.com/0k1z0pK.png", sizes:"512x512", type:"image/png"}]
+    function startRadio() {
+      player.style.display = 'block';
+      player.play().then(() => {
+        btn.textContent = '⏸ Pausar Radio';
+        msg.textContent = 'La radio suena. ¡Dale play cada vez que quieras!';
+      }).catch(err => {
+        msg.textContent = 'Presiona ▶ nuevamente para iniciar (bloqueo de autoplay).';
+        console.warn('Error al intentar reproducir:', err);
       });
-      navigator.mediaSession.playbackState = "playing";
-      navigator.mediaSession.setActionHandler("pause", ()=> audio.pause());
-      navigator.mediaSession.setActionHandler("play",  ()=> { pauseOthers(); audio.play().catch(()=>{}); });
-      navigator.mediaSession.setActionHandler("stop",  ()=> audio.pause());
     }
-  }
 
-  function stopPlayback(msg){
-    isPlaying = false;
-    btnPause.disabled = true;
-    setVU(false);
-    audio.pause();
-    if (msg) setStatus(msg);
-    if ("mediaSession" in navigator){ navigator.mediaSession.playbackState = "paused"; }
-  }
+    btn.addEventListener('click', () => {
+      if (player.paused) startRadio();
+      else {
+        player.pause();
+        btn.textContent = '▶ Empezar Radio';
+        msg.textContent = 'Radio en pausa.';
+      }
+    });
 
-  function useMainList(){
-    currentList = [...MAIN_VARIANTS];
-    usingBackup = false;
-  }
-  function useBackupList(){
-    if (!BACKUPS.length){ setStatus("No hay respaldos configurados."); return; }
-    currentList = [...BACKUPS];
-    usingBackup = true;
-    listIndex = 0;
-    tryNextURL(true);
-  }
+    // Sincronizar estado si el usuario usa controles nativos
+    player.addEventListener('play', () => {
+      btn.textContent = '⏸ Pausar Radio';
+      msg.textContent = 'La radio suena. ¡Dale play cada vez que quieras!';
+    });
+    player.addEventListener('pause', () => {
+      btn.textContent = '▶ Empezar Radio';
+      msg.textContent = 'Radio en pausa.';
+    });
+    player.addEventListener('error', () => {
+      msg.textContent = 'Error de conexión. Verifica que tu encoder esté ON.';
+    });
 
-  // ========= 5) Eventos UI =========
-  btnPlay.addEventListener("click", ()=>{
-    if (isPlaying){ pauseOthers(); audio.play().catch(()=>{}); return; }
-    useMainList();
-    setStatus("Conectando…");
-    tryNextURL(true);
-  });
-
-  btnPause.addEventListener("click", ()=> stopPlayback("En pausa."));
-
-  btnRetry.addEventListener("click", ()=>{
-    stopPlayback();
-    setStatus("Reintentando conexión…");
-    tryNextURL(true);
-  });
-
-  btnSwap.addEventListener("click", ()=>{
-    if (usingBackup){ useMainList(); setStatus("Volviendo a servidor principal…"); }
-    else { setStatus("Cambiando a respaldo…"); }
-    stopPlayback();
-    tryNextURL(true);
-  });
-
-  btnOpen.addEventListener("click", ()=>{
-    // Abre tu página pública del canal (ajústala si deseas otra)
-    window.open("https://tropicalflow.listen2myshow.com", "_blank");
-  });
-
-  vol.addEventListener("input", ()=> audio.volume = parseFloat(vol.value||"0.9"));
-
-  // ========= 6) Eventos del <audio> =========
-  audio.addEventListener("playing", ()=>{ isPlaying = true; setVU(true); });
-  audio.addEventListener("pause",   ()=>{ isPlaying = false; setVU(false); });
-  audio.addEventListener("error",   ()=>{
-    setStatus("Error de reproducción. Probando otra variante…");
-    tryNextURL(false);
-  });
-})();
+    // Al cargar la página, mostramos el player y tratamos de iniciar si hay interacción previa
+    window.addEventListener('touchend', function once() {
+      if (player.paused) player.load();
+      window.removeEventListener('touchend', once);
+    }, { once: true });
+  })();
 </script>
-<!-- ========== /RADIO PRO ========== -->
  
   <!-- ============ VIDEOS RECIENTES (Carrusel) ============ -->
   <section id="videos">
