@@ -66,21 +66,21 @@
 <header><h1>🌴 Tropical Flow TV📺Radio - VIP</h1></header>
 
 <div class="wrap">
-<!-- RADIO – Player oficial L2MR en HTTPS -->
+<!-- RADIO – Player oficial L2MR con vista compacta en móvil -->
 <section id="radio" style="margin-top:12px">
   <h2 style="text-align:center;margin:0 0 10px">🎧 Tropical Flow TV <span style="opacity:.7">Radio</span></h2>
 
-  <div style="max-width:950px;margin:0 auto;padding:14px;border-radius:14px;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);">
-    <!-- Botones compactos -->
+  <div id="radioCard" style="max-width:950px;margin:0 auto;padding:14px;border-radius:14px;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);position:relative;">
+    <!-- Controles compactos -->
     <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:10px">
       <button id="btnOpenTab" style="background:#fbbf24;color:#000;border:0;border-radius:10px;padding:8px 12px;font-weight:700;cursor:pointer">🌐 Abrir en pestaña</button>
       <button id="btnReload"  style="background:#2dd4bf;color:#000;border:0;border-radius:10px;padding:8px 12px;font-weight:700;cursor:pointer">🔁 Reintentar</button>
+      <button id="btnToggle"  style="background:#94a3b8;color:#000;border:0;border-radius:10px;padding:8px 12px;font-weight:700;cursor:pointer">➖ Minimizar</button>
     </div>
 
     <!-- Marca de agua -->
     <div style="position:relative;border-radius:12px;overflow:hidden;background:#000">
-      <div style="position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;opacity:.08;font-weight:900;
-                  font-size:clamp(28px,7vw,64px);letter-spacing:.5px;text-transform:uppercase;">
+      <div class="tf-watermark" style="position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;opacity:.08;font-weight:900;font-size:clamp(28px,7vw,64px);letter-spacing:.5px;text-transform:uppercase;">
         Tropical Flow RadioTV
       </div>
 
@@ -89,23 +89,76 @@
               src="https://tropicalflow.listen2myshow.com/?autoplay=1"
               title="Tropical Flow Radio"
               allow="autoplay"
-              style="position:relative;width:100%;height:min(70vh,520px);border:0;">
+              style="position:relative;width:100%;height:60vh;max-height:520px;min-height:260px;border:0;">
       </iframe>
     </div>
 
     <p id="radioNote" style="margin:10px 0 0;text-align:center;color:#bbb;font-size:.92rem">
-      Si no escuchas, pulsa <b>Abrir en pestaña</b>. El player oficial usa HTTPS y evita el bloqueo por contenido mixto.
+      Si no escuchas, pulsa <b>Abrir en pestaña</b> (evita bloqueos del navegador).
     </p>
   </div>
 </section>
 
+<style>
+  /* Vista móvil: player más bajo y botones pequeños */
+  @media (max-width: 640px){
+    #l2mrFrame{ height: 42vh; max-height: 380px; min-height: 200px; }
+    #radioCard button{ padding:7px 10px; font-weight:700; border-radius:9px }
+  }
+  /* Barra compacta fija cuando está minimizado */
+  #radioMini {
+    position: fixed; left: 10px; right: 10px; bottom: 10px; z-index: 50;
+    background: rgba(0,0,0,.8); color:#fff; border:1px solid rgba(255,255,255,.15);
+    border-radius:12px; display:none; align-items:center; justify-content:space-between;
+    padding:8px 12px; backdrop-filter: blur(4px);
+  }
+  #radioMini button{ background:#2dd4bf; color:#000; border:0; border-radius:10px; padding:7px 10px; font-weight:700; }
+</style>
+
+<div id="radioMini">
+  <span>🔊 Tropical Flow Radio — reproduciendo…</span>
+  <div style="display:flex;gap:8px">
+    <button id="miniOpen">Abrir player</button>
+    <button id="miniTab" style="background:#fbbf24">Pestaña</button>
+  </div>
+</div>
+
 <script>
-  // Botones
-  document.getElementById('btnOpenTab').onclick = ()=> window.open('https://tropicalflow.listen2myshow.com','_blank');
-  document.getElementById('btnReload').onclick  = ()=>{
-    const f = document.getElementById('l2mrFrame');
-    try{ f.contentWindow.location.reload(); }catch(_){ f.src = f.src.split('#')[0].split('?')[0]+'?t='+Date.now(); }
+  const frame = document.getElementById('l2mrFrame');
+  const card  = document.getElementById('radioCard');
+  const mini  = document.getElementById('radioMini');
+  const btnOpenTab = document.getElementById('btnOpenTab');
+  const btnReload  = document.getElementById('btnReload');
+  const btnToggle  = document.getElementById('btnToggle');
+
+  btnOpenTab.onclick = ()=> window.open('https://tropicalflow.listen2myshow.com','_blank');
+  btnReload.onclick  = ()=>{
+    try{ frame.contentWindow.location.reload(); }
+    catch(_){ frame.src = frame.src.split('#')[0].split('?')[0]+'?t='+Date.now(); }
   };
+
+  // Minimizar / restaurar
+  let minimized = false;
+  btnToggle.onclick = ()=>{
+    minimized = !minimized;
+    if(minimized){
+      frame.style.display = 'none';
+      document.querySelector('.tf-watermark').style.display = 'none';
+      mini.style.display = 'flex';
+      btnToggle.textContent = '➕ Restaurar';
+      // sube el resto del contenido
+      window.scrollTo({top: card.offsetTop - 10, behavior:'smooth'});
+    }else{
+      frame.style.display = '';
+      document.querySelector('.tf-watermark').style.display = '';
+      mini.style.display = 'none';
+      btnToggle.textContent = '➖ Minimizar';
+    }
+  };
+
+  // Acciones en la barra mini
+  document.getElementById('miniOpen').onclick = ()=>{ minimized=false; btnToggle.click(); };
+  document.getElementById('miniTab').onclick  = ()=> window.open('https://tropicalflow.listen2myshow.com','_blank');
 </script>
   <!-- ============ VIDEOS RECIENTES (Carrusel) ============ -->
   <section id="videos">
