@@ -231,8 +231,11 @@
   // ───── CARRUSEL YouTube sencillo
   (function(){
     const IDS = [
-      "tpi8zLE3Kqw","RBE8A9rAj8Y","XYe0ZHVvVig","h86xW_G-j4s","5pKPlIlQa_8",
-      "wgqGHqhEZ8M","auTHP2prrxw","CL7m60BISiw","4jdbpZVzlf4","X_Df1rsXBjE"
+       "tpi8zLE3Kqw","RBE8A9rAj8Y","XYe0ZHVvVig","h86xW_G-j4s","5pKPlIlQa_8",
+  "wgqGHqhEZ8M","auTHP2prrxw","CL7m60BISiw","4jdbpZVzlf4","X_Df1rsXBjE",
+  "RWp76Pj0RUo","M9wQdkQicbk","FCu8-sim5F4","O6xVXaBcOac","jTqKxMTtVEI",
+  "4tXLT0hN8n8","n8RMGnc8v_o"
+
     ];
     let i = 0;
     const main = document.getElementById('ytMain');
@@ -318,6 +321,54 @@
 
     render(); load(false);
   })();
+<script>
+/* ===== VIDEO PROMO (Merengue → Salsa) ===== */
+const PROMO_IDS = ["U0V7ATX_2CY", "5ZVTbahB5CM"];
+let promoIndex = 0, promoPlayer = null;
+
+function promoPrev(){ promoIndex = (promoIndex - 1 + PROMO_IDS.length) % PROMO_IDS.length; pauseAllExcept('promo'); promoPlayer.loadVideoById(PROMO_IDS[promoIndex]); }
+function promoNext(){ promoIndex = (promoIndex + 1) % PROMO_IDS.length; pauseAllExcept('promo'); promoPlayer.loadVideoById(PROMO_IDS[promoIndex]); }
+function promoToggle(){
+  try{
+    const s = promoPlayer.getPlayerState();
+    if (s === YT.PlayerState.PLAYING) promoPlayer.pauseVideo();
+    else { pauseAllExcept('promo'); promoPlayer.playVideo(); }
+  }catch(_){}
+}
+function createPromoPlayer(){
+  if (!(window.YT && window.YT.Player)) return;
+  promoPlayer = new YT.Player('promo-player', {
+    videoId: PROMO_IDS[promoIndex],
+    playerVars: { rel:0, modestbranding:1, playsinline:1, controls:1 },
+    events: {
+      onReady: e => { try{ e.target.mute(); e.target.playVideo(); }catch(_){ } setTimeout(updatePromoTitle,300); },
+      onStateChange: e => {
+        if (e.data === YT.PlayerState.PLAYING) pauseAllExcept('promo');
+        if (e.data === YT.PlayerState.ENDED) promoNext();
+        if (e.data === YT.PlayerState.PLAYING || e.data === YT.PlayerState.CUED) setTimeout(updatePromoTitle,300);
+      }
+    }
+  });
+  window._ytPromoPlayerInstance = promoPlayer;
+
+  document.getElementById('promoPrev').onclick = promoPrev;
+  document.getElementById('promoNext').onclick = promoNext;
+  document.getElementById('promoPlay').onclick = promoToggle;
+
+  const fsBtn = document.getElementById('promoFs');
+  const shell = document.querySelector('#promo .video-shell');
+  function toggleFs(){ if (document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.(); }
+  function onFsChange(){ fsBtn.textContent = document.fullscreenElement ? "⤢ Salir de pantalla completa" : "⤢ Pantalla completa"; }
+  fsBtn?.addEventListener('click', toggleFs);
+  document.addEventListener('fullscreenchange', onFsChange);
+}
+function updatePromoTitle(){ try{ const d = promoPlayer.getVideoData(); document.getElementById('promo-title').textContent = d?.title || ""; }catch(_){} }
+
+(function loadPromo(){
+  if (window.YT && window.YT.Player) { createPromoPlayer(); return; }
+  const prev = window.onYouTubeIframeAPIReady;
+  window.onYouTubeIframeAPIReady = function(){ if (typeof prev==='function') prev(); createPromoPlayer(); };
+})();
 </script>
 
 </body>
