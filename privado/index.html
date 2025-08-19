@@ -5,11 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Tropical Flow TV📺Radio - VIP</title>
 <meta name="description" content="Acceso exclusivo a Tropical Flow TV📺Radio. Música, videos y más 24/7.">
+
 <style>
-  :root{
-    --accent:#00e0ff; --bg:rgba(0,0,0,.6); --maxw:1100px;
-    --aspect21x9:42.857%;
-  }
+  :root{ --accent:#00e0ff; --bg:rgba(0,0,0,.6); --maxw:1100px; --aspect21x9:42.857% }
   *{box-sizing:border-box}
   body{
     margin:0;font-family:Arial,Helvetica,sans-serif;color:#fff;
@@ -23,6 +21,18 @@
   h2{margin:0 0 12px;text-align:center}
   audio{ width:100%; display:block; margin:8px auto; border-radius:10px }
 
+  /* Botones */
+  .btn{ background:var(--accent); color:#000; font-weight:700; border:none; border-radius:10px; padding:8px 12px; cursor:pointer }
+  .btn.alt{ background:#2dd4bf } .btn.warn{ background:#fbbf24; color:#000 }
+  .row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+
+  /* Radio card */
+  .radio-card{max-width:950px;margin:0 auto;padding:14px;border-radius:14px;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);position:relative;overflow:hidden}
+  .radio-brand{position:absolute; left:10px; bottom:10px; background:rgba(0,0,0,.55); padding:.35rem .6rem; border-radius:8px; font-weight:700}
+  #radioMini{position:fixed;left:10px;right:10px;bottom:10px;z-index:50;background:rgba(0,0,0,.88);color:#fff;border:1px solid rgba(255,255,255,.15);border-radius:12px;display:flex;align-items:center;justify-content:space-between;padding:8px 12px;backdrop-filter:blur(4px);box-shadow:0 8px 24px rgba(0,0,0,.35)}
+  #radioMini button{ background:#2dd4bf; color:#000; border:0; border-radius:10px; padding:7px 10px; font-weight:700 }
+  #radioMini .tab{ background:#fbbf24; color:#000 }
+
   /* Video 21:9 */
   .video-shell{ width:100%; margin:0 auto; border-radius:12px; overflow:hidden; background:#000; max-width:var(--maxw) }
   .video-aspect{ position:relative; width:100%; padding-top:var(--aspect21x9) }
@@ -34,39 +44,23 @@
   #yt-thumbs img{ height:90px;border-radius:10px;display:block }
   @media (max-width:600px){ #yt-thumbs img{ height:70px } }
 
-  /* Botones */
-  .btn{ background:var(--accent); color:#000; font-weight:700; border:none; border-radius:10px; padding:10px 14px; cursor:pointer }
-  .btn.alt{ background:#2dd4bf }
-  .btn.warn{ background:#fbbf24; color:#000 } /* amarillo con texto negro */
-
   /* Playlist */
+  .playlist-box{ text-align:center; padding:20px; background:rgba(0,0,0,0.5); border-radius:15px }
   ul.plist{ list-style:none; padding:0; max-width:var(--maxw); margin:0 auto; color:#fff }
   ul.plist li{ padding:8px 10px; border-radius:8px; cursor:pointer }
   ul.plist li:hover{ background:rgba(255,255,255,.18) }
   .status{max-width:var(--maxw);margin:6px auto 0; font-size:.92rem}
   .ok{color:#7CFC00} .warn{color:#ffd166}
 
-  /* Badge sobre el player */
-  .badge{
-    position:absolute; left:10px; bottom:10px; background:rgba(0,0,0,.55);
-    padding:.35rem .6rem; border-radius:8px; font-weight:700; backdrop-filter: blur(2px);
-  }
-
-  .social-buttons{ text-align:center; margin: 16px 0 }
-  .social-buttons a{ display:inline-block; margin:.4rem; padding:.6rem 1rem; color:#fff; text-decoration:none; border-radius:8px; background:#444 }
-  .whatsapp{ background:#25d366 } .youtube{ background:#FF0000 } .facebook{ background:#3b5998 }
-  .paypal{ background:#0070ba } .athmovil{ background:#6f42c1 }
-
   footer{ text-align:center; padding:1rem; background:rgba(0,0,0,.6); color:#ccc }
 </style>
-<!-- API YouTube -->
 <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
 <header><h1>🌴 Tropical Flow TV📺Radio - VIP</h1></header>
 
 <div class="wrap">
- <!-- RADIO -->
+  <!-- RADIO -->
   <section id="radio">
     <h2>🎧 Tropical Flow Radio</h2>
     <div class="radio-card">
