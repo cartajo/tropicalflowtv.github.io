@@ -66,124 +66,164 @@
 <header><h1>🌴 Tropical Flow TV📺Radio - VIP</h1></header>
 
 <div class="wrap">
-<!-- RADIO – compacto, inicia minimizado (Android/iOS) -->
-<section id="radio" style="margin-top:12px">
-  <h2 style="text-align:center;margin:0 0 10px">🎧 Tropical Flow TV Radio</h2>
+ <!-- RADIO -->
+<section id="radio">
+  <h2>🎧 Tropical Flow Radio</h2>
 
-  <div id="radioCard" style="max-width:850px;margin:0 auto;padding:10px;border-radius:10px;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);position:relative;">
-    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:8px">
-      <button id="btnOpenTab" style="background:#fbbf24;color:#000;border:0;border-radius:8px;padding:8px 10px;font-weight:600;cursor:pointer">🌐 Abrir en pestaña</button>
-      <button id="btnToggle"  style="background:#2dd4bf;color:#000;border:0;border-radius:8px;padding:8px 10px;font-weight:600;cursor:pointer">▶ Abrir player</button>
+  <style>
+    .radio-card{
+      max-width:950px;margin:0 auto;padding:14px;border-radius:14px;
+      background:linear-gradient(135deg, rgba(0,0,0,.65), rgba(0,0,0,.5));
+      backdrop-filter:blur(4px);position:relative;overflow:hidden
+    }
+    .radio-hero{
+      position:absolute; inset:0; opacity:.12;
+      background:
+        radial-gradient(ellipse at 20% 10%, rgba(0,224,255,.4), transparent 55%),
+        radial-gradient(ellipse at 80% 90%, rgba(45,212,191,.35), transparent 55%),
+        url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
+      pointer-events:none;
+    }
+    .radio-brand{
+      position:absolute; left:10px; bottom:10px; background:rgba(0,0,0,.55);
+      padding:.35rem .6rem; border-radius:8px; font-weight:700
+    }
+    .radio-buttons{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:10px}
+    .btn{ background:var(--accent); color:#000; font-weight:700; border:none; border-radius:10px; padding:8px 12px; cursor:pointer }
+    .btn.alt{ background:#2dd4bf } .btn.warn{ background:#fbbf24; color:#000 }
+    #radioMini{position:fixed;left:10px;right:10px;bottom:10px;z-index:50;background:rgba(0,0,0,.88);color:#fff;border:1px solid rgba(255,255,255,.15);border-radius:12px;display:flex;align-items:center;justify-content:space-between;padding:8px 12px;backdrop-filter:blur(4px);box-shadow:0 8px 24px rgba(0,0,0,.35)}
+    #radioMini button{ background:#2dd4bf; color:#000; border:0; border-radius:10px; padding:7px 10px; font-weight:700 }
+    #radioMini .tab{ background:#fbbf24; color:#000 }
+    /* alturas compactas en móvil para evitar pantalla completa */
+    #radioViewport{ height:320px }
+    @media (max-width: 820px){ #radioViewport{ height:300px } }
+    @media (max-width: 640px){ #radioViewport{ height:240px } }
+  </style>
+
+  <div class="radio-card">
+    <div class="radio-hero"></div>
+
+    <div class="radio-buttons">
+      <button id="radioOpenTab" class="btn warn">🌐 Abrir en pestaña</button>
+      <button id="radioToggle"  class="btn alt">▶ Abrir player</button>
+      <button id="radioUseBackup" class="btn">🎵 Usar respaldo</button>
+      <button id="radioStop" class="btn">⏹ Detener</button>
     </div>
 
-    <!-- Viewport del iframe (oculto cuando está minimizado) -->
-    <div class="radio-viewport" style="position:relative;width:100%;height:420px;border-radius:10px;overflow:hidden;background:#000;display:none">
-      <div class="tf-watermark" style="position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;opacity:.08;font-weight:900;font-size:clamp(26px,7vw,60px);letter-spacing:.5px;text-transform:uppercase;">
-        Tropical Flow RadioTV
-      </div>
-      <iframe id="l0mrFrame"
+    <!-- IFRAME oficial L2MR -->
+    <div id="radioViewport" style="display:none; position:relative; width:100%;">
+      <iframe id="l2mrFrame"
               src="https://tropicalflow.listen2myshow.com/?autoplay=1"
               title="Tropical Flow Radio"
-              allow="autoplaY"
-              style="position:absolute;inset:0;width:100%;height:100%;border:0;">
+              allow="autoplay"
+              style="position:absolute;inset:0;width:100%;height:100%;border:0;background:#000;">
       </iframe>
+      <div class="radio-brand">📻 Tropical Flow RadioTV</div>
     </div>
 
-    <!-- Barra nativa (solo si tenemos URL HTTPS directa) -->
-    <div id="nativeWrap" style="display:none;max-width:820px;margin:8px auto 0">
-      <audio id="nativeAudio" controls preload="none" style="width:100%;border-radius:10px;"></audio>
-      <p style="margin:6px 0 0;text-align:center;color:#bbb;font-size:.9rem">Si no suena, toca “Abrir en pestaña”.</p>
+    <!-- Respaldo nativo HTTPS -->
+    <div id="radioBackupWrap" style="display:none;max-width:820px;margin:8px auto 0">
+      <audio id="radioBackup" controls preload="none" style="width:100%;border-radius:10px;"></audio>
+      <p style="margin:6px 0 0;text-align:center;color:#bbb;font-size:.9rem">
+        Respaldo activo. Para volver al player oficial, toca “Abrir player”.
+      </p>
     </div>
 
-    <p id="radioNote" style="margin:10px 0 0;text-align:center;color:#bbb;font-size:.92rem">
-      Si no escuchas, pulsa <b>Abrir en pestaña</b> (evita bloqueos del navegador).
+    <p id="radioHelp" style="margin:10px 0 0;text-align:center;color:#bbb;font-size:.92rem">
+      Si no escuchas, pulsa <b>Abrir en pestaña</b> (algunos móviles bloquean autoplay).
     </p>
   </div>
-</section>
 
-<style>
-  /* Alturas bajas en móviles para que NUNCA llene pantalla */
-  @media (max-width: 820px){ .radio-viewport{ height: 300px !important; } }
-  @media (max-width: 640px){ .radio-viewport{ height: 240px !important; } }
-  /* Barra mini fija cuando está minimizado */
-  #radioMini {
-    position: fixed; left: 10px; right: 10px; bottom: 10px; z-index: 50;
-    background: rgba(0,0,0,.88); color:#fff; border:1px solid rgba(255,255,255,.15);
-    border-radius:12px; display:flex; align-items:center; justify-content:space-between;
-    padding:8px 12px; backdrop-filter: blur(4px); box-shadow:0 8px 24px rgba(0,0,0,.35);
-  }
-  #radioMini button{ background:#2dd4bf; color:#000; border:0; border-radius:10px; padding:7px 10px; font-weight:700; }
-  #radioMini button.tab{ background:#fbbf24; }
-</style>
-
-<!-- Barra mini (siempre visible al inicio) -->
-<div id="radioMini">
-  <span>🔊 Tropical Flow Radio — listo para reproducir…</span>
-  <div style="display:flex;gap:8px">
-    <button id="miniOpen">Abrir player</button>
-    <button id="miniTab" class="tab">Pestaña</button>
+  <!-- Barra mini -->
+  <div id="radioMini">
+    <span>🔊 Tropical Flow Radio — listo para reproducir…</span>
+    <div style="display:flex;gap:8px">
+      <button id="miniOpen">Abrir player</button>
+      <button id="miniTab" class="tab">Pestaña</button>
+    </div>
   </div>
-</div>
 
-<script>
-(function(){
-  // ⚠ Si consigues un stream HTTPS (mp3/aac), ponlo aquí para mostrar la barra nativa <audio>
-  // Ejemplo: const STREAM_DIRECT = "https://tu-dominio/stream.mp3";
-  const STREAM_DIRECT = ""; // deja vacío si no lo tienes (Listen2MyRadio suele ser HTTP)
+  <script>
+    (function(){
+      // 🔁 PON AQUÍ tu stream HTTPS directo (mp3/aac) si Listen2MyRadio te lo da.
+      // Mientras, dejo uno de prueba (género tropical/latino). CÁMBIALO cuando tengas el tuyo.
+      const BACKUP_STREAM = "https://stream-149.zeno.fm/0cn4d1x2kxhvv"; // <-- reemplaza cuando tengas tu URL HTTPS
 
-  const frame      = document.getElementById('l2mrFrame');
-  const viewport   = document.querySelector('.radio-viewport');
-  const btnTab     = document.getElementById('btnOpenTab');
-  const btnToggle  = document.getElementById('btnToggle');
-  const miniBar    = document.getElementById('radioMini');
-  const miniOpen   = document.getElementById('miniOpen');
-  const miniTab    = document.getElementById('miniTab');
+      const viewport = document.getElementById('radioViewport');
+      const frame    = document.getElementById('l2mrFrame');
+      const openTab  = document.getElementById('radioOpenTab');
+      const toggle   = document.getElementById('radioToggle');
+      const useBkp   = document.getElementById('radioUseBackup');
+      const stopBtn  = document.getElementById('radioStop');
 
-  const nativeWrap = document.getElementById('nativeWrap');
-  const nativeAud  = document.getElementById('nativeAudio');
+      const mini     = document.getElementById('radioMini');
+      const miniOpen = document.getElementById('miniOpen');
+      const miniTab  = document.getElementById('miniTab');
 
-  btnTab.onclick = ()=> window.open('https://tropicalflow.listen2myshow.com','_blank');
-  miniTab.onclick = btnTab.onclick;
+      const bkpWrap  = document.getElementById('radioBackupWrap');
+      const bkpAudio = document.getElementById('radioBackup');
 
-  function showIframePlayer(){
-    nativeWrap.style.display = 'none';
-    viewport.style.display = '';
-    miniBar.style.display = 'none';
-    btnToggle.textContent = '➖ Minimizar';
-  }
-  function hidePlayer(){
-    viewport.style.display = 'none';
-    nativeWrap.style.display = 'none';
-    miniBar.style.display = 'flex';
-    btnToggle.textContent = '▶ Abrir player';
-  }
-  function showNative(){
-    if (!STREAM_DIRECT) return false;
-    try{
-      nativeAud.src = STREAM_DIRECT;
-      nativeWrap.style.display = '';
-      viewport.style.display = 'none';
-      miniBar.style.display = 'none';
-      btnToggle.textContent = '➖ Minimizar';
-      return true;
-    }catch(_){ return false; }
-  }
+      // Integramos con la pausa global para que no suene todo a la vez
+      function pauseAllExcept(source){
+        try{
+          if (source!=='playlist'){
+            const p = document.getElementById('audio1');
+            if (p && !p.paused) p.pause();
+          }
+          if (source!=='yt'){
+            const y = window._ytCarouselPlayerInstance;
+            if (y && y.getPlayerState && y.getPlayerState()===YT.PlayerState.PLAYING) y.pauseVideo();
+          }
+          if (source!=='promo'){
+            const pr = window._ytPromoPlayerInstance;
+            if (pr && pr.getPlayerState && pr.getPlayerState()===YT.PlayerState.PLAYING) pr.pauseVideo();
+          }
+        }catch(e){}
+      }
 
-  // Botones
-  btnToggle.onclick = ()=> {
-    // Si tenemos stream HTTPS, usamos barra nativa
-    if (viewport.style.display === 'none'){
-      if (!showNative()) showIframePlayer();
-    } else {
-      hidePlayer();
-    }
-  };
-  miniOpen.onclick = btnToggle.onclick;
+      function showIframe(){
+        // Mostrar player oficial
+        bkpAudio.pause(); bkpWrap.style.display='none';
+        viewport.style.display=''; mini.style.display='none';
+        toggle.textContent='➖ Minimizar';
+        pauseAllExcept('radio');
+      }
+      function hideAll(){
+        viewport.style.display='none'; bkpWrap.style.display='none';
+        mini.style.display='flex'; toggle.textContent='▶ Abrir player';
+      }
+      function useBackup(){
+        // Activar respaldo HTTPS (nativo <audio>)
+        try{
+          bkpAudio.src = BACKUP_STREAM;
+          bkpWrap.style.display=''; viewport.style.display='none'; mini.style.display='none';
+          bkpAudio.play().catch(()=>{});
+          toggle.textContent='➖ Minimizar';
+          pauseAllExcept('radio');
+        }catch(_){}
+      }
+      function stopAll(){
+        // Parar ambos
+        try{ bkpAudio.pause(); }catch(_){}
+        hideAll();
+      }
 
-  // 🔽 Siempre arrancar MINIMIZADO (así Android ya no ocupa toda la pantalla)
-  hidePlayer();
-})();
-</script>
+      // Botones
+      openTab.onclick = ()=> window.open('https://tropicalflow.listen2myshow.com','_blank');
+      miniTab.onclick = openTab.onclick;
+      toggle.onclick  = ()=>{ if (viewport.style.display==='none' && bkpWrap.style.display==='none') showIframe(); else hideAll(); };
+      miniOpen.onclick= toggle.onclick;
+      useBkp.onclick  = useBackup;
+      stopBtn.onclick = stopAll;
+
+      // Arranca minimizado
+      hideAll();
+
+      // Si el usuario toca play en el respaldo, pausamos el resto
+      bkpAudio.addEventListener('play', ()=> pauseAllExcept('radio'));
+    })();
+  </script>
+</section>
  
   <!-- ============ VIDEOS RECIENTES (Carrusel) ============ -->
   <section id="videos">
