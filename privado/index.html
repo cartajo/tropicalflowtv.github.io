@@ -489,18 +489,38 @@ function nextC(){ cIndex=(cIndex+1)%CAROUSEL_IDS.length; loadCarousel(true); }
 </html>
 
 
+  /* ─── Playlist ─── */
+  .plist{ list-style:none; padding:0; margin:10px 0 0; max-height:340px; overflow:auto }
+  .plist li{ padding:8px 10px; border-radius:8px; cursor:pointer }
+  .plist li.active{ background:rgba(0,191,255,.35) }
+  .status{ margin-top:8px; color:#7CFC00 }
+  .status.warn{ color:#ffd166 }
+
+  /* Sociales */
+  .social{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center }
+  .social a{
+    text-decoration:none; color:#fff; padding:.65rem 1rem; border-radius:10px; font-weight:700;
+    background:#444; display:inline-flex; align-items:center; gap:.5rem;
+  }
+  .whatsapp{ background:#25d366 } .youtube{ background:#FF0000 }
+  .facebook{ background:#3b5998 } .paypal{ background:#0070ba } .athmovil{ background:#6f42c1 }
+
+  footer{ text-align:center; padding:14px; color:#cfcfcf; background:rgba(0,0,0,.5) }
+</style>
+</head>
+<body>
+
+<div class="bg-mark">Tropical Flow RadioTV</div>
+
+<header>
+  <h1>🌴 Tropical Flow TV 📺 Radio – VIP</h1>
+</header>
+
+<div class="wrap">
+
+  
+
  
-
-</div>
-
-<footer>
-  &copy; <span id="year"></span> Tropical Flow TV 📺 Radio — Todos los derechos reservados
-</footer>
-
-<script>
-  // Año
-  document.getElementById('year').textContent = new Date().getFullYear();
-
   // ───── RADIO (minimizada por defecto)
   (function(){
     const viewport  = document.getElementById('radioViewport');
