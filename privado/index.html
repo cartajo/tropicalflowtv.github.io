@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="utf-8" />
@@ -160,52 +160,46 @@
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
 
-/* ========== PAUSA CRUZADA (evita que suene todo a la vez) ========== */
-const hub = {
-  radioFrame: ()=> document.getElementById('radioFrame'),
-  playlist:   ()=> document.getElementById('plAudio'),
-  ytCarousel: ()=> window._ytCarousel || null,
-  ytPromo:    ()=> window._ytPromo || null
-};
+/* ========== HUB: Pausa cruzada (corte duro radio) ========== */
+const RADIO_URL = "https://tropicalflow.listen2myshow.com/?autoplay=1";
+function getRadioFrame(){ return document.getElementById('radioFrame'); }
+function radioStart(){
+  const f=getRadioFrame();
+  if (f && (f.src==="about:blank" || !f.src)) f.src=RADIO_URL;
+}
+function radioStopHard(){ const f=getRadioFrame(); if (f) f.src="about:blank"; }
+
+function getPl(){ return document.getElementById('plAudio'); }
+function getCarousel(){ return window._ytCarousel || null; }
+function getPromo(){ return window._ytPromo || null; }
+
 function pauseAllExcept(kind){
   try{
-    if (kind!=='radio'){
-      const ifr = hub.radioFrame();
-      if (ifr && ifr.contentWindow) {
-        try { ifr.contentWindow.postMessage({event:"command",func:"pause"}, "*"); } catch(e){}
-      }
-    }
-    if (kind!=='playlist'){
-      const a = hub.playlist(); if (a && !a.paused) a.pause();
-    }
-    if (kind!=='yt'){
-      const c = hub.ytCarousel(); if (c && c.getPlayerState && c.getPlayerState()===YT.PlayerState.PLAYING) c.pauseVideo();
-    }
-    if (kind!=='promo'){
-      const p = hub.ytPromo(); if (p && p.getPlayerState && p.getPlayerState()===YT.PlayerState.PLAYING) p.pauseVideo();
-    }
+    if (kind!=='radio'){ radioStopHard(); } // 🔴 corte duro para silenciar radio
+    if (kind!=='playlist'){ const a=getPl(); if (a && !a.paused) a.pause(); }
+    if (kind!=='yt'){ const c=getCarousel(); if (c?.getPlayerState?.()===YT.PlayerState.PLAYING) c.pauseVideo(); }
+    if (kind!=='promo'){ const p=getPromo(); if (p?.getPlayerState?.()===YT.PlayerState.PLAYING) p.pauseVideo(); }
   }catch(e){}
 }
 
-/* ========== RADIO (minimizada + abrir en pestaña) ========== */
+/* ========== RADIO (minimizada + abrir) ========== */
 (function(){
-  const RADIO_URL = "https://tropicalflow.listen2myshow.com/?autoplay=1";
   const viewport  = document.getElementById('radioViewport');
-  const frame     = document.getElementById('radioFrame');
   const openBtn   = document.getElementById('openPlayer');
   const tabBtn    = document.getElementById('openTab');
 
   function show(){
     viewport.style.display='block';
-    if (frame.src==="about:blank") frame.src = RADIO_URL;
+    radioStart();
     pauseAllExcept('radio');
   }
-  function hide(){ viewport.style.display='none'; }
+  function hide(){ viewport.style.display='none'; /* mantiene lo cargado si no cambias */ }
 
   openBtn.onclick = ()=> (viewport.style.display==='none' ? show() : hide());
   tabBtn.onclick  = ()=> window.open("https://tropicalflow.listen2myshow.com","_blank");
 
-  hide(); // entra minimizada (Android ya no ocupa toda la pantalla)
+  // entra minimizada
+  hide();
 })();
 
 /* ========== PLAYLIST VIP (lee /musica/) ========== */
@@ -255,8 +249,8 @@ function pauseAllExcept(kind){
   next.onclick  = ()=>{ i=(i+1)%TRACKS.length; load(true); };
   toggle.onclick= ()=>{ if(audio.paused){ pauseAllExcept('playlist'); audio.play().catch(()=>{});} else audio.pause(); };
   audio.addEventListener('ended', ()=> next.onclick());
+  audio.addEventListener('play',  ()=> pauseAllExcept('playlist'));
   audio.addEventListener('error', ()=> msg("⚠ No se pudo cargar: "+decodeURIComponent(TRACKS[i].src), true));
-  audio.addEventListener('play', ()=> pauseAllExcept('playlist'));
 
   render(); load(false);
 })();
@@ -292,7 +286,8 @@ function createPromo(){
   document.getElementById('promoNext').onclick = promoNext;
   document.getElementById('promoToggle').onclick = ()=>{
     const s = promoPlayer.getPlayerState?.();
-    if (s===YT.PlayerState.PLAYING) promoPlayer.pauseVideo(); else { pauseAllExcept('promo'); promoPlayer.playVideo(); }
+    if (s===YT.PlayerState.PLAYING) promoPlayer.pauseVideo();
+    else { pauseAllExcept('promo'); promoPlayer.playVideo(); }
   };
   const fsBtn=document.getElementById('promoFs'), shell=document.getElementById('promoShell');
   fsBtn.onclick=()=>{ if(document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.(); };
@@ -337,7 +332,8 @@ function createCarousel(){
   document.getElementById('cNext').onclick = nextC;
   document.getElementById('cToggle').onclick = ()=>{
     const s = cPlayer.getPlayerState?.();
-    if (s===YT.PlayerState.PLAYING) cPlayer.pauseVideo(); else { pauseAllExcept('yt'); cPlayer.playVideo(); }
+    if (s===YT.PlayerState.PLAYING) cPlayer.pauseVideo();
+    else { pauseAllExcept('yt'); cPlayer.playVideo(); }
   };
   const fsBtn=document.getElementById('cFs'), shell=document.getElementById('carouselShell');
   fsBtn.onclick=()=>{ if(document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.(); };
