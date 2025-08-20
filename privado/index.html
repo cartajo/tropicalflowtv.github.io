@@ -367,4 +367,20 @@
   .playOverlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(transparent,rgba(0,0,0,.32))}
   .playBtn{width:54px;height:54px;border-radius:50%;background:rgba(0,0,0,.66);border:2px solid rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center}
   .playBtn:before{content:"";border-left:18px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px}
+<!-- ============= 3) CARRUSEL (17 VIDEOS) ============= -->
+  <section id="videos">
+    <h2>🎞 Videos Recientes</h2>
+    <div id="carouselPlayerShell" class="ratio21x9" style="max-width:1100px;margin:0 auto;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)">
+      <div id="ytMain" class="fill"></div>
+    </div>
+    <div class="controls">
+      <button id="cPrev" class="btn">⏮ Anterior</button>
+      <button id="cToggle" class="btn alt">▶ / ⏸</button>
+      <button id="cNext" class="btn">⏭ Siguiente</button>
+      <button id="cFs" class="btn warn">⤢ Pantalla completa</button>
+    </div>
+    <div id="cTitle" style="max-width:1100px;margin:8px auto 10px;text-align:center;font-weight:700"></div>
+    <div id="thumbs" class="thumbStrip"></div>
+  </section>
+
 
