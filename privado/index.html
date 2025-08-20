@@ -414,57 +414,7 @@ const CAROUSEL_IDS = [
 
 }
 
-/* ====== CARRUSEL ====== */
-let cIndex=0, cPlayer=null;
-function buildThumbs(){
-  const wrap=document.getElementById('thumbs');
-  wrap.innerHTML = CAROUSEL_IDS.map((id,i)=>`
-    <div class="thumb ${i===cIndex?'active':''}" data-i="${i}">
-      <img src="https://img.youtube.com/vi/${id}/hqdefault.jpg" alt="thumb ${i+1}">
-      <div class="playOverlay"><div class="playBtn"></div></div>
-    </div>`).join('');
-  wrap.querySelectorAll('.thumb').forEach(el=>{
-    el.onclick = ()=>{ cIndex=+el.dataset.i; loadCarousel(true); };
-  });
-}
-function markActive(){ document.querySelectorAll('#thumbs .thumb').forEach((el,i)=> el.classList.toggle('active', i===cIndex)); }
-function createCarousel(){
-  if (!(window.YT && window.YT.Player)) return;
-  cPlayer = new YT.Player('ytMain',{
-    videoId: CAROUSEL_IDS[cIndex],
-    playerVars:{rel:0,modestbranding:1,playsinline:1,controls:1},
-    events:{
-      onReady:e=>{ updateCTitle(); },
-      onStateChange:e=>{
-        if(e.data===YT.PlayerState.ENDED) nextC();
-        if(e.data===YT.PlayerState.PLAYING || e.data===YT.PlayerState.CUED) updateCTitle();
-      }
-    }
-  });
-  buildThumbs();
-  document.getElementById('cPrev').onclick = prevC;
-  document.getElementById('cNext').onclick = nextC;
-  document.getElementById('cToggle').onclick = ()=>{
-    const s=cPlayer.getPlayerState?.();
-    if (s===YT.PlayerState.PLAYING) cPlayer.pauseVideo(); else cPlayer.playVideo();
-  };
-  const fsBtn=document.getElementById('cFs'), shell=document.getElementById('carouselPlayerShell');
-  fsBtn.onclick=()=>{ if(document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.(); };
-}
-function loadCarousel(play){ cPlayer.loadVideoById(CAROUSEL_IDS[cIndex]); markActive(); updateCTitle(); if(!play) cPlayer.pauseVideo?.(); }
-function updateCTitle(){ try{ document.getElementById('cTitle').textContent = cPlayer.getVideoData()?.title || ""; }catch(_){} }
-function prevC(){ cIndex=(cIndex-1+CAROUSEL_IDS.length)%CAROUSEL_IDS.length; loadCarousel(true); }
-function nextC(){ cIndex=(cIndex+1)%CAROUSEL_IDS.length; loadCarousel(true); }
 
-/* ====== Boot de la API de YouTube ====== */
-(function boot(){
-  let started=false;
-  function start(){ if(started) return; started=true; createPromo(); createCarousel(); }
-  if (window.YT && window.YT.Player) start();
-  const prev=window.onYouTubeIframeAPIReady;
-  window.onYouTubeIframeAPIReady=function(){ if (typeof prev==='function') prev(); start(); };
-})();
-</script>
 </body>
 </html>
 
