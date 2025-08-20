@@ -38,26 +38,6 @@
   .hint{color:#bbb;font-size:.9rem;text-align:center}
   .radio-viewport{position:relative;padding-top:52%;display:none}
 
-  /* Playlist */
-  .plist{list-style:none;margin:10px auto 0;max-width:900px;padding:0}
-  .plist li{padding:8px 10px;border-radius:10px;cursor:pointer}
-  .plist li.active{background:rgba(0,191,255,.28)}
-  audio{width:100%;max-width:720px;margin:8px auto;display:block;border-radius:12px}
-
-  /* Video players */
-  .ratio16x9{position:relative;padding-top:56.25%}
-  .ratio21x9{position:relative;padding-top:42.857%}
-  .fill{position:absolute;inset:0}
-
-  /* Carrusel thumbnails */
-  .thumbStrip{max-width:var(--maxw);margin:10px auto 0;padding:10px;display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory}
-  .thumb{position:relative;flex:0 0 auto;width:210px;border-radius:12px;overflow:hidden;scroll-snap-align:start;box-shadow:0 8px 22px rgba(0,0,0,.35);cursor:pointer}
-  .thumb img{display:block;width:100%;filter:brightness(.9);transition:transform .18s ease, filter .18s ease}
-  .thumb:hover img{transform:scale(1.03);filter:brightness(1)}
-  .thumb.active{outline:3px solid var(--accent);outline-offset:-3px}
-  .playOverlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(transparent,rgba(0,0,0,.32))}
-  .playBtn{width:54px;height:54px;border-radius:50%;background:rgba(0,0,0,.66);border:2px solid rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center}
-  .playBtn:before{content:"";border-left:18px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px}
 
   /* Marca de agua “TROPICAL FLOW” */
   .watermark{
@@ -94,18 +74,7 @@
     </div>
   </section>
 
-  <!-- ============= 2) PLAYLIST VIP ============= -->
-  <section id="playlist">
-    <h2>🎶 Playlist VIP 1</h2>
-    <audio id="plAudio" controls preload="metadata">Tu navegador no soporta audio HTML5.</audio>
-    <div class="controls">
-      <button id="plPrev" class="btn">⏮ Anterior</button>
-      <button id="plToggle" class="btn alt">▶ / ⏸</button>
-      <button id="plNext" class="btn">⏭ Siguiente</button>
-    </div>
-    <ul id="plList" class="plist"></ul>
-    <p id="plStatus" class="hint" style="margin-top:8px"></p>
-  </section>
+
 
   <!-- ============= 3) CARRUSEL (17 VIDEOS) ============= -->
   <section id="videos">
