@@ -3,62 +3,40 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Tropical Flow TV 📺 Radio - VIP</title>
-<meta name="description" content="Tropical Flow TV Radio: salsa, merengue, bachata y reggaetón 24/7.">
-
+<title>Tropical Flow TV📺 Radio - VIP</title>
+<meta name="description" content="Tropical Flow TV Radio — Salsa, Merengue, Bachata y Reggaetón 24/7.">
 <style>
   :root{
     --accent:#00e0ff; --accent2:#2dd4bf; --warn:#fbbf24;
-    --bgCard: rgba(0,0,0,.60); --bgPane: rgba(255,255,255,.08);
+    --glass:rgba(0,0,0,.62); --panel:rgba(255,255,255,.08);
     --maxw:1100px;
   }
   *{box-sizing:border-box}
-  html,body{margin:0}
   body{
-    font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-    color:#fff;
+    margin:0; color:#fff;
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,Helvetica,sans-serif;
     background:
-      linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.75)),
-      url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop&ixlib=rb-4.0.3")
-        center/cover fixed no-repeat;
+      linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.78)),
+      url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop") center/cover fixed no-repeat;
   }
-  .bg-mark{
-    position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.06;
-    display:flex; align-items:center; justify-content:center;
-    font-weight:900; letter-spacing:.08em; text-transform:uppercase;
-    font-size:clamp(38px,10vw,120px);
-  }
+  header,footer{background:rgba(0,0,0,.6);text-align:center;padding:14px}
+  h1{margin:0;font-size:clamp(22px,3.2vw,34px)}
+  .wrap{max-width:var(--maxw);margin:16px auto;padding:16px;border-radius:16px;background:var(--glass)}
+  section{margin:20px 0;padding:14px;border-radius:14px;background:var(--panel)}
+  h2{margin:0 0 12px;text-align:center}
 
-  header{ position:relative; z-index:1; text-align:center; padding:16px 10px; background:rgba(0,0,0,.5) }
-  h1{ margin:0; font-size:clamp(22px,3.5vw,36px) }
+  /* Botones */
+  .btn{background:var(--accent);color:#000;border:0;border-radius:12px;font-weight:800;padding:10px 14px;cursor:pointer}
+  .btn.alt{background:var(--accent2)}
+  .btn.warn{background:var(--warn)}
+  .controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}
 
-  .wrap{ position:relative; z-index:1; max-width:var(--maxw); margin:0 auto; padding:16px }
-  section{ margin:18px 0; padding:16px; background:var(--bgPane); border-radius:14px }
-
-  .btn{ background:var(--accent); color:#000; font-weight:800; border:0; border-radius:12px; padding:10px 14px; cursor:pointer }
-  .btn.alt{ background:var(--accent2) }
-  .btn.warn{ background:var(--warn); color:#000 }
-  .btn.ghost{ background:transparent; border:1px solid rgba(255,255,255,.2); color:#fff }
-
-  /* ─── Radio ─── */
-  .radio-card{ background:var(--bgCard); border-radius:16px; padding:14px; overflow:hidden; position:relative }
-  .radio-head{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:10px }
-  .radio-viewport{ position:relative; width:100%; height:340px; border-radius:14px; overflow:hidden; background:#101010; }
-  .radio-viewport iframe{ position:absolute; inset:0; width:100%; height:100%; border:0 }
-  @media (max-width:900px){ .radio-viewport{ height:300px } }
-  @media (max-width:700px){ .radio-viewport{ height:260px } }
-  @media (max-width:540px){ .radio-viewport{ height:220px } }
-
-  #radioMini{
-    position:fixed; left:10px; right:10px; bottom:10px; z-index:50;
-    display:flex; align-items:center; justify-content:space-between; gap:10px;
-    padding:8px 12px; background:rgba(0,0,0,.88);
-    border:1px solid rgba(255,255,255,.15); border-radius:12px;
-    box-shadow:0 8px 24px rgba(0,0,0,.35); backdrop-filter:blur(4px);
-  }
-  #radioMini .txt{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
-  #radioMini .btn{ padding:8px 12px }
-  #radioMini .tab{ background:var(--warn) }
+  /* Radio */
+  #radioCard{position:relative;max-width:950px;margin:0 auto;padding:14px;border-radius:14px;background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}
+  #radioFrame{position:absolute;inset:0;width:100%;height:100%;border:0;display:none}
+  #radioMini{position:relative;display:flex;gap:10px;justify-content:center;align-items:center}
+  .hint{color:#bbb;font-size:.9rem;text-align:center}
+  .radio-viewport{position:relative;padding-top:52%;display:none}
 
   /* ─── Video 21:9 ─── */
   .video-shell{ width:100%; border-radius:12px; overflow:hidden; background:#000 }
