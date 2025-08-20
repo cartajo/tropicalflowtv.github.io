@@ -412,30 +412,7 @@ const CAROUSEL_IDS = [
   "4tXLT0hN8n8","n8RMGnc8v_o"
 ];
 
-/* ====== PROMO ====== */
-let promoIndex=0, promoPlayer=null;
-function createPromo(){
-  if (!(window.YT && window.YT.Player)) return;
-  promoPlayer = new YT.Player('promoPlayer',{
-    videoId: PROMO_IDS[promoIndex],
-    playerVars:{rel:0,modestbranding:1,playsinline:1,controls:1},
-    events:{
-      onReady:e=>{ try{e.target.mute();e.target.playVideo();}catch(_){} updatePromoTitle(); },
-      onStateChange:e=>{ if(e.data===YT.PlayerState.ENDED) promoNext(); }
-    }
-  });
-  document.getElementById('promoPrev').onclick = promoPrev;
-  document.getElementById('promoNext').onclick = promoNext;
-  document.getElementById('promoToggle').onclick = ()=>{
-    const s=promoPlayer.getPlayerState?.();
-    if (s===YT.PlayerState.PLAYING) promoPlayer.pauseVideo(); else promoPlayer.playVideo();
-  };
-  const fsBtn=document.getElementById('promoFs'), shell=document.getElementById('promoShell');
-  fsBtn.onclick=()=>{ if(document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.(); };
 }
-function updatePromoTitle(){ try{ document.getElementById('promoTitle').textContent = promoPlayer.getVideoData()?.title || ""; }catch(_){} }
-function promoPrev(){ promoIndex=(promoIndex-1+PROMO_IDS.length)%PROMO_IDS.length; promoPlayer.loadVideoById(PROMO_IDS[promoIndex]); updatePromoTitle(); }
-function promoNext(){ promoIndex=(promoIndex+1)%PROMO_IDS.length; promoPlayer.loadVideoById(PROMO_IDS[promoIndex]); updatePromoTitle(); }
 
 /* ====== CARRUSEL ====== */
 let cIndex=0, cPlayer=null;
