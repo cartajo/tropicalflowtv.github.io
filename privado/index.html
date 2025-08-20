@@ -643,14 +643,7 @@ function nextC(){ cIndex=(cIndex+1)%CAROUSEL_IDS.length; loadCarousel(true); }
         img.classList.toggle('active', idx===i);
       });
     }
-    strip.innerHTML = IDS.map((id,idx)=>(
-      `<button data-i="${idx}">
-         <img src="https://img.youtube.com/vi/${id}/hqdefault.jpg" alt="thumb ${idx+1}">
-       </button>`
-    )).join('');
-    strip.querySelectorAll('button').forEach(btn=>{
-      btn.addEventListener('click',()=> setMain(+btn.dataset.i));
-    });
+    
 
     document.getElementById('vidPrev').onclick = ()=> setMain(i-1);
     document.getElementById('vidNext').onclick = ()=> setMain(i+1);
