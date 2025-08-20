@@ -520,7 +520,80 @@ function nextC(){ cIndex=(cIndex+1)%CAROUSEL_IDS.length; loadCarousel(true); }
 
   
 
- 
+ <!-- ╭────────── PLAYLIST VIP 1 ──────────╮ -->
+  <section id="playlist">
+    <h2 style="text-align:center;margin:0 0 12px">🎶 Playlist VIP 1</h2>
+
+    <audio id="audio1" controls preload="metadata" style="width:100%;max-width:760px;display:block;margin:8px auto;border-radius:12px">
+      Tu navegador no soporta audio HTML5.
+    </audio>
+
+    <div style="text-align:center;margin:10px 0;">
+      <button id="prev1" class="btn">⏮ Anterior</button>
+      <button id="play1" class="btn alt">▶ / ⏸</button>
+      <button id="next1" class="btn">⏭ Siguiente</button>
+    </div>
+
+    <ul id="list1" class="plist"></ul>
+    <div id="status1" class="status"></div>
+  </section>
+
+  <!-- ╭────────── SOCIALES ──────────╮ -->
+  <section id="social">
+    <h2 style="text-align:center;margin:0 0 12px">📲 Conecta con Tropical Flow</h2>
+    <div class="social">
+      <a class="whatsapp" href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
+      <a class="youtube"  href="https://www.youtube.com/@TFTvpoweredbyworldm8780" target="_blank">YouTube</a>
+      <a class="facebook" href="https://www.facebook.com/profile.php?id=61555653663073" target="_blank">Facebook</a>
+      <a class="paypal"   href="https://www.paypal.com/donate/?business=cartajoffice1@gmail.com&currency_code=USD" target="_blank">🎧 Donar vía PayPal</a>
+      <a class="athmovil" href="https://www.athmovil.com/cartajo" target="_blank">Donar ATH Móvil</a>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  &copy; <span id="year"></span> Tropical Flow TV 📺 Radio — Todos los derechos reservados
+</footer>
+
+<script>
+  // Año
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ───── RADIO (minimizada por defecto)
+  (function(){
+    const viewport  = document.getElementById('radioViewport');
+    const btnOpen   = document.getElementById('btnToggle');
+    const btnTab    = document.getElementById('btnOpenTab');
+    const btnRest   = document.getElementById('btnRestore');
+    const miniBar   = document.getElementById('radioMini');
+    const miniOpen  = document.getElementById('miniOpen');
+    const miniTab   = document.getElementById('miniTab');
+    const L2MR_URL  = "https://tropicalflow.listen2myshow.com/?autoplay=1";
+
+    function openInTab(){ window.open("https://tropicalflow.listen2myshow.com","_blank"); }
+    function showPlayer(){
+      viewport.style.display = '';
+      miniBar.style.display = 'none';
+      btnOpen.textContent = '➖ Minimizar';
+    }
+    function hidePlayer(){
+      viewport.style.display = 'none';
+      miniBar.style.display = 'flex';
+      btnOpen.textContent = '▶ Abrir player';
+    }
+    function restore(){ const f = document.getElementById('l2mrFrame'); if(f) f.src = L2MR_URL; }
+
+    btnOpen.addEventListener('click', ()=> viewport.style.display==='none' ? showPlayer() : hidePlayer());
+    btnTab.addEventListener('click', openInTab);
+    btnRest.addEventListener('click', restore);
+    miniOpen.addEventListener('click', ()=> btnOpen.click());
+    miniTab.addEventListener('click', openInTab);
+
+    hidePlayer(); // <- entra minimizada (Android no ocupa toda la pantalla)
+  })();
+
+  
   // ───── RADIO (minimizada por defecto)
   (function(){
     const viewport  = document.getElementById('radioViewport');
