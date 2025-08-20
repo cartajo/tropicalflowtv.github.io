@@ -487,78 +487,7 @@ function nextC(){ cIndex=(cIndex+1)%CAROUSEL_IDS.length; loadCarousel(true); }
 </script>
 </body>
 </html>
-<html lang="es">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Tropical Flow TV 📺 Radio - VIP</title>
-<meta name="description" content="Tropical Flow TV Radio: salsa, merengue, bachata y reggaetón 24/7.">
 
-<style>
-  :root{
-    --accent:#00e0ff; --accent2:#2dd4bf; --warn:#fbbf24;
-    --bgCard: rgba(0,0,0,.60); --bgPane: rgba(255,255,255,.08);
-    --maxw:1100px;
-  }
-  *{box-sizing:border-box}
-  html,body{margin:0}
-  body{
-    font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-    color:#fff;
-    background:
-      linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.75)),
-      url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop&ixlib=rb-4.0.3")
-        center/cover fixed no-repeat;
-  }
-  .bg-mark{
-    position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.06;
-    display:flex; align-items:center; justify-content:center;
-    font-weight:900; letter-spacing:.08em; text-transform:uppercase;
-    font-size:clamp(38px,10vw,120px);
-  }
-
-  header{ position:relative; z-index:1; text-align:center; padding:16px 10px; background:rgba(0,0,0,.5) }
-  h1{ margin:0; font-size:clamp(22px,3.5vw,36px) }
-
-  .wrap{ position:relative; z-index:1; max-width:var(--maxw); margin:0 auto; padding:16px }
-  section{ margin:18px 0; padding:16px; background:var(--bgPane); border-radius:14px }
-
-  .btn{ background:var(--accent); color:#000; font-weight:800; border:0; border-radius:12px; padding:10px 14px; cursor:pointer }
-  .btn.alt{ background:var(--accent2) }
-  .btn.warn{ background:var(--warn); color:#000 }
-  .btn.ghost{ background:transparent; border:1px solid rgba(255,255,255,.2); color:#fff }
-
-  /* ─── Radio ─── */
-  .radio-card{ background:var(--bgCard); border-radius:16px; padding:14px; overflow:hidden; position:relative }
-  .radio-head{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:10px }
-  .radio-viewport{ position:relative; width:100%; height:340px; border-radius:14px; overflow:hidden; background:#101010; }
-  .radio-viewport iframe{ position:absolute; inset:0; width:100%; height:100%; border:0 }
-  @media (max-width:900px){ .radio-viewport{ height:300px } }
-  @media (max-width:700px){ .radio-viewport{ height:260px } }
-  @media (max-width:540px){ .radio-viewport{ height:220px } }
-
-  #radioMini{
-    position:fixed; left:10px; right:10px; bottom:10px; z-index:50;
-    display:flex; align-items:center; justify-content:space-between; gap:10px;
-    padding:8px 12px; background:rgba(0,0,0,.88);
-    border:1px solid rgba(255,255,255,.15); border-radius:12px;
-    box-shadow:0 8px 24px rgba(0,0,0,.35); backdrop-filter:blur(4px);
-  }
-  #radioMini .txt{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
-  #radioMini .btn{ padding:8px 12px }
-  #radioMini .tab{ background:var(--warn) }
-
-  /* ─── Video 21:9 ─── */
-  .video-shell{ width:100%; border-radius:12px; overflow:hidden; background:#000 }
-  .video-aspect{ position:relative; width:100%; padding-top:42.857% }
-  .video-aspect > iframe{ position:absolute; inset:0; width:100%; height:100%; border:0 }
-
-  /* Carrusel miniaturas */
-  .thumbs{ display:flex; gap:10px; overflow-x:auto; padding:10px 2px; margin-top:10px }
-  .thumbs button{ background:transparent; border:0; cursor:pointer; flex:0 0 auto }
-  .thumbs img{ height:86px; border-radius:10px; display:block; opacity:.6; outline:none }
-  .thumbs img.active{ opacity:1; outline:3px solid var(--accent) }
-  @media(max-width:620px){ .thumbs img{ height:70px } }
 
   /* ─── Playlist ─── */
   .plist{ list-style:none; padding:0; margin:10px 0 0; max-height:340px; overflow:auto }
@@ -589,59 +518,7 @@ function nextC(){ cIndex=(cIndex+1)%CAROUSEL_IDS.length; loadCarousel(true); }
 
 <div class="wrap">
 
-  <!-- ╭────────── RADIO ──────────╮ -->
-  <section id="radio">
-    <h2 style="text-align:center;margin:0 0 12px">🎧 Tropical Flow TV Radio</h2>
-
-    <div class="radio-card">
-      <div class="radio-head">
-        <button id="btnOpenTab" class="btn warn">🌐 Abrir en pestaña</button>
-        <button id="btnToggle"  class="btn alt">▶ Abrir player</button>
-        <button id="btnRestore" class="btn ghost">↺ Restaurar</button>
-      </div>
-
-      <div id="radioViewport" class="radio-viewport" style="display:none">
-        <iframe id="l2mrFrame"
-          src="https://tropicalflow.listen2myshow.com/?autoplay=1"
-          title="Tropical Flow Radio" allow="autoplay"></iframe>
-      </div>
-
-      <p id="radioNote" style="margin:10px 0 0;text-align:center;color:#cbd5e1;font-size:.95rem">
-        Si no escuchas, pulsa <b>Abrir en pestaña</b> (evita bloqueos del navegador).
-      </p>
-    </div>
-  </section>
-
-  <!-- Barra mini -->
-  <div id="radioMini">
-    <div class="txt">🔊 Tropical Flow Radio — listo para reproducir…</div>
-    <div style="display:flex;gap:8px">
-      <button id="miniOpen" class="btn alt">Abrir player</button>
-      <button id="miniTab"  class="btn tab">Pestaña</button>
-    </div>
-  </div>
-
-  <!-- ╭────────── VIDEOS RECIENTES (carrusel) ──────────╮ -->
-  <section id="videos">
-    <h2 style="text-align:center;margin:0 0 12px">🎬 Videos Recientes</h2>
-
-    <div class="video-shell">
-      <div class="video-aspect">
-        <iframe id="ytMain" src="https://www.youtube.com/embed/tpi8zLE3Kqw?rel=0&modestbranding=1&playsinline=1"
-          title="YouTube" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen></iframe>
-      </div>
-    </div>
-
-    <!-- Tiras de miniaturas -->
-    <div id="ytThumbs" class="thumbs"></div>
-
-    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px">
-      <button id="vidPrev" class="btn">⏮ Anterior</button>
-      <button id="vidNext" class="btn">⏭ Siguiente</button>
-      <button id="vidFs"   class="btn warn">⤢ Pantalla completa</button>
-    </div>
-  </section>
+  
 
   <!-- ╭────────── PLAYLIST VIP 1 ──────────╮ -->
   <section id="playlist">
