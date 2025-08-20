@@ -28,8 +28,27 @@
     font-weight:900; letter-spacing:.08em; text-transform:uppercase;
     font-size:clamp(38px,10vw,120px);
   }
-  header, footer{ position:relative; z-index:1; text-align:center; padding:14px; background:rgba(0,0,0,.5) }
+  header, footer{ position:relative; z-index:2; text-align:center; padding:14px; background:rgba(0,0,0,.5) }
   h1{ margin:0; font-size:clamp(22px,3.4vw,36px) }
+
+  /* Barra social superior */
+  .top-social{
+    position:relative; z-index:2;
+    background:rgba(0,0,0,.6);
+    padding:10px 12px;
+  }
+  .social{
+    max-width:var(--maxw);
+    margin:0 auto;
+    display:flex; flex-wrap:wrap; gap:10px; justify-content:center;
+  }
+  .social a{
+    text-decoration:none; color:#fff; padding:.55rem .9rem; border-radius:10px; font-weight:800;
+    background:#444; display:inline-flex; align-items:center; gap:.5rem; border:1px solid rgba(255,255,255,.15);
+  }
+  .whatsapp{ background:#25d366 } .youtube{ background:#FF0000 }
+  .facebook{ background:#3b5998 } .paypal{ background:#0070ba } .athmovil{ background:#6f42c1 }
+
   .wrap{ position:relative; z-index:1; max-width:var(--maxw); margin:16px auto; padding:16px; background:var(--glass); border-radius:16px }
   section{ margin:18px 0; padding:16px; background:var(--panel); border-radius:14px }
   h2{ margin:0 0 12px; text-align:center }
@@ -83,6 +102,17 @@
 <header>
   <h1>🌴 Tropical Flow TV 📺 Radio – VIP</h1>
 </header>
+
+<!-- 🔼 Barra social arriba -->
+<div class="top-social">
+  <div class="social">
+    <a class="whatsapp" href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
+    <a class="youtube"  href="https://www.youtube.com/@TFTvpoweredbyworldm8780" target="_blank">YouTube</a>
+    <a class="facebook" href="https://www.facebook.com/profile.php?id=61555653663073" target="_blank">Facebook</a>
+    <a class="paypal"   href="https://www.paypal.com/donate/?business=cartajoffice1@gmail.com&currency_code=USD" target="_blank">🎧 Donar vía PayPal</a>
+    <a class="athmovil" href="https://www.athmovil.com/cartajo" target="_blank">Donar ATH Móvil</a>
+  </div>
+</div>
 
 <div class="wrap">
 
@@ -175,7 +205,7 @@ function getPromo(){ return window._ytPromo || null; }
 
 function pauseAllExcept(kind){
   try{
-    if (kind!=='radio'){ radioStopHard(); } // 🔴 corte duro para silenciar radio
+    if (kind!=='radio'){ radioStopHard(); } // 🔴 silencia radio (iframe externo)
     if (kind!=='playlist'){ const a=getPl(); if (a && !a.paused) a.pause(); }
     if (kind!=='yt'){ const c=getCarousel(); if (c?.getPlayerState?.()===YT.PlayerState.PLAYING) c.pauseVideo(); }
     if (kind!=='promo'){ const p=getPromo(); if (p?.getPlayerState?.()===YT.PlayerState.PLAYING) p.pauseVideo(); }
@@ -193,13 +223,12 @@ function pauseAllExcept(kind){
     radioStart();
     pauseAllExcept('radio');
   }
-  function hide(){ viewport.style.display='none'; /* mantiene lo cargado si no cambias */ }
+  function hide(){ viewport.style.display='none'; }
 
   openBtn.onclick = ()=> (viewport.style.display==='none' ? show() : hide());
   tabBtn.onclick  = ()=> window.open("https://tropicalflow.listen2myshow.com","_blank");
 
-  // entra minimizada
-  hide();
+  hide(); // entra minimizada
 })();
 
 /* ========== PLAYLIST VIP (lee /musica/) ========== */
