@@ -649,27 +649,7 @@ function nextC(){ cIndex=(cIndex+1)%CAROUSEL_IDS.length; loadCarousel(true); }
   // Año
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // ───── RADIO (minimizada por defecto)
-  (function(){
-    const viewport  = document.getElementById('radioViewport');
-    const btnOpen   = document.getElementById('btnToggle');
-    const btnTab    = document.getElementById('btnOpenTab');
-    const btnRest   = document.getElementById('btnRestore');
-    const miniBar   = document.getElementById('radioMini');
-    const miniOpen  = document.getElementById('miniOpen');
-    const miniTab   = document.getElementById('miniTab');
-    const L2MR_URL  = "https://tropicalflow.listen2myshow.com/?autoplay=1";
-
-    function openInTab(){ window.open("https://tropicalflow.listen2myshow.com","_blank"); }
-    function showPlayer(){
-      viewport.style.display = '';
-      miniBar.style.display = 'none';
-      btnOpen.textContent = '➖ Minimizar';
-    }
-    function hidePlayer(){
-      viewport.style.display = 'none';
-      miniBar.style.display = 'flex';
-      btnOpen.textContent = '▶ Abrir player';
+  
     }
     function restore(){ const f = document.getElementById('l2mrFrame'); if(f) f.src = L2MR_URL; }
 
