@@ -141,59 +141,57 @@
 
  
 
-  /* ====== PLAYLIST VIP (lee /musica/) ====== */
-// ruta base
-const BASE = "../musica/";
-// tus 10 temas (nombres tal como están en /musica/)
-const RAW = [
-  "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3",
-  "02 - dj mario andretti - mix merengue romantico.mp3",
-  "03 - La Amas Como Yo - Karis.Mp3",
-  "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3",
-  "05 - Hey Dude! - Elvis Crespo.mp3",
-  "06 - Te Regalo Amores - Ken-Yrkm.mp3",
-  "08 - What Is Love - Haddaway.Mp3",
-  "09 - Boricua Como El Gran Combo.mp3",
-  "10 - Me Gusta, Me Gusta - Elvis Crespo.mp3",
-  "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3"
-];
-const TRACKS = RAW.map(f=>({title:f, src: BASE + encodeURIComponent(f)}));
+// ───── PLAYLIST VIP 1 (lee /musica/)
+  (function(){
+    const base = "../musica/";  // ajusta si tu carpeta cambia
+    const raw = [
+      { title:"01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3", file:"01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3" },
+      { title:"02 - dj mario andretti - mix merengue romantico.mp3",     file:"02 - dj mario andretti - mix merengue romantico.mp3" },
+      { title:"03 - La Amas Como Yo - Karis.Mp3",                         file:"03 - La Amas Como Yo - Karis.Mp3" },
+      { title:"04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3",            file:"04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3" },
+      { title:"05 - Hey Dude! - Elvis Crespo.mp3",                        file:"05 - Hey Dude! - Elvis Crespo.mp3" },
+      { title:"06 - Te Regalo Amores - Ken-Yrkm.mp3",                     file:"06 - Te Regalo Amores - Ken-Yrkm.mp3" },
+      { title:"07 - What Is Love - Haddaway.Mp3",                         file:"08 - What Is Love - Haddaway.Mp3" },
+      { title:"08 - Boricua Como El Gran Combo.mp3",                      file:"09 - Boricua Como El Gran Combo.mp3" },
+      { title:"09 - Me Gusta, Me Gusta - Elvis Crespo.mp3",               file:"10 - Me Gusta, Me Gusta - Elvis Crespo.mp3" },
+      { title:"10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3",         file:"10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3" }
+    ];
+    const tracks = raw.map(t => ({ title:t.title, src: base + encodeURIComponent(t.file) }));
 
-const plAudio = document.getElementById('plAudio');
-const plList  = document.getElementById('plList');
-const plPrev  = document.getElementById('plPrev');
-const plNext  = document.getElementById('plNext');
-const plToggle= document.getElementById('plToggle');
-const plStatus= document.getElementById('plStatus');
-let plIndex=0;
+    const audio = document.getElementById('audio1');
+    const list  = document.getElementById('list1');
+    const prev  = document.getElementById('prev1');
+    const play  = document.getElementById('play1');
+    const next  = document.getElementById('next1');
+    const status= document.getElementById('status1');
+    let idx = 0;
 
-function renderList(){
-  plList.innerHTML = "";
-  TRACKS.forEach((t,i)=>{
-    const li=document.createElement('li');
-    li.textContent = (i===plIndex?"▶ ":"")+t.title;
-    li.className = "item"+(i===plIndex?" active":"");
-    if (i===plIndex) li.classList.add('active');
-    li.onclick=()=>{ plIndex=i; loadTrack(true); };
-    plList.appendChild(li);
-  });
-}
-function status(msg){ plStatus.textContent=msg; }
-function loadTrack(auto){
-  plAudio.src = TRACKS[plIndex].src;
-  renderList();
-  status("Cargando: "+TRACKS[plIndex].title+"…");
-  if (auto) plAudio.play().catch(()=>{});
-}
-plPrev.onclick = ()=>{ plIndex=(plIndex-1+TRACKS.length)%TRACKS.length; loadTrack(true); };
-plNext.onclick = ()=>{ plIndex=(plIndex+1)%TRACKS.length; loadTrack(true); };
-plToggle.onclick = ()=>{ if (plAudio.paused) plAudio.play().catch(()=>{}); else plAudio.pause(); };
-plAudio.addEventListener('ended', ()=>{ plIndex=(plIndex+1)%TRACKS.length; loadTrack(true); });
-plAudio.addEventListener('loadedmetadata', ()=> status("Listo: "+TRACKS[plIndex].title+" ✓"));
-plAudio.addEventListener('error', ()=> status("⚠ No se pudo cargar: "+decodeURIComponent(TRACKS[plIndex].src)));
-renderList(); loadTrack(false);
+    function render(){
+      list.innerHTML = "";
+      tracks.forEach((t,i)=>{
+        const li = document.createElement('li');
+        li.textContent = t.title;
+        li.className = i===idx ? "active" : "";
+        li.onclick = ()=>{ idx=i; load(true); };
+        list.appendChild(li);
+      });
+    }
+    function msg(text, warn=false){ status.textContent = text; status.className = "status" + (warn?" warn":""); }
+    function load(auto){
+      audio.src = tracks[idx].src;
+      render();
+      msg("Listo: "+tracks[idx].title+" ✓");
+      if(auto){ audio.play().catch(()=>{}); }
+    }
 
-</script>
+    prev.onclick = ()=>{ idx=(idx-1+tracks.length)%tracks.length; load(true); };
+    next.onclick = ()=>{ idx=(idx+1)%tracks.length; load(true); };
+    play.onclick = ()=>{ if(audio.paused) audio.play().catch(()=>{}); else audio.pause(); };
+    audio.addEventListener('ended', ()=> next.onclick());
+    audio.addEventListener('error', ()=> msg("⚠ No se pudo cargar: "+decodeURIComponent(tracks[idx].src), true));
+
+    render(); load(false);
+  })();
 
 </body>
 </html>
