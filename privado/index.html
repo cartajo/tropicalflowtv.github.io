@@ -716,97 +716,9 @@ function nextC(){ cIndex=(cIndex+1)%CAROUSEL_IDS.length; loadCarousel(true); }
     hidePlayer(); // <- entra minimizada (Android no ocupa toda la pantalla)
   })();
 
-  // ───── CARRUSEL YouTube sencillo
-  (function(){
-    const IDS = [
-      "tpi8zLE3Kqw","RBE8A9rAj8Y","XYe0ZHVvVig","h86xW_G-j4s","5pKPlIlQa_8",
-      "wgqGHqhEZ8M","auTHP2prrxw","CL7m60BISiw","4jdbpZVzlf4","X_Df1rsXBjE"
-    ];
-    let i = 0;
-    const main = document.getElementById('ytMain');
-    const strip = document.getElementById('ytThumbs');
+  
 
-    function setMain(idx){
-      i = (idx + IDS.length) % IDS.length;
-      main.src = "https://www.youtube.com/embed/"+IDS[i]+"?rel=0&modestbranding=1&playsinline=1";
-      highlight();
-    }
-    function highlight(){
-      strip.querySelectorAll('img').forEach((img,idx)=>{
-        img.classList.toggle('active', idx===i);
-      });
-    }
-    strip.innerHTML = IDS.map((id,idx)=>(
-      `<button data-i="${idx}">
-         <img src="https://img.youtube.com/vi/${id}/hqdefault.jpg" alt="thumb ${idx+1}">
-       </button>`
-    )).join('');
-    strip.querySelectorAll('button').forEach(btn=>{
-      btn.addEventListener('click',()=> setMain(+btn.dataset.i));
-    });
-
-    document.getElementById('vidPrev').onclick = ()=> setMain(i-1);
-    document.getElementById('vidNext').onclick = ()=> setMain(i+1);
-    document.getElementById('vidFs').onclick = ()=>{
-      const shell = document.querySelector('#videos .video-shell');
-      if (document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.();
-    };
-
-    setMain(0);
-  })();
-
-  // ───── PLAYLIST VIP 1 (lee /musica/)
-  (function(){
-    const base = "../musica/";  // ajusta si tu carpeta cambia
-    const raw = [
-      { title:"01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3", file:"01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3" },
-      { title:"02 - dj mario andretti - mix merengue romantico.mp3",     file:"02 - dj mario andretti - mix merengue romantico.mp3" },
-      { title:"03 - La Amas Como Yo - Karis.Mp3",                         file:"03 - La Amas Como Yo - Karis.Mp3" },
-      { title:"04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3",            file:"04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3" },
-      { title:"05 - Hey Dude! - Elvis Crespo.mp3",                        file:"05 - Hey Dude! - Elvis Crespo.mp3" },
-      { title:"06 - Te Regalo Amores - Ken-Yrkm.mp3",                     file:"06 - Te Regalo Amores - Ken-Yrkm.mp3" },
-      { title:"07 - What Is Love - Haddaway.Mp3",                         file:"08 - What Is Love - Haddaway.Mp3" },
-      { title:"08 - Boricua Como El Gran Combo.mp3",                      file:"09 - Boricua Como El Gran Combo.mp3" },
-      { title:"09 - Me Gusta, Me Gusta - Elvis Crespo.mp3",               file:"10 - Me Gusta, Me Gusta - Elvis Crespo.mp3" },
-      { title:"10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3",         file:"10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3" }
-    ];
-    const tracks = raw.map(t => ({ title:t.title, src: base + encodeURIComponent(t.file) }));
-
-    const audio = document.getElementById('audio1');
-    const list  = document.getElementById('list1');
-    const prev  = document.getElementById('prev1');
-    const play  = document.getElementById('play1');
-    const next  = document.getElementById('next1');
-    const status= document.getElementById('status1');
-    let idx = 0;
-
-    function render(){
-      list.innerHTML = "";
-      tracks.forEach((t,i)=>{
-        const li = document.createElement('li');
-        li.textContent = t.title;
-        li.className = i===idx ? "active" : "";
-        li.onclick = ()=>{ idx=i; load(true); };
-        list.appendChild(li);
-      });
-    }
-    function msg(text, warn=false){ status.textContent = text; status.className = "status" + (warn?" warn":""); }
-    function load(auto){
-      audio.src = tracks[idx].src;
-      render();
-      msg("Listo: "+tracks[idx].title+" ✓");
-      if(auto){ audio.play().catch(()=>{}); }
-    }
-
-    prev.onclick = ()=>{ idx=(idx-1+tracks.length)%tracks.length; load(true); };
-    next.onclick = ()=>{ idx=(idx+1)%tracks.length; load(true); };
-    play.onclick = ()=>{ if(audio.paused) audio.play().catch(()=>{}); else audio.pause(); };
-    audio.addEventListener('ended', ()=> next.onclick());
-    audio.addEventListener('error', ()=> msg("⚠ No se pudo cargar: "+decodeURIComponent(tracks[idx].src), true));
-
-    render(); load(false);
-  })();
-</script>
+  
 
 </body>
 </html>
