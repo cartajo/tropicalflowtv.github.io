@@ -59,24 +59,7 @@
   #radioMini .btn{ padding:8px 12px }
   #radioMini .tab{ background:var(--warn) }
 
-  /* ─── Video 21:9 ─── */
-  .video-shell{ width:100%; border-radius:12px; overflow:hidden; background:#000 }
-  .video-aspect{ position:relative; width:100%; padding-top:42.857% }
-  .video-aspect > iframe{ position:absolute; inset:0; width:100%; height:100%; border:0 }
-
-  /* Carrusel miniaturas */
-  .thumbs{ display:flex; gap:10px; overflow-x:auto; padding:10px 2px; margin-top:10px }
-  .thumbs button{ background:transparent; border:0; cursor:pointer; flex:0 0 auto }
-  .thumbs img{ height:86px; border-radius:10px; display:block; opacity:.6; outline:none }
-  .thumbs img.active{ opacity:1; outline:3px solid var(--accent) }
-  @media(max-width:620px){ .thumbs img{ height:70px } }
-
-  /* ─── Playlist ─── */
-  .plist{ list-style:none; padding:0; margin:10px 0 0; max-height:340px; overflow:auto }
-  .plist li{ padding:8px 10px; border-radius:8px; cursor:pointer }
-  .plist li.active{ background:rgba(0,191,255,.35) }
-  .status{ margin-top:8px; color:#7CFC00 }
-  .status.warn{ color:#ffd166 }
+ 
 
   /* Sociales */
   .social{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center }
@@ -132,45 +115,7 @@
     </div>
   </div>
 
-  <!-- ╭────────── VIDEOS RECIENTES (carrusel) ──────────╮ -->
-  <section id="videos">
-    <h2 style="text-align:center;margin:0 0 12px">🎬 Videos Recientes</h2>
-
-    <div class="video-shell">
-      <div class="video-aspect">
-        <iframe id="ytMain" src="https://www.youtube.com/embed/tpi8zLE3Kqw?rel=0&modestbranding=1&playsinline=1"
-          title="YouTube" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen></iframe>
-      </div>
-    </div>
-
-    <!-- Tiras de miniaturas -->
-    <div id="ytThumbs" class="thumbs"></div>
-
-    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px">
-      <button id="vidPrev" class="btn">⏮ Anterior</button>
-      <button id="vidNext" class="btn">⏭ Siguiente</button>
-      <button id="vidFs"   class="btn warn">⤢ Pantalla completa</button>
-    </div>
-  </section>
-
-  <!-- ╭────────── PLAYLIST VIP 1 ──────────╮ -->
-  <section id="playlist">
-    <h2 style="text-align:center;margin:0 0 12px">🎶 Playlist VIP 1</h2>
-
-    <audio id="audio1" controls preload="metadata" style="width:100%;max-width:760px;display:block;margin:8px auto;border-radius:12px">
-      Tu navegador no soporta audio HTML5.
-    </audio>
-
-    <div style="text-align:center;margin:10px 0;">
-      <button id="prev1" class="btn">⏮ Anterior</button>
-      <button id="play1" class="btn alt">▶ / ⏸</button>
-      <button id="next1" class="btn">⏭ Siguiente</button>
-    </div>
-
-    <ul id="list1" class="plist"></ul>
-    <div id="status1" class="status"></div>
-  </section>
+  <
 
   <!-- ╭────────── SOCIALES ──────────╮ -->
   <section id="social">
@@ -227,44 +172,7 @@
     hidePlayer(); // <- entra minimizada (Android no ocupa toda la pantalla)
   })();
 
-  // ───── CARRUSEL YouTube sencillo
-  (function(){
-    const IDS = [
-      "tpi8zLE3Kqw","RBE8A9rAj8Y","XYe0ZHVvVig","h86xW_G-j4s","5pKPlIlQa_8",
-      "wgqGHqhEZ8M","auTHP2prrxw","CL7m60BISiw","4jdbpZVzlf4","X_Df1rsXBjE"
-    ];
-    let i = 0;
-    const main = document.getElementById('ytMain');
-    const strip = document.getElementById('ytThumbs');
-
-    function setMain(idx){
-      i = (idx + IDS.length) % IDS.length;
-      main.src = "https://www.youtube.com/embed/"+IDS[i]+"?rel=0&modestbranding=1&playsinline=1";
-      highlight();
-    }
-    function highlight(){
-      strip.querySelectorAll('img').forEach((img,idx)=>{
-        img.classList.toggle('active', idx===i);
-      });
-    }
-    strip.innerHTML = IDS.map((id,idx)=>(
-      `<button data-i="${idx}">
-         <img src="https://img.youtube.com/vi/${id}/hqdefault.jpg" alt="thumb ${idx+1}">
-       </button>`
-    )).join('');
-    strip.querySelectorAll('button').forEach(btn=>{
-      btn.addEventListener('click',()=> setMain(+btn.dataset.i));
-    });
-
-    document.getElementById('vidPrev').onclick = ()=> setMain(i-1);
-    document.getElementById('vidNext').onclick = ()=> setMain(i+1);
-    document.getElementById('vidFs').onclick = ()=>{
-      const shell = document.querySelector('#videos .video-shell');
-      if (document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.();
-    };
-
-    setMain(0);
-  })();
+ 
 
   // ───── PLAYLIST VIP 1 (lee /musica/)
   (function(){
