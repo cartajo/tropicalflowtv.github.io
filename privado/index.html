@@ -40,10 +40,10 @@
   .btn.warn{ background:var(--warn); color:#000 }
   .btn.ghost{ background:transparent; border:1px solid rgba(255,255,255,.2); color:#fff }
 
-  /* ─── Radio ─── */
+   /* ─── Radio ─── */
   .radio-card{ background:var(--bgCard); border-radius:16px; padding:14px; overflow:hidden; position:relative }
   .radio-head{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:10px }
-  .radio-viewport{ position:relative; width:100%; height:250px; border-radius:12px; overflow:hidden; background:#101010; }
+  .radio-viewport{ position:relative; width:100%; height:340px; border-radius:14px; overflow:hidden; background:#101010; }
   .radio-viewport iframe{ position:absolute; inset:0; width:100%; height:100%; border:0 }
   @media (max-width:900px){ .radio-viewport{ height:300px } }
   @media (max-width:700px){ .radio-viewport{ height:260px } }
@@ -228,11 +228,14 @@
     hidePlayer(); // <- entra minimizada (Android no ocupa toda la pantalla)
   })();
 
-  // ───── CARRUSEL YouTube sencillo
+  /* ====== YouTube lists ====== */
   (function(){
     const IDS = [
       "tpi8zLE3Kqw","RBE8A9rAj8Y","XYe0ZHVvVig","h86xW_G-j4s","5pKPlIlQa_8",
       "wgqGHqhEZ8M","auTHP2prrxw","CL7m60BISiw","4jdbpZVzlf4","X_Df1rsXBjE"
+       "RWp76Pj0RUo","M9wQdkQicbk","FCu8-sim5F4","O6xVXaBcOac","jTqKxMTtVEI",
+      "4tXLT0hN8n8","n8RMGnc8v_o"
+
     ];
     let i = 0;
     const main = document.getElementById('ytMain');
