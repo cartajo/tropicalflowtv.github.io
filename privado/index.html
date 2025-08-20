@@ -71,15 +71,19 @@
 
   /* ─── PLAYLIST ─── */
   audio{width:100%;max-width:720px;margin:8px auto;display:block;border-radius:12px}
-  .plist{list-style:none;margin:10px auto 0;max-width:900px;padding:0}
+  .plist{list-style:none;margin:10px auto 0;max-width:900px;padding:0;max-height:340px;overflow:auto} /* NUEVO: altura + overflow */
   .plist li{padding:8px 10px;border-radius:10px;cursor:pointer}
   .plist li.active{background:rgba(0,191,255,.28)}
   .status{margin-top:8px;color:#7CFC00;text-align:center}
   .status.warn{color:#ffd166}
+  /* NUEVO: Scrollbar estilizado */
+  .plist::-webkit-scrollbar{width:10px}
+  .plist::-webkit-scrollbar-track{background:rgba(255,255,255,.08);border-radius:10px}
+  .plist::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--accent),#00bcd4);border-radius:10px}
+  .plist{scrollbar-width:thin;scrollbar-color:#00bcd4 rgba(255,255,255,.08)}
 
   /* ─── VIDEO ─── */
-  .ratio21x9{position:relative;padding-top:42.857%}
-  .ratio16x9{position:relative;padding-top:56.25%}
+  .ratio16x9{position:relative;padding-top:56.25%}            /* NUEVO: usaremos 16:9 en ambos players */
   .fill{position:absolute;inset:0}
 
   /* ─── CARRUSEL THUMBS ─── */
@@ -155,7 +159,8 @@
   <!-- ============= 3) CARRUSEL (17 VIDEOS) ============= -->
   <section id="videos">
     <h2>🎞 Videos Recientes</h2>
-    <div id="carouselShell" class="ratio21x9" style="max-width:1100px;margin:0 auto;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)">
+    <!-- NUEVO: 16:9 para llenar sin franjas -->
+    <div id="carouselShell" class="ratio16x9" style="max-width:1100px;margin:0 auto;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)">
       <div id="ytMain" class="fill"></div>
     </div>
     <div class="controls">
@@ -171,6 +176,7 @@
   <!-- ============= 4) VIDEO PROMO ============= -->
   <section id="promoArea">
     <h2>🎬 Video Promo Tropical</h2>
+    <!-- Ya estabas en 16:9, se mantiene -->
     <div id="promoShell" class="ratio16x9" style="max-width:1000px;margin:0 auto;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)">
       <div id="promoPlayer" class="fill"></div>
     </div>
@@ -205,7 +211,7 @@ function getPromo(){ return window._ytPromo || null; }
 
 function pauseAllExcept(kind){
   try{
-    if (kind!=='radio'){ radioStopHard(); } // 🔴 silencia radio (iframe externo)
+    if (kind!=='radio'){ radioStopHard(); } // silencia radio (iframe externo)
     if (kind!=='playlist'){ const a=getPl(); if (a && !a.paused) a.pause(); }
     if (kind!=='yt'){ const c=getCarousel(); if (c?.getPlayerState?.()===YT.PlayerState.PLAYING) c.pauseVideo(); }
     if (kind!=='promo'){ const p=getPromo(); if (p?.getPlayerState?.()===YT.PlayerState.PLAYING) p.pauseVideo(); }
