@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Tropical Flow TV📺 Radio - VIP</title>
 <meta name="description" content="Tropical Flow TV Radio — Salsa, Merengue, Bachata y Reggaetón 24/7.">
 <style>
@@ -13,7 +13,8 @@
   }
   *{box-sizing:border-box}
   body{
-    margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,Helvetica,sans-serif;color:#fff;
+    margin:0; color:#fff;
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,Helvetica,sans-serif;
     background:
       linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.78)),
       url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop") center/cover fixed no-repeat;
@@ -34,11 +35,16 @@
   #radioCard{position:relative;max-width:950px;margin:0 auto;padding:14px;border-radius:14px;background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}
   #radioFrame{position:absolute;inset:0;width:100%;height:100%;border:0;display:none}
   #radioMini{position:relative;display:flex;gap:10px;justify-content:center;align-items:center}
-  #radioMini .hint{color:#bbb;font-size:.9rem;text-align:center}
-  .radio-viewport{position:relative;padding-top:56.25%;display:none}
-  @media (max-width:820px){ .radio-viewport{padding-top:52%} }
+  .hint{color:#bbb;font-size:.9rem;text-align:center}
+  .radio-viewport{position:relative;padding-top:52%;display:none}
 
-  /* Video players (16:9 y 21:9) */
+  /* Playlist */
+  .plist{list-style:none;margin:10px auto 0;max-width:900px;padding:0}
+  .plist li{padding:8px 10px;border-radius:10px;cursor:pointer}
+  .plist li.active{background:rgba(0,191,255,.28)}
+  audio{width:100%;max-width:720px;margin:8px auto;display:block;border-radius:12px}
+
+  /* Video players */
   .ratio16x9{position:relative;padding-top:56.25%}
   .ratio21x9{position:relative;padding-top:42.857%}
   .fill{position:absolute;inset:0}
@@ -65,7 +71,6 @@
     font-weight:900;letter-spacing:.1em;font-size:18vw;color:#fff;opacity:.06;pointer-events:none
   }
 </style>
-<!-- API de YouTube -->
 <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
@@ -74,29 +79,51 @@
 
 <div class="wrap">
 
-  <!-- =================== RADIO =================== -->
+  <!-- ============= 1) RADIO ============= -->
   <section id="radio">
     <h2>🎧 Tropical Flow TV Radio</h2>
     <div id="radioCard">
-      <!-- barra mini (inicio) -->
       <div id="radioMini">
         <button id="openPlayer" class="btn alt">▶ Abrir player</button>
         <button id="openTab" class="btn warn">🌐 Abrir en pestaña</button>
       </div>
-
-      <!-- contenedor del iframe para el player oficial -->
       <div class="radio-viewport" id="radioViewport">
-        <iframe id="radioFrame" title="Tropical Flow Radio"
-          src="about:blank" allow="autoplay"></iframe>
+        <iframe id="radioFrame" title="Tropical Flow Radio" src="about:blank" allow="autoplay"></iframe>
       </div>
-
-      <p class="hint" style="margin:10px 0 0;text-align:center;color:#bbb">
-        Si no escuchas, pulsa <b>Abrir en pestaña</b> (evita bloqueos del navegador).
-      </p>
+      <p class="hint">Si no escuchas, pulsa <b>Abrir en pestaña</b> (evita bloqueos del navegador).</p>
     </div>
   </section>
 
-  <!-- =================== VIDEO PROMO =================== -->
+  <!-- ============= 2) PLAYLIST VIP ============= -->
+  <section id="playlist">
+    <h2>🎶 Playlist VIP 1</h2>
+    <audio id="plAudio" controls preload="metadata">Tu navegador no soporta audio HTML5.</audio>
+    <div class="controls">
+      <button id="plPrev" class="btn">⏮ Anterior</button>
+      <button id="plToggle" class="btn alt">▶ / ⏸</button>
+      <button id="plNext" class="btn">⏭ Siguiente</button>
+    </div>
+    <ul id="plList" class="plist"></ul>
+    <p id="plStatus" class="hint" style="margin-top:8px"></p>
+  </section>
+
+  <!-- ============= 3) CARRUSEL (17 VIDEOS) ============= -->
+  <section id="videos">
+    <h2>🎞 Videos Recientes</h2>
+    <div id="carouselPlayerShell" class="ratio21x9" style="max-width:1100px;margin:0 auto;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)">
+      <div id="ytMain" class="fill"></div>
+    </div>
+    <div class="controls">
+      <button id="cPrev" class="btn">⏮ Anterior</button>
+      <button id="cToggle" class="btn alt">▶ / ⏸</button>
+      <button id="cNext" class="btn">⏭ Siguiente</button>
+      <button id="cFs" class="btn warn">⤢ Pantalla completa</button>
+    </div>
+    <div id="cTitle" style="max-width:1100px;margin:8px auto 10px;text-align:center;font-weight:700"></div>
+    <div id="thumbs" class="thumbStrip"></div>
+  </section>
+
+  <!-- ============= 4) VIDEO PROMO ============= -->
   <section id="promoArea">
     <h2>🎬 Video Promo Tropical</h2>
     <div id="promoShell" class="ratio16x9" style="max-width:1000px;margin:0 auto;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)">
@@ -111,25 +138,6 @@
     <div id="promoTitle" style="max-width:1000px;margin:8px auto 0;text-align:center;font-weight:700"></div>
   </section>
 
-  <!-- =================== CARRUSEL (17 VIDEOS) =================== -->
-  <section id="videos">
-    <h2>🎞 Videos Recientes</h2>
-
-    <div id="carouselPlayerShell" class="ratio21x9" style="max-width:1100px;margin:0 auto;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)">
-      <div id="ytMain" class="fill"></div>
-    </div>
-
-    <div class="controls">
-      <button id="cPrev" class="btn">⏮ Anterior</button>
-      <button id="cToggle" class="btn alt">▶ / ⏸</button>
-      <button id="cNext" class="btn">⏭ Siguiente</button>
-      <button id="cFs" class="btn warn">⤢ Pantalla completa</button>
-    </div>
-
-    <div id="cTitle" style="max-width:1100px;margin:8px auto 10px;text-align:center;font-weight:700"></div>
-    <div id="thumbs" class="thumbStrip"></div>
-  </section>
-
 </div>
 
 <footer>© <span id="year"></span> Tropical Flow TV📺 Radio — Todos los derechos reservados</footer>
@@ -137,19 +145,70 @@
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
 
-/* ========== RADIO: abre en card o pestaña y NO ocupa pantalla completa en Android ========== */
-const RADIO_URL = "https://tropicalflow.listen2myshow.com/?autoplay=1"; // tu canal oficial
+/* ====== RADIO ====== */
+const RADIO_URL = "https://tropicalflow.listen2myshow.com/?autoplay=1";
 const radioViewport = document.getElementById('radioViewport');
 const radioFrame    = document.getElementById('radioFrame');
 document.getElementById('openTab').onclick = ()=> window.open("https://tropicalflow.listen2myshow.com","_blank");
 document.getElementById('openPlayer').onclick = ()=>{
-  // mostrar el iframe dentro del recuadro
   radioViewport.style.display = 'block';
   radioFrame.style.display    = 'block';
   if (radioFrame.src === "about:blank") radioFrame.src = RADIO_URL;
 };
 
-/* ========== LISTAS ========== */
+/* ====== PLAYLIST VIP (lee /musica/) ====== */
+// ruta base
+const BASE = "../musica/";
+// tus 10 temas (nombres tal como están en /musica/)
+const RAW = [
+  "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3",
+  "02 - dj mario andretti - mix merengue romantico.mp3",
+  "03 - La Amas Como Yo - Karis.Mp3",
+  "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3",
+  "05 - Hey Dude! - Elvis Crespo.mp3",
+  "06 - Te Regalo Amores - Ken-Yrkm.mp3",
+  "08 - What Is Love - Haddaway.Mp3",
+  "09 - Boricua Como El Gran Combo.mp3",
+  "10 - Me Gusta, Me Gusta - Elvis Crespo.mp3",
+  "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3"
+];
+const TRACKS = RAW.map(f=>({title:f, src: BASE + encodeURIComponent(f)}));
+
+const plAudio = document.getElementById('plAudio');
+const plList  = document.getElementById('plList');
+const plPrev  = document.getElementById('plPrev');
+const plNext  = document.getElementById('plNext');
+const plToggle= document.getElementById('plToggle');
+const plStatus= document.getElementById('plStatus');
+let plIndex=0;
+
+function renderList(){
+  plList.innerHTML = "";
+  TRACKS.forEach((t,i)=>{
+    const li=document.createElement('li');
+    li.textContent = (i===plIndex?"▶ ":"")+t.title;
+    li.className = "item"+(i===plIndex?" active":"");
+    if (i===plIndex) li.classList.add('active');
+    li.onclick=()=>{ plIndex=i; loadTrack(true); };
+    plList.appendChild(li);
+  });
+}
+function status(msg){ plStatus.textContent=msg; }
+function loadTrack(auto){
+  plAudio.src = TRACKS[plIndex].src;
+  renderList();
+  status("Cargando: "+TRACKS[plIndex].title+"…");
+  if (auto) plAudio.play().catch(()=>{});
+}
+plPrev.onclick = ()=>{ plIndex=(plIndex-1+TRACKS.length)%TRACKS.length; loadTrack(true); };
+plNext.onclick = ()=>{ plIndex=(plIndex+1)%TRACKS.length; loadTrack(true); };
+plToggle.onclick = ()=>{ if (plAudio.paused) plAudio.play().catch(()=>{}); else plAudio.pause(); };
+plAudio.addEventListener('ended', ()=>{ plIndex=(plIndex+1)%TRACKS.length; loadTrack(true); });
+plAudio.addEventListener('loadedmetadata', ()=> status("Listo: "+TRACKS[plIndex].title+" ✓"));
+plAudio.addEventListener('error', ()=> status("⚠ No se pudo cargar: "+decodeURIComponent(TRACKS[plIndex].src)));
+renderList(); loadTrack(false);
+
+/* ====== YouTube lists ====== */
 const PROMO_IDS = ["U0V7ATX_2CY","5ZVTbahB5CM"];
 const CAROUSEL_IDS = [
   "tpi8zLE3Kqw","RBE8A9rAj8Y","XYe0ZHVvVig","h86xW_G-j4s","5pKPlIlQa_8",
@@ -158,7 +217,7 @@ const CAROUSEL_IDS = [
   "4tXLT0hN8n8","n8RMGnc8v_o"
 ];
 
-/* ========== PROMO PLAYER ========== */
+/* ====== PROMO ====== */
 let promoIndex=0, promoPlayer=null;
 function createPromo(){
   if (!(window.YT && window.YT.Player)) return;
@@ -166,28 +225,24 @@ function createPromo(){
     videoId: PROMO_IDS[promoIndex],
     playerVars:{rel:0,modestbranding:1,playsinline:1,controls:1},
     events:{
-      onReady: e=>{ try{e.target.mute(); e.target.playVideo();}catch(_){} updatePromoTitle(); },
-      onStateChange: e=>{
-        if (e.data===YT.PlayerState.ENDED) promoNext();
-        if (e.data===YT.PlayerState.PLAYING) pauseCarousel();
-      }
+      onReady:e=>{ try{e.target.mute();e.target.playVideo();}catch(_){} updatePromoTitle(); },
+      onStateChange:e=>{ if(e.data===YT.PlayerState.ENDED) promoNext(); }
     }
   });
-  // botones
   document.getElementById('promoPrev').onclick = promoPrev;
   document.getElementById('promoNext').onclick = promoNext;
   document.getElementById('promoToggle').onclick = ()=>{
-    const s = promoPlayer.getPlayerState?.();
+    const s=promoPlayer.getPlayerState?.();
     if (s===YT.PlayerState.PLAYING) promoPlayer.pauseVideo(); else promoPlayer.playVideo();
   };
   const fsBtn=document.getElementById('promoFs'), shell=document.getElementById('promoShell');
-  fsBtn.onclick = ()=>{ if (document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.(); };
+  fsBtn.onclick=()=>{ if(document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.(); };
 }
-function updatePromoTitle(){ try{ document.getElementById('promoTitle').textContent = promoPlayer.getVideoData()?.title || ""; }catch(_){ } }
+function updatePromoTitle(){ try{ document.getElementById('promoTitle').textContent = promoPlayer.getVideoData()?.title || ""; }catch(_){} }
 function promoPrev(){ promoIndex=(promoIndex-1+PROMO_IDS.length)%PROMO_IDS.length; promoPlayer.loadVideoById(PROMO_IDS[promoIndex]); updatePromoTitle(); }
 function promoNext(){ promoIndex=(promoIndex+1)%PROMO_IDS.length; promoPlayer.loadVideoById(PROMO_IDS[promoIndex]); updatePromoTitle(); }
 
-/* ========== CARRUSEL PLAYER ========== */
+/* ====== CARRUSEL ====== */
 let cIndex=0, cPlayer=null;
 function buildThumbs(){
   const wrap=document.getElementById('thumbs');
@@ -200,22 +255,17 @@ function buildThumbs(){
     el.onclick = ()=>{ cIndex=+el.dataset.i; loadCarousel(true); };
   });
 }
-function markActive(){
-  document.querySelectorAll('#thumbs .thumb').forEach((el,i)=>{
-    el.classList.toggle('active', i===cIndex);
-  });
-}
+function markActive(){ document.querySelectorAll('#thumbs .thumb').forEach((el,i)=> el.classList.toggle('active', i===cIndex)); }
 function createCarousel(){
   if (!(window.YT && window.YT.Player)) return;
   cPlayer = new YT.Player('ytMain',{
     videoId: CAROUSEL_IDS[cIndex],
     playerVars:{rel:0,modestbranding:1,playsinline:1,controls:1},
     events:{
-      onReady: e=>{ updateCTitle(); },
-      onStateChange: e=>{
-        if (e.data===YT.PlayerState.ENDED) nextC();
-        if (e.data===YT.PlayerState.PLAYING) pausePromo();
-        if (e.data===YT.PlayerState.PLAYING || e.data===YT.PlayerState.CUED) updateCTitle();
+      onReady:e=>{ updateCTitle(); },
+      onStateChange:e=>{
+        if(e.data===YT.PlayerState.ENDED) nextC();
+        if(e.data===YT.PlayerState.PLAYING || e.data===YT.PlayerState.CUED) updateCTitle();
       }
     }
   });
@@ -227,23 +277,17 @@ function createCarousel(){
     if (s===YT.PlayerState.PLAYING) cPlayer.pauseVideo(); else cPlayer.playVideo();
   };
   const fsBtn=document.getElementById('cFs'), shell=document.getElementById('carouselPlayerShell');
-  fsBtn.onclick = ()=>{ if (document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.(); };
+  fsBtn.onclick=()=>{ if(document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.(); };
 }
-function loadCarousel(play){
-  cPlayer.loadVideoById(CAROUSEL_IDS[cIndex]);
-  markActive(); updateCTitle();
-  if (!play) cPlayer.pauseVideo?.();
-}
+function loadCarousel(play){ cPlayer.loadVideoById(CAROUSEL_IDS[cIndex]); markActive(); updateCTitle(); if(!play) cPlayer.pauseVideo?.(); }
 function updateCTitle(){ try{ document.getElementById('cTitle').textContent = cPlayer.getVideoData()?.title || ""; }catch(_){} }
 function prevC(){ cIndex=(cIndex-1+CAROUSEL_IDS.length)%CAROUSEL_IDS.length; loadCarousel(true); }
 function nextC(){ cIndex=(cIndex+1)%CAROUSEL_IDS.length; loadCarousel(true); }
-function pausePromo(){ try{ const s=promoPlayer?.getPlayerState(); if (s===YT.PlayerState.PLAYING) promoPlayer.pauseVideo(); }catch(_){} }
-function pauseCarousel(){ try{ const s=cPlayer?.getPlayerState();   if (s===YT.PlayerState.PLAYING) cPlayer.pauseVideo(); }catch(_){} }
 
-/* ========== BOOT YouTube API ========== */
+/* ====== Boot de la API de YouTube ====== */
 (function boot(){
   let started=false;
-  function start(){ if (started) return; started=true; createPromo(); createCarousel(); }
+  function start(){ if(started) return; started=true; createPromo(); createCarousel(); }
   if (window.YT && window.YT.Player) start();
   const prev=window.onYouTubeIframeAPIReady;
   window.onYouTubeIframeAPIReady=function(){ if (typeof prev==='function') prev(); start(); };
@@ -251,4 +295,3 @@ function pauseCarousel(){ try{ const s=cPlayer?.getPlayerState();   if (s===YT.P
 </script>
 </body>
 </html>
-
