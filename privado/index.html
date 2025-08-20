@@ -382,5 +382,26 @@
     <div id="cTitle" style="max-width:1100px;margin:8px auto 10px;text-align:center;font-weight:700"></div>
     <div id="thumbs" class="thumbStrip"></div>
   </section>
+<!-- ============= 4) VIDEO PROMO ============= -->
+  <section id="promoArea">
+    <h2>🎬 Video Promo Tropical</h2>
+    <div id="promoShell" class="ratio16x9" style="max-width:1000px;margin:0 auto;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)">
+      <div id="promoPlayer" class="fill"></div>
+    </div>
+    <div class="controls">
+      <button id="promoPrev" class="btn">⏮ Anterior</button>
+      <button id="promoToggle" class="btn alt">▶ / ⏸</button>
+      <button id="promoNext" class="btn">⏭ Siguiente</button>
+      <button id="promoFs" class="btn warn">⤢ Pantalla completa</button>
+    </div>
+    <div id="promoTitle" style="max-width:1000px;margin:8px auto 0;text-align:center;font-weight:700"></div>
+  </section>
+
+</div>
+
+<footer>© <span id="year"></span> Tropical Flow TV📺 Radio — Todos los derechos reservados</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
 
 
