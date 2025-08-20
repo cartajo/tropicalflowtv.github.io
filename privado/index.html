@@ -309,7 +309,7 @@ function createPromo(){
     events:{
       onReady:e=>{ try{e.target.mute();e.target.playVideo();}catch(_){} updatePromoTitle(); },
       onStateChange:e=>{
-        if(e.data===YT.PlayerState.PLAYING) pauseAllExcept('promo');
+        if(e.data===YT.PlayerState.PLAYING)
         if(e.data===YT.PlayerState.ENDED) promoNext();
         if(e.data===YT.PlayerState.PLAYING || e.data===YT.PlayerState.CUED) updatePromoTitle();
       }
@@ -322,7 +322,7 @@ function createPromo(){
   document.getElementById('promoToggle').onclick = ()=>{
     const s = promoPlayer.getPlayerState?.();
     if (s===YT.PlayerState.PLAYING) promoPlayer.pauseVideo();
-    else { pauseAllExcept('promo'); promoPlayer.playVideo(); }
+    else 
   };
   const fsBtn=document.getElementById('promoFs'), shell=document.getElementById('promoShell');
   fsBtn.onclick=()=>{ if(document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.(); };
