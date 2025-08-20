@@ -101,28 +101,21 @@
 
 <div class="wrap">
 
-  <!-- ╭────────── RADIO ──────────╮ -->
+  <!-- ============= 1) RADIO ============= -->
   <section id="radio">
-    <h2 style="text-align:center;margin:0 0 12px">🎧 Tropical Flow TV Radio</h2>
-
-    <div class="radio-card">
-      <div class="radio-head">
-        <button id="btnOpenTab" class="btn warn">🌐 Abrir en pestaña</button>
-        <button id="btnToggle"  class="btn alt">▶ Abrir player</button>
-        <button id="btnRestore" class="btn ghost">↺ Restaurar</button>
+    <h2>🎧 Tropical Flow TV Radio</h2>
+    <div id="radioCard">
+      <div id="radioMini">
+        <button id="openPlayer" class="btn alt">▶ Abrir player</button>
+        <button id="openTab" class="btn warn">🌐 Abrir en pestaña</button>
       </div>
-
-      <div id="radioViewport" class="radio-viewport" style="display:none">
-        <iframe id="l2mrFrame"
-          src="https://tropicalflow.listen2myshow.com/?autoplay=1"
-          title="Tropical Flow Radio" allow="autoplay"></iframe>
+      <div class="radio-viewport" id="radioViewport">
+        <iframe id="radioFrame" title="Tropical Flow Radio" src="about:blank" allow="autoplay"></iframe>
       </div>
-
-      <p id="radioNote" style="margin:10px 0 0;text-align:center;color:#cbd5e1;font-size:.95rem">
-        Si no escuchas, pulsa <b>Abrir en pestaña</b> (evita bloqueos del navegador).
-      </p>
+      <p class="hint">Si no escuchas, pulsa <b>Abrir en pestaña</b> (evita bloqueos del navegador).</p>
     </div>
   </section>
+
 
   <!-- Barra mini -->
   <div id="radioMini">
