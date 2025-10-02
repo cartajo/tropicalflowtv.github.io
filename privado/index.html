@@ -173,21 +173,20 @@
     <div id="thumbs" class="thumbStrip"></div>
   </section>
 
-<!-- 🎬 VIDEO PROMO -->
-<section id="promoArea" style="max-width:100%;padding:0;background:#000;">
-  <h2 style="color:white;margin:10px 0;">🎬 Video Promo Tropical</h2>
-  <div id="promoShell" style="width:100%;max-width:100%;margin:0 auto;overflow:hidden;background:#000;">
-    <video id="promoVideo" controls muted autoplay loop style="width:100%;height:auto;max-height:80vh;display:block;margin:0 auto;">
-      <source src="musica/Video Promo Tropical.mp4" type="video/mp4">
-      Tu navegador no soporta video HTML5.
-    </video>
-  </div>
-  <div class="controls">
-    <button id="promoToggle" class="btn alt">▶ / ⏸</button>
-    <button id="promoFs" class="btn warn">⤢ Pantalla completa</button>
-  </div>
-  <div id="promoTitle" style="margin-top:8px;font-weight:700;color:white;">Video Promo Tropical</div>
-</section>
+<!-- ============= 4) VIDEO PROMO ============= -->
+  <section id="promoArea">
+    <h2>🎬 Video Promo Tropical</h2>
+    <!-- Ya estabas en 16x9, se mantiene -->
+    <div id="promoShell" class="ratio16x9" style="max-width:1000px;margin:0 auto;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)">
+      <div id="promoPlayer" class="fill"></div>
+    </div>
+    <div class="controls">
+      <button id="promoPrev" class="btn">⏮ Anterior</button>
+      <button id="promoToggle" class="btn alt">▶ / ⏸</button>
+      <button id="promoNext" class="btn">⏭ Siguiente</button>
+      <button id="promoFs" class="btn warn">⤢ Pantalla completa</button>
+    </div>
+    <div id="promoTitle" style="max-width:1000px;margin:8px auto 0;text-align:center;font-weight:700"></div>
 
 
 </div>
