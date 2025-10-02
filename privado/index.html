@@ -386,3 +386,98 @@ function loadCarousel(play){ cPlayer.loadVideoById(CAROUSEL_IDS[cIndex]); markAc
 </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tropical Flow TV 📺 Radio - VIP</title>
+<meta name="description" content="Tropical Flow TV Radio — Salsa, Merengue, Bachata y Reggaetón 24/7.">
+
+<style>
+  :root{
+    --accent:#00e0ff; --accent2:#2dd4bf; --warn:#fbbf24;
+    --glass:rgba(0,0,0,.62); --panel:rgba(255,255,255,.08);
+    --card:rgba(0,0,0,.60); --maxw:1100px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    color:#fff;
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,Helvetica,sans-serif;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.80)),
+      url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop")
+      center/cover fixed no-repeat;
+  }
+  .bg-mark{
+    position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.06;
+    display:flex; align-items:center; justify-content:center;
+    font-weight:900; letter-spacing:.08em; text-transform:uppercase;
+    font-size:clamp(38px,10vw,120px);
+  }
+  header, footer{ position:relative; z-index:2; text-align:center; padding:14px; background:rgba(0,0,0,.5) }
+  h1{ margin:0; font-size:clamp(22px,3.4vw,36px) }
+
+  /* Barra social superior */
+  .top-social{
+    position:relative; z-index:2;
+    background:rgba(0,0,0,.6);
+    padding:10px 12px;
+  }
+  .social{
+    max-width:var(--maxw);
+    margin:0 auto;
+    display:flex; flex-wrap:wrap; gap:10px; justify-content:center;
+  }
+  .social a{
+    text-decoration:none; color:#fff; padding:.55rem .9rem; border-radius:10px; font-weight:800;
+    background:#444; display:inline-flex; align-items:center; gap:.5rem; border:1px solid rgba(255,255,255,.15);
+  }
+  .whatsapp{ background:#25d366 } .youtube{ background:#FF0000 }
+  .facebook{ background:#3b5998 } .paypal{ background:#0070ba } .athmovil{ background:#6f42c1 }
+
+  .wrap{ position:relative; z-index:1; max-width:var(--maxw); margin:16px auto; padding:16px; background:var(--glass); border-radius:16px }
+  section{ margin:18px 0; padding:16px; background:var(--panel); border-radius:14px }
+  h2{ margin:0 0 12px; text-align:center }
+
+  .btn{background:var(--accent);color:#000;border:0;border-radius:12px;font-weight:800;padding:10px 14px;cursor:pointer}
+  .btn.alt{background:var(--accent2)}
+  .btn.warn{background:var(--warn);color:#000}
+  .controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+
+  /* ─── VIDEO ─── */
+  .ratio16x9{position:relative;padding-top:56.25%}
+  .fill{position:absolute;inset:0;width:100%;height:100%}
+  video{width:100%;height:100%;object-fit:cover}
+</style>
+</head>
+<body>
+<div class="bg-mark">Tropical Flow RadioTV</div>
+
+<header>
+  <h1>🌴 Tropical Flow TV 📺 Radio – VIP</h1>
+</header>
+
+<div class="wrap">
+
+  <!-- ============= VIDEO PROMO (LOCAL MP4) ============= -->
+  <section id="promoArea">
+    <h2>🎬 Video Promo Tropical</h2>
+    <div id="promoShell" class="ratio16x9" style="max-width:1000px;margin:0 auto;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)">
+      <video id="promoVideo" controls autoplay muted loop>
+        <source src="https://cartajo.github.io/tropicalflowtv.github.io/musica/Video%20Promo%20Tropical.mp4" type="video/mp4">
+        Tu navegador no soporta videos HTML5.
+      </video>
+    </div>
+  </section>
+
+</div>
+
+<footer>© <span id="year"></span> Tropical Flow TV📺 Radio — Todos los derechos reservados</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
