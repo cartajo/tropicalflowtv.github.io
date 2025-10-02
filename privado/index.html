@@ -15,6 +15,59 @@
   *{box-sizing:border-box}
   html,body{margin:0}
   body{
+    <!-- 🌴 Header Tropical Flow TV📺Radio -->
+<header style="background: linear-gradient(90deg, #008080, #00b894); padding:15px; color:white; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; border-bottom: 3px solid #fff;">
+  
+  <!-- 📺 Logo / Nombre -->
+  <div style="font-size:22px; font-weight:bold;">
+    🌴 Tropical Flow TV 📺 Radio
+  </div>
+  
+  <!-- 🕒 Hora de Puerto Rico -->
+  <div id="hora-pr" style="font-size:16px; font-weight:bold; margin:5px 0;">
+    Cargando hora de Puerto Rico...
+  </div>
+
+  <!-- 🔗 Menú -->
+  <nav>
+    <a href="index.html" style="color:white; margin:0 10px; text-decoration:none; font-weight:bold;">Inicio</a>
+    <a href="radio.html" style="color:white; margin:0 10px; text-decoration:none; font-weight:bold;">Radio</a>
+    <a href="tv.html" style="color:white; margin:0 10px; text-decoration:none; font-weight:bold;">TV</a>
+    <a href="musica.html" style="color:white; margin:0 10px; text-decoration:none; font-weight:bold;">Música</a>
+    <a href="donaciones.html" style="color:white; margin:0 10px; text-decoration:none; font-weight:bold;">Donaciones</a>
+    <a href="contacto.html" style="color:white; margin:0 10px; text-decoration:none; font-weight:bold;">Contacto</a>
+  </nav>
+
+  <!-- 🌐 Redes Sociales -->
+  <div>
+    <a href="https://wa.me/17873133929" target="_blank" style="color:white; margin:0 8px; text-decoration:none;">📱 WhatsApp</a>
+    <a href="https://youtube.com" target="_blank" style="color:white; margin:0 8px; text-decoration:none;">▶️ YouTube</a>
+    <a href="https://facebook.com" target="_blank" style="color:white; margin:0 8px; text-decoration:none;">📘 Facebook</a>
+  </div>
+
+</header>
+
+<!-- 🕒 Script del reloj -->
+<script>
+function actualizarHoraPR() {
+  let opciones = {
+    timeZone: "America/Puerto_Rico",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  };
+
+  let ahora = new Date().toLocaleString("es-PR", opciones);
+  document.getElementById("hora-pr").innerHTML = "🕒 Hora en Puerto Rico: " + ahora;
+}
+
+setInterval(actualizarHoraPR, 1000);
+actualizarHoraPR();
+</script>
+
     color:#fff;
     font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,Helvetica,sans-serif;
     background:
