@@ -1,24 +1,22 @@
-async function verificarCodigo() {
-  const codigo = document.getElementById("codigo").value.trim().toUpperCase();
-  const mensaje = document.getElementById("mensaje");
-
-  if (!codigo) {
-    mensaje.textContent = "Por favor, introduce un código.";
-    return;
+fsBtn.onclick = () => {
+  const promoWrapper = document.getElementById('promoShell');
+  // Creamos fullscreen real, ocupando toda la pantalla
+  if (!document.fullscreenElement) {
+    promoWrapper.style.position = 'fixed';
+    promoWrapper.style.top = '0';
+    promoWrapper.style.left = '0';
+    promoWrapper.style.width = '100vw';
+    promoWrapper.style.height = '100vh';
+    promoWrapper.style.zIndex = '9999';
+    promoWrapper.requestFullscreen?.();
+  } else {
+    document.exitFullscreen?.();
+    // Restauramos estilos originales
+    promoWrapper.style.position = '';
+    promoWrapper.style.top = '';
+    promoWrapper.style.left = '';
+    promoWrapper.style.width = '';
+    promoWrapper.style.height = '';
+    promoWrapper.style.zIndex = '';
   }
-
-  try {
-    const res = await fetch("codes.json");
-    const data = await res.json();
-
-    if (data.includes(codigo)) {
-      localStorage.setItem("accesoTFTV", "ok");
-      window.location.href = "../index.html";
-    } else {
-      mensaje.textContent = "Código incorrecto o ya fue usado.";
-    }
-  } catch (error) {
-    mensaje.textContent = "Error al validar código.";
-    console.error(error);
-  }
-}
+};
