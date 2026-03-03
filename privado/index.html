@@ -15,6 +15,7 @@
   *{box-sizing:border-box}
   html,body{margin:0}
   body{
+  
     color:#fff;
     font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,Helvetica,sans-serif;
     background:
@@ -23,18 +24,23 @@
       center/cover fixed no-repeat;
   }
   .bg-mark{
-    position:fixed; inset:0; pointer-events:none; z-index:0; display:flex; align-items:center; justify-content:center;
+    position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.06;
+    display:flex; align-items:center; justify-content:center;
     font-weight:900; letter-spacing:.08em; text-transform:uppercase;
     font-size:clamp(38px,10vw,120px);
   }
   header, footer{ position:relative; z-index:2; text-align:center; padding:14px; background:rgba(0,0,0,.5) }
   h1{ margin:0; font-size:clamp(22px,3.4vw,36px) }
 
+  /* Barra social superior */
   .top-social{
-    position:relative; z-index:2; background:rgba(0,0,0,.6); padding:10px 12px;
+    position:relative; z-index:2;
+    background:rgba(0,0,0,.6);
+    padding:10px 12px;
   }
   .social{
-    max-width:var(--maxw); margin:0 auto;
+    max-width:var(--maxw);
+    margin:0 auto;
     display:flex; flex-wrap:wrap; gap:10px; justify-content:center;
   }
   .social a{
@@ -53,38 +59,48 @@
   .btn.warn{background:var(--warn);color:#000}
   .controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}
 
+  /* ─── RADIO ─── */
   #radioCard{position:relative;max-width:950px;margin:0 auto;padding:14px;border-radius:14px;background:var(--card);backdrop-filter:blur(4px)}
   #radioViewport{position:relative;display:none;border-radius:14px;overflow:hidden;background:#000}
   #radioViewport .viewport{position:relative;width:100%;padding-top:52%}
   #radioFrame{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
   #radioMini{display:flex;gap:10px;justify-content:center;align-items:center}
   .hint{color:#bbb;font-size:.9rem;text-align:center;margin-top:8px}
+  @media (max-width:900px){ #radioViewport .viewport{ padding-top:56% } }
+  @media (max-width:700px){ #radioViewport .viewport{ padding-top:62% } }
+  @media (max-width:540px){ #radioViewport .viewport{ padding-top:68% } }
 
+  /* ─── PLAYLIST ─── */
   audio{width:100%;max-width:720px;margin:8px auto;display:block;border-radius:12px}
-  .plist{list-style:none;margin:10px auto 0;max-width:900px;padding:0;max-height:340px;overflow:auto}
+  .plist{list-style:none;margin:10px auto 0;max-width:900px;padding:0;max-height:340px;overflow:auto} /* NUEVO: altura + overflow */
   .plist li{padding:8px 10px;border-radius:10px;cursor:pointer}
   .plist li.active{background:rgba(0,191,255,.28)}
   .status{margin-top:8px;color:#7CFC00;text-align:center}
   .status.warn{color:#ffd166}
+  /* NUEVO: Scrollbar estilizado */
   .plist::-webkit-scrollbar{width:10px}
   .plist::-webkit-scrollbar-track{background:rgba(255,255,255,.08);border-radius:10px}
   .plist::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--accent),#00bcd4);border-radius:10px}
+  .plist{scrollbar-width:thin;scrollbar-color:#00bcd4 rgba(255,255,255,.08)}
 
-  .ratio16x9{position:relative;padding-top:56.25%}
+  /* ─── VIDEO ─── */
+  .ratio16x9{position:relative;padding-top:56.25%}            /* NUEVO: usaremos 16x9 en ambos players */
   .fill{position:absolute;inset:0}
 
-  #carouselShell{position:relative;width:100%;padding-top:56.25%;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)}
-  #ytMain{position:absolute;top:0;left:0;width:100%;height:100%}
-  .thumbStrip{max-width:100%;margin:10px auto 0;padding:10px;display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory}
-  .thumb{position:relative;flex:0 0 auto;width:220px;border-radius:12px;overflow:hidden;scroll-snap-align:start;box-shadow:0 8px 22px rgba(0,0,0,.35);cursor:pointer}
-  .thumb img{display:block;width:100%;filter:brightness(.9);transition:transform .18s ease, filter .18s ease}
-  .thumb:hover img{transform:scale(1.03);filter:brightness(1)}
-  .thumb.active{outline:3px solid var(--accent);outline-offset:-3px}
-  .playOverlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(transparent,rgba(0,0,0,.32))}
-  .playBtn{width:54px;height:54px;border-radius:50%;background:rgba(0,0,0,.66);border:2px solid rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center}
-  .playBtn:before{content:"";border-left:18px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px}
+  //* CARRUSEL VIDEO FULL WIDTH */
+#carouselShell{position:relative;width:100%;padding-top:56.25%;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)}
+#ytMain{position:absolute;top:0;left:0;width:100%;height:100%}
+.thumbStrip{max-width:100%;margin:10px auto 0;padding:10px;display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory}
+.thumb{position:relative;flex:0 0 auto;width:220px;border-radius:12px;overflow:hidden;scroll-snap-align:start;box-shadow:0 8px 22px rgba(0,0,0,.35);cursor:pointer}
+.thumb img{display:block;width:100%;filter:brightness(.9);transition:transform .18s ease, filter .18s ease}
+.thumb:hover img{transform:scale(1.03);filter:brightness(1)}
+.thumb.active{outline:3px solid var(--accent);outline-offset:-3px}
+.playOverlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(transparent,rgba(0,0,0,.32))}
+.playBtn{width:54px;height:54px;border-radius:50%;background:rgba(0,0,0,.66);border:2px solid rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center}
+.playBtn:before{content:"";border-left:18px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px}
 </style>
 
+<!-- API YouTube -->
 <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
@@ -94,6 +110,7 @@
   <h1>🌴 Tropical Flow TV 📺 Radio – VIP</h1>
 </header>
 
+<!-- 🔼 Barra social arriba -->
 <div class="top-social">
   <div class="social">
     <a class="whatsapp" href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
@@ -106,7 +123,7 @@
 
 <div class="wrap">
 
-  <!-- RADIO -->
+  <!-- ============= 1) RADIO ============= -->
   <section id="radio">
     <h2>🎧 Tropical Flow TV Radio</h2>
     <div id="radioCard">
@@ -129,7 +146,7 @@
     </div>
   </section>
 
-  <!-- PLAYLIST -->
+  <!-- ============= 2) PLAYLIST VIP ============= -->
   <section id="playlist">
     <h2>🎶 Playlist VIP 1</h2>
     <audio id="plAudio" controls preload="metadata">Tu navegador no soporta audio HTML5.</audio>
@@ -142,10 +159,11 @@
     <p id="plStatus" class="status" style="margin-top:8px"></p>
   </section>
 
-  <!-- CARRUSEL -->
+  <!-- ============= 3) CARRUSEL (17 VIDEOS) ============= -->
   <section id="videos">
     <h2>🎞 Videos Recientes</h2>
-    <div id="carouselShell" class="ratio16x9">
+    <!-- NUEVO: 16:9 para llenar sin franjas -->
+    <div id="carouselShell" class="ratio16x9" style="max-width:1100px;margin:0 auto;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)">
       <div id="ytMain" class="fill"></div>
     </div>
     <div class="controls">
@@ -157,11 +175,11 @@
     <div id="cTitle" style="max-width:1100px;margin:8px auto 10px;text-align:center;font-weight:700"></div>
     <div id="thumbs" class="thumbStrip"></div>
   </section>
-
-  <!-- VIDEO PROMO -->
+<!-- ============= 4) VIDEO PROMO ============= -->
   <section id="promoArea">
     <h2>🎬 Video Promo Tropical</h2>
-    <div id="promoShell" class="ratio16x9">
+    <!-- Ya estabas en 16x9, se mantiene -->
+    <div id="promoShell" class="ratio16x9" style="max-width:1000px;margin:0 auto;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)">
       <div id="promoPlayer" class="fill"></div>
     </div>
     <div class="controls">
@@ -170,85 +188,9 @@
       <button id="promoNext" class="btn">⏭ Siguiente</button>
       <button id="promoFs" class="btn warn">⤢ Pantalla completa</button>
     </div>
-    <div id="promoTitle" style="max-width:1100px;margin:8px auto 0;text-align:center;font-weight:700"></div>
-  </section>
-
-</div>
-
-<footer>© <span id="year"></span> Tropical Flow TV📺 Radio — Todos los derechos reservados</footer>
-
+    <div id="promoTitle" style="max-width:1000px;margin:8px auto 0;text-align:center;font-weight:700"></div>
 <script>
-// Año automático
-document.getElementById('year').textContent = new Date().getFullYear();
-
-// RADIO
-const RADIO_URL = "https://tropicalflow.listen2myshow.com/?autoplay=1";
-function getRadioFrame(){ return document.getElementById('radioFrame'); }
-function radioStart(){ const f=getRadioFrame(); if(f.src==="about:blank") f.src=RADIO_URL; }
-function radioStopHard(){ const f=getRadioFrame(); if(f) f.src="about:blank"; }
-
-(function(){
-  const viewport  = document.getElementById('radioViewport');
-  const openBtn   = document.getElementById('openPlayer');
-  const tabBtn    = document.getElementById('openTab');
-  openBtn.onclick = ()=>{ viewport.style.display=(viewport.style.display==='none'?'block':'none'); radioStart(); };
-  tabBtn.onclick  = ()=> window.open(RADIO_URL,"_blank");
-  viewport.style.display='none';
-})();
-
-// PLAYLIST
-(function(){
-  const BASE="../musica/";
-  const RAW=[
-    "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3",
-    "02 - dj mario andretti - mix merengue romantico.mp3",
-    "03 - La Amas Como Yo - Karis.Mp3",
-    "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3",
-    "05 - Hey Dude! - Elvis Crespo.mp3",
-    "06 - Te Regalo Amores - Ken-Yrkm.mp3",
-    "07 - What Is Love - Haddaway.Mp3",
-    "08 - Boricua Como El Gran Combo.mp3",
-    "09 - Me Gusta, Me Gusta - Elvis Crespo.mp3",
-    "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3"
-  ];
-  const TRACKS = RAW.map(f=>({title:f, src:BASE + encodeURIComponent(f)}));
-
-  const audio = document.getElementById('plAudio');
-  const list  = document.getElementById('plList');
-  const prev  = document.getElementById('plPrev');
-  const next  = document.getElementById('plNext');
-  const toggle= document.getElementById('plToggle');
-  const status= document.getElementById('plStatus');
-  let i=0;
-
-  function render(){
-    list.innerHTML="";
-    TRACKS.forEach((t,idx)=>{
-      const li=document.createElement('li');
-      li.textContent = (idx===i?"▶ ":"")+t.title;
-      li.className = idx===i ? "active" : "";
-      li.onclick = ()=>{ i=idx; load(true); };
-      list.appendChild(li);
-    });
-  }
-  function msg(tx,warn=false){ status.textContent=tx; status.className="status"+(warn?" warn":""); }
-  function load(auto){
-    audio.src = TRACKS[i].src;
-    render();
-    msg("Listo: "+TRACKS[i].title+" ✓");
-    if(auto){ radioStopHard(); audio.play().catch(()=>{}); }
-  }
-  prev.onclick  = ()=>{ i=(i-1+TRACKS.length)%TRACKS.length; load(true); };
-  next.onclick  = ()=>{ i=(i+1)%TRACKS.length; load(true); };
-  toggle.onclick= ()=>{ if(audio.paused){ radioStopHard(); audio.play().catch(()=>{});} else audio.pause(); };
-  audio.addEventListener('ended', ()=> next.onclick());
-  audio.addEventListener('play', ()=> radioStopHard());
-  audio.addEventListener('error', ()=> msg("⚠ No se pudo cargar: "+decodeURIComponent(TRACKS[i].src), true));
-
-  render(); load(false);
-})();
-
-// ────────── YT: Carrusel + Promo ──────────
+// IDs de YouTube
 const CAROUSEL_IDS = ["tpi8zLE3Kqw","RBE8A9rAj8Y","XYe0ZHVvVig","h86xW_G-j4s","5pKPlIlQa_8",
   "wgqGHqhEZ8M","auTHP2prrxw","CL7m60BISiw","4jdbpZVzlf4","X_Df1rsXBjE",
   "RWp76Pj0RUo","M9wQdkQicbk","FCu8-sim5F4","O6xVXaBcOac","jTqKxMTtVEI",
@@ -258,6 +200,7 @@ const PROMO_IDS = ["U0V7ATX_2CY","5ZVTbahB5CM"];
 let cIndex = 0, cPlayer = null;
 let promoIndex = 0, promoPlayer = null;
 
+// ────── Funciones auxiliares ──────
 function pauseAllExcept(kind){
   try{
     if(kind!=='yt' && cPlayer?.getPlayerState?.()===YT.PlayerState.PLAYING) cPlayer.pauseVideo();
@@ -288,55 +231,269 @@ function createCarousel(){
         <img src="https://img.youtube.com/vi/${id}/hqdefault.jpg" alt="thumb ${i+1}">
         <div class="playOverlay"><div class="playBtn"></div></div>
       </div>`).join('');
-    thumbs.querySelectorAll('.thumb').for    thumbs.querySelectorAll('.thumb').forEach(el=>{
-      el.onclick = ()=>{
-        cIndex = parseInt(el.dataset.i);
-        cPlayer.loadVideoById(CAROUSEL_IDS[cIndex]);
-        updateCTitle();
-        buildThumbs();
-      }
-    });
+    thumbs.querySelectorAll('.thumb').forEach(el=> el.onclick = ()=>{ cIndex=+el.dataset.i; loadCarousel(true); });
   }
 
-  function updateCTitle(){
-    document.getElementById('cTitle').textContent = "Video "+(cIndex+1)+" de "+CAROUSEL_IDS.length;
+  function markActive(){ thumbs.querySelectorAll('.thumb').forEach((el,i)=>el.classList.toggle('active',i===cIndex)); }
+  function updateCTitle(){ try{ document.getElementById('cTitle').textContent = cPlayer.getVideoData()?.title || ""; }catch(_){} }
+  function prevC(){ cIndex=(cIndex-1+CAROUSEL_IDS.length)%CAROUSEL_IDS.length; loadCarousel(true); }
+  function nextC(){ cIndex=(cIndex+1)%CAROUSEL_IDS.length; loadCarousel(true); }
+  function loadCarousel(play){
+    cPlayer.loadVideoById(CAROUSEL_IDS[cIndex]);
+    markActive(); updateCTitle();
+    if(!play) cPlayer.pauseVideo?.();
   }
 
-  function prevC(){ cIndex=(cIndex-1+CAROUSEL_IDS.length)%CAROUSEL_IDS.length; cPlayer.loadVideoById(CAROUSEL_IDS[cIndex]); updateCTitle(); buildThumbs(); }
-  function nextC(){ cIndex=(cIndex+1)%CAROUSEL_IDS.length; cPlayer.loadVideoById(CAROUSEL_IDS[cIndex]); updateCTitle(); buildThumbs(); }
-
+  // Botones
   document.getElementById('cPrev').onclick = prevC;
   document.getElementById('cNext').onclick = nextC;
-  document.getElementById('cToggle').onclick = ()=>{ let s=cPlayer.getPlayerState(); if(s===YT.PlayerState.PLAYING){cPlayer.pauseVideo();}else{pauseAllExcept('yt');cPlayer.playVideo();} }
-  document.getElementById('cFs').onclick = ()=>{ let iframe=cPlayer.getIframe(); iframe.requestFullscreen?.() }
+  document.getElementById('cToggle').onclick = ()=>{
+    const s=cPlayer.getPlayerState?.();
+    if(s===YT.PlayerState.PLAYING)cPlayer.pauseVideo();
+    else { pauseAllExcept('yt'); cPlayer.playVideo(); }
+  };
+  document.getElementById('cFs').onclick = ()=>{ shell.requestFullscreen?.(); };
 }
-createCarousel();
 
-// ────────── Promo ──────────
 function createPromo(){
+  const shell = document.getElementById('promoShell');
   promoPlayer = new YT.Player('promoPlayer',{
     videoId: PROMO_IDS[promoIndex],
     playerVars:{rel:0,modestbranding:1,playsinline:1,controls:1},
     events:{
-      onReady:()=> updatePromoTitle(),
+      onReady: e=>{ try{ e.target.mute(); e.target.playVideo(); }catch(_){} updatePromoTitle(); },
       onStateChange:e=>{
         if(e.data===YT.PlayerState.PLAYING) pauseAllExcept('promo');
-        if(e.data===YT.PlayerState.ENDED) nextPromo();
+        if(e.data===YT.PlayerState.ENDED) promoNext();
+        if(e.data===YT.PlayerState.PLAYING || e.data===YT.PlayerState.CUED) updatePromoTitle();
       }
     }
   });
 
-  function updatePromoTitle(){
-    document.getElementById('promoTitle').textContent = "Promo "+(promoIndex+1)+" de "+PROMO_IDS.length;
+  function updatePromoTitle(){ try{ document.getElementById('promoTitle').textContent = promoPlayer.getVideoData()?.title || ""; }catch(_){} }
+
+  function promoPrev(){ promoIndex=(promoIndex-1+PROMO_IDS.length)%PROMO_IDS.length; promoPlayer.loadVideoById(PROMO_IDS[promoIndex]); updatePromoTitle(); }
+  function promoNext(){ promoIndex=(promoIndex+1)%PROMO_IDS.length; promoPlayer.loadVideoById(PROMO_IDS[promoIndex]); updatePromoTitle(); }
+
+  // Botones
+  document.getElementById('promoPrev').onclick = promoPrev;
+  document.getElementById('promoNext').onclick = promoNext;
+  document.getElementById('promoToggle').onclick = ()=>{
+    const s=promoPlayer.getPlayerState?.();
+    if(s===YT.PlayerState.PLAYING) promoPlayer.pauseVideo();
+    else { pauseAllExcept('promo'); promoPlayer.playVideo(); }
+  };
+  document.getElementById('promoFs').onclick = ()=>{ shell.requestFullscreen?.(); };
+
+  window._ytPromo = promoPlayer;
+}
+
+// Boot YT API
+function bootYT(){
+  if(window.YT && window.YT.Player){ createCarousel(); createPromo(); return; }
+  const prev = window.onYouTubeIframeAPIReady;
+  window.onYouTubeIframeAPIReady = function(){
+    if(typeof prev==='function') prev();
+    createCarousel();
+    createPromo();
+  };
+}
+bootYT();
+</script>
+</div>
+
+<footer>© <span id="year"></span> Tropical Flow TV📺 Radio — Todos los derechos reservados</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ========== HUB: Pausa cruzada (corte duro radio) ========== */
+const RADIO_URL = "https://tropicalflow.listen2myshow.com/?autoplay=1";
+function getRadioFrame(){ return document.getElementById('radioFrame'); }
+function radioStart(){
+  const f=getRadioFrame();
+  if (f && (f.src==="about:blank" || !f.src)) f.src=RADIO_URL;
+}
+function radioStopHard(){ const f=getRadioFrame(); if (f) f.src="about:blank"; }
+
+function getPl(){ return document.getElementById('plAudio'); }
+function getCarousel(){ return window._ytCarousel || null; }
+function getPromo(){ return window._ytPromo || null; }
+
+function pauseAllExcept(kind){
+  try{
+    if (kind!=='radio'){ radioStopHard(); } // silencia radio (iframe externo)
+    if (kind!=='playlist'){ const a=getPl(); if (a && !a.paused) a.pause(); }
+    if (kind!=='yt'){ const c=getCarousel(); if (c?.getPlayerState?.()===YT.PlayerState.PLAYING) c.pauseVideo(); }
+    if (kind!=='promo'){ const p=getPromo(); if (p?.getPlayerState?.()===YT.PlayerState.PLAYING) p.pauseVideo(); }
+  }catch(e){}
+}
+
+/* ========== RADIO (minimizada + abrir) ========== */
+(function(){
+  const viewport  = document.getElementById('radioViewport');
+  const openBtn   = document.getElementById('openPlayer');
+  const tabBtn    = document.getElementById('openTab');
+
+  function show(){
+    viewport.style.display='block';
+    radioStart();
+    pauseAllExcept('radio');
+  }
+  function hide(){ viewport.style.display='none'; }
+
+  openBtn.onclick = ()=> (viewport.style.display==='none' ? show() : hide());
+  tabBtn.onclick  = ()=> window.open("https://tropicalflow.listen2myshow.com","_blank");
+
+  hide(); // entra minimizada
+})();
+
+/* ========== PLAYLIST VIP (lee /musica/) ========== */
+(function(){
+  const BASE = "../musica/";
+  const RAW  = [
+    "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3",
+    "02 - dj mario andretti - mix merengue romantico.mp3",
+    "03 - La Amas Como Yo - Karis.Mp3",
+    "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3",
+    "05 - Hey Dude! - Elvis Crespo.mp3",
+    "06 - Te Regalo Amores - Ken-Yrkm.mp3",
+    "07 - What Is Love - Haddaway.Mp3",
+    "08 - Boricua Como El Gran Combo.mp3",
+    "09 - Me Gusta, Me Gusta - Elvis Crespo.mp3",
+    "10 - Alexis & Fido Ft Daddy Yankee - Rescate.mp3"
+  ];
+  const TRACKS = RAW.map(f=>({title:f, src: BASE + encodeURIComponent(f)}));
+
+  const audio = document.getElementById('plAudio');
+  const list  = document.getElementById('plList');
+  const prev  = document.getElementById('plPrev');
+  const next  = document.getElementById('plNext');
+  const toggle= document.getElementById('plToggle');
+  const status= document.getElementById('plStatus');
+  let i=0;
+
+  function render(){
+    list.innerHTML="";
+    TRACKS.forEach((t,idx)=>{
+      const li=document.createElement('li');
+      li.textContent = (idx===i?"▶ ":"")+t.title;
+      li.className = idx===i ? "active" : "";
+      li.onclick = ()=>{ i=idx; load(true); };
+      list.appendChild(li);
+    });
+  }
+  function msg(tx, warn=false){ status.textContent=tx; status.className="status"+(warn?" warn":""); }
+  function load(auto){
+    audio.src = TRACKS[i].src;
+    render();
+    msg("Listo: "+TRACKS[i].title+" ✓");
+    if(auto){ pauseAllExcept('playlist'); audio.play().catch(()=>{}); }
   }
 
-  function prevPromo(){ promoIndex=(promoIndex-1+PROMO_IDS.length)%PROMO_IDS.length; promoPlayer.loadVideoById(PROMO_IDS[promoIndex]); updatePromoTitle(); }
-  function nextPromo(){ promoIndex=(promoIndex+1)%PROMO_IDS.length; promoPlayer.loadVideoById(PROMO_IDS[promoIndex]); updatePromoTitle(); }
+  prev.onclick  = ()=>{ i=(i-1+TRACKS.length)%TRACKS.length; load(true); };
+  next.onclick  = ()=>{ i=(i+1)%TRACKS.length; load(true); };
+  toggle.onclick= ()=>{ if(audio.paused){ pauseAllExcept('playlist'); audio.play().catch(()=>{});} else audio.pause(); };
+  audio.addEventListener('ended', ()=> next.onclick());
+  audio.addEventListener('play',  ()=> pauseAllExcept('playlist'));
+  audio.addEventListener('error', ()=> msg("⚠ No se pudo cargar: "+decodeURIComponent(TRACKS[i].src), true));
 
-  document.getElementById('promoPrev').onclick = prevPromo;
-  document.getElementById('promoNext').onclick = nextPromo;
-  document.getElementById('promoToggle').onclick = ()=>{ let s=promoPlayer.getPlayerState(); if(s===YT.PlayerState.PLAYING){promoPlayer.pauseVideo();}else{pauseAllExcept('promo');promoPlayer.playVideo();} }
-  document.getElementById('promoFs').onclick = ()=>{ let iframe=promoPlayer.getIframe(); iframe.requestFullscreen?.() }
+  render(); load(false);
+})();
+
+/* ========== YouTube IDs (17 carrusel + 2 promo) ========== */
+const CAROUSEL_IDS = [
+  "tpi8zLE3Kqw","RBE8A9rAj8Y","XYe0ZHVvVig","h86xW_G-j4s","5pKPlIlQa_8",
+  "wgqGHqhEZ8M","auTHP2prrxw","CL7m60BISiw","4jdbpZVzlf4","X_Df1rsXBjE",
+  "RWp76Pj0RUo","M9wQdkQicbk","FCu8-sim5F4","O6xVXaBcOac","jTqKxMTtVEI",
+  "4tXLT0hN8n8","n8RMGnc8v_o"
+];
+const PROMO_IDS   = ["U0V7ATX_2CY","5ZVTbahB5CM"];
+
+/* ========== PROMO (YT) ========== */
+let promoIndex=0, promoPlayer=null;
+function createPromo(){
+  if (!(window.YT && window.YT.Player)) return;
+  promoPlayer = new YT.Player('promoPlayer',{
+    videoId:PROMO_IDS[promoIndex],
+    playerVars:{rel:0,modestbranding:1,playsinline:1,controls:1},
+    events:{
+      onReady:e=>{ try{e.target.mute();e.target.playVideo();}catch(_){} updatePromoTitle(); },
+      onStateChange:e=>{
+        if(e.data===YT.PlayerState.PLAYING) pauseAllExcept('promo');
+        if(e.data===YT.PlayerState.ENDED) promoNext();
+        if(e.data===YT.PlayerState.PLAYING || e.data===YT.PlayerState.CUED) updatePromoTitle();
+      }
+    }
+  });
+  window._ytPromo = promoPlayer;
+
+  document.getElementById('promoPrev').onclick = promoPrev;
+  document.getElementById('promoNext').onclick = promoNext;
+  document.getElementById('promoToggle').onclick = ()=>{
+    const s = promoPlayer.getPlayerState?.();
+    if (s===YT.PlayerState.PLAYING) promoPlayer.pauseVideo();
+    else { pauseAllExcept('promo'); promoPlayer.playVideo(); } 
+  };
+  const fsBtn=document.getElementById('promoFs'), shell=document.getElementById('promoShell');
+  fsBtn.onclick=()=>{ if(document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.(); };
 }
-createPromo();
+function updatePromoTitle(){ try{ document.getElementById('promoTitle').textContent = promoPlayer.getVideoData()?.title || ""; }catch(_){} }
+function promoPrev(){ promoIndex=(promoIndex-1+PROMO_IDS.length)%PROMO_IDS.length; promoPlayer.loadVideoById(PROMO_IDS[promoIndex]); updatePromoTitle(); }
+function promoNext(){ promoIndex=(promoIndex+1)%PROMO_IDS.length; promoPlayer.loadVideoById(PROMO_IDS[promoIndex]); updatePromoTitle(); }
+
+/* ========== CARRUSEL (YT) ========== */
+let cIndex=0, cPlayer=null;
+function buildThumbs(){
+  const wrap=document.getElementById('thumbs');
+  wrap.innerHTML = CAROUSEL_IDS.map((id,i)=>`
+    <div class="thumb ${i===cIndex?'active':''}" data-i="${i}">
+      <img src="https://img.youtube.com/vi/${id}/hqdefault.jpg" alt="thumb ${i+1}">
+      <div class="playOverlay"><div class="playBtn"></div></div>
+    </div>`).join('');
+  wrap.querySelectorAll('.thumb').forEach(el=> el.onclick = ()=>{ cIndex=+el.dataset.i; loadCarousel(true); });
+}
+function markActive(){ document.querySelectorAll('#thumbs .thumb').forEach((el,i)=> el.classList.toggle('active', i===cIndex)); }
+function updateCTitle(){ try{ document.getElementById('cTitle').textContent = cPlayer.getVideoData()?.title || ""; }catch(_){} }
+function prevC(){ cIndex=(cIndex-1+CAROUSEL_IDS.length)%CAROUSEL_IDS.length; loadCarousel(true); }
+function nextC(){ cIndex=(cIndex+1)%CAROUSEL_IDS.length; loadCarousel(true); }
+function createCarousel(){
+  if (!(window.YT && window.YT.Player)) return;
+  cPlayer = new YT.Player('ytMain',{
+    videoId: CAROUSEL_IDS[cIndex],
+    playerVars:{rel:0,modestbranding:1,playsinline:1,controls:1},
+    events:{
+      onReady:()=>{ updateCTitle(); },
+      onStateChange:e=>{
+        if(e.data===YT.PlayerState.PLAYING) pauseAllExcept('yt');
+        if(e.data===YT.PlayerState.ENDED) nextC();
+        if(e.data===YT.PlayerState.PLAYING || e.data===YT.PlayerState.CUED) updateCTitle();
+      }
+    }
+  });
+  window._ytCarousel = cPlayer;
+
+  buildThumbs();
+  document.getElementById('cPrev').onclick = prevC;
+  document.getElementById('cNext').onclick = nextC;
+  document.getElementById('cToggle').onclick = ()=>{
+    const s = cPlayer.getPlayerState?.();
+    if (s===YT.PlayerState.PLAYING) cPlayer.pauseVideo();
+    else { pauseAllExcept('yt'); cPlayer.playVideo(); }
+  };
+  const fsBtn=document.getElementById('cFs'), shell=document.getElementById('carouselShell');
+  fsBtn.onclick=()=>{ if(document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.(); };
+}
+function loadCarousel(play){ cPlayer.loadVideoById(CAROUSEL_IDS[cIndex]); markActive(); updateCTitle(); if(!play) cPlayer.pauseVideo?.(); }
+
+/* ========== Boot YouTube API (promo + carrusel) ========== */
+(function bootYT(){
+  let started=false;
+  function start(){ if(started) return; started=true; createPromo(); createCarousel(); }
+  if (window.YT && window.YT.Player) start();
+  const prev=window.onYouTubeIframeAPIReady;
+  window.onYouTubeIframeAPIReady = function(){ if (typeof prev==='function') prev(); start(); };
+})();
 </script>
+</body>
+</html>
