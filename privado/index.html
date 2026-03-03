@@ -177,75 +177,19 @@
   </section>
 
 <!-- ============= 4) VIDEO PROMO ============= -->
-<section id="promoArea">
-  <h2>🎬 Video Promo Tropical</h2>
-  <div id="promoShell" style="position:relative;width:100%;padding-top:56.25%;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35);max-width:1000px;margin:0 auto">
-    <div id="promoPlayer" style="position:absolute;top:0;left:0;width:100%;height:100%"></div>
-  </div>
-  <div class="controls">
-    <button id="promoPrev" class="btn">⏮ Anterior</button>
-    <button id="promoToggle" class="btn alt">▶ / ⏸</button>
-    <button id="promoNext" class="btn">⏭ Siguiente</button>
-    <button id="promoFs" class="btn warn">⤢ Pantalla completa</button>
-  </div>
-  <div id="promoTitle" style="max-width:1000px;margin:8px auto 0;text-align:center;font-weight:700"></div>
-</section>
-
-<script src="https://www.youtube.com/iframe_api"></script>
-<script>
-/* ===== VIDEO PROMO FULL WIDTH Y PANTALLA COMPLETA ===== */
-const PROMO_IDS = [
-  "dQw4w9WgXcQ","3JZ_D3ELwOQ","L_jWHffIx5E" // Ejemplos de videos
-];
-let pIndex = 0, pPlayer = null;
-
-function buildPromoTitle() {
-  try { document.getElementById('promoTitle').textContent = pPlayer.getVideoData()?.title || ""; } catch(_) {}
-}
-
-function prevPromo(){ pIndex = (pIndex-1+PROMO_IDS.length) % PROMO_IDS.length; loadPromo(true); }
-function nextPromo(){ pIndex = (pIndex+1) % PROMO_IDS.length; loadPromo(true); }
-
-function createPromo(){
-  if (!(window.YT && window.YT.Player)) return;
-  pPlayer = new YT.Player('promoPlayer',{
-    videoId: PROMO_IDS[pIndex],
-    playerVars:{rel:0,modestbranding:1,playsinline:1,controls:1},
-    events:{
-      onReady:()=>{ buildPromoTitle(); },
-      onStateChange:e=>{
-        if(e.data===YT.PlayerState.ENDED){ nextPromo(); }
-      }
-    }
-  });
-
-  document.getElementById('promoPrev').onclick = prevPromo;
-  document.getElementById('promoNext').onclick = nextPromo;
-  document.getElementById('promoToggle').onclick = ()=>{ const s=pPlayer.getPlayerState?.(); if(s===YT.PlayerState.PLAYING) pPlayer.pauseVideo(); else pPlayer.playVideo(); };
-  document.getElementById('promoFs').onclick = ()=>{
-    const shell = document.getElementById('promoShell');
-    if(document.fullscreenElement) document.exitFullscreen?.();
-    else shell.requestFullscreen?.();
-  };
-}
-
-function loadPromo(play){
-  pPlayer.loadVideoById(PROMO_IDS[pIndex]);
-  buildPromoTitle();
-  if(!play) pPlayer.pauseVideo?.();
-}
-
-(function bootPromo(){
-  let started=false;
-  function start(){ if(started) return; started=true; createPromo(); }
-  if(window.YT && window.YT.Player) start();
-  const prev = window.onYouTubeIframeAPIReady;
-  window.onYouTubeIframeAPIReady = function(){
-    if(typeof prev==='function') prev();
-    start();
-  };
-})();
-</script>
+  <section id="promoArea">
+    <h2>🎬 Video Promo Tropical</h2>
+    <!-- Ya estabas en 16x9, se mantiene -->
+    <div id="promoShell" class="ratio16x9" style="max-width:1000px;margin:0 auto;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)">
+      <div id="promoPlayer" class="fill"></div>
+    </div>
+    <div class="controls">
+      <button id="promoPrev" class="btn">⏮ Anterior</button>
+      <button id="promoToggle" class="btn alt">▶ / ⏸</button>
+      <button id="promoNext" class="btn">⏭ Siguiente</button>
+      <button id="promoFs" class="btn warn">⤢ Pantalla completa</button>
+    </div>
+    <div id="promoTitle" style="max-width:1000px;margin:8px auto 0;text-align:center;font-weight:700"></div>
 
 </div>
 
