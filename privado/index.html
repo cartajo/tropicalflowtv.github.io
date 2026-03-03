@@ -177,16 +177,19 @@
   </section>
 
 <!-- ============= 4) VIDEO PROMO ============= -->
-#carouselShell{position:relative;width:100%;padding-top:56.25%;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)}
-#ytMain{position:absolute;top:0;left:0;width:100%;height:100%}
-.thumbStrip{max-width:100%;margin:10px auto 0;padding:10px;display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory}
-.thumb{position:relative;flex:0 0 auto;width:220px;border-radius:12px;overflow:hidden;scroll-snap-align:start;box-shadow:0 8px 22px rgba(0,0,0,.35);cursor:pointer}
-.thumb img{display:block;width:100%;filter:brightness(.9);transition:transform .18s ease, filter .18s ease}
-.thumb:hover img{transform:scale(1.03);filter:brightness(1)}
-.thumb.active{outline:3px solid var(--accent);outline-offset:-3px}
-.playOverlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(transparent,rgba(0,0,0,.32))}
-.playBtn{width:54px;height:54px;border-radius:50%;background:rgba(0,0,0,.66);border:2px solid rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center}
-.playBtn:before{content:"";border-left:18px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px}
+ <section id="promoArea">
+    <h2>🎬 Video Promo Tropical</h2>
+    <!-- Ya estabas en 16x9, se mantiene -->
+    <div id="promoShell" {position:relative;width:100%;padding-top:56.25%;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)}" style="max-width:1000px;margin:0 auto;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)">
+      <div id="promoPlayer" class="fill"></div>
+    </div>
+    <div class="controls">
+      <button id="promoPrev" class="btn">⏮ Anterior</button>
+      <button id="promoToggle" class="btn alt">▶ / ⏸</button>
+      <button id="promoNext" class="btn">⏭ Siguiente</button>
+      <button id="promoFs" class="btn warn">⤢ Pantalla completa</button>
+    </div>
+    <div id="promoTitle" style="max-width:1000px;margin:8px auto 0;text-align:center;font-weight:700"></div>
 
 
 </div>
