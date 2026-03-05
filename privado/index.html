@@ -302,7 +302,7 @@ const CAROUSEL_IDS = [
 const PROMO_IDS   = ["vOsd3OUU2pI"];
 
 /* ========== PROMO (YT) ========== */
-left promoIndex=0, promoPlayer=null;
+let promoIndex=0, promoPlayer=null;
 function createPromo(){
   if (!(window.YT && window.YT.Player)) return;
   promoPlayer = new YT.Player('promoPlayer',{
