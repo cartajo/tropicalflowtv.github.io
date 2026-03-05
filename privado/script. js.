@@ -1,22 +1,27 @@
+const fsBtn = document.getElementById('promoFs');
+const promoWrapper = document.getElementById('promoShell');
+
 fsBtn.onclick = () => {
-  const promoWrapper = document.getElementById('promoShell');
-  // Creamos fullscreen real, ocupando toda la pantalla
+
   if (!document.fullscreenElement) {
-    promoWrapper.style.position = 'fixed';
-    promoWrapper.style.top = '0';
-    promoWrapper.style.left = '0';
-    promoWrapper.style.width = '100vw';
-    promoWrapper.style.height = '100vh';
-    promoWrapper.style.zIndex = '9999';
-    promoWrapper.requestFullscreen?.();
+
+    // Activar fullscreen limpio
+    promoWrapper.requestFullscreen?.().then(() => {
+      promoWrapper.style.width = "100vw";
+      promoWrapper.style.height = "100vh";
+    });
+
   } else {
+
     document.exitFullscreen?.();
-    // Restauramos estilos originales
-    promoWrapper.style.position = '';
-    promoWrapper.style.top = '';
-    promoWrapper.style.left = '';
-    promoWrapper.style.width = '';
-    promoWrapper.style.height = '';
-    promoWrapper.style.zIndex = '';
+
   }
 };
+
+// Restaurar automáticamente cuando se sale del fullscreen
+document.addEventListener("fullscreenchange", () => {
+  if (!document.fullscreenElement) {
+    promoWrapper.style.width = "";
+    promoWrapper.style.height = "";
+  }
+});
