@@ -122,14 +122,43 @@
 
 <div class="wrap">
 
-  <!-- ============= 1) RADIO ============= -->
-  <section id="radio">
-    <h2>🎧 Tropical Flow TV Radio</h2>
-    // CONTADOR EN TIEMPO REAL CON CAMBIO DE COLOR
+ // ================== RADIO DINÁMICA ==================
+const RADIO_URL = "https://tropicalflowradio.ismyradio.com/?autoplay=1";
 const liveCountEl = document.getElementById('liveCount');
 const liveStatusEl = document.getElementById('liveStatus');
-const RADIO_STATS_URL = 'https://tropicalflowradio.ismyradio.com/status-json.xsl'; // URL de tu servidor de radio
+const viewport  = document.getElementById('radioViewport');
+const openBtn   = document.getElementById('openPlayer');
+const tabBtn    = document.getElementById('openTab');
+const RADIO_STATS_URL = 'https://tropicalflowradio.ismyradio.com/status-json.xsl'; // JSON de tu servidor de radio
 
+function getRadioFrame(){ return document.getElementById('radioFrame'); }
+
+function radioStart(){
+  const f=getRadioFrame();
+  if (f && (f.src==="about:blank" || !f.src)) f.src=RADIO_URL;
+}
+
+function radioStopHard(){ const f=getRadioFrame(); if(f) f.src="about:blank"; }
+
+// Mostrar / ocultar player
+function showPlayer(){
+  viewport.style.display='block';
+  radioStart();
+  pauseAllExcept('radio');
+}
+
+function hidePlayer(){
+  viewport.style.display='none';
+  // Al cerrar, actualiza color si no hay oyentes
+  updateLiveCount();
+}
+
+// Botones
+openBtn.onclick = ()=> (viewport.style.display==='none' ? showPlayer() : hidePlayer());
+tabBtn.onclick  = ()=> window.open(RADIO_URL,"_blank");
+viewport.style.display='none'; // inicia minimizado
+
+// ================== CONTADOR EN VIVO ==================
 async function updateLiveCount(){
   try {
     const res = await fetch(RADIO_STATS_URL);
@@ -147,13 +176,18 @@ async function updateLiveCount(){
 
     liveCountEl.textContent = listeners;
 
-    // Cambiar color EN VIVO según oyentes
+    // Cambiar color y texto
     if(listeners > 0){
       liveStatusEl.style.color = "#ff4444"; // rojo vivo
       liveStatusEl.textContent = `🔴 EN VIVO — ${listeners} persona${listeners>1?'s':''} conectada${listeners>1?'s':''}`;
     } else {
       liveStatusEl.style.color = "#aaa"; // gris apagado
       liveStatusEl.textContent = "⚪ OFFLINE — 0 personas conectadas";
+    }
+
+    // Si el player está abierto y hay oyentes, mantener rojo
+    if(viewport.style.display !== 'none' && listeners>0){
+      liveStatusEl.style.color = "#ff4444";
     }
 
   } catch(err){
@@ -164,7 +198,7 @@ async function updateLiveCount(){
   }
 }
 
-// Actualiza cada 10 segundos
+// Actualización cada 10 segundos
 updateLiveCount();
 setInterval(updateLiveCount, 10000);
 </div>
