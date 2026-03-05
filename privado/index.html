@@ -126,7 +126,48 @@
   <section id="radio">
     <h2>🎧 Tropical Flow TV Radio</h2>
     <div id="liveStatus" style="text-align:center;margin-bottom:10px;font-weight:bold;font-size:18px;">
-  🔴 EN VIVO — <span id="liveCount">0</span> personas conectadas
+ // CONTADOR EN TIEMPO REAL CON CAMBIO DE COLOR
+const liveCountEl = document.getElementById('liveCount');
+const liveStatusEl = document.getElementById('liveStatus');
+const RADIO_STATS_URL = 'https://tropicalflowradio.ismyradio.com/status-json.xsl'; // URL de tu servidor de radio
+
+async function updateLiveCount(){
+  try {
+    const res = await fetch(RADIO_STATS_URL);
+    const data = await res.json();
+
+    // Contar oyentes
+    let listeners = 0;
+    if(data.icestats && data.icestats.source){
+      if(Array.isArray(data.icestats.source)){
+        listeners = data.icestats.source.reduce((sum, s) => sum + (s.listeners_current||0), 0);
+      } else {
+        listeners = data.icestats.source.listeners_current || 0;
+      }
+    }
+
+    liveCountEl.textContent = listeners;
+
+    // Cambiar color EN VIVO según oyentes
+    if(listeners > 0){
+      liveStatusEl.style.color = "#ff4444"; // rojo vivo
+      liveStatusEl.textContent = `🔴 EN VIVO — ${listeners} persona${listeners>1?'s':''} conectada${listeners>1?'s':''}`;
+    } else {
+      liveStatusEl.style.color = "#aaa"; // gris apagado
+      liveStatusEl.textContent = "⚪ OFFLINE — 0 personas conectadas";
+    }
+
+  } catch(err){
+    console.error('Error al obtener el contador:', err);
+    liveCountEl.textContent = '0';
+    liveStatusEl.style.color = "#aaa";
+    liveStatusEl.textContent = "⚪ OFFLINE — 0 personas conectadas";
+  }
+}
+
+// Actualiza cada 10 segundos
+updateLiveCount();
+setInterval(updateLiveCount, 10000);
 </div>
     <div id="radioCard">
       <div id="radioMini">
