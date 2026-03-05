@@ -1,3 +1,4 @@
+// === FULLSCREEN PROMO PRO ===
 const fsBtn = document.getElementById('promoFs');
 const promoWrapper = document.getElementById('promoShell');
 
@@ -5,7 +6,6 @@ fsBtn.onclick = () => {
 
   if (!document.fullscreenElement) {
 
-    // Activar fullscreen limpio
     promoWrapper.requestFullscreen?.().then(() => {
       promoWrapper.style.width = "100vw";
       promoWrapper.style.height = "100vh";
