@@ -153,6 +153,7 @@
       <button id="plPrev" class="btn">⏮ Anterior</button>
       <button id="plToggle" class="btn alt">▶ / ⏸</button>
       <button id="plNext" class="btn">⏭ Siguiente</button>
+      <button id="plRandom" class="btn warn">🔀 Random OFF</button>
     </div>
     <ul id="plList" class="plist"></ul>
     <p id="plStatus" class="status" style="margin-top:8px"></p>
@@ -270,6 +271,7 @@ function pauseAllExcept(kind){
   const toggle= document.getElementById('plToggle');
   const status= document.getElementById('plStatus');
   let i=0;
+  let randomMode = false;
 
   function render(){
     list.innerHTML="";
@@ -292,7 +294,20 @@ function pauseAllExcept(kind){
   prev.onclick  = ()=>{ i=(i-1+TRACKS.length)%TRACKS.length; load(true); };
   next.onclick  = ()=>{ i=(i+1)%TRACKS.length; load(true); };
   toggle.onclick= ()=>{ if(audio.paused){ pauseAllExcept('playlist'); audio.play().catch(()=>{});} else audio.pause(); };
-  audio.addEventListener('ended', ()=> next.onclick());
+
+  document.getElementById('plRandom').onclick = () => {
+    randomMode = !randomMode;
+    document.getElementById('plRandom').textContent =
+      randomMode ? '🔀 Random ON' : '🔀 Random OFF';
+  };
+  audio.addEventListener('ended', ()=> {
+    if(randomMode){
+      i = Math.floor(Math.random() * TRACKS.length);
+      load(true);
+    } else {
+      next.onclick();
+    }
+  });
   audio.addEventListener('play',  ()=> pauseAllExcept('playlist'));
   audio.addEventListener('error', ()=> msg("⚠ No se pudo cargar: "+decodeURIComponent(TRACKS[i].src), true));
 
