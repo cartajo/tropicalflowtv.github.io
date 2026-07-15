@@ -86,12 +86,6 @@
   .ratio16x9{position:relative;padding-top:56.25%}            /* NUEVO: usaremos 16x9 en ambos players */
   .fill{position:absolute;inset:0}
 
-  #promoPlayer iframe,
-  #ytMain iframe{
-    width:100% !important;
-    height:100% !important;
-  }
-
  /* CARRUSEL VIDEO FULL WIDTH */
 #carouselShell{position:relative;width:100%;padding-top:56.25%;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)}
 #ytMain{position:absolute;top:0;left:0;width:100%;height:100%}
@@ -159,7 +153,6 @@
       <button id="plPrev" class="btn">⏮ Anterior</button>
       <button id="plToggle" class="btn alt">▶ / ⏸</button>
       <button id="plNext" class="btn">⏭ Siguiente</button>
-      <button id="plRandom" class="btn warn">🔀 Random OFF</button>
     </div>
     <ul id="plList" class="plist"></ul>
     <p id="plStatus" class="status" style="margin-top:8px"></p>
@@ -176,6 +169,7 @@
       <button id="cPrev" class="btn">⏮ Anterior</button>
       <button id="cToggle" class="btn alt">▶ / ⏸</button>
       <button id="cNext" class="btn">⏭ Siguiente</button>
+      <button id="cRandom" class="btn warn">🔀 Random OFF</button>
       <button id="cFs" class="btn warn">⤢ Pantalla completa</button>
     </div>
     <div id="cTitle" style="max-width:1100px;margin:8px auto 10px;text-align:center;font-weight:700"></div>
@@ -186,7 +180,7 @@
   <section id="promoArea">
     <h2>🎬 Video Promo Tropical</h2>
     <!-- Ya estabas en 16x9, se mantiene -->
-    <div id="promoShell" class="ratio16x9" style="width:100%;max-width:1100px;margin:0 auto;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)">
+    <div id="promoShell" class="ratio16x9" style="max-width:1000px;margin:0 auto;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)">
       <div id="promoPlayer" class="fill"></div>
     </div>
     <div class="controls">
@@ -276,7 +270,6 @@ function pauseAllExcept(kind){
   const toggle= document.getElementById('plToggle');
   const status= document.getElementById('plStatus');
   let i=0;
-  let randomMode = false;
 
   function render(){
     list.innerHTML="";
@@ -299,20 +292,7 @@ function pauseAllExcept(kind){
   prev.onclick  = ()=>{ i=(i-1+TRACKS.length)%TRACKS.length; load(true); };
   next.onclick  = ()=>{ i=(i+1)%TRACKS.length; load(true); };
   toggle.onclick= ()=>{ if(audio.paused){ pauseAllExcept('playlist'); audio.play().catch(()=>{});} else audio.pause(); };
-
-  document.getElementById("plRandom").onclick = () => {
-    randomMode = !randomMode;
-    document.getElementById("plRandom").textContent =
-      randomMode ? "🔀 Random ON" : "🔀 Random OFF";
-  };
-  audio.addEventListener('ended', ()=> {
-    if(randomMode){
-      i = Math.floor(Math.random() * TRACKS.length);
-      load(true);
-    } else {
-      next.onclick();
-    }
-  });
+  audio.addEventListener('ended', ()=> next.onclick());
   audio.addEventListener('play',  ()=> pauseAllExcept('playlist'));
   audio.addEventListener('error', ()=> msg("⚠ No se pudo cargar: "+decodeURIComponent(TRACKS[i].src), true));
 
@@ -530,6 +510,7 @@ function promoNext(){ promoIndex=(promoIndex+1)%PROMO_IDS.length; promoPlayer.lo
 
 /* ========== CARRUSEL (YT) ========== */
 let cIndex=0, cPlayer=null;
+let cRandom = false;
 function buildThumbs(){
   const wrap=document.getElementById('thumbs');
   wrap.innerHTML = CAROUSEL_IDS.map((id,i)=>`
@@ -552,7 +533,14 @@ function createCarousel(){
       onReady:()=>{ updateCTitle(); },
       onStateChange:e=>{
         if(e.data===YT.PlayerState.PLAYING) pauseAllExcept('yt');
-        if(e.data===YT.PlayerState.ENDED) nextC();
+        if(e.data===YT.PlayerState.ENDED){
+          if(cRandom){
+            cIndex = Math.floor(Math.random() * CAROUSEL_IDS.length);
+            loadCarousel(true);
+          } else {
+            nextC();
+          }
+        }
         if(e.data===YT.PlayerState.PLAYING || e.data===YT.PlayerState.CUED) updateCTitle();
       }
     }
@@ -562,6 +550,12 @@ function createCarousel(){
   buildThumbs();
   document.getElementById('cPrev').onclick = prevC;
   document.getElementById('cNext').onclick = nextC;
+
+  document.getElementById('cRandom').onclick = () => {
+    cRandom = !cRandom;
+    document.getElementById('cRandom').textContent =
+      cRandom ? "🔀 Random ON" : "🔀 Random OFF";
+  };
   document.getElementById('cToggle').onclick = ()=>{
     const s = cPlayer.getPlayerState?.();
     if (s===YT.PlayerState.PLAYING) cPlayer.pauseVideo();
