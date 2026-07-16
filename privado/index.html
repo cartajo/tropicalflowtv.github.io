@@ -183,8 +183,8 @@
     <!-- Ya estabas en 16x9, se mantiene -->
    <div id="promoShell" class="ratio16x9"
 style="
-width:85%;
-max-width:900px;
+width:100%;
+max-width:1200px;
 margin:0 auto;
 display:flex;
 justify-content:center;
@@ -198,8 +198,8 @@ border-radius:18px;
   <button id="promoPrev" class="btn">⏮ Anterior</button>
   <button id="promoToggle" class="btn alt">▶ / ⏸</button>
   <button id="promoNext" class="btn">⏭ Siguiente</button>
-  <button id="promoRandom" class="btn warn">🔀 Random OFF
-  <button id="promoFs" class="btn warn">⤢ Pantalla completa</button>
+  <button id="promoRandom" class="btn warn">🔀 Random OFF</button>
+<button id="promoFs" class="btn warn">⤢ Pantalla completa</button>
 </div>
     <div id="promoTitle" style="max-width:1000px;margin:8px auto 0;text-align:center;font-weight:700"></div>
   </section>
@@ -511,7 +511,9 @@ const PROMO_IDS = [
 ];
 
 /* ========== PROMO (YT) ========== */
-let promoIndex=0, promoPlayer=null;
+let promoIndex = 0;
+let promoPlayer = null;
+let promoRandom = false;
 function createPromo(){
   if (!(window.YT && window.YT.Player)) return;
   promoPlayer = new YT.Player('promoPlayer',{
@@ -521,7 +523,25 @@ function createPromo(){
       onReady:e=>{ try{e.target.mute();e.target.playVideo();}catch(_){} updatePromoTitle(); },
       onStateChange:e=>{
         if(e.data===YT.PlayerState.PLAYING) pauseAllExcept('promo');
-        if(e.data===YT.PlayerState.ENDED) promoNext();
+        if (e.data === YT.PlayerState.ENDED) {
+
+  if (promoRandom) {
+
+    promoIndex = Math.floor(
+      Math.random() * PROMO_IDS.length
+    );
+
+    promoPlayer.loadVideoById(
+      PROMO_IDS[promoIndex]
+    );
+
+  } else {
+
+    promoNext();
+
+  }
+
+}
         if(e.data===YT.PlayerState.PLAYING || e.data===YT.PlayerState.CUED) updatePromoTitle();
       }
     }
@@ -529,7 +549,12 @@ function createPromo(){
   window._ytPromo = promoPlayer;
 
   document.getElementById('promoPrev').onclick = promoPrev;
-  document.getElementById('promoNext').onclick = promoNext;
+  document.getElementById('promoRandom').onclick = () => {
+  promoRandom = !promoRandom;
+
+  document.getElementById('promoRandom').textContent =
+    promoRandom ? "🔀 Random ON" : "🔀 Random OFF";
+};
   document.getElementById('promoToggle').onclick = ()=>{
     const s = promoPlayer.getPlayerState?.();
     if (s===YT.PlayerState.PLAYING) promoPlayer.pauseVideo();
