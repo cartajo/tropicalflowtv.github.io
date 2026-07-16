@@ -182,7 +182,15 @@
     <h2>🎬 Videos Cristianos ✝️</h2>
     <!-- Ya estabas en 16x9, se mantiene -->
    <div id="promoShell" class="ratio16x9"
-style="
+style="document.getElementById('promoPrev').onclick = promoPrev;
+document.getElementById('promoNext').onclick = promoNext;
+
+document.getElementById('promoRandom').onclick = () => {
+  promoRandom = !promoRandom;
+
+  document.getElementById('promoRandom').textContent =
+    promoRandom ? "🔀 Random ON" : "🔀 Random OFF";
+};
 width:100%;
 max-width:1200px;
 margin:0 auto;
@@ -549,7 +557,9 @@ function createPromo(){
   window._ytPromo = promoPlayer;
 
   document.getElementById('promoPrev').onclick = promoPrev;
-  document.getElementById('promoRandom').onclick = () => {
+document.getElementById('promoNext').onclick = promoNext;
+
+document.getElementById('promoRandom').onclick = () => {
   promoRandom = !promoRandom;
 
   document.getElementById('promoRandom').textContent =
