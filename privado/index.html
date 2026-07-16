@@ -182,15 +182,15 @@
     <div id="thumbs" class="thumbStrip"></div>
   </section>
 
- <!-- ============= 4) VIDEO PROMO ============= -->
+<!-- ============= 4) VIDEO PROMO ============= -->
   <section id="promoArea">
     <h2>🎬 Videos Cristianos ✝️</h2>
-    <!-- CORREGIDO: Se aisló el reproductor en su contenedor 16:9 independiente -->
+    <!-- CORREGIDO: Contenedor 16:9 aislado para evitar deformaciones del reproductor -->
     <div id="promoShell" class="ratio16x9" style="width:100%;max-width:1200px;margin:0 auto;border-radius:18px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)">
       <div id="promoPlayer" class="fill"></div>
     </div>
    
-    <!-- CORREGIDO: Los controles se movieron fuera del contenedor del reproductor para no romper el diseño -->
+    <!-- CORREGIDO: Botones reposicionados afuera con espaciado correcto y diseño unificado -->
     <div class="controls" style="margin-top:15px">
       <button id="promoPrev" class="btn">⏮ Anterior</button>
       <button id="promoToggle" class="btn alt">▶ / ⏸</button>
@@ -199,18 +199,6 @@
       <button id="promoFs" class="btn warn">⤢ Pantalla completa</button>
     </div>
     <div id="promoTitle" style="max-width:1000px;margin:12px auto 0;text-align:center;font-weight:700"></div>
-  </section>
-
-</div>
-   
-    <div class="promoControls">
-  <button id="promoPrev" class="btn">⏮ Anterior</button>
-  <button id="promoToggle" class="btn alt">▶ / ⏸</button>
-  <button id="promoNext" class="btn">⏭ Siguiente</button>
-  <button id="promoRandom" class="btn warn">🔀 Random OFF</button>
-<button id="promoFs" class="btn warn">⤢ Pantalla completa</button>
-</div>
-    <div id="promoTitle" style="max-width:1000px;margin:8px auto 0;text-align:center;font-weight:700"></div>
   </section>
 
 </div>
@@ -235,12 +223,13 @@ function getPromo(){ return window._ytPromo || null; }
 
 function pauseAllExcept(kind){
   try{
-    if (kind!=='radio'){ radioStopHard(); } // silencia radio (iframe externo)
+    if (kind!=='radio'){ radioStopHard(); } 
     if (kind!=='playlist'){ const a=getPl(); if (a && !a.paused) a.pause(); }
     if (kind!=='yt'){ const c=getCarousel(); if (c?.getPlayerState?.()===YT.PlayerState.PLAYING) c.pauseVideo(); }
     if (kind!=='promo'){ const p=getPromo(); if (p?.getPlayerState?.()===YT.PlayerState.PLAYING) p.pauseVideo(); }
   }catch(e){}
 }
+
 
 /* ========== RADIO (minimizada + abrir) ========== */
 (function(){
@@ -519,99 +508,125 @@ const PROMO_IDS = [
   "63h1IaDD91I"
 ];
 
-/* ========== PROMO (YT) ========== */
+/* ========== PROMO / VIDEOS CRISTIANOS (YT) ========== */
 let promoIndex = 0;
 let promoPlayer = null;
 let promoRandom = false;
+
 function createPromo(){
   if (!(window.YT && window.YT.Player)) return;
   promoPlayer = new YT.Player('promoPlayer',{
-    videoId:PROMO_IDS[promoIndex],
-    playerVars:{rel:0,modestbranding:1,playsinline:1,controls:1},
-    events:{
-      onReady:e=>{ try{e.target.mute();e.target.playVideo();}catch(_){} updatePromoTitle(); },
-      onStateChange:e=>{
-        if(e.data===YT.PlayerState.PLAYING) pauseAllExcept('promo');
+    videoId: PROMO_IDS[promoIndex],
+    playerVars: { rel: 0, modestbranding: 1, playsinline: 1, controls: 1 },
+    events: {
+      onReady: e => { 
+        try { e.target.mute(); e.target.playVideo(); } catch(_) {} 
+        updatePromoTitle(); 
+      },
+      onStateChange: e => {
+        if (e.data === YT.PlayerState.PLAYING) pauseAllExcept('promo');
         if (e.data === YT.PlayerState.ENDED) {
-
-  if (promoRandom) {
-
-    promoIndex = Math.floor(
-      Math.random() * PROMO_IDS.length
-    );
-
-    promoPlayer.loadVideoById(
-      PROMO_IDS[promoIndex]
-    );
-
-  } else {
-
-    promoNext();
-
-  }
-
-}
-        if(e.data===YT.PlayerState.PLAYING || e.data===YT.PlayerState.CUED) updatePromoTitle();
+          if (promoRandom) {
+            promoIndex = Math.floor(Math.random() * PROMO_IDS.length);
+            promoPlayer.loadVideoById(PROMO_IDS[promoIndex]);
+          } else {
+            promoNext();
+          }
+        }
+        if (e.data === YT.PlayerState.PLAYING || e.data === YT.PlayerState.CUED) updatePromoTitle();
       }
     }
   });
   window._ytPromo = promoPlayer;
 
   document.getElementById('promoPrev').onclick = promoPrev;
-document.getElementById('promoNext').onclick = promoNext;
+  document.getElementById('promoNext').onclick = promoNext;
 
-document.getElementById('promoRandom').onclick = () => {
-  promoRandom = !promoRandom;
-
-  document.getElementById('promoRandom').textContent =
-    promoRandom ? "🔀 Random ON" : "🔀 Random OFF";
-};
-  document.getElementById('promoToggle').onclick = ()=>{
+  document.getElementById('promoRandom').onclick = () => {
+    promoRandom = !promoRandom;
+    document.getElementById('promoRandom').textContent = promoRandom ? "🔀 Random ON" : "🔀 Random OFF";
+  };
+  
+  document.getElementById('promoToggle').onclick = () => {
     const s = promoPlayer.getPlayerState?.();
-    if (s===YT.PlayerState.PLAYING) promoPlayer.pauseVideo();
+    if (s === YT.PlayerState.PLAYING) promoPlayer.pauseVideo();
     else { pauseAllExcept('promo'); promoPlayer.playVideo(); } 
   };
-  const fsBtn=document.getElementById('promoFs'), shell=document.getElementById('promoShell');
-  fsBtn.onclick=()=>{ if(document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.(); };
+  
+  const fsBtn = document.getElementById('promoFs'), shell = document.getElementById('promoShell');
+  fsBtn.onclick = () => { if (document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.(); };
 }
-function updatePromoTitle(){ try{ document.getElementById('promoTitle').textContent = promoPlayer.getVideoData()?.title || ""; }catch(_){} }
-function promoPrev(){ promoIndex=(promoIndex-1+PROMO_IDS.length)%PROMO_IDS.length; promoPlayer.loadVideoById(PROMO_IDS[promoIndex]); updatePromoTitle(); }
-function promoNext(){ promoIndex=(promoIndex+1)%PROMO_IDS.length; promoPlayer.loadVideoById(PROMO_IDS[promoIndex]); updatePromoTitle(); }
 
-/* ========== CARRUSEL (YT) ========== */
-let cIndex=0, cPlayer=null;
+function updatePromoTitle(){ 
+  try { document.getElementById('promoTitle').textContent = promoPlayer.getVideoData()?.title || ""; } catch(_) {} 
+}
+function promoPrev(){ 
+  promoIndex = (promoIndex - 1 + PROMO_IDS.length) % PROMO_IDS.length; 
+  promoPlayer.loadVideoById(PROMO_IDS[promoIndex]); 
+  updatePromoTitle(); 
+}
+function promoNext(){ 
+  promoIndex = (promoIndex + 1) % PROMO_IDS.length; 
+  promoPlayer.loadVideoById(PROMO_IDS[promoIndex]); 
+  updatePromoTitle(); 
+}
+
+
+/* ========== CARRUSEL PRINCIPAL DE VIDEOS (YT) ========== */
+let cIndex = 0, cPlayer = null;
 let cRandom = false;
+
 function buildThumbs(){
-  const wrap=document.getElementById('thumbs');
-  wrap.innerHTML = CAROUSEL_IDS.map((id,i)=>`
-    <div class="thumb ${i===cIndex?'active':''}" data-i="${i}">
-      <img src="https://img.youtube.com/vi/${id}/hqdefault.jpg" alt="thumb ${i+1}">
+  const wrap = document.getElementById('thumbs');
+  wrap.innerHTML = CAROUSEL_IDS.map((id, i) => `
+    <div class="thumb ${i === cIndex ? 'active' : ''}" data-i="${i}">
+      <img src="https://img.youtube.com/vi/${id}/hqdefault.jpg" alt="thumb ${i + 1}">
       <div class="playOverlay"><div class="playBtn"></div></div>
     </div>`).join('');
-  wrap.querySelectorAll('.thumb').forEach(el=> el.onclick = ()=>{ cIndex=+el.dataset.i; loadCarousel(true); });
+  wrap.querySelectorAll('.thumb').forEach(el => el.onclick = () => { cIndex = +el.dataset.i; loadCarousel(true); });
 }
-function markActive(){ document.querySelectorAll('#thumbs .thumb').forEach((el,i)=> el.classList.toggle('active', i===cIndex)); }
-function updateCTitle(){ try{ document.getElementById('cTitle').textContent = cPlayer.getVideoData()?.title || ""; }catch(_){} }
-function prevC(){ cIndex=(cIndex-1+CAROUSEL_IDS.length)%CAROUSEL_IDS.length; loadCarousel(true); }
-function nextC(){ cIndex=(cIndex+1)%CAROUSEL_IDS.length; loadCarousel(true); }
+
+// MEJORADO: El scroll se mueve automáticamente para enfocar el video seleccionado de la lista de 150
+function markActive(){ 
+  document.querySelectorAll('#thumbs .thumb').forEach((el, i) => {
+    const isActive = i === cIndex;
+    el.classList.toggle('active', isActive);
+    if (isActive) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+  }); 
+}
+
+function updateCTitle(){ 
+  try { document.getElementById('cTitle').textContent = cPlayer.getVideoData()?.title || ""; } catch(_) {} 
+}
+function prevC(){ 
+  cIndex = (cIndex - 1 + CAROUSEL_IDS.length) % CAROUSEL_IDS.length; 
+  loadCarousel(true); 
+}
+function nextC(){ 
+  cIndex = (cIndex + 1) % CAROUSEL_IDS.length; 
+  loadCarousel(true); 
+}
+
 function createCarousel(){
   if (!(window.YT && window.YT.Player)) return;
   cPlayer = new YT.Player('ytMain',{
     videoId: CAROUSEL_IDS[cIndex],
-    playerVars:{rel:0,modestbranding:1,playsinline:1,controls:1},
-    events:{
-      onReady:()=>{ updateCTitle(); },
-      onStateChange:e=>{
-        if(e.data===YT.PlayerState.PLAYING) pauseAllExcept('yt');
-        if(e.data===YT.PlayerState.ENDED){
-          if(cRandom){
+    playerVars: { rel: 0, modestbranding: 1, playsinline: 1, controls: 1 },
+    events: {
+      onReady: () => { updateCTitle(); },
+      onStateChange: e => {
+        if (e.data === YT.PlayerState.PLAYING) pauseAllExcept('yt');
+        if (e.data === YT.PlayerState.ENDED) {
+          if (cRandom) {
             cIndex = Math.floor(Math.random() * CAROUSEL_IDS.length);
             loadCarousel(true);
           } else {
             nextC();
           }
         }
-        if(e.data===YT.PlayerState.PLAYING || e.data===YT.PlayerState.CUED) updateCTitle();
+        if (e.data === YT.PlayerState.PLAYING || e.data === YT.PlayerState.CUED) updateCTitle();
       }
     }
   });
@@ -623,26 +638,33 @@ function createCarousel(){
 
   document.getElementById('cRandom').onclick = () => {
     cRandom = !cRandom;
-    document.getElementById('cRandom').textContent =
-      cRandom ? "🔀 Random ON" : "🔀 Random OFF";
+    document.getElementById('cRandom').textContent = cRandom ? "🔀 Random ON" : "🔀 Random OFF";
   };
-  document.getElementById('cToggle').onclick = ()=>{
+  document.getElementById('cToggle').onclick = () => {
     const s = cPlayer.getPlayerState?.();
-    if (s===YT.PlayerState.PLAYING) cPlayer.pauseVideo();
+    if (s === YT.PlayerState.PLAYING) cPlayer.pauseVideo();
     else { pauseAllExcept('yt'); cPlayer.playVideo(); }
   };
-  const fsBtn=document.getElementById('cFs'), shell=document.getElementById('carouselShell');
-  fsBtn.onclick=()=>{ if(document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.(); };
+  
+  const fsBtn = document.getElementById('cFs'), shell = document.getElementById('carouselShell');
+  fsBtn.onclick = () => { if (document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.(); };
 }
-function loadCarousel(play){ cPlayer.loadVideoById(CAROUSEL_IDS[cIndex]); markActive(); updateCTitle(); if(!play) cPlayer.pauseVideo?.(); }
+
+function loadCarousel(play){ 
+  cPlayer.loadVideoById(CAROUSEL_IDS[cIndex]); 
+  markActive(); 
+  updateCTitle(); 
+  if (!play) cPlayer.pauseVideo?.(); 
+}
+
 
 /* ========== Boot YouTube API (promo + carrusel) ========== */
 (function bootYT(){
-  let started=false;
-  function start(){ if(started) return; started=true; createPromo(); createCarousel(); }
+  let started = false;
+  function start(){ if (started) return; started = true; createPromo(); createCarousel(); }
   if (window.YT && window.YT.Player) start();
-  const prev=window.onYouTubeIframeAPIReady;
-  window.onYouTubeIframeAPIReady = function(){ if (typeof prev==='function') prev(); start(); };
+  const prev = window.onYouTubeIframeAPIReady;
+  window.onYouTubeIframeAPIReady = function(){ if (typeof prev === 'function') prev(); start(); };
 })();
 </script>
 </body>
