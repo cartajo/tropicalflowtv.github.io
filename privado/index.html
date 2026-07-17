@@ -151,7 +151,18 @@ function actualizarReloj() {
         }
     );
 
-    document.getElementById('reloj').textContent = hora;
+    const fecha = ahora.toLocaleDateString(
+    'es-PR',
+    {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    }
+);
+
+document.getElementById('reloj').innerHTML =
+    hora + '<br><small>' + fecha + '</small>'
 }
 
 setInterval(actualizarReloj, 1000);
