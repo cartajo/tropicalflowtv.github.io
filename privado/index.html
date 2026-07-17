@@ -19,7 +19,7 @@
     font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,Helvetica,sans-serif;
     background:
       linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.80)),
-      url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop")
+      url("https://unsplash.com")
       center/cover fixed no-repeat;
   }
   .bg-mark{
@@ -30,8 +30,8 @@
   }
   header, footer{ position:relative; z-index:2; text-align:center; padding:14px; background:rgba(0,0,0,.5) }
   h1{ margin:0; font-size:clamp(22px,3.4vw,36px) }
-  
-   /* ⌚ NUEVO: Estilos del Reloj Digital */        
+
+  /* ⌚ Estilos del Reloj Digital */
   .reloj-container {
     position: relative;
     z-index: 2;
@@ -54,6 +54,7 @@
     margin-top: 2px;
     text-transform: capitalize;
   }
+
   /* Barra social superior */
   .top-social{
     position:relative; z-index:2;
@@ -105,11 +106,10 @@
   .plist{scrollbar-width:thin;scrollbar-color:#00bcd4 rgba(255,255,255,.08)}
 
   /* ─── VIDEO ─── */
-    /* ─── CORRECCIÓN DEFINITIVA PARA PANTALLA COMPLETA ─── */
   .ratio16x9 {
     position: relative;
     width: 100%;
-    padding-top: 56.25% !important; /* Fuerza la proporción de cine 16:9 */
+    padding-top: 56.25% !important;
     height: 0 !important;
   }
   .fill {
@@ -117,10 +117,9 @@
     top: 0 !important;
     left: 0 !important;
     width: 100% !important;
-    height: 100% !important; /* Fuerza a YouTube a estirarse completo */
+    height: 100% !important;
   }
-  /* Esto evita que el iframe interno de YouTube se auto-recorte */
-  #promoPlayer, #ytMain, #promoPlayer iframe, #ytMain iframe {
+  #ytMain, #ytMain iframe {
     width: 100% !important;
     height: 100% !important;
     position: absolute !important;
@@ -128,28 +127,20 @@
     left: 0 !important;
   }
 
-
   /* CARRUSEL VIDEO FULL WIDTH */
-  #carouselShell{position:relative;width:100%;padding-top:56.25%;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)}
-  #ytMain{position:absolute;top:0;left:0;width:100%;height:100%}
+  #carouselShell{position:relative;width:100%;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)}
   .thumbStrip{max-width:100%;margin:10px auto 0;padding:10px;display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory}
-  
-  /* CORREGIDO: Añadido position: relative obligatorio para centrar elementos internos */
   .thumb{position:relative;flex:0 0 auto;width:220px;border-radius:12px;overflow:hidden;scroll-snap-align:start;box-shadow:0 8px 22px rgba(0,0,0,.35);cursor:pointer}
-  .thumb img{display:block;width:100%;filter:brightness(.9);transition:transform .18s ease, filter .18s ease}
+  .thumb img{display:block;width:100%;height:124px;object-fit:cover;filter:brightness(.9);transition:transform .18s ease, filter .18s ease}
   .thumb:hover img{transform:scale(1.03);filter:brightness(1)}
   .thumb.active{outline:3px solid var(--accent);outline-offset:-3px}
-  
-  /* CORREGIDO: Ajustado el overlay para centrado absoluto total */
   .playOverlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(transparent,rgba(0,0,0,.32));z-index:2}
-  
-  /* CORREGIDO: El botón ahora se auto-posiciona de forma exacta en el centro */
   .playBtn{width:54px;height:54px;border-radius:50%;background:rgba(0,0,0,.66);border:2px solid rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%)}
   .playBtn:before{content:"";border-left:18px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px}
 </style>
 
 <!-- API YouTube -->
-<script src="https://www.youtube.com/iframe_api"></script>
+<script src="https://youtube.com"></script>
 </head>
 <body>
 <div class="bg-mark">Tropical Flow RadioTV</div>
@@ -157,21 +148,21 @@
 <header>
   <h1>🌴 Tropical Flow TV 📺 Radio – VIP</h1>
 </header>
-  
-<!-- ⌚ UBICACIÓN RECOMENDADA: Reloj justo debajo del Header -->
+
+<!-- Reloj Digital Corregido sin retraso -->
 <div class="reloj-container">
-  <div id="relojDigit">00:00:00 PM</div>
+  <div id="relojDigit">Cargando hora...</div>
   <div id="relojFecha">Cargando fecha...</div>
 </div>
-  
-<!-- 🔼 Barra social arriba -->
+
+<!-- Barra social arriba -->
 <div class="top-social">
   <div class="social">
-    <a class="whatsapp" href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
-    <a class="youtube"  href="https://www.youtube.com/@TFTvpoweredbyworldm8780" target="_blank">YouTube</a>
-    <a class="facebook" href="https://www.facebook.com/profile.php?id=61555653663073" target="_blank">Facebook</a>
-    <a class="paypal"   href="https://www.paypal.com/donate/?business=cartajoffice1@gmail.com&currency_code=USD" target="_blank">🎧 Donar vía PayPal</a>
-    <a class="athmovil" href="https://www.athmovil.com/cartajo" target="_blank">Donar ATH Móvil</a>
+    <a class="whatsapp" href="https://wa.me" target="_blank">WhatsApp</a>
+    <a class="youtube"  href="https://youtube.com" target="_blank">YouTube</a>
+    <a class="facebook" href="https://facebook.com" target="_blank">Facebook</a>
+    <a class="paypal"   href="https://paypal.com" target="_blank">🎧 Donar vía PayPal</a>
+    <a class="athmovil" href="https://athmovil.com" target="_blank">Donar ATH Móvil</a>
   </div>
 </div>
 
@@ -203,7 +194,7 @@
   <!-- ============= 2) PLAYLIST VIP ============= -->
   <section id="playlist">
     <h2>🎶 Playlist VIP 1</h2>
-    <audio id="plAudio" controls preload="metadata">Tu navegador no soporta audio HTML5.</audio>
+    <audio id="plAudio" controls preload="metadata"></audio>
     <div class="controls">
       <button id="plPrev" class="btn">⏮ Anterior</button>
       <button id="plToggle" class="btn alt">▶ / ⏸</button>
@@ -213,6 +204,35 @@
     <ul id="plList" class="plist"></ul>
     <p id="plStatus" class="status" style="margin-top:8px"></p>
   </section>
+
+  <!-- ============= 3) CARRUSEL DE VIDEOS RESTAURADO ============= -->
+  <section id="videos">
+    <h2>🎞 Videos Recientes</h2>
+    <div id="carouselShell" class="ratio16x9" style="max-width:1100px;margin:0 auto;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)">
+      <div id="ytMain" class="fill"></div>
+    </div>
+    <!-- ARREGLADO: Botones del Carrusel devueltos y centrados correctamente -->
+    <div class="controls">
+      <button id="cPrev" class="btn">⏮ Anterior</button>
+      <button id="cToggle" class="btn alt">▶ / ⏸</button>
+      <button id="cNext" class="btn">⏭ Siguiente</button>
+      <button id="cRandom" class="btn warn">🔀 Random OFF</button>
+      <button id="cFs" class="btn warn">⤢ Pantalla completa</button>
+    </div>
+    <div id="cTitle" style="max-width:1100px;margin:8px auto 10px;text-align:center;font-weight:700"></div>
+    <div id="thumbs" class="thumbStrip"></div>
+  </section>
+
+</div>
+
+<footer>
+  <p>&copy; 2026 Tropical Flow TV Radio. Todos los derechos reservados.</p>
+</footer>
+
+<script>
+  // Lógica de actualización inmediata para el Reloj
+  function actualizarReloj() {
+    const ahora = new Date();
 
   <!-- ============= 3) CARRUSEL ( VIDEOS) ============= -->
   <section id="videos">
