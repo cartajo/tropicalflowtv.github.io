@@ -286,6 +286,7 @@
   </div>
 </div>
 <!-- Elementos de reproducción nativos ocultos -->
+<!-- Elementos de reproducción nativos ocultos -->
 <audio id="audioA" loop crossorigin="anonymous"></audio>
 <audio id="audioB" loop crossorigin="anonymous"></audio>
 
@@ -299,10 +300,11 @@
   let analyserA, analyserB;
   let engineReady = false;
 
-  // Inicialización del Entorno de Audio Profesional
+  // NUEVO: Inicialización y Desbloqueo Forzado del Hardware de Audio
   function initAudioEngine() {
     if (engineReady) return;
     try {
+      // Forzar la creación del contexto de audio vinculado al hardware de la PC/móvil
       audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       
       srcA = audioCtx.createMediaElementSource(audA);
@@ -311,6 +313,7 @@
       gainA = audioCtx.createGain(); gainB = audioCtx.createGain();
       crossGainA = audioCtx.createGain(); crossGainB = audioCtx.createGain();
       
+      // Analizadores FFT rápidos para renderizado de ondas gráficas
       analyserA = audioCtx.createAnalyser(); analyserA.fftSize = 64;
       analyserB = audioCtx.createAnalyser(); analyserB.fftSize = 64;
       
@@ -318,45 +321,61 @@
       filterMid = audioCtx.createBiquadFilter(); filterMid.type = "peaking";    filterMid.frequency.value = 1200; filterMid.Q.value = 1.0;
       filterLow = audioCtx.createBiquadFilter(); filterLow.type = "lowshelf";   filterLow.frequency.value = 250;
 
+      // Puentes de enrutamiento: Orígenes -> Volumen -> Crossfader -> Filtros -> Salida Máster
       srcA.connect(gainA).connect(crossGainA).connect(analyserA).connect(filterLow);
       srcB.connect(gainB).connect(crossGainB).connect(analyserB).connect(filterLow);
       
       filterLow.connect(filterMid).connect(filterHi).connect(audioCtx.destination);
+      
       engineReady = true;
       renderWaves();
-    } catch(e) { console.log("Hardware de audio en espera."); }
+    } catch(e) { 
+      console.log("Esperando clic para iniciar hardware de audio."); 
+    }
   }
 
-  // Carga de tracks locales con detección de metadatos de tiempo
+  // CORREGIDO: Lectura nativa segura para inyección de música local
   document.getElementById('fileA').addEventListener('change', function(e) {
     if (this.files.length > 0) {
-      document.getElementById('titleA').innerText = this.files[0].name;
+      const file = this.files[0];
+      document.getElementById('titleA').innerText = file.name;
       document.getElementById('labelFileA').innerText = "Cambiar track";
-      audA.src = URL.createObjectURL(this.files[0]); audA.load();
+      audA.src = URL.createObjectURL(file);
+      audA.load();
     }
   });
 
   document.getElementById('fileB').addEventListener('change', function(e) {
     if (this.files.length > 0) {
-      document.getElementById('titleB').innerText = this.files[0].name;
+      const file = this.files[0];
+      document.getElementById('titleB').innerText = file.name;
       document.getElementById('labelFileB').innerText = "Cambiar track";
-      audB.src = URL.createObjectURL(this.files[0]); audB.load();
+      audB.src = URL.createObjectURL(file);
+      audB.load();
     }
   });
 
-  // Gatillos Deck A
+  // Gatillos Deck A con Promesa y Reactivación de Contexto
   document.getElementById('playA').addEventListener('click', () => {
-    initAudioEngine(); if (audioCtx?.state === 'suspended') audioCtx.resume();
-    audA.play().then(() => { document.getElementById('wheelA').classList.add('spinning'); updateMixerMixes(); })
-    .catch(() => alert("Por favor, carga una canción en el DECK A primero."));
+    initAudioEngine(); 
+    if (audioCtx && audioCtx.state === 'suspended') { audioCtx.resume(); }
+    
+    audA.play().then(() => { 
+      document.getElementById('wheelA').classList.add('spinning'); 
+      updateMixerMixes(); 
+    }).catch(() => alert("Por favor, selecciona primero una canción válida para el DECK A"));
   });
   document.getElementById('cueA').addEventListener('click', () => { audA.pause(); document.getElementById('wheelA').classList.remove('spinning'); });
 
-  // Gatillos Deck B
+  // Gatillos Deck B con Promesa y Reactivación de Contexto
   document.getElementById('playB').addEventListener('click', () => {
-    initAudioEngine(); if (audioCtx?.state === 'suspended') audioCtx.resume();
-    audB.play().then(() => { document.getElementById('wheelB').classList.add('spinning'); updateMixerMixes(); })
-    .catch(() => alert("Por favor, carga una canción en el DECK B primero."));
+    initAudioEngine(); 
+    if (audioCtx && audioCtx.state === 'suspended') { audioCtx.resume(); }
+    
+    audB.play().then(() => { 
+      document.getElementById('wheelB').classList.add('spinning'); 
+      updateMixerMixes(); 
+    }).catch(() => alert("Por favor, selecciona primero una canción válida para el DECK B"));
   });
   document.getElementById('cueB').addEventListener('click', () => { audB.pause(); document.getElementById('wheelB').classList.remove('spinning'); });
 
@@ -391,7 +410,7 @@
   document.getElementById('eqMid').addEventListener('input', (e) => { if (engineReady) filterMid.gain.value = e.target.value; });
   document.getElementById('eqLow').addEventListener('input', (e) => { if (engineReady) filterLow.gain.value = e.target.value; });
 
-  // NUEVO: SISTEMA DE RELOJ Y CUENTA REGRESIVA (COUNTDOWN)
+  // SISTEMA DE RELOJ Y CUENTA REGRESIVA (COUNTDOWN)
   function updateCounters() {
     const formatTime = (secs) => {
       if (isNaN(secs) || secs < 0) return "00:00";
@@ -400,12 +419,10 @@
       return `${m}:${s}`;
     };
 
-    // Deck A
     document.getElementById('timeA').innerText = formatTime(audA.currentTime);
     const remainingA = audA.duration - audA.currentTime;
     document.getElementById('remainA').innerText = "-" + formatTime(remainingA);
 
-    // Deck B
     document.getElementById('timeB').innerText = formatTime(audB.currentTime);
     const remainingB = audB.duration - audB.currentTime;
     document.getElementById('remainB').innerText = "-" + formatTime(remainingB);
@@ -414,7 +431,7 @@
   }
   requestAnimationFrame(updateCounters);
 
-  // Analizador Gráfico de Espectro Led de Frecuencias
+  // Renderizador Gráfico de Espectro Led de Frecuencias
   function renderWaves() {
     const canvasA = document.getElementById('canvasA'), ctxA = canvasA.getContext('2d');
     const canvasB = document.getElementById('canvasB'), ctxB = canvasB.getContext('2d');
@@ -443,13 +460,17 @@
     draw();
   }
 
-  // NUEVO: SISTEMA EXPANDIDO DE 10 EFECTOS SYNTH SAMPLER
+  // CORREGIDO: SISTEMA SINTETIZADOR INDEPENDIENTE DE AUDIO PARA LOS 10 EFECTOS
   function playFX(type) {
-    initAudioEngine(); if (!audioCtx) return;
-    if (audioCtx.state === 'suspended') audioCtx.resume();
+    // Forzar inicialización si el usuario da clic primero a un efecto
+    initAudioEngine(); 
+    if (!audioCtx) return;
+    if (audioCtx.state === 'suspended') { audioCtx.resume(); }
 
     const osc = audioCtx.createOscillator();
     const gainNode = audioCtx.createGain();
+    
+    // Conectar directamente a la bocina del máster para saltarse bloqueos
     osc.connect(gainNode).connect(audioCtx.destination);
     const now = audioCtx.currentTime;
 
@@ -464,50 +485,14 @@
     } 
     else if (type === 'laser') {
       osc.type = 'sawtooth'; osc.frequency.setValueAtTime(2200, now); osc.frequency.exponentialRampToValueAtTime(60, now + 0.45);
+
+      gainNode.gain.setValueAtTime(0.4, now); gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.32); osc.start(now); osc.stop(now + 0.32);
+    } 
+    else if (type === 'laser') {
+      osc.type = 'sawtooth'; osc.frequency.setValueAtTime(2200, now); osc.frequency.exponentialRampToValueAtTime(60, now + 0.45);
       gainNode.gain.setValueAtTime(0.18, now); gainNode.gain.linearRampToValueAtTime(0.001, now + 0.45); osc.start(now); osc.stop(now + 0.45);
     } 
-    else if (type === 'sirena') {
-      osc.type = 'sine'; osc.frequency.setValueAtTime(550, now); osc.frequency.linearRampToValueAtTime(950, now + 0.2); osc.frequency.linearRampToValueAtTime(550, now + 0.4); osc.frequency.linearRampToValueAtTime(950, now + 0.6);
-      gainNode.gain.setValueAtTime(0.22, now); gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.9); osc.start(now); osc.stop(now + 0.9);
-    }
-    else if (type === 'corte') {
-      // Efecto Vinyl Kill (Frenazo de motor)
-      if(audA.playbackRate > 0 && !audA.paused) {
-    } 
-    else if (type === 'explosion') {
-      osc.type = 'sawtooth'; osc.frequency.setValueAtTime(120, now); osc.frequency.linearRampToValueAtTime(20, now + 1.2);
-      gainNode.gain.setValueAtTime(0.5, now); gainNode.gain.exponentialRampToValueAtTime(0.001, now + 1.2); osc.start(now); osc.stop(now + 1.2);
-    }
-    else if (type === 'aplauso') {
-      osc.type = 'triangle'; osc.frequency.setValueAtTime(280, now); gainNode.gain.setValueAtTime(0.25, now);
-      for(let i = 0.05; i < 0.5; i += 0.05) { gainNode.gain.setValueAtTime(0.25, now + i); gainNode.gain.setValueAtTime(0.01, now + i + 0.02); }
-      osc.start(now); osc.stop(now + 0.5);
-    }
-    else if (type === 'campana') {
-      osc.type = 'sine'; osc.frequency.setValueAtTime(880, now); osc.frequency.setValueAtTime(1200, now);
-      gainNode.gain.setValueAtTime(0.3, now); gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.4); osc.start(now); osc.stop(now + 0.4);
-    }
-    else if (type === 'dembow') {
-      osc.type = 'sine'; osc.frequency.setValueAtTime(150, now); osc.frequency.exponentialRampToValueAtTime(40, now + 0.12);
-      gainNode.gain.setValueAtTime(0.6, now); gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.15); osc.start(now); osc.stop(now + 0.15);
-    }
-    else if (type === 'subbass') {
-      osc.type = 'sine'; osc.frequency.setValueAtTime(90, now); osc.frequency.linearRampToValueAtTime(25, now + 1.5);
-      gainNode.gain.setValueAtTime(0.5, now); gainNode.gain.exponentialRampToValueAtTime(0.001, now + 1.5); osc.start(now); osc.stop(now + 1.5);
-    }
-  }
-
-  // Escuchadores de los 10 Pads
-  document.getElementById('fxBocina').addEventListener('click', () => playFX('bocina'));
-  document.getElementById('fxScratch').addEventListener('click', () => playFX('scratch'));
-  document.getElementById('fxLaser').addEventListener('click', () => playFX('laser'));
-  document.getElementById('fxSirena').addEventListener('click', () => playFX('sirena'));
-  document.getElementById('fxCorte').addEventListener('click', () => playFX('corte'));
-  document.getElementById('fxExplosion').addEventListener('click', () => playFX('explosion'));
-  document.getElementById('fxAplauso').addEventListener('click', () => playFX('aplauso'));
-  document.getElementById('fxCampana').addEventListener('click', () => playFX('campana'));
-  document.getElementById('fxDembow').addEventListener('click', () => playFX('dembow'));
-  document.getElementById('fxSubBass').addEventListener('click', () => playFX('subbass'));
+    else if (type === 'sirena') {osc.type = 'sine'; osc.frequency.setValueAtTime(550, now); osc.frequency.linearRampToValueAtTime(950, now + 0.2); osc.frequency.linearRampToValueAtTime(550, now + 0.4); osc.frequency.linearRampToValueAtTime(950, now + 0.6);gainNode.gain.setValueAtTime(0.22, now); gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.9); osc.start(now); osc.stop(now + 0.9);}else if (type === 'corte') {if(audA.playbackRate > 0 && !audA.paused) {let r = audA.playbackRate;const iv = setInterval(() => { r -= 0.1; if(r <= 0.1){ clearInterval(iv); audA.pause(); audA.playbackRate = 1; document.getElementById('wheelA').classList.remove('spinning'); } else { audA.playbackRate = r; } }, 40);}if(audB.playbackRate > 0 && !audB.paused) {let r = audB.playbackRate;const iv = setInterval(() => { r -= 0.1; if(r <= 0.1){ clearInterval(iv); audB.pause(); audB.playbackRate = 1; document.getElementById('wheelB').classList.remove('spinning'); } else { audB.playbackRate = r; } }, 40);}}else if (type === 'explosion') {osc.type = 'sawtooth'; osc.frequency.setValueAtTime(120, now); osc.frequency.linearRampToValueAtTime(20, now + 1.2);gainNode.gain.setValueAtTime(0.5, now); gainNode.gain.exponentialRampToValueAtTime(0.001, now + 1.2); osc.start(now); osc.stop(now + 1.2);}else if (type === 'aplauso') {osc.type = 'triangle'; osc.frequency.setValueAtTime(280, now); gainNode.gain.setValueAtTime(0.25, now);for(let i = 0.05; i < 0.5; i += 0.05) { gainNode.gain.setValueAtTime(0.25, now + i); gainNode.gain.setValueAtTime(0.01, now + i + 0.02); }osc.start(now); osc.stop(now + 0.5);}else if (type === 'campana') {osc.type = 'sine'; osc.frequency.setValueAtTime(880, now); osc.frequency.setValueAtTime(1200, now);gainNode.gain.setValueAtTime(0.3, now); gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.4); osc.start(now); osc.stop(now + 0.4);}else if (type === 'dembow') {osc.type = 'sine'; osc.frequency.setValueAtTime(150, now); osc.frequency.exponentialRampToValueAtTime(40, now + 0.12);gainNode.gain.setValueAtTime(0.6, now); gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.15); osc.start(now); osc.stop(now + 0.15);}else if (type === 'subbass') {osc.type = 'sine'; osc.frequency.setValueAtTime(90, now); osc.frequency.linearRampToValueAtTime(25, now + 1.5);gainNode.gain.setValueAtTime(0.5, now); gainNode.gain.exponentialRampToValueAtTime(0.001, now + 1.5); osc.start(now); osc.stop(now + 1.5);}}// Escuchadores del panel Sampler FX 10-Padsdocument.getElementById('fxBocina').addEventListener('click', () => playFX('bocina'));document.getElementById('fxScratch').addEventListener('click', () => playFX('scratch'));document.getElementById('fxLaser').addEventListener('click', () => playFX('laser'));document.getElementById('fxSirena').addEventListener('click', () => playFX('sirena'));document.getElementById('fxCorte').addEventListener('click', () => playFX('corte'));document.getElementById('fxExplosion').addEventListener('click', () => playFX('explosion'));document.getElementById('fxAplauso').addEventListener('click', () => playFX('aplauso'));document.getElementById('fxCampana').addEventListener('click', () => playFX('campana'));document.getElementById('fxDembow').addEventListener('click', () => playFX('dembow'));document.getElementById('fxSubBass').addEventListener('click', () => playFX('subbass'));
 </script>
 </body>
 </html>
