@@ -586,7 +586,7 @@ function createPromo(){
     playerVars: { rel: 0, modestbranding: 1, playsinline: 1, controls: 1 },
     events: {
       onReady: e => { 
-        try { e.target.mute(); e.target.playVideo(); } catch(_) {} 
+        try { e.target.unMute(); e.target.playVideo(); } catch(_) {} 
         updatePromoTitle(); 
       },
       onStateChange: e => {
