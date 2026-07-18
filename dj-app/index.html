@@ -7,7 +7,7 @@
 <meta name="description" content="Pro Core Audio Engine, Advanced FX Sampler & Dual Wave Live Analyzer.">
 
 <style>
- :root {
+  :root {
   --bg-app: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?fit=crop&w=1920&q=80');
 
   --bg-panel: rgba(11, 15, 25, 0.92);
@@ -90,7 +90,153 @@
     text-shadow: 0 2px 4px rgba(0,0,0,0.8);
   }
 
-  <div class="studio-container">
+  .studio-container { width: 100%; max-width: 1400px; display: flex; flex-direction: column; gap: 15px; }
+  .mixer-interface { display: grid; grid-template-columns: 1fr 340px 1fr; gap: 15px; width: 100%; }
+
+  @media (max-width: 1100px) {
+    .mixer-interface { grid-template-columns: 1fr; }
+    .center-rack { order: 3; }
+  }
+  /* ESTILOS DE LOS PLATOS (DECKS) EXTENDIDOS */
+  .dj-deck {
+    background: var(--bg-panel); border-radius: 12px; padding: 15px;
+    border: 1px solid rgba(255,255,255,0.03); display: flex; flex-direction: column;
+    position: relative; box-shadow: 0 15px 35px rgba(0,0,0,0.7);
+  }
+  .deck-a { border-top: 3px solid var(--neon-cyan); }
+  .deck-b { border-top: 3px solid var(--neon-magenta); }
+
+  .deck-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; width: 100%; }
+  .deck-info-meta { display: flex; flex-direction: column; gap: 2px; }
+  .deck-badge { font-size: 0.7rem; font-weight: 900; padding: 2px 6px; border-radius: 4px; background: #000; width: max-content; }
+  .deck-a .deck-badge { color: var(--neon-cyan); border: 1px solid rgba(0,240,255,0.2); }
+  .deck-b .deck-badge { color: var(--neon-magenta); border: 1px solid rgba(255,0,127,0.2); }
+  
+  .track-title { font-size: 0.9rem; color: #fff; font-weight: 700; max-width: 220px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 4px; }
+  .bpm-counter { text-align: right; }
+  .bpm-label { font-size: 0.55rem; color: var(--text-dim); font-weight: 800; }
+  .bpm-value { font-family: monospace; font-size: 1.1rem; font-weight: 900; color: var(--neon-green); }
+
+  /* DISPLAY CONTADORES */
+  .display-panel {
+    width: 100%; background: #04060a; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05);
+    padding: 8px 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;
+  }
+  .time-group { display: flex; flex-direction: column; }
+  .time-label { font-size: 0.55rem; color: var(--text-dim); font-weight: 800; letter-spacing: 0.5px; }
+  .time-counter { font-family: monospace; font-size: 1.2rem; font-weight: bold; color: var(--neon-green); }
+  .time-counter.countdown { color: var(--neon-red); }
+
+  .wave-display { width: 100%; height: 45px; background: #000; border-radius: 4px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.02); }
+
+  /* FILA DE CONTROLES CUE / LOOP / SYNC */
+  .performance-row { width: 100%; display: flex; gap: 4px; margin-bottom: 10px; justify-content: space-between; align-items: center; }
+  .perf-label { font-size: 0.55rem; color: var(--text-dim); font-weight: 800; text-transform: uppercase; white-space: nowrap; }
+  .perf-grid { display: flex; gap: 4px; flex-grow: 1; justify-content: flex-end; }
+  .pad-btn { padding: 4px 8px; background: #131a2a; border: 1px solid #23314f; color: #94a3b8; font-size: 0.65rem; font-weight: 700; border-radius: 3px; cursor: pointer; text-transform: uppercase; min-width: 32px; text-align: center; }
+  .pad-btn:hover { background: #1e2942; color: #fff; }
+  .pad-btn.active-mode { background: #1e2942; color: var(--neon-cyan); border-color: var(--neon-cyan); }
+  .pad-btn.sync-mode { color: var(--neon-magenta); border-color: var(--neon-magenta); }
+
+  /* ZONA CENTRAL DEL DECK (JOG WHEEL + SLIDERS) */
+  .deck-center-row { width: 100%; display: flex; justify-content: space-between; align-items: center; margin: 10px 0; gap: 15px; }
+  .pitch-container, .vol-container { display: flex; flex-direction: column; align-items: center; gap: 5px; width: 45px; }
+  .v-slider-label { font-size: 0.55rem; color: var(--text-dim); font-weight: 800; text-transform: uppercase; }
+  .v-slider-val { font-family: monospace; font-size: 0.65rem; color: #94a3b8; }
+  
+  /* CONTROLES DESLIZANTES VERTICALES ESTÁNDAR */
+  input[type="range"].vertical-slider { writing-mode: vertical-lr; direction: rtl; width: 12px; height: 120px; background: #000; cursor: pointer; outline: none; }
+
+  /* JOG WHEEL PROFESIONAL */
+  .jog-wheel { width: 135px; height: 135px; border-radius: 50%; background: radial-gradient(circle, #1a2233 12%, #07090e 13%, #07090e 35%, #111622 36%, #020305 70%); border: 4px solid #1f293d; position: relative; box-shadow: 0 8px 20px rgba(0,0,0,0.6); }
+  .jog-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 34px; height: 34px; border-radius: 50%; border: 2px solid #000; background: #0b0f19; }
+  .deck-a .jog-center { box-shadow: 0 0 15px rgba(0,240,255,0.4); border-color: var(--neon-cyan); }
+  .deck-b .jog-center { box-shadow: 0 0 15px rgba(255,0,127,0.4); border-color: var(--neon-magenta); }
+  .jog-marker { position: absolute; top: 4px; left: 50%; transform: translateX(-50%); width: 4px; height: 16px; background: #fff; border-radius: 1px; transform-origin: bottom center; }
+  .spinning { animation: jogSpin 2.5s linear infinite; }
+  @keyframes jogSpin { 100% { transform: rotate(360deg); } }
+
+  /* BOTONES DE DISPARO PRINCIPAL */
+  .main-controls { width: 100%; display: flex; gap: 5px; margin-top: 5px; }
+  .btn-action { flex: 1; padding: 8px; border: 0; border-radius: 4px; font-weight: 800; font-size: 0.7rem; text-transform: uppercase; cursor: pointer; color: #fff; background: #131a2a; border: 1px solid #23314f; transition: all 0.2s ease; }
+  .btn-action.play-a:hover { background: #002c30; color: var(--neon-cyan); border-color: var(--neon-cyan); }
+  .btn-action.play-b:hover { background: #33001a; color: var(--neon-magenta); border-color: var(--neon-magenta); }
+  .btn-action.cue-btn:hover { background: #2b1b00; color: var(--gold); border-color: var(--gold); }
+  
+  .file-uploader { width: 100%; margin-bottom: 4px; }
+  .file-uploader input[type="file"] { display: none; }
+  .file-label { display: block; text-align: center; padding: 6px; background: #131a2a; border: 1px dashed #23314f; border-radius: 4px; font-size: 0.65rem; cursor: pointer; color: #94a3b8; font-weight: bold; }
+  .file-label:hover { color: #fff; border-color: var(--text-main); }
+  /* ESTILOS CSS DEL MEZCLADOR CENTRAL */
+  .center-rack {
+    background: var(--bg-panel); border-radius: 12px; padding: 15px;
+    display: flex; flex-direction: column; align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.03); box-shadow: 0 15px 35px rgba(0,0,0,0.7);
+  }
+  .mixer-title-sec { font-size: 0.75rem; font-weight: 800; color: #94a3b8; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; text-shadow: 0 1px 2px #000; }
+  
+  .eq-section { width: 100%; display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px; }
+  .knob-unit { display: flex; flex-direction: column; width: 100%; gap: 2px; }
+  .knob-unit label { font-size: 0.6rem; color: var(--text-dim); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; }
+  input[type="range"].h-slider-raw { width: 100%; height: 5px; background: #000; border-radius: 3px; outline: none; cursor: pointer; appearance: none; -webkit-appearance: none; accent-color: var(--gold); }
+
+  .vumeter-wrapper { display: flex; gap: 15px; background: #04060a; padding: 8px 15px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.03); margin-bottom: 15px; justify-content: center; width: 100%; }
+  .vumeter-channel { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .vumeter-label { font-size: 0.55rem; color: var(--text-dim); font-weight: 900; }
+  .vumeter-bar-bg { width: 8px; height: 75px; background: #11141e; position: relative; border-radius: 2px; overflow: hidden; display: flex; flex-direction: column-reverse; }
+  
+  .vumeter-fill {
+    transition: height 0.05s ease; 
+    height: 0%;
+    background: linear-gradient(to top, var(--neon-green) 0%, var(--neon-green) 75%, var(--neon-red) 100%); 
+  }
+
+  .sampler-panel { width: 100%; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; gap: 8px; }
+  .sampler-title { font-size: 0.55rem; font-weight: 800; text-transform: uppercase; display: flex; justify-content: space-between; width: 100%; color: var(--text-dim); }
+  .sampler-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; width: 100%; }
+  .fx-pad { padding: 8px 2px; background: #131a2a; border: 1px solid #23314f; border-radius: 4px; font-size: 0.52rem; font-weight: 800; color: #fff; cursor: pointer; text-transform: uppercase; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 3px; box-shadow: 0 2px 4px rgba(0,0,0,0.3); transition: transform 0.1s ease; }
+  .fx-pad span { font-size: 0.7rem; }
+  .fx-pad:active { transform: scale(0.95); }
+  .fx-pad.cyan { border-bottom: 2px solid var(--neon-cyan); }
+  .fx-pad.cyan:hover { background: rgba(0, 240, 255, 0.1); }
+  .fx-pad.magenta { border-bottom: 2px solid var(--neon-magenta); }
+  .fx-pad.magenta:hover { background: rgba(255, 0, 127, 0.1); }
+  .fx-pad.gold { border-bottom: 2px solid var(--gold); }
+  .fx-pad.gold:hover { background: rgba(245, 158, 11, 0.1); }
+
+  .crossfader-container { width: 100%; margin-top: 15px; display: flex; flex-direction: column; gap: 4px; }
+  .crossfader-container label { font-size: 0.55rem; color: var(--text-dim); font-weight: 800; text-transform: uppercase; text-align: center; }
+  input[type="range"].cf-slider-input { width: 100%; height: 6px; background: #000; border-radius: 3px; accent-color: #f8fafc; outline: none; cursor: pointer; appearance: none; -webkit-appearance: none; }
+  .cf-labels { display: flex; justify-content: space-between; font-size: 0.5rem; color: var(--text-dim); font-weight: 700; }
+
+  /* LIBRERÍA INFERIOR */
+  .bottom-library-section { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; width: 100%; }
+  .lib-panel { background: var(--bg-panel); border-radius: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.03); height: 210px; display: flex; flex-direction: column; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+  .lib-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; }
+  .lib-title { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--neon-cyan); display: flex; align-items: center; gap: 5px; }
+  .lib-panel.right-side .lib-title { color: var(--neon-magenta); }
+  .lib-search { background: #060911; border: 1px solid #1e293b; color: #fff; padding: 3px 8px; border-radius: 4px; font-size: 0.65rem; width: 140px; outline: none; }
+  .table-wrapper { flex-grow: 1; overflow-y: auto; }
+  .track-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.65rem; }
+  .track-table th { padding: 4px 6px; color: var(--text-dim); text-transform: uppercase; font-weight: 800; border-bottom: 1px solid rgba(255,255,255,0.05); position: sticky; top: 0; background: var(--bg-panel); }
+  .track-table td { padding: 5px 6px; color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.02); cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px; }
+  .track-table tr:hover td { color: #fff; background: rgba(255,255,255,0.02); }
+  .track-table tr.playing-track td { color: var(--neon-green); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <button class="nav-btn">☰ Menu</button>
+  <h1>Ultra Pro DJ Mixing Studio V2</h1>
+  <button class="nav-btn">ON AIR •</button>
+</div>
+
+<div class="tropical-brand-center">
+  <h2>TROPICAL flow<br><span style="font-size: 2rem; background: linear-gradient(90deg, var(--neon-magenta), var(--gold)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Radio Tv</span></h2>
+  <p>La evolución del Caribe</p>
+</div>
+<div class="studio-container">
   <div class="mixer-interface">
     
     <!-- DECK A (COLUMNA IZQUIERDA) -->
@@ -102,7 +248,7 @@
         </div>
         <div class="bpm-counter">
           <div class="bpm-label">BPM</div>
-          <div class="bpm-value" id="bpmValA">92.50</div>
+          <div class="bpm-value">92.50</div>
         </div>
       </div>
       
@@ -127,7 +273,356 @@
           <button class="pad-btn">3</button>
           <button class="pad-btn">4</button>
         </div>
-       loopA
+        <button class="pad-btn active-mode">Loop</button>
+        <button class="pad-btn sync-mode">Sync</button>
+      </div>
+
+      <div class="deck-center-row">
+        <div class="pitch-container">
+          <span class="v-slider-label">Pitch</span>
+          <input type="range" id="pitchA" class="vertical-slider" min="-10" max="10" step="0.1" value="0">
+          <span class="v-slider-val" id="txtPitchA">0.0%</span>
+        </div>
+
+        <div class="jog-wheel" id="wheelA">
+          <div class="jog-center"></div>
+          <div class="jog-marker" id="markA"></div>
+        </div>
+
+        <div class="vol-container">
+          <span class="v-slider-label">Volume</span>
+          <input type="range" id="volA" class="vertical-slider" min="0" max="1" step="0.01" value="1">
+          <span class="v-slider-val" id="txtVolA">100%</span>
+        </div>
+      </div>
+
+      <div class="file-uploader">
+        <label for="fileA" class="file-label" id="labelFileA">Seleccionar canción</label>
+        <input type="file" id="fileA" accept="audio/*">
+      </div>
+
+      <div class="main-controls">
+        <button class="btn-action play-a" id="playA">▶️ Play</button>
+        <button class="btn-action cue-btn" id="cueA">⏸️ Cue</button>
+      </div>
+    </div>
+
+    <!-- MEZCLADOR CENTRAL (COLUMNA MEDIO) -->
+    <div class="center-rack">
+      <div class="mixer-title-sec">Master Control</div>
+      
+      <div class="eq-section">
+        <div class="knob-unit">
+          <label>HI (Agudos)</label>
+          <input type="range" id="eqHi" class="h-slider-raw" min="-24" max="12" step="1" value="0">
+        </div>
+        <div class="knob-unit">
+          <label>MID (Medios)</label>
+          <input type="range" id="eqMid" class="h-slider-raw" min="-24" max="12" step="1" value="0">
+        </div>
+        <div class="knob-unit">
+          <label>LOW (Graves)</label>
+          <input type="range" id="eqLow" class="h-slider-raw" min="-24" max="12" step="1" value="0">
+        </div>
+      </div>
+
+      <div class="vumeter-wrapper">
+        <div class="vumeter-channel">
+          <span class="vumeter-label">L</span>
+          <div class="vumeter-bar-bg">
+            <div class="vumeter-fill" id="vuLeft"></div>
+          </div>
+        </div>
+        <div class="vumeter-channel">
+          <span class="vumeter-label">R</span>
+          <div class="vumeter-bar-bg">
+            <div class="vumeter-fill" id="vuRight"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sampler-panel">
+        <div class="sampler-title">
+          <span class="perf-label">FX Sampler 10-Pads</span>
+          <span style="color:var(--gold);" id="txtVolFX">VOL: 70%</span>
+        </div>
+        <input type="range" id="volFX" min="0" max="1" step="0.01" value="0.7" style="width:100%; height:4px; background:#000; accent-color:var(--gold); appearance:none; margin-bottom:5px;">
+        
+        <div class="sampler-grid">
+          <div class="fx-pad cyan" id="fxBocina"><span>📣</span>Airhorn</div>
+          <div class="fx-pad cyan" id="fxScratch"><span>💿</span>Scratch</div>
+          <div class="fx-pad magenta" id="fxLaser"><span>⚡</span>Láser</div>
+          <div class="fx-pad magenta" id="fxSirena"><span>🚨</span>Sirena</div>
+          <div class="fx-pad gold" id="fxCorte"><span>🔌</span>Kill FX</div>
+          <div class="fx-pad gold" id="fxExplosion"><span>💥</span>Explosion</div>
+          <div class="fx-pad cyan" id="fxAplauso"><span>👏</span>Applause</div>
+          <div class="fx-pad cyan" id="fxCampana"><span>🔔</span>Salsa Bell</div>
+          <div class="fx-pad magenta" id="fxDembow"><span>🥁</span>Dembow</div>
+          <div class="fx-pad magenta" id="fxSubBass"><span>🔊</span>Sub Drop</div>
+        </div>
+      </div>
+
+      <div class="crossfader-container">
+        <label>Crossfader</label>
+        <input type="range" id="crossfader" class="cf-slider-input" min="-1" max="1" step="0.02" value="0">
+        <div class="cf-labels">
+          <span>CH A</span>
+          <span>CENTER</span>
+          <span>CH B</span>
+        </div>
+      </div>
+    </div>
+    <!-- DECK B (COLUMNA DERECHA) -->
+    <div class="dj-deck deck-b">
+      <div class="deck-header">
+        <div class="deck-info-meta">
+          <span class="deck-badge">DECK B</span>
+          <div class="track-title" id="titleB">Ningún track cargado</div>
+        </div>
+        <div class="bpm-counter">
+          <div class="bpm-label">BPM</div>
+          <div class="bpm-value" id="bpmValB">0.00</div>
+        </div>
+      </div>
+      
+      <div class="display-panel">
+        <div class="time-group">
+          <span class="time-label">ELAPSED</span>
+          <div class="time-counter" id="timeB">00:00</div>
+        </div>
+        <div class="time-group" style="text-align: right;">
+          <span class="time-label" style="color:var(--neon-red)">REMAINING</span>
+          <div class="time-counter countdown" id="remainB">-00:00</div>
+        </div>
+      </div>
+
+      <canvas class="wave-display" id="canvasB"></canvas>
+      
+      <div class="performance-row">
+        <span class="perf-label">Hot Cue</span>
+        <div class="perf-grid">
+          <button class="pad-btn">1</button>
+          <button class="pad-btn">2</button>
+          <button class="pad-btn">3</button>
+          <button class="pad-btn">4</button>
+        </div>
+        <button class="pad-btn active-mode">Loop</button>
+        <button class="pad-btn sync-mode">Sync</button>
+      </div>
+
+      <div class="deck-center-row">
+        <div class="pitch-container">
+          <span class="v-slider-label">Pitch</span>
+          <input type="range" id="pitchB" class="vertical-slider" min="-10" max="10" step="0.1" value="0">
+          <span class="v-slider-val" id="txtPitchB">0.0%</span>
+        </div>
+
+        <div class="jog-wheel" id="wheelB">
+          <div class="jog-center"></div>
+          <div class="jog-marker" id="markB"></div>
+        </div>
+
+        <div class="vol-container">
+          <span class="v-slider-label">Volume</span>
+          <input type="range" id="volB" class="vertical-slider" min="0" max="1" step="0.01" value="1">
+          <span class="v-slider-val" id="txtVolB">100%</span>
+        </div>
+      </div>
+
+      <div class="file-uploader">
+        <label for="fileB" class="file-label" id="labelFileB">Seleccionar canción</label>
+        <input type="file" id="fileB" accept="audio/*">
+      </div>
+
+      <div class="main-controls">
+        <button class="btn-action play-b" id="playB">▶️ Play</button>
+        <button class="btn-action cue-btn" id="cueB">⏸️ Cue</button>
+      </div>
+    </div>
+
+  </div> <!-- mixer-interface -->
+
+  <!-- SECCIÓN INFERIOR: PLAYLIST & LIBRARY -->
+  <div class="bottom-library-section">
+    <div class="lib-panel">
+      <div class="lib-header">
+        <div class="lib-title">🎵 Playlist Active</div>
+      </div>
+      <div class="table-wrapper">
+        <table class="track-table">
+          <thead>
+            <tr><th>Track Name</th><th>Artist</th><th>Time</th><th>BPM</th></tr>
+          </thead>
+          <tbody>
+            <tr class="playing-track"><td>Flaco Mío</td><td>Joe Antonio</td><td>03:45</td><td>92.5</td></tr>
+            <tr><td>Bajo el Cielo de Cartagena</td><td>Shalysa</td><td>03:52</td><td>93.0</td></tr>
+            <tr><td>Calmo tu sed 2</td><td>Joe Antonio</td><td>03:20</td><td>90.0</td></tr>
+            <tr><td>Aquí Estoy Bebe</td><td>Joe Antonio</td><td>03:15</td><td>91.0</td></tr>
+            <tr><td>Eres Mi Hombre</td><td>Joe Antonio</td><td>03:40</td><td>92.0</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="lib-panel right-side">
+      <div class="lib-header">
+        <div class="lib-title">📂 Media Library</div>
+        <input type="search" class="lib-search" placeholder="Buscar canción...">
+      </div>
+      <div class="table-wrapper">
+        <table class="track-table">
+          <thead>
+            <tr><th>Title</th><th>Artist</th><th>Time</th><th>BPM</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Amor de Otro Planeta</td><td>Joe Antonio</td><td>03:48</td><td>93.0</td></tr>
+            <tr><td>Tu y Yo</td><td>Joe Antonio</td><td>03:30</td><td>91.5</td></tr>
+            <tr><td>Solo Contigo</td><td>Joe Antonio</td><td>03:27</td><td>90.0</td></tr>
+            <tr><td>No Me Dejes</td><td>Joe Antonio</td><td>03:41</td><td>94.0</td></tr>
+            <tr><td>Por Ti</td><td>Joe Antonio</td><td>03:17</td><td>90.0</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div> <!-- studio-container -->
+
+<!-- Elementos de audio nativos en segundo plano -->
+<audio id="audioA" loop crossorigin="anonymous"></audio>
+<audio id="audioB" loop crossorigin="anonymous"></audio>
+
+<script>
+  const audA = document.getElementById('audioA');
+  const audB = document.getElementById('audioB');
+  
+  let audioCtx = null;
+  let srcA, srcB, gainA, gainB, crossGainA, crossGainB;
+  let filterHi, filterMid, filterLow;
+  let analyserA, analyserB;
+  let engineReady = false;
+  // Inicialización y Configuración de Nodos de Audio Profesional
+  async function initAudioEngine() {
+    if (engineReady) {
+      if (audioCtx && audioCtx.state === 'suspended') { await audioCtx.resume(); }
+      return;
+    }
+    try {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      
+      srcA = audioCtx.createMediaElementSource(audA);
+      srcB = audioCtx.createMediaElementSource(audB);
+      
+      gainA = audioCtx.createGain(); 
+      gainB = audioCtx.createGain();
+      crossGainA = audioCtx.createGain(); 
+      crossGainB = audioCtx.createGain();
+      
+      analyserA = audioCtx.createAnalyser(); analyserA.fftSize = 64;
+      analyserB = audioCtx.createAnalyser(); analyserB.fftSize = 64;
+      
+      filterHi = audioCtx.createBiquadFilter();  filterHi.type = "highshelf";  filterHi.frequency.value = 4000;
+      filterMid = audioCtx.createBiquadFilter(); filterMid.type = "peaking";    filterMid.frequency.value = 1200; filterMid.Q.value = 1.0;
+      filterLow = audioCtx.createBiquadFilter(); filterLow.type = "lowshelf";   filterLow.frequency.value = 250;
+
+      const masterMixer = audioCtx.createGain();
+
+      srcA.connect(gainA).connect(crossGainA).connect(analyserA).connect(masterMixer);
+      srcB.connect(gainB).connect(crossGainB).connect(analyserB).connect(masterMixer);
+      
+      masterMixer.connect(filterLow);
+      filterLow.connect(filterMid).connect(filterHi).connect(audioCtx.destination);
+      
+      if (audioCtx.state === 'suspended') { await audioCtx.resume(); }
+
+      engineReady = true;
+      renderWavesAndVus();
+    } catch(e) { 
+      console.error("Hardware de audio esperando interacción inicial:", e); 
+    }
+  }
+
+  // Carga e Inyección de Archivos Binarios a los Reproductores
+  document.getElementById('fileA').addEventListener('change', function(e) {
+    if (this.files.length > 0) {
+      document.getElementById('titleA').innerText = this.files[0].name;
+      document.getElementById('labelFileA').innerText = "Cambiar track A";
+      audA.src = URL.createObjectURL(this.files[0]);
+      audA.load();
+    }
+  });
+
+  document.getElementById('fileB').addEventListener('change', function(e) {
+    if (this.files.length > 0) {
+      document.getElementById('titleB').innerText = this.files[0].name;
+      document.getElementById('labelFileB').innerText = "Cambiar track B";
+      audB.src = URL.createObjectURL(this.files[0]);
+      audB.load();
+    }
+  });
+
+  // Disparadores de los Decks con Desbloqueo asíncrono de Seguridad
+  document.getElementById('playA').addEventListener('click', async () => {
+    await initAudioEngine(); 
+    if (audioCtx && audioCtx.state === 'suspended') { await audioCtx.resume(); }
+    audA.play().then(() => { 
+      document.getElementById('wheelA').classList.add('spinning'); 
+      updateMixerMixes(); 
+    }).catch(() => alert("Selecciona una canción para el DECK A"));
+  });
+  document.getElementById('cueA').addEventListener('click', () => { audA.pause(); document.getElementById('wheelA').classList.remove('spinning'); });
+
+  document.getElementById('playB').addEventListener('click', async () => {
+    await initAudioEngine(); 
+    if (audioCtx && audioCtx.state === 'suspended') { await audioCtx.resume(); }
+    audB.play().then(() => { 
+      document.getElementById('wheelB').classList.add('spinning'); 
+      updateMixerMixes(); 
+    }).catch(() => alert("Selecciona una canción para el DECK B"));
+  });
+  document.getElementById('cueB').addEventListener('click', () => { audB.pause(); document.getElementById('wheelB').classList.remove('spinning'); });
+  // Renderizador de Ondas Canvas y Animación de VuMeters LED
+  function renderWavesAndVus() {
+    const canvasA = document.getElementById('canvasA'), ctxA = canvasA.getContext('2d');
+    const canvasB = document.getElementById('canvasB'), ctxB = canvasB.getContext('2d');
+    const bufferLengthA = analyserA.frequencyBinCount, dataArrayA = new Uint8Array(bufferLengthA);
+    const bufferLengthB = analyserB.frequencyBinCount, dataArrayB = new Uint8Array(bufferLengthB);
+
+    function draw() {
+      requestAnimationFrame(draw);
+      if (!engineReady) return;
+      
+      analyserA.getByteFrequencyData(dataArrayA);
+      analyserB.getByteFrequencyData(dataArrayB);
+
+      ctxA.fillStyle = '#000'; ctxA.fillRect(0, 0, canvasA.width, canvasA.height);
+      let barWidth = (canvasA.width / bufferLengthA) * 1.5, barHeight, x = 0;
+      let totalVolA = 0;
+      for (let i = 0; i < bufferLengthA; i++) {
+        barHeight = dataArrayA[i] / 4; totalVolA += dataArrayA[i];
+        ctxA.fillStyle = hsl(185, 100%, ${Math.min(barHeight + 30, 70)}%);
+        ctxA.fillRect(x, canvasA.height - barHeight, barWidth - 1, barHeight); x += barWidth;
+      }
+
+      ctxB.fillStyle = '#000'; ctxB.fillRect(0, 0, canvasB.width, canvasB.height);
+      x = 0; let totalVolB = 0;
+      for (let i = 0; i < bufferLengthB; i++) {
+        barHeight = dataArrayB[i] / 4; totalVolB += dataArrayB[i];
+        ctxB.fillStyle = hsl(330, 100%, ${Math.min(barHeight + 30, 70)}%);
+        ctxB.fillRect(x, canvasB.height - barHeight, barWidth - 1, barHeight); x += barWidth;
+      }
+
+      if (engineReady && crossGainA && gainA && crossGainB && gainB) {
+        let avgA = (totalVolA / bufferLengthA) * (crossGainA.gain.value * gainA.gain.value);
+        let avgB = (totalVolB / bufferLengthB) * (crossGainB.gain.value * gainB.gain.value);
+        let pctA = Math.min((avgA / 180) * 100, 100);
+        let pctB = Math.min((avgB / 180) * 100, 100);
+        document.getElementById('vuLeft').style.height = pctA + '%';
+        document.getElementById('vuRight').style.height = pctB + '%';
+      }
+    }
+    draw();
+  }
   // Modulador Completo Sampler FX de 10 Botones
   function playFX(type) {
     initAudioEngine(); 
