@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ultra Pro DJ Mixing Studio V2</title>
+<meta name="description" content="Pro Core Audio Engine, Advanced FX Sampler & Dual Wave Live Analyzer.">
+
+<style>
+  :root {
+    --bg-main: #050608;
+    --panel-bg: #0f1115;
+    --neon-cyan: #00f0ff;
+    --neon-magenta: #ff007f;
+    --neon-green: #39ff14;
+    --neon-red: #ff3333;
+    --text-main: #f8fafc;
+    --text-dim: #475569;
+    --gold: #f59e0b;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: system-ui, -apple-system, sans-serif;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  header { text-align: center; margin-bottom: 20px; width: 100%; max-width: 1250px; }
+  header h1 {
+    font-size: 2.5rem; font-weight: 900; text-transform: uppercase; letter-spacing: 4px;
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  header p { color: var(--text-dim); font-size: 0.85rem; margin-top: 4px; letter-spacing: 1px; }
+
+  .studio-container {
+    width: 100%; max-width: 1250px; background: var(--panel-bg); border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.03); box-shadow: 0 25px 60px #000; padding: 20px;
+  }
+
+  /* Grid Principal de la Interfaz */
+  .mixer-interface { display: grid; grid-template-columns: 1fr 310px 1fr; gap: 20px; }
+  @media (max-width: 1000px) { .mixer-interface { grid-template-columns: 1fr; } .center-rack { order: 3; } }
+</style>
+<style>
+  /* ─── ESTILOS DE LOS DECKS ─── */
+  .dj-deck {
+    background: #13161c; border-radius: 16px; padding: 18px; border: 1px solid rgba(255,255,255,0.02);
+    display: flex; flex-direction: column; align-items: center; position: relative;
+  }
+  .deck-a { border-bottom: 4px solid var(--neon-cyan); }
+  .deck-b { border-bottom: 4px solid var(--neon-magenta); }
+  .deck-header { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .deck-badge { font-size: 0.75rem; font-weight: 900; padding: 3px 8px; border-radius: 5px; background: #000; }
+  .deck-a .deck-badge { color: var(--neon-cyan); border: 1px solid rgba(0,240,255,0.2); }
+  .deck-b .deck-badge { color: var(--neon-magenta); border: 1px solid rgba(255,0,127,0.2); }
+  .track-title { font-size: 0.8rem; color: var(--text-main); font-weight: 600; max-width: 160px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  
+  /* PANTALLAS DIGITALES CON DOBLE CONTADOR */
+  .display-panel {
+    width: 100%; background: #07080a; border-radius: 8px; border: 1px solid rgba(255,255,255,0.04);
+    padding: 10px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+  }
+  .time-group { display: flex; flex-direction: column; gap: 2px; }
+  .time-label { font-size: 0.6rem; color: var(--text-dim); font-weight: 800; letter-spacing: 0.5px; }
+  .time-counter { font-family: monospace; font-size: 1.15rem; font-weight: bold; color: var(--neon-green); text-shadow: 0 0 8px rgba(57,255,20,0.2); }
+  .time-counter.countdown { color: var(--neon-red); text-shadow: 0 0 8px rgba(255,51,53,0.2); }
+  
+  .wave-display { width: 100%; height: 52px; background: #000; border-radius: 6px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.02); display: block; }
+
+  /* CARGADOR Y PLATO GIRA-DISCOS */
+  .file-uploader { width: 100%; margin-bottom: 12px; }
+  .file-uploader input[type="file"] { display: none; }
+  .file-label { display: block; text-align: center; padding: 8px; background: #1c1f26; border: 1px dashed rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.75rem; cursor: pointer; color: var(--text-dim); }
+  .file-label:hover { color: #fff; border-color: rgba(255,255,255,0.2); }
+  .jog-wheel { width: 145px; height: 150px; border-radius: 50%; background: radial-gradient(circle, #212530 12%, #0a0b0d 13%, #0a0b0d 35%, #12151b 36%, #020304 70%); border: 5px solid #20242e; position: relative; box-shadow: 0 8px 20px rgba(0,0,0,0.5); }
+  .jog-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 38px; height: 38px; border-radius: 50%; border: 2px solid #000; background: #0f1115; }
+  .deck-a .jog-center { box-shadow: 0 0 12px rgba(0,240,255,0.3); border-color: var(--neon-cyan); }
+  .deck-b .jog-center { box-shadow: 0 0 12px rgba(255,0,127,0.3); border-color: var(--neon-magenta); }
+  .jog-marker { position: absolute; top: 5px; left: 50%; transform: translateX(-50%); width: 4px; height: 20px; background: #fff; border-radius: 2px; transform-origin: bottom center; }
+  .spinning { animation: jogSpin 2.5s linear infinite; }
+  @keyframes jogSpin { 100% { transform: rotate(360deg); } }
+
+  /* CONTROLES E INTERFAZ DEL MEZCLADOR CENTRAL */
+  .deck-controls-row { width: 100%; display: flex; gap: 8px; margin-top: 15px; }
+  .action-btn { flex: 1; padding: 10px; border: 0; border-radius: 6px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; cursor: pointer; background: #1c1f26; color: var(--text-main); }
+  .btn-play { background: #141c2b; color: var(--neon-green); border: 1px solid rgba(57,255,20,0.1); }
+  .btn-play:hover { background: var(--neon-green); color: #000; box-shadow: 0 0 12px rgba(57,255,20,0.3); }
+  .btn-cue { background: #141c2b; color: var(--gold); border: 1px solid rgba(234,179,8,0.1); }
+  .btn-cue:hover { background: var(--gold); color: #000; box-shadow: 0 0 12px rgba(234,179,8,0.3); }
+  .deck-sliders { width: 100%; display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+  .slider-unit { display: flex; flex-direction: column; gap: 3px; width: 100%; }
+  .slider-unit label { font-size: 0.7rem; color: var(--text-dim); display: flex; justify-content: space-between; font-weight: 600; text-transform: uppercase; }
+  .slider-unit input[type="range"] { width: 100%; height: 5px; background: #000; border-radius: 3px; outline: none; cursor: pointer; appearance: none; -webkit-appearance: none; }
+  .deck-a input[type="range"] { accent-color: var(--neon-cyan); }
+  .deck-b input[type="range"] { accent-color: var(--neon-magenta); }
+  
+  .center-rack { background: #090a0d; border-radius: 16px; padding: 15px; display: flex; flex-direction: column; align-items: center; border: 1px solid rgba(255, 255, 255, 0.01); }
+  .mixer-brand { font-size: 0.75rem; font-weight: 900; letter-spacing: 2px; color: var(--text-dim); margin-bottom: 12px; text-transform: uppercase; }
+  .eq-section { width: 100%; display: flex; flex-direction: column; gap: 12px; padding: 5px 0; }
+  .knob-unit { display: flex; flex-direction: column; align-items: center; gap: 4px; width: 100%; }
+  .knob-unit label { font-size: 0.65rem; color: var(--text-dim); font-weight: 700; letter-spacing: 1px; }
+  .knob-unit input[type="range"] { width: 85%; accent-color: var(--gold); cursor: pointer; }
+
+  /* REESTRUCTURACIÓN PARA 10 PADS DEL SAMPLER FX EXTENDIDO */
+  .sampler-panel { width: 100%; margin-top: 15px; padding: 10px 5px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; gap: 8px; align-items: center; }
+  .sampler-title { font-size: 0.65rem; font-weight: 800; color: var(--text-dim); letter-spacing: 1.5px; text-transform: uppercase; display: flex; width: 100%; justify-content: space-between; }
+  .sampler-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; width: 100%; }
+  .fx-pad { padding: 8px 4px; background: #12141a; border: 1px solid rgba(255,255,255,0.02); border-radius: 5px; font-size: 0.65rem; font-weight: 800; color: #fff; cursor: pointer; text-transform: uppercase; text-align: center; transition: all 0.1s ease; box-shadow: inset 0 1px 0 rgba(255,255,255,0.04); }
+  .fx-pad:active { transform: scale(0.94); }
+  .fx-pad.cyan { border-bottom: 3px solid var(--neon-cyan); }
+  .fx-pad.cyan:hover { background: rgba(0, 240, 255, 0.12); box-shadow: 0 0 8px rgba(0, 240, 255, 0.25); }
+  .fx-pad.magenta { border-bottom: 3px solid var(--neon-magenta); }
+  .fx-pad.magenta:hover { background: rgba(255, 0, 127, 0.12); box-shadow: 0 0 8px rgba(255, 0, 127, 0.25); }
+  .fx-pad.gold { border-bottom: 3px solid var(--gold); }
+  .fx-pad.gold:hover { background: rgba(245, 158, 11, 0.12); box-shadow: 0 0 8px rgba(245, 158, 11, 0.25); }
+
+  /* CROSSFADER */
+  .crossfader-section { width: 100%; margin-top: 20px; display: flex; flex-direction: column; gap: 5px; }
+  .crossfader-section label { font-size: 0.65rem; color: var(--text-dim); font-weight: 800; text-transform: uppercase; text-align: center; letter-spacing: 1px; }
+  .crossfader-slider { width: 100%; height: 6px; background: #000; border-radius: 3px; accent-color: var(--text-main); outline: none; cursor: pointer; appearance: none; -webkit-appearance: none; }
+  .fader-labels { display: flex; justify-content: space-between; font-size: 0.55rem; color: var(--text-dim); font-weight: 700; margin-top: 2px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Ultra Pro DJ Mixing Studio V2</h1>
+  <p>Pro Core Audio Engine, Advanced FX Sampler & Dual Wave Live Analyzer</p>
+</header>
+
+<div class="studio-container">
+  <div class="mixer-interface">
+    <!-- DECK A -->
+    <div class="dj-deck deck-a">
+      <div class="deck-header">
+        <span class="deck-badge">DECK A</span>
+        <div class="track-title" id="titleA">Ningún track cargado</div>
+      </div>
+      
+      <!-- Pantallas Digitales de Doble Contador -->
+      <div class="display-panel">
+        <div class="time-group">
+          <span class="time-label">ELAPSED</span>
+          <div class="time-counter" id="timeA">00:00</div>
+        </div>
+        <div class="time-group" style="text-align: right;">
+          <span class="time-label" style="color:var(--neon-red)">REMAINING</span>
+          <div class="time-counter countdown" id="remainA">-00:00</div>
+        </div>
+      </div>
+
+      <!-- Pantalla Analizadora de Onda A -->
+      <canvas class="wave-display" id="canvasA"></canvas>
+      
+      <div class="file-uploader">
+        <label for="fileA" class="file-label" id="labelFileA">Seleccionar canción</label>
+        <input type="file" id="fileA" accept="audio/*">
+      </div>
+
+      <div class="jog-wheel" id="wheelA">
+        <div class="jog-center"></div>
+        <div class="jog-marker" id="markA"></div>
+      </div>
+
+      <div class="deck-controls-row">
+        <button class="action-btn btn-play" id="playA">▶ Play</button>
+        <button class="action-btn btn-cue" id="cueA">⏸ Cue</button>
+      </div>
+
+      <div class="deck-sliders">
+        <div class="slider-unit">
+          <label>Volumen A <span id="txtVolA">100%</span></label>
+          <input type="range" id="volA" min="0" max="1" step="0.01" value="1">
+        </div>
+        <div class="slider-unit">
+          <label>Pitch Tempo <span id="txtPitchA">0.0%</span></label>
+          <input type="range" id="pitchA" min="-10" max="10" step="0.1" value="0">
+        </div>
+      </div>
+    </div>
+
+    <!-- MEZCLADOR CENTRAL -->
+    <div class="center-rack">
+      <div class="mixer-brand">Master Control</div>
+      
+      <div class="eq-section">
+        <div class="knob-unit">
+          <label>HI (Agudos)</label>
+          <input type="range" id="eqHi" min="-24" max="12" step="1" value="0">
+        </div>
+        <div class="knob-unit">
+          <label>MID (Medios)</label>
+          <input type="range" id="eqMid" min="-24" max="12" step="1" value="0">
+        </div>
+        <div class="knob-unit">
+          <label>LOW (Graves)</label>
+          <input type="range" id="eqLow" min="-24" max="12" step="1" value="0">
+        </div>
+      </div>
+
+      <!-- PANEL CENTRAL CON 10 PADS DE EFECTOS EXPANDIDOS Y CONTROL DE VOLUMEN -->
+      <div class="sampler-panel">
+        <div class="sampler-title">
+          <span>FX Sampler 10-Pads</span>
+          <span style="color:var(--gold)" id="txtVolFX">Vol: 70%</span>
+        </div>
+        <!-- NUEVO: Slider de control de volumen para Sampler FX -->
+        <div class="slider-unit" style="margin-bottom: 8px;">
+          <input type="range" id="volFX" min="0" max="1" step="0.01" value="0.7" style="accent-color:var(--gold);">
+        </div>
+        <div class="sampler-grid">
+          <div class="fx-pad cyan" id="fxBocina">📣 Airhorn</div>
+          <div class="fx-pad cyan" id="fxScratch">💿 Scratch</div>
+          <div class="fx-pad magenta" id="fxLaser">⚡ Láser</div>
+          <div class="fx-pad magenta" id="fxSirena">🚨 Sirena</div>
+          <div class="fx-pad gold" id="fxCorte">🔌 Kill FX</div>
+          <div class="fx-pad gold" id="fxExplosion">💥 Explosion</div>
+          <div class="fx-pad cyan" id="fxAplauso">👏 Applause</div>
+          <div class="fx-pad cyan" id="fxCampana">🔔 Salsa Bell</div>
+          <div class="fx-pad magenta" id="fxDembow">🥁 Dembow</div>
+          <div class="fx-pad magenta" id="fxSubBass">🔊 Sub Drop</div>
+        </div>
+      </div>
+
+      <div class="crossfader-section">
+        <label>Crossfader</label>
+        <input type="range" id="crossfader" class="crossfader-slider" min="-1" max="1" step="0.02" value="0">
+        <div class="fader-labels">
+          <span>CH A</span>
+          <span>CENTER</span>
+          <span>CH B</span>
+        </div>
+      </div>
+    </div>
+    <!-- DECK B -->
+    <div class="dj-deck deck-b">
+      <div class="deck-header">
+        <span class="deck-badge">DECK B</span>
+        <div class="track-title" id="titleB">Ningún track cargado</div>
+      </div>
+      
+      <!-- Pantallas Digitales de Doble Contador -->
+      <div class="display-panel">
+        <div class="time-group">
+          <span class="time-label">ELAPSED</span>
+          <div class="time-counter" id="timeB">00:00</div>
+        </div>
+        <div class="time-group" style="text-align: right;">
+          <span class="time-label" style="color:var(--neon-red)">REMAINING</span>
+          <div class="time-counter countdown" id="remainB">-00:00</div>
+        </div>
+      </div>
+
+      <!-- Pantalla Analizadora de Onda B -->
+      <canvas class="wave-display" id="canvasB"></canvas>
+      
+      <div class="file-uploader">
+        <label for="fileB" class="file-label" id="labelFileB">Seleccionar canción</label>
+        <input type="file" id="fileB" accept="audio/*">
+      </div>
+
+      <div class="jog-wheel" id="wheelB">
+        <div class="jog-center"></div>
+        <div class="jog-marker" id="markB"></div>
+      </div>
+
+      <div class="deck-controls-row">
+        <button class="action-btn btn-play" id="playB">▶ Play</button>
+        <button class="action-btn btn-cue" id="cueB">⏸ Cue</button>
+      </div>
+
+      <div class="deck-sliders">
+        <div class="slider-unit">
+          <label>Volumen B <span id="txtVolB">100%</span></label>
+          <input type="range" id="volB" min="0" max="1" step="0.01" value="1">
+        </div>
+        <div class="slider-unit">
+          <label>Pitch Tempo <span id="txtPitchB">0.0%</span></label>
+          <input type="range" id="pitchB" min="-10" max="10" step="0.1" value="0">
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Elementos de reproducción nativos ocultos -->
+<audio id="audioA" loop crossorigin="anonymous"></audio>
+<audio id="audioB" loop crossorigin="anonymous"></audio>
+
+<script>
+  const audA = document.getElementById('audioA');
+  const audB = document.getElementById('audioB');
+  
+  let audioCtx = null;
+  let srcA, srcB, gainA, gainB, crossGainA, crossGainB;
+  let filterHi, filterMid, filterLow;
+  let analyserA, analyserB;
+  let engineReady = false;
+
+  // Inicialización y Desbloqueo del Entorno de Audio Profesional
+  function initAudioEngine() {
+    if (engineReady) return;
+    try {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      
+      srcA = audioCtx.createMediaElementSource(audA);
+      srcB = audioCtx.createMediaElementSource(audB);
+      
+      gainA = audioCtx.createGain(); gainB = audioCtx.createGain();
+      crossGainA = audioCtx.createGain(); crossGainB = audioCtx.createGain();
+      
+      analyserA = audioCtx.createAnalyser(); analyserA.fftSize = 64;
+      analyserB = audioCtx.createAnalyser(); analyserB.fftSize = 64;
+      
+      filterHi = audioCtx.createBiquadFilter();  filterHi.type = "highshelf";  filterHi.frequency.value = 4000;
+      filterMid = audioCtx.createBiquadFilter(); filterMid.type = "peaking";    filterMid.frequency.value = 1200; filterMid.Q.value = 1.0;
+      filterLow = audioCtx.createBiquadFilter(); filterLow.type = "lowshelf";   filterLow.frequency.value = 250;
+
+      srcA.connect(gainA).connect(crossGainA).connect(analyserA).connect(filterLow);
+      srcB.connect(gainB).connect(crossGainB).connect(analyserB).connect(filterLow);
+      
+      filterLow.connect(filterMid).connect(filterHi).connect(audioCtx.destination);
+      
+      engineReady = true;
+      renderWaves();
+    } catch(e) { 
+      console.log("Esperando clic para iniciar hardware de audio."); 
+    }
+  }
+
+  // Lectura segura para inyección de música local
+  document.getElementById('fileA').addEventListener('change', function(e) {
+    if (this.files.length > 0) {
+      document.getElementById('titleA').innerText = this.files[0].name;
+      document.getElementById('labelFileA').innerText = "Cambiar track";
+      audA.src = URL.createObjectURL(this.files[0]);
+      audA.load();
+    }
+  });
+
+  document.getElementById('fileB').addEventListener('change', function(e) {
+    if (this.files.length > 0) {
+      document.getElementById('titleB').innerText = this.files[0].name;
+      document.getElementById('labelFileB').innerText = "Cambiar track";
+      audB.src = URL.createObjectURL(this.files[0]);
+      audB.load();
+    }
+  });
+  // Gatillos Deck A
+  document.getElementById('playA').addEventListener('click', () => {
+    initAudioEngine(); 
+    if (audioCtx && audioCtx.state === 'suspended') { audioCtx.resume(); }
+    
+    audA.play().then(() => { 
+      document.getElementById('wheelA').classList.add('spinning'); 
+      updateMixerMixes(); 
+    }).catch(() => alert("Por favor, selecciona primero una canción para el DECK A"));
+  });
+  document.getElementById('cueA').addEventListener('click', () => { audA.pause(); document.getElementById('wheelA').classList.remove('spinning'); });
+
+  // Gatillos Deck B
+  document.getElementById('playB').addEventListener('click', () => {
+    initAudioEngine(); 
+    if (audioCtx && audioCtx.state === 'suspended') { audioCtx.resume(); }
+    
+    audB.play().then(() => { 
+      document.getElementById('wheelB').classList.add('spinning'); 
+      updateMixerMixes(); 
+    }).catch(() => alert("Por favor, selecciona primero una canción para el DECK B"));
+  });
+  document.getElementById('cueB').addEventListener('click', () => { audB.pause(); document.getElementById('wheelB').classList.remove('spinning'); });
+
+  // Mezclas y Crossfader Pro Lineal
+  function updateMixerMixes() {
+    if (!engineReady) return;
+    gainA.gain.value = parseFloat(document.getElementById('volA').value);
+    gainB.gain.value = parseFloat(document.getElementById('volB').value);
+    const crossVal = parseFloat(document.getElementById('crossfader').value);
+    if (crossVal <= 0) { crossGainA.gain.value = 1; crossGainB.gain.value = 1 + crossVal; } 
+    else { crossGainA.gain.value = 1 - crossVal; crossGainB.gain.value = 1; }
+  }
+
+  document.getElementById('volA').addEventListener('input', (e) => { document.getElementById('txtVolA').innerText = Math.round(e.target.value * 100) + "%"; updateMixerMixes(); });
+  document.getElementById('volB').addEventListener('input', (e) => { document.getElementById('txtVolB').innerText = Math.round(e.target.value * 100) + "%"; updateMixerMixes(); });
+  document.getElementById('crossfader').addEventListener('input', updateMixerMixes);
+
+  // Escuchador para la perilla de volumen de efectos (FX Sampler)
+  document.getElementById('volFX').addEventListener('input', (e) => {
+    document.getElementById('txtVolFX').innerText = "Vol: " + Math.round(e.target.value * 100) + "%";
+  });
+
+  // Pitch y velocidad de reproducción
+  document.getElementById('pitchA').addEventListener('input', (e) => {
+    const percent = parseFloat(e.target.value);
+    document.getElementById('txtPitchA').innerText = (percent >= 0 ? "+" : "") + percent.toFixed(1) + "%";
+    audA.playbackRate = 1 + (percent / 100);
+  });
+  document.getElementById('pitchB').addEventListener('input', (e) => {
+    const percent = parseFloat(e.target.value);
+    document.getElementById('txtPitchB').innerText = (percent >= 0 ? "+" : "") + percent.toFixed(1) + "%";
+    audB.playbackRate = 1 + (percent / 100);
+  });
+
+  // Perillas Ecualizadoras
+  document.getElementById('eqHi').addEventListener('input', (e) => { if (engineReady) filterHi.gain.value = e.target.value; });
+  document.getElementById('eqMid').addEventListener('input', (e) => { if (engineReady) filterMid.gain.value = e.target.value; });
+  document.getElementById('eqLow').addEventListener('input', (e) => { if (engineReady) filterLow.gain.value = e.target.value; });
+
+  // SISTEMA DE RELOJ Y CUENTA REGRESIVA (COUNTDOWN)
+  function updateCounters() {
+    const formatTime = (secs) => {
+      if (isNaN(secs) || secs < 0) return "00:00";
+      const m = String(Math.floor(secs / 60)).padStart(2, '0');
+      const s = String(Math.floor(secs % 60)).padStart(2, '0');
+      return `${m}:${s}`;
+    };
+
+    document.getElementById('timeA').innerText = formatTime(audA.currentTime);
+    const remainingA = audA.duration - audA.currentTime;
+    document.getElementById('remainA').innerText = "-" + formatTime(remainingA);
+
+    document.getElementById('timeB').innerText = formatTime(audB.currentTime);
+    const remainingB = audB.duration - audB.currentTime;
+    document.getElementById('remainB').innerText = "-" + formatTime(remainingB);
+
+    requestAnimationFrame(updateCounters);
+  }
+  requestAnimationFrame(updateCounters);
+
+  // Renderizador Gráfico de Espectro Led de Frecuencias
+  function renderWaves() {
+    const canvasA = document.getElementById('canvasA'), ctxA = canvasA.getContext('2d');
+    const canvasB = document.getElementById('canvasB'), ctxB = canvasB.getContext('2d');
+    const bufferLengthA = analyserA.frequencyBinCount, dataArrayA = new Uint8Array(bufferLengthA);
+    const bufferLengthB = analyserB.frequencyBinCount, dataArrayB = new Uint8Array(bufferLengthB);
+
+    function draw() {
+      requestAnimationFrame(draw);
+      analyserA.getByteFrequencyData(dataArrayA);
+      analyserB.getByteFrequencyData(dataArrayB);
+
+      ctxA.fillStyle = '#000'; ctxA.fillRect(0, 0, canvasA.width, canvasA.height);
+      let barWidth = (canvasA.width / bufferLengthA) * 1.5, barHeight, x = 0;
+      for (let i = 0; i < bufferLengthA; i++) {
+        barHeight = dataArrayA[i] / 4; ctxA.fillStyle = `hsl(185, 100%, ${Math.min(barHeight + 30, 70)}%)`;
+        ctxA.fillRect(x, canvasA.height - barHeight, barWidth - 1, barHeight); x += barWidth;
+      }
+
+      ctxB.fillStyle = '#000'; ctxB.fillRect(0, 0, canvasB.width, canvasB.height);
+      x = 0;
+      for (let i = 0; i < bufferLengthB; i++) {
+        barHeight = dataArrayB[i] / 4; ctxB.fillStyle = `hsl(330, 100%, ${Math.min(barHeight + 30, 70)}%)`;
+        ctxB.fillRect(x, canvasB.height - barHeight, barWidth - 1, barHeight); x += barWidth;
+      }
+    }
+    draw();
+  }
+  // Sintonizador de efectos con volumen dinámico enlazado a la perilla FX
+  function playFX(type) {
+    initAudioEngine(); 
+    if (!audioCtx) return;
+    if (audioCtx.state === 'suspended') { audioCtx.resume(); }
+
+    const osc = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    
+    if (engineReady && filterLow) {
+      osc.connect(gainNode).connect(filterLow);
+    } else {
+      osc.connect(gainNode).connect(audioCtx.destination);
+    }
+    
+    const now = audioCtx.currentTime;
+    
+    // Obtener dinámicamente el valor actual del control de volumen del Sampler
+    const userFXVolume = parseFloat(document.getElementById('volFX').value);
+    gainNode.gain.setValueAtTime(0.01 * userFXVolume, now);
+
+    if (type === 'bocina') {
+      osc.type = 'sawtooth'; osc.frequency.setValueAtTime(420, now); 
+      gainNode.gain.linearRampToValueAtTime(0.35 * userFXVolume, now + 0.02);
+      for(let i = 0.08; i < 0.7; i += 0.12) { 
+        osc.frequency.setValueAtTime(390, now + i); 
+        osc.frequency.setValueAtTime(440, now + i + 0.04); 
+      }
+      gainNode.gain.setValueAtTime(0.35 * userFXVolume, now + 0.7);
+      gainNode.gain.linearRampToValueAtTime(0.01 * userFXVolume, now + 0.9); 
+      osc.start(now); osc.stop(now + 0.9);
+    } 
+    else if (type === 'scratch') {
+      osc.type = 'triangle'; osc.frequency.setValueAtTime(140, now); 
+      gainNode.gain.linearRampToValueAtTime(0.45 * userFXVolume, now + 0.02);
+      osc.frequency.linearRampToValueAtTime(900, now + 0.08); 
+      osc.frequency.linearRampToValueAtTime(180, now + 0.16); 
+      osc.frequency.linearRampToValueAtTime(700, now + 0.24);
+      gainNode.gain.setValueAtTime(0.45 * userFXVolume, now + 0.24);
+      gainNode.gain.linearRampToValueAtTime(0.01 * userFXVolume, now + 0.32); 
+      osc.start(now); osc.stop(now + 0.32);
+    } 
+    else if (type === 'laser') {
+      osc.type = 'sawtooth'; osc.frequency.setValueAtTime(2200, now); 
+      gainNode.gain.linearRampToValueAtTime(0.25 * userFXVolume, now + 0.02);
+      osc.frequency.linearRampToValueAtTime(60, now + 0.45);
+      gainNode.gain.linearRampToValueAtTime(0.01 * userFXVolume, now + 0.45); 
+      osc.start(now); osc.stop(now + 0.45);
+    } 
+    else if (type === 'sirena') {
+      osc.type = 'sine'; osc.frequency.setValueAtTime(550, now); 
+      osc.frequency.linearRampToValueAtTime(950, now + 0.2); 
+      osc.frequency.linearRampToValueAtTime(550, now + 0.4); 
+      osc.frequency.linearRampToValueAtTime(950, now + 0.6);
+      gainNode.gain.setValueAtTime(0.25 * userFXVolume, now); 
+      gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.9); 
+      osc.start(now); osc.stop(now + 0.9);
+    }
+    else if (type === 'corte') {
+      if(audA.playbackRate > 0 && !audA.paused) {
+        let r = audA.playbackRate;
+        const iv = setInterval(() => { 
+          r -= 0.1; 
+          if(r <= 0.1){ 
+            clearInterval(iv); audA.pause(); audA.playbackRate = 1; 
+            document.getElementById('wheelA').classList.remove('spinning'); 
+          } else { audA.playbackRate = r; } 
+        }, 40);
+      }
+      if(audB.playbackRate > 0 && !audB.paused) {
+        let r = audB.playbackRate;
+        const iv = setInterval(() => { 
+          r -= 0.1; 
+          if(r <= 0.1){ 
+            clearInterval(iv); audB.pause(); audB.playbackRate = 1; 
+            document.getElementById('wheelB').classList.remove('spinning'); 
+          } else { audB.playbackRate = r; } 
+        }, 40);
+      }
+    }
+    else if (type === 'explosion') {
+      osc.type = 'sawtooth'; osc.frequency.setValueAtTime(120, now); 
+      osc.frequency.linearRampToValueAtTime(20, now + 1.2);
+      gainNode.gain.setValueAtTime(0.55 * userFXVolume, now); 
+      gainNode.gain.exponentialRampToValueAtTime(0.001, now + 1.2); 
+      osc.start(now); osc.stop(now + 1.2);
+    }
+    else if (type === 'aplauso') {
+      osc.type = 'triangle'; osc.frequency.setValueAtTime(280, now); 
+      gainNode.gain.setValueAtTime(0.3 * userFXVolume, now);
+      for(let i = 0.05; i < 0.5; i += 0.05) { 
+        gainNode.gain.setValueAtTime(0.3 * userFXVolume, now + i); 
+        gainNode.gain.setValueAtTime(0.01 * userFXVolume, now + i + 0.02); 
+      }
+      osc.start(now); osc.stop(now + 0.5);
+    }
+    else if (type === 'campana') {
+      osc.type = 'sine'; osc.frequency.setValueAtTime(880, now); 
+      osc.frequency.setValueAtTime(1200, now);
+      gainNode.gain.setValueAtTime(0.35 * userFXVolume, now); 
+      gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.4); 
+      osc.start(now); osc.stop(now + 0.4);
+    }
+    else if (type === 'dembow') {
+      osc.type = 'sine'; osc.frequency.setValueAtTime(150, now); 
+      osc.frequency.exponentialRampToValueAtTime(40, now + 0.12);
+      gainNode.gain.setValueAtTime(0.65 * userFXVolume, now); 
+      gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.15); 
+      osc.start(now); osc.stop(now + 0.15);
+    }
+    else if (type === 'subbass') {
+      osc.type = 'sine'; osc.frequency.setValueAtTime(90, now); 
+      osc.frequency.linearRampToValueAtTime(25, now + 1.5);
+      gainNode.gain.setValueAtTime(0.6 * userFXVolume, now); 
+      gainNode.gain.exponentialRampToValueAtTime(0.001, now + 1.5); 
+      osc.start(now); osc.stop(now + 1.5);
+    }
+  }
+
+  // Escuchadores del panel Sampler FX 10-Pads
+  document.getElementById('fxBocina').addEventListener('click', () => playFX('bocina'));
+  document.getElementById('fxScratch').addEventListener('click', () => playFX('scratch'));
+  document.getElementById('fxLaser').addEventListener('click', () => playFX('laser'));
+  document.getElementById('fxSirena').addEventListener('click', () => playFX('sirena'));
+  document.getElementById('fxCorte').addEventListener('click', () => playFX('corte'));
+  document.getElementById('fxExplosion').addEventListener('click', () => playFX('explosion'));
+  document.getElementById('fxAplauso').addEventListener('click', () => playFX('aplauso'));
+  document.getElementById('fxCampana').addEventListener('click', () => playFX('campana'));
+  document.getElementById('fxDembow').addEventListener('click', () => playFX('dembow'));
+  document.getElementById('fxSubBass').addEventListener('click', () => playFX('subbass'));
+</script>
+</body>
+</html>
