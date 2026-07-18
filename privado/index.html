@@ -679,7 +679,12 @@ function createCarousel(){
   if (!(window.YT && window.YT.Player)) return;
   cPlayer = new YT.Player('ytMain',{
     videoId: CAROUSEL_IDS[cIndex],
-    playerVars: { rel: 0, modestbranding: 1, playsinline: 1, controls: 1 },
+    playerVars: {
+  rel: 0,
+  modestbranding: 1,
+  playsinline: 0,
+  controls: 1
+}
     events: {
       onReady: () => { updateCTitle(); },
       onStateChange: e => {
