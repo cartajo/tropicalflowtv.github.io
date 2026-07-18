@@ -72,14 +72,9 @@
     height:120px;
     border-radius:50%;
     border:4px solid #00e0ff;
-    background:
-    radial-gradient(circle,
-    #00e0ff 0%,
-    #333 20%,
-    #000 60%,
-    #111 100%);
-    box-shadow:0 0 20px #00e0ff;
+
     animation:spin 4s linear infinite;
+    animation-play-state: paused;
 }
 
 .dj-btn{
@@ -223,7 +218,7 @@
       <div class="deck">
           <div class="vinyl"></div>
           <h3>🎵 Deck A</h3>
-          <button class="dj-btn">▶ Play</button>
+          <button class="dj-btn" onclick="toggleVinyl(this)">▶ Play</button>
       </div>
 
       <div class="mixer">
@@ -839,5 +834,31 @@ setInterval(actualizarReloj, 1000);
 actualizarReloj();
 
 </script>
+<script>
+
+function toggleVinyl(btn){
+
+    const plato = btn.parentElement.querySelector(".vinyl");
+
+    if (btn.textContent === "▶ Play") {
+
+        plato.style.animationPlayState = "running";
+
+        btn.textContent = "⏸ Pause";
+
+        document.getElementById("plAudio").play();
+
+    } else {
+
+        plato.style.animationPlayState = "paused";
+
+        btn.textContent = "▶ Play";
+
+        document.getElementById("plAudio").pause();
+
+    }
+}
+
+</script>  
 </body>
 </html>
