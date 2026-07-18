@@ -3,742 +3,605 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Tropical Flow TV 📺 Radio - VIP</title>
-<meta name="description" content="Tropical Flow TV Radio — Salsa, Merengue, Bachata y Reggaetón 24/7.">
-
+<title>Pro DJ Mixer Live Studio</title>
 <style>
-  :root{
-    --accent:#00e0ff; --accent2:#2dd4bf; --warn:#fbbf24;
-    --glass:rgba(0,0,0,.62); --panel:rgba(255,255,255,.08);
-    --card:rgba(0,0,0,.60); --maxw:1100px;
+  :root {
+    --bg-main: #0a0b0d;
+    --panel-bg: #14171c;
+    --neon-cyan: #00f0ff;
+    --neon-magenta: #ff007f;
+    --neon-green: #39ff14;
+    --text-main: #e2e8f0;
+    --text-dim: #64748b;
+    --gold: #f59e0b;
   }
-  *{box-sizing:border-box}
-  html,body{margin:0}
-  body{
-    color:#fff;
-    font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,Helvetica,sans-serif;
-    background:
-      linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.80)),
-      url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop")
-      center/cover fixed no-repeat;
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
   }
-  .bg-mark{
-    position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.06;
-    display:flex; align-items:center; justify-content:center;
-    font-weight:900; letter-spacing:.08em; text-transform:uppercase;
-    font-size:clamp(38px,10vw,120px);
-  }
-  header, footer{ position:relative; z-index:2; text-align:center; padding:14px; background:rgba(0,0,0,.5) }
-  h1{ margin:0; font-size:clamp(22px,3.4vw,36px) }
-#reloj{
-  margin-top:12px;
-  display:inline-block;
-  padding:10px 20px;
-  border:2px solid var(--accent);
-  border-radius:15px;
-  background:rgba(0,0,0,.45);
-  box-shadow:0 0 15px rgba(0,224,255,.5);
-  color:var(--accent);
-  font-size:26px;
-  font-weight:900;
-  text-align:center;
-  letter-spacing:2px;
-}
 
-#reloj small{
-  display:block;
-  margin-top:5px;
-  font-size:14px;
-  color:#fff;
-}
-  .social{
-    max-width:var(--maxw);
-    margin:0 auto;
-    display:flex; flex-wrap:wrap; gap:10px; justify-content:center;
-  }
-  .social a{
-    text-decoration:none; color:#fff; padding:.55rem .9rem; border-radius:10px; font-weight:800;
-    background:#444; display:inline-flex; align-items:center; gap:.5rem; border:1px solid rgba(255,255,255,.15);
-  }
-  .whatsapp{ background:#25d366 } .youtube{ background:#FF0000 }
-  .facebook{ background:#3b5998 } .paypal{ background:#0070ba } .athmovil{ background:#6f42c1 }
-
-  .wrap{ position:relative; z-index:1; max-width:var(--maxw); margin:16px auto; padding:16px; background:var(--glass); border-radius:16px }
-  section{ margin:18px 0; padding:16px; background:var(--panel); border-radius:14px }
-  h2{ margin:0 0 12px; text-align:center }
-
-  .btn{background:var(--accent);color:#000;border:0;border-radius:12px;font-weight:800;padding:10px 14px;cursor:pointer}
-  .btn.alt{background:var(--accent2)}
-  .btn.warn{background:var(--warn);color:#000}
-  .controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}
-
-  /* ─── RADIO ─── */
-  #radioCard{position:relative;max-width:950px;margin:0 auto;padding:14px;border-radius:14px;background:var(--card);backdrop-filter:blur(4px)}
-  #radioViewport{position:relative;display:none;border-radius:14px;overflow:hidden;background:#000}
-  #radioViewport .viewport{position:relative;width:100%;padding-top:52%}
-  #radioFrame{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
-  #radioMini{display:flex;gap:10px;justify-content:center;align-items:center}
-  .hint{color:#bbb;font-size:.9rem;text-align:center;margin-top:8px}
-  @media (max-width:900px){ #radioViewport .viewport{ padding-top:56% } }
-  @media (max-width:700px){ #radioViewport .viewport{ padding-top:62% } }
-  @media (max-width:540px){ #radioViewport .viewport{ padding-top:68% } }
-
-  /* ─── PLAYLIST ─── */
-  audio{width:100%;max-width:720px;margin:8px auto;display:block;border-radius:12px}
-  .plist{list-style:none;margin:10px auto 0;max-width:900px;padding:0;max-height:340px;overflow:auto}
-  .plist li{padding:8px 10px;border-radius:10px;cursor:pointer}
-  .plist li.active{background:rgba(0,191,255,.28)}
-  .status{margin-top:8px;color:#7CFC00;text-align:center}
-  .status.warn{color:#ffd166}
-  .plist::-webkit-scrollbar{width:10px}
-  .plist::-webkit-scrollbar-track{background:rgba(255,255,255,.08);border-radius:10px}
-  .plist::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--accent),#00bcd4);border-radius:10px}
-  .plist{scrollbar-width:thin;scrollbar-color:#00bcd4 rgba(255,255,255,.08)}
-
-  /* ─── VIDEO ─── */
-    /* ─── CORRECCIÓN DEFINITIVA PARA PANTALLA COMPLETA ─── */
-  .ratio16x9 {
-    position: relative;
+  header {
+    text-align: center;
+    margin-bottom: 25px;
     width: 100%;
-    padding-top: 56.25% !important; /* Fuerza la proporción de cine 16:9 */
-    height: 0 !important;
-  }
-  .fill {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important; /* Fuerza a YouTube a estirarse completo */
-  }
-  /* Esto evita que el iframe interno de YouTube se auto-recorte */
-  #promoPlayer, #ytMain, #promoPlayer iframe, #ytMain iframe {
-    width: 100% !important;
-    height: 100% !important;
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
+    max-width: 1200px;
   }
 
+  header h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 30px rgba(0, 240, 255, 0.2);
+  }
 
-  /* CARRUSEL VIDEO FULL WIDTH */
-  #carouselShell{position:relative;width:100%;padding-top:56.25%;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)}
-  #ytMain{position:absolute;top:0;left:0;width:100%;height:100%}
-  .thumbStrip{max-width:100%;margin:10px auto 0;padding:10px;display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory}
+  header p {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    margin-top: 5px;
+    letter-spacing: 1px;
+  }
+
+  .studio-container {
+    width: 100%;
+    max-width: 1200px;
+    background: var(--panel-bg);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    padding: 25px;
+  }
+
+  /* Mixer Grid Principal */
+  .mixer-interface {
+    display: grid;
+    grid-template-columns: 1fr 240px 1fr;
+    gap: 20px;
+  }
+
+  @media (max-width: 900px) {
+    .mixer-interface { grid-template-columns: 1fr; }
+    .center-rack { order: 3; }
+  }
+
+  /* Estilos de los Decks (Platos) */
+  .dj-deck {
+    background: #1a1e24;
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
+  }
+
+  .deck-a { border-bottom: 4px solid var(--neon-cyan); }
+  .deck-b { border-bottom: 4px solid var(--neon-magenta); }
+
+  .deck-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+
+  .deck-badge {
+    font-size: 0.8rem;
+    font-weight: 900;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: #000;
+  }
+  .deck-a .deck-badge { color: var(--neon-cyan); border: 1px solid rgba(0,240,255,0.3); }
+  .deck-b .deck-badge { color: var(--neon-magenta); border: 1px solid rgba(255,0,127,0.3); }
+
+  .track-title {
+    font-size: 0.85rem;
+    color: var(--text-main);
+    font-weight: 600;
+    max-width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* File Input Estilizado */
+  .file-uploader {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  .file-uploader input[type="file"] { display: none; }
+  .file-label {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    background: #242932;
+    border: 1px dashed rgba(255,255,255,0.1);
+    border-radius: 8px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    color: var(--text-dim);
+    transition: all 0.2s;
+  }
+  .file-label:hover {
+    color: #fff;
+    border-color: rgba(255,255,255,0.3);
+  }
+
+  /* El Plato Giratorio */
+  .jog-wheel {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #2d323f 12%, #11141a 13%, #11141a 35%, #181b22 36%, #050608 70%);
+    border: 6px solid #282d37;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5), inset 0 0 15px #000;
+    cursor: grab;
+  }
+  .jog-wheel:active { cursor: grabbing; }
   
-  /* CORREGIDO: Añadido position: relative obligatorio para centrar elementos internos */
-  .thumb{position:relative;flex:0 0 auto;width:220px;border-radius:12px;overflow:hidden;scroll-snap-align:start;box-shadow:0 8px 22px rgba(0,0,0,.35);cursor:pointer}
-  .thumb img{display:block;width:100%;filter:brightness(.9);transition:transform .18s ease, filter .18s ease}
-  .thumb:hover img{transform:scale(1.03);filter:brightness(1)}
-  .thumb.active{outline:3px solid var(--accent);outline-offset:-3px}
-  
-  /* CORREGIDO: Ajustado el overlay para centrado absoluto total */
-  .playOverlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(transparent,rgba(0,0,0,.32));z-index:2}
-  
-  /* CORREGIDO: El botón ahora se auto-posiciona de forma exacta en el centro */
-  .playBtn{width:54px;height:54px;border-radius:50%;background:rgba(0,0,0,.66);border:2px solid rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%)}
-  .playBtn:before{content:"";border-left:18px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px}
+  .jog-center {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 45px; height: 45px;
+    border-radius: 50%;
+    border: 3px solid #000;
+    background: #14171c;
+  }
+  .deck-a .jog-center { box-shadow: 0 0 15px rgba(0,240,255,0.4); border-color: var(--neon-cyan); }
+  .deck-b .jog-center { box-shadow: 0 0 15px rgba(255,0,127,0.4); border-color: var(--neon-magenta); }
+
+  .jog-marker {
+    position: absolute; top: 6px; left: 50%;
+    transform: translateX(-50%);
+    width: 4px; height: 25px;
+    background: #fff; border-radius: 2px;
+    transform-origin: bottom center;
+  }
+
+  .spinning { animation: jogSpin 3s linear infinite; }
+  @keyframes jogSpin { 100% { transform: rotate(360deg); } }
+
+  /* Controles Inferiores del Deck */
+  .deck-controls-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    gap: 10px;
+  }
+
+  .action-btn {
+    flex: 1;
+    padding: 12px;
+    border: 0;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #242932;
+    color: var(--text-main);
+  }
+  .btn-play { background: #1e293b; color: var(--neon-green); border: 1px solid rgba(57,255,20,0.2); }
+  .btn-play:hover { background: var(--neon-green); color: #000; box-shadow: 0 0 15px rgba(57,255,20,0.4); }
+  .btn-cue { background: #1e293b; color: var(--gold); border: 1px solid rgba(245,158,11,0.2); }
+  .btn-cue:hover { background: var(--gold); color: #000; box-shadow: 0 0 15px rgba(245,158,11,0.4); }
+
+  /* Deslizadores del Deck (Pitch / Fader Lateral) */
+  .deck-sliders {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 15px;
+  }
 </style>
+</head>
+<style>
+  .slider-unit {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+  }
 
-<!-- API YouTube -->
-<script src="https://www.youtube.com/iframe_api"></script>
+  .slider-unit label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .slider-unit input[type="range"] {
+    width: 100%;
+    height: 6px;
+    background: #11141a;
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  .deck-a input[type="range"] { accent-color: var(--neon-cyan); }
+  .deck-b input[type="range"] { accent-color: var(--neon-magenta); }
+
+  /* Rack del Mezclador Central */
+  .center-rack {
+    background: #111317;
+    border-radius: 16px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.02);
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+  }
+
+  .mixer-brand {
+    font-size: 0.75rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    margin-bottom: 15px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .eq-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 10px 0;
+  }
+
+  .knob-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+  }
+
+  .knob-unit label {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  .knob-unit input[type="range"] {
+    width: 85%;
+    accent-color: var(--gold);
+    cursor: pointer;
+  }
+
+  .crossfader-section {
+    width: 100%;
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    text-align: center;
+  }
+
+  .crossfader-section label {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .crossfader-slider {
+    width: 100%;
+    height: 8px;
+    background: #000;
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    accent-color: var(--gold);
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .fader-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    margin-top: 4px;
+    font-weight: 700;
+  }
+</style>
 </head>
 <body>
-<div class="bg-mark">Tropical Flow RadioTV</div>
 
 <header>
-  <h1>🌴 Tropical Flow TV 📺 Radio – VIP</h1>
-
-  <div id="reloj"></div>
+  <h1>Pro DJ Mixer</h1>
+  <p>Live Mixing Studio — Virtual Core Engine</p>
 </header>
 
-<!-- 🔼 Barra social arriba -->
-<div class="top-social">
-  <div class="social">
-    <a class="whatsapp" href="https://wa.me/19399029695" target="_blank">WhatsApp</a>
-    <a class="youtube"  href="https://www.youtube.com/@TFTvpoweredbyworldm8780" target="_blank">YouTube</a>
-    <a class="facebook" href="https://www.facebook.com/profile.php?id=61555653663073" target="_blank">Facebook</a>
-    <a class="paypal"   href="https://www.paypal.com/donate/?business=cartajoffice1@gmail.com&currency_code=USD" target="_blank">🎧 Donar vía PayPal</a>
-    <a class="athmovil" href="https://www.athmovil.com/cartajo" target="_blank">Donar ATH Móvil</a>
-  </div>
-</div>
-
-<div class="wrap">
-
-  <!-- ============= 1) RADIO ============= -->
-  <section id="radio">
-    <h2>🎧 Tropical Flow TV Radio</h2>
-    <div id="radioCard">
-      <div id="radioMini">
-        <button id="openPlayer" class="btn alt">▶️ Abrir player</button>
-        <button id="openTab" class="btn warn">🌐 Abrir en pestaña</button>
+<div class="studio-container">
+  <div class="mixer-interface">
+    
+    <!-- DECK A -->
+    <div class="dj-deck deck-a">
+      <div class="deck-header">
+        <span class="deck-badge">DECK A</span>
+        <div class="track-title" id="titleA">No Track Loaded</div>
       </div>
-      <div id="radioViewport">
-        <div class="viewport">
-          <iframe
-            id="radioFrame"
-            title="Tropical Flow Radio"
-            src="about:blank"
-            allow="autoplay"
-            sandbox="allow-same-origin allow-scripts allow-forms allow-popups">
-          </iframe>
+      
+      <div class="file-uploader">
+        <label for="fileA" class="file-label" id="labelFileA">Cargar canción</label>
+        <input type="file" id="fileA" accept="audio/*">
+      </div>
+
+      <div class="jog-wheel" id="wheelA">
+        <div class="jog-center"></div>
+        <div class="jog-marker" id="markA"></div>
+      </div>
+
+      <div class="deck-controls-row">
+        <button class="action-btn btn-play" id="playA">▶ Play</button>
+        <button class="action-btn btn-cue" id="cueA">⏸ Cue</button>
+      </div>
+
+      <div class="deck-sliders">
+        <div class="slider-unit">
+          <label>Volumen <span id="txtVolA">100%</span></label>
+          <input type="range" id="volA" min="0" max="1" step="0.01" value="1">
+        </div>
+        <div class="slider-unit">
+          <label>Pitch Tempo <span id="txtPitchA">0.0%</span></label>
+          <input type="range" id="pitchA" min="-10" max="10" step="0.1" value="0">
         </div>
       </div>
-      <p class="hint">Si no escuchas, pulsa <b>Abrir en pestaña</b> (evita bloqueos del navegador).</p>
     </div>
-  </section>
 
-  <!-- ============= 2) PLAYLIST VIP ============= -->
-  <section id="playlist">
-    <h2>🎶 Playlist VIP 1</h2>
-    <audio id="plAudio" controls preload="metadata">Tu navegador no soporta audio HTML5.</audio>
-    <div class="controls">
-      <button id="plPrev" class="btn">⏮️ Anterior</button>
-      <button id="plToggle" class="btn alt">▶️ / ⏸️</button>
-      <button id="plNext" class="btn">⏭️ Siguiente</button>
-      <button id="plRandom" class="btn warn">🔀 Random OFF</button>
-    </div>
-    <ul id="plList" class="plist"></ul>
-    <p id="plStatus" class="status" style="margin-top:8px"></p>
-  </section>
+    <!-- CENTRAL MIXER RACK -->
+    <div class="center-rack">
+      <div class="mixer-brand">Master Control</div>
+      
+      <div class="eq-section">
+        <div class="knob-unit">
+          <label>HI (Agudos)</label>
+          <input type="range" id="eqHi" min="-24" max="12" step="1" value="0">
+        </div>
+        <div class="knob-unit">
+          <label>MID (Medios)</label>
+          <input type="range" id="eqMid" min="-24" max="12" step="1" value="0">
+        </div>
+        <div class="knob-unit">
+          <label>LOW (Graves)</label>
+          <input type="range" id="eqLow" min="-24" max="12" step="1" value="0">
+        </div>
+      </div>
 
-  <!-- ============= 3) CARRUSEL ( VIDEOS) ============= -->
-  <section id="videos">
-    <h2>🎞️ Videos Recientes</h2>
-    <!-- NUEVO: 16:9 para llenar sin franjas -->
-    <div id="carouselShell" class="ratio16x9" style="max-width:1100px;margin:0 auto;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)">
-      <div id="ytMain" class="fill"></div>
+      <div class="crossfader-section">
+        <label>Crossfader</label>
+        <input type="range" id="crossfader" class="crossfader-slider" min="-1" max="1" step="0.02" value="0">
+        <div class="fader-labels">
+          <span>CH A</span>
+          <span>CENTER</span>
+          <span>CH B</span>
+        </div>
+      </div>
     </div>
-    <div class="controls">
-      <button id="cPrev" class="btn">⏮️ Anterior</button>
-      <button id="cToggle" class="btn alt">▶️ / ⏸️</button>
-      <button id="cNext" class="btn">⏭️ Siguiente</button>
-      <button id="cRandom" class="btn warn">🔀 Random OFF</button>
-      <button id="cFs" class="btn warn">⤢ Pantalla completa</button>
-    </div>
-    <div id="cTitle" style="max-width:1100px;margin:8px auto 10px;text-align:center;font-weight:700"></div>
-    <div id="thumbs" class="thumbStrip"></div>
-  </section>
 
-<!-- ============= 4) VIDEO PROMO ============= -->
-  <section id="promoArea">
-    <h2>🎬 Videos Cristianos ✝️</h2>
+    <!-- DECK B -->
+    <div class="dj-deck deck-b">
+      <div class="deck-header">
+        <span class="deck-badge">DECK B</span>
+        <div class="track-title" id="titleB">No Track Loaded</div>
+      </div>
+      
+      <div class="file-uploader">
+        <label for="fileB" class="file-label" id="labelFileB">Cargar canción</label>
+        <input type="file" id="fileB" accept="audio/*">
+      </div>
+
+      <div class="jog-wheel" id="wheelB">
+        <div class="jog-center"></div>
+        <div class="jog-marker" id="markB"></div>
+      </div>
+
+      <div class="deck-controls-row">
+        <button class="action-btn btn-play" id="playB">▶ Play</button>
+        <button class="action-btn btn-cue" id="cueB">⏸ Cue</button>
+      </div>
+
+      <div class="deck-sliders">
+        <div class="slider-unit">
+          <label>Volumen <span id="txtVolB">100%</span></label>
+          <input type="range" id="volB" min="0" max="1" step="0.01" value="1">
+        </div>
+        <div class="slider-unit">
+          <label>Pitch Tempo <span id="txtPitchB">0.0%</span></label>
+          <input type="range" id="pitchB" min="-10" max="10" step="0.1" value="0">
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- Elementos de Audio Nativos Ocultos -->
+<audio id="audioA" loop crossorigin="anonymous"></audio>
+<audio id="audioB" loop crossorigin="anonymous"></audio>
+
+<script>
+  // Obtención de elementos de audio
+  const audA = document.getElementById('audioA');
+  const audB = document.getElementById('audioB');
+  
+  // Variables del Motor Web Audio API
+  let audioCtx = null;
+  let srcA, srcB, gainA, gainB, crossGainA, crossGainB;
+  let filterHi, filterMid, filterLow;
+  let engineReady = false;
+
+  // Inicialización Segura del Entorno de Audio Profesional
+  function initAudioEngine() {
+    if (engineReady) return;
+    try {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      
+      // Nodos de origen multimedia
+      srcA = audioCtx.createMediaElementSource(audA);
+      srcB = audioCtx.createMediaElementSource(audB);
+      
+      // Nodos de volumen independiente por canal
+      gainA = audioCtx.createGain();
+      gainB = audioCtx.createGain();
+      
+      // Nodos de volumen asignados al Crossfader central
+      crossGainA = audioCtx.createGain();
+      crossGainB = audioCtx.createGain();
+      
+      // Filtros del Ecualizador Isolator (3 bandas)
+      filterHi = audioCtx.createBiquadFilter();  filterHi.type = "highshelf";  filterHi.frequency.value = 4000;
+      filterMid = audioCtx.createBiquadFilter(); filterMid.type = "peaking";    filterMid.frequency.value = 1200; filterMid.Q.value = 1.0;
+      filterLow = audioCtx.createBiquadFilter(); filterLow.type = "lowshelf";   filterLow.frequency.value = 250;
+
+      // Enrutamiento físico: Fuentes -> Volumen -> Crossfader -> Ecualizador -> Bocinas
+      srcA.connect(gainA).connect(crossGainA).connect(filterLow);
+      srcB.connect(gainB).connect(crossGainB).connect(filterLow);
+      
+      filterLow.connect(filterMid).connect(filterHi).connect(audioCtx.destination);
+      
+      engineReady = true;
+    } catch(e) {
+      console.log("Esperando acción del usuario para activar hardware de audio.");
+    }
+  }
+
+  // Carga Dinámica de Archivos MP3/WAV (Deck A)
+  document.getElementById('fileA').addEventListener('change', function(e) {
+    if (this.files.length > 0) {
+      const file = this.files[0];
+      document.getElementById('titleA').innerText = file.name;
+      document.getElementById('labelFileA').innerText = "Cambiar canción";
+      audA.src = URL.createObjectURL(file);
+      audA.load();
+    }
+  });
+
+  // Carga Dinámica de Archivos MP3/WAV (Deck B)
+  document.getElementById('fileB').addEventListener('change', function(e) {
+    if (this.files.length > 0) {
+      const file = this.files[0];
+      document.getElementById('titleB').innerText = file.name;
+      document.getElementById('labelFileB').innerText = "Cambiar canción";
+      audB.src = URL.createObjectURL(file);
+      audB.load();
+    }
+  });
+
+  // Disparadores de Reproducción Deck A
+  document.getElementById('playA').addEventListener('click', () => {
+    initAudioEngine();
+    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
     
-    <!-- CONTENEDOR 16:9 PERFECTO: Mantiene la proporción de pantalla ancha original -->
-    <div id="promoShell" class="ratio16x9" style="width:100%; max-width:1200px; margin:0 auto; border-radius:18px; overflow:hidden; background:#000;">
-  <div id="promoPlayer" class="fill"></div>
-</div>
+    audA.play().then(() => {
+      document.getElementById('wheelA').classList.add('spinning');
+      updateMixerMixes();
+    }).catch(() => alert("Por favor, carga un archivo de música en el DECK A primero."));
+  });
 
-   
-    <!-- CONTROLES ADAPTADOS -->
-    <div class="controls" style="margin-top:15px">
-      <button id="promoPrev" class="btn">⏮️ Anterior</button>
-      <button id="promoToggle" class="btn alt">▶️ / ⏸️</button>
-      <button id="promoNext" class="btn">⏭️ Siguiente</button>
-      <button id="promoRandom" class="btn warn">🔀 Random OFF</button>
-      <button id="promoFs" class="btn warn">⤢ Pantalla completa</button>
-    </div>
-    <div id="promoTitle" style="max-width:1000px; margin:12px auto 0; text-align:center; font-weight:700"></div>
-  </section>
+  document.getElementById('cueA').addEventListener('click', () => {
+    audA.pause();
+    document.getElementById('wheelA').classList.remove('spinning');
+  });
 
-</div>
+  // Disparadores de Reproducción Deck B
+  document.getElementById('playB').addEventListener('click', () => {
+    initAudioEngine();
+    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    
+    audB.play().then(() => {
+      document.getElementById('wheelB').classList.add('spinning');
+      updateMixerMixes();
+    }).catch(() => alert("Por favor, carga un archivo de música en el DECK B primero."));
+  });
 
-<footer>© <span id="year"></span> Tropical Flow TV📺 Radio — Todos los derechos reservados</footer>
+  document.getElementById('cueB').addEventListener('click', () => {
+    audB.pause();
+    document.getElementById('wheelB').classList.remove('spinning');
+  });
 
-<script>
-document.getElementById('year').textContent = new Date().getFullYear();
+  // Cálculo de Atenuación de Canales y Crossfader Pro DJ
+  function updateMixerMixes() {
+    if (!engineReady) return;
+    
+    const vA = parseFloat(document.getElementById('volA').value);
+    const vB = parseFloat(document.getElementById('volB').value);
+    gainA.gain.value = vA;
+    gainB.gain.value = vB;
 
-/* ========== HUB: Pausa cruzada (corte duro radio) ========== */
-const RADIO_URL = "https://tropicalflow.listen2myshow.com/?autoplay=1";
-function getRadioFrame(){ return document.getElementById('radioFrame'); }
-function radioStart(){
-  const f=getRadioFrame();
-  if (f && (f.src==="about:blank" || !f.src)) f.src=RADIO_URL;
-}
-function radioStopHard(){ const f=getRadioFrame(); if (f) f.src="about:blank"; }
-
-function getPl(){ return document.getElementById('plAudio'); }
-function getCarousel(){ return window._ytCarousel || null; }
-function getPromo(){ return window._ytPromo || null; }
-
-function pauseAllExcept(kind){
-  try{
-    if (kind!=='radio'){ radioStopHard(); } 
-    if (kind!=='playlist'){ const a=getPl(); if (a && !a.paused) a.pause(); }
-    if (kind!=='yt'){ const c=getCarousel(); if (c?.getPlayerState?.()===YT.PlayerState.PLAYING) c.pauseVideo(); }
-    if (kind!=='promo'){ const p=getPromo(); if (p?.getPlayerState?.()===YT.PlayerState.PLAYING) p.pauseVideo(); }
-  }catch(e){}
-}
-
-
-/* ========== RADIO (minimizada + abrir) ========== */
-(function(){
-  const viewport  = document.getElementById('radioViewport');
-  const openBtn   = document.getElementById('openPlayer');
-  const tabBtn    = document.getElementById('openTab');
-
-  function show(){
-    viewport.style.display='block';
-    radioStart();
-    pauseAllExcept('radio');
-  }
-  function hide(){ viewport.style.display='none'; }
-
-  openBtn.onclick = ()=> (viewport.style.display==='none' ? show() : hide());
-  tabBtn.onclick  = ()=> window.open("https://tropicalflow.listen2myshow.com","_blank");
-
-  hide(); // entra minimizada
-})();
-
-/* ========== PLAYLIST VIP (lee /musica/) ========== */
-(function(){
-  const BASE = "../musica/";
-  const RAW  = [
-    "01 - Aquí Estoy Yo [Urban Remix] - Luis Fonsi & Yomo.mp3",
-    "02 - dj mario andretti - mix merengue romantico.mp3",
-    "03 - La Amas Como Yo - Karis.Mp3",
-    "04 - Que Voy A Hacer Sin Ti - Grupo Caneo.Mp3",
-    "05 - Hey Dude! - Elvis Crespo.mp3",
-    "06 - Te Regalo Amores - Ken-Yrkm.mp3",
-    "08 - What Is Love - Haddaway.Mp3",
-"09 - Boricua Como El Gran Combo.mp3",
-"10 - Me Gusta, Me Gusta - Elvis Crespo.mp3",
-    "Tito El Bambino - Dame La Ola - LMP.mp3",
-"Tito El Bambino Ft. Yandel - El Esta Celoso (WWW.ELGENERO.COM).mp3",
-"Tito Swing - No Quiero Novio - LMP.mp3",
-"Chino Y Nacho - Mi Nina Bonita.mp3",
-"Elvis Crespo ft Fito Blanko - Pegadito Suavecito (Remix).mp3",
-"Grupo Mania - Te Vi.mp3",
-  ];
-
-  const TRACKS = RAW.map(f=>({title:f, src: BASE + encodeURIComponent(f)}));
-
-  const audio = document.getElementById('plAudio');
-  const list  = document.getElementById('plList');
-  const prev  = document.getElementById('plPrev');
-  const next  = document.getElementById('plNext');
-  const toggle= document.getElementById('plToggle');
-  const status= document.getElementById('plStatus');
-  let i=0;
-  let randomMode = false;
-
-  function render(){
-    list.innerHTML="";
-    TRACKS.forEach((t,idx)=>{
-      const li=document.createElement('li');
-      li.textContent = (idx===i?"▶️ ":"")+t.title;
-      li.className = idx===i ? "active" : "";
-      li.onclick = ()=>{ i=idx; load(true); };
-      list.appendChild(li);
-    });
-  }
-  function msg(tx, warn=false){ status.textContent=tx; status.className="status"+(warn?" warn":""); }
-  function load(auto){
-    audio.src = TRACKS[i].src;
-    render();
-    msg("Listo: "+TRACKS[i].title+" ✓");
-    if(auto){ pauseAllExcept('playlist'); audio.play().catch(()=>{}); }
-  }
-
-  prev.onclick  = ()=>{ i=(i-1+TRACKS.length)%TRACKS.length; load(true); };
-  next.onclick  = ()=>{ i=(i+1)%TRACKS.length; load(true); };
-  toggle.onclick= ()=>{ if(audio.paused){ pauseAllExcept('playlist'); audio.play().catch(()=>{});} else audio.pause(); };
-
-  document.getElementById('plRandom').onclick = () => {
-    randomMode = !randomMode;
-    document.getElementById('plRandom').textContent =
-      randomMode ? '🔀 Random ON' : '🔀 Random OFF';
-  };
-  audio.addEventListener('ended', ()=> {
-    if(randomMode){
-      i = Math.floor(Math.random() * TRACKS.length);
-      load(true);
+    const crossVal = parseFloat(document.getElementById('crossfader').value);
+    // Algoritmo de corte lineal limpio
+    if (crossVal <= 0) {
+      crossGainA.gain.value = 1;
+      crossGainB.gain.value = 1 + crossVal; // Incrementa el volumen del canal B al centrarse
     } else {
-      next.onclick();
+      crossGainA.gain.value = 1 - crossVal; // Atenúa el canal A al moverse a la derecha
+      crossGainB.gain.value = 1;
     }
-  });
-  audio.addEventListener('play',  ()=> pauseAllExcept('playlist'));
-  audio.addEventListener('error', ()=> msg("⚠️ No se pudo cargar: "+decodeURIComponent(TRACKS[i].src), true));
-
-  render(); load(false);
-})();
-
-/* ========== YouTube IDs (Carrusel + Promo) ========== */
-// const API_KEY = "AIzaSy..."; "AIzaSyBesgi7u2RgmehiSqXHIqM_FfE0R_Nqpbw"
-
-const PLAYLIST_ID = "PLKvDKj5mBH3mRuS38uMV1Qw1hMNzUC83_";
-const CAROUSEL_IDS = [
-  "GQ2ZLGRsRk4",
-  "RBE8A9rAj8Y",
-  "XYe0ZHVvVig",
-  "h86xW_G-j4s",
-  "5pKPlIlQa_8",
-  "wgqGHqhEZ8M",
-  "auTHP2prrxw",
-  "CL7m60BISiw",
-  "4jdbpZVzlf4",
-  "X_Df1rsXBjE",
-  "RWp76Pj0RUo",
-  "M9wQdkQicbk",
-  "FCu8-sim5F4",
-  "O6xVXaBcOac",
-  "jTqKxMTtVEI",
-  "4tXLT0hN8n8",
-  "n8RMGnc8v_o",
-  "XSAM8sUBAX4",
-  "tyqiwlOuKDA",
-  "tpi8zLE3Kqw",
-  "KZsmeh2122c",
-  "7IZF99TldP4",
-  "8bK5FzYBOX0",
-  "RcRjOpvks_w",
-  "fe474JBP5bo",
-  "hAwpckV1zJA",
-  "GfSmKZKUQgI",
-  "VQy8mWQ44IE",
-  "LYgUyNxcClc",
-  "Feo_d-SfjV4",
-  "9s5L2N86BhI",
-  "obW4BaZucn4",
-  "-rKiKWl5nrI",
-  "CzXfeG1wp7k",
-  "-YIJLs19HJA",
-  "hpom3ZHzfsc",
-  "OMEUGE3YBig",
-  "Lqt8KchvPWs",
-  "auhWaaNIB5Q",
-  "hEgqP_4DUKQ",
-  "IF6B0L5G45U",
-  "H5ZrvB6FEyc",
-  "aH-4J_Q0lZk",
-  "w5L_iNnWgUo",
-  "d6brc8barHQ",
-  "4HF0QkBYRRc",
-  "r9lBTeBqgUc",
-  "BrmcXdYuycU",
-  "vwdopSnsMLs",
-  "lb3lY9c2LPk",
-  "-XOt6cizYdo",
-  "4vkhB6MiJ-k",
-  "BziR7lSh1Pw",
-  "4cTZpoRd54k",
-  "Q1u_kOWlgs4",
-  "Ob9I449fZn4",
-  "21Pk_j4buY4",
-  "t_LrxMpLxis",
-  "MTuM7D2p3Cg",
-  "jF2XJxAp_v8",
-  "kf6RLeOs5ow",
-  "6wbwxXcJkGc",
-  "i-HD5_2WDYU",
-  "2ioucs6HOUU",
-  "IQ3wXbkJJZA",
-  "x1dbS39QrlI",
-  "cJ5gu-mlyv4",
-  "olJRGdZKv8Q",
-  "vrfFNZZXFsE",
-  "3oh5z387ozY",
-  "OTSVayj-9Os",
-  "FbRSDpKEyac",
-  "tCl5mJkta04",
-  "Ya9r0wGichw",
-  "pt92h8rvZxU",
-  "s-mDRPkEZBk",
-
-  "pvAthjIlnuc",
-  "aNOiqSYOe9E",
-  "DeDPrhD_BLw",
-  "6654k9MfoBA",
-  "mTSm_5sOFvQ",
-  "WjR7mf0S6wQ",
-  "KB0Egwr3BkY",
-  "jeUo8mLQbGg",
-  "c1EwHvbPv0o",
-"JqfDYSLP1Co",
-"7gS7-_9PBxM",
-"yVBHbPsHIjk",
-"OrRPR0AdPV4",
-"Tf2o36-T2XY",
-"AEj6xbGy64c",
-"idpPD42Nh7I",
-"Q1EyMFTPZrs",
-"8GZfyUKXugQ",
-"hW2mAMEx8mo",
-"2ZXs_FrB7co",
-"D5y4xpKdux4",
-"1Z_lmKtf6RY",
-"J1Dz86UCL_M",
-"c5NA5EBpOw4",
-"40XaVZBfXmc",
-"9CZ9cYu-yCk",
-"c1j1QbnEvFA",
-"nddBuDbhlkQ",
-"W4Gbz8DhDKs",
-"yHHX8bsht1w",
-"tYYa-djM5j8",
-"l8wTJMbCsQ8",
-"OixrDR8sVhc",
-"HtTzLFKInTM",
-"FVYjdghFIfo",
-"VBdLpH8R3Y8",
-"2r7CnIp9oLI",
-"-vj-a-e0Rf4",
-"34eiZ9Hd-fA",
-"pjrhSRCIZDk",
-"mKjKgaOWQn8",
-"YHQJkK9NpE0",
-"nGsT-sqaQNg",
-"o40JNCThI8M",
-"rWhjBlsXhVw",
-"mrXKNFXHEqo",
-"7tE_xKxat9c",
-"u9b83ujltH8",
-"TZMCYoWntqY",
-"U1drf9cCHHk",
-"qVzECaje5CE",
-"Bsmz-VxXpyY",
-"FG1Va_rL6W0",
-"PCDYOTWQ9uc",
-"doD3StRKwKA",
-"iLuKRoUi4Lc",
-"PKolClrUVSQ",
-"xH_qmGwHIhY",
-"OPmAxqBfR3E",
-"BnhZkrNclVw",
-"SFmXwGf1kYU",
-"DAbkUKBLvak",
-"UK4aj9gV66s",
-"ILWO9Hyo_yo",
-"_bFrGBuzxew",
-"phWbH7OCcHk",
-"fnGZn3tkjYA",
-"Er52V4C62wU",
-"NBOlGhmv4lw",
-"kRZjFGGCR24",
-"beYTZkJMifw",
-"88WnXr9X4yM",
-"bbcs8Jv_k6w",
-"w3ybiJjm0wo",
-"CXlqcerd2Ew",
-"meyVBz_Pl5Q",
-"rZ-8_R2L19o",
-"cv5uXAxaWDc",
-"0iGJpS2Cq8Q",
-"LYN2UfUwKnE",
-"A3-XQXcxM0w",
-"Qvxrrwj64hU",
-"j1IrGdubgbQ",
-"nN36VD0KJWM",
-"l3bLYUyXodg",
-"3nBOTAh6IZk",
-"dnDAXZanv2U",
-"LSNOmJcDotk",
-"WZ8aVVeObY4"
-];
-
-const PROMO_IDS = [
-  "ZgISarA-gZo",
-  "-Uuq771d8fM",
-  "40XaVZBfXmc",
-  "rpktsrRL3M0",
-  "4oRIOfYdJkY",
-  "0sa8U0GUp8g",
-  "UAnj0yFrqsU",
-  "kQvnuyHwjdg",
-  "63h1IaDD91I"
-];
-
-/* ========== PROMO / VIDEOS CRISTIANOS (YT) ========== */
-let promoIndex = 0;
-let promoPlayer = null;
-let promoRandom = false;
-
-function createPromo(){
-  if (!(window.YT && window.YT.Player)) return;
-  promoPlayer = new YT.Player('promoPlayer',{
-    videoId: PROMO_IDS[promoIndex],
-    playerVars: { rel: 0, modestbranding: 1, playsinline: 1, controls: 1 },
-    events: {
-      onReady: e => { 
-        try { e.target.mute(); e.target.playVideo(); } catch(_) {} 
-        updatePromoTitle(); 
-      },
-      onStateChange: e => {
-        if (e.data === YT.PlayerState.PLAYING) pauseAllExcept('promo');
-        if (e.data === YT.PlayerState.ENDED) {
-          if (promoRandom) {
-            promoIndex = Math.floor(Math.random() * PROMO_IDS.length);
-            promoPlayer.loadVideoById(PROMO_IDS[promoIndex]);
-          } else {
-            promoNext();
-          }
-        }
-        if (e.data === YT.PlayerState.PLAYING || e.data === YT.PlayerState.CUED) updatePromoTitle();
-      }
-    }
-  });
-  window._ytPromo = promoPlayer;
-
-  document.getElementById('promoPrev').onclick = promoPrev;
-  document.getElementById('promoNext').onclick = promoNext;
-
-  document.getElementById('promoRandom').onclick = () => {
-    promoRandom = !promoRandom;
-    document.getElementById('promoRandom').textContent = promoRandom ? "🔀 Random ON" : "🔀 Random OFF";
-  };
-  
-  document.getElementById('promoToggle').onclick = () => {
-    const s = promoPlayer.getPlayerState?.();
-    if (s === YT.PlayerState.PLAYING) promoPlayer.pauseVideo();
-    else { pauseAllExcept('promo'); promoPlayer.playVideo(); } 
-  };
-  
-  const fsBtn = document.getElementById('promoFs'), shell = document.getElementById('promoShell');
-  fsBtn.onclick = () => { if (document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.(); };
-}
-
-function updatePromoTitle(){ 
-  try { document.getElementById('promoTitle').textContent = promoPlayer.getVideoData()?.title || ""; } catch(_) {} 
-}
-function promoPrev(){ 
-  promoIndex = (promoIndex - 1 + PROMO_IDS.length) % PROMO_IDS.length; 
-  promoPlayer.loadVideoById(PROMO_IDS[promoIndex]); 
-  updatePromoTitle(); 
-}
-function promoNext(){ 
-  promoIndex = (promoIndex + 1) % PROMO_IDS.length; 
-  promoPlayer.loadVideoById(PROMO_IDS[promoIndex]); 
-  updatePromoTitle(); 
-}
-
-
-/* ========== CARRUSEL PRINCIPAL DE VIDEOS (YT) ========== */
-let cIndex = 0, cPlayer = null;
-let cRandom = false;
-
-function buildThumbs(){
-  const wrap = document.getElementById('thumbs');
-  wrap.innerHTML = CAROUSEL_IDS.map((id, i) => `
-    <div class="thumb ${i === cIndex ? 'active' : ''}" data-i="${i}">
-      <img src="https://img.youtube.com/vi/${id}/hqdefault.jpg" alt="thumb ${i + 1}">
-      <div class="playOverlay"><div class="playBtn"></div></div>
-    </div>`).join('');
-  wrap.querySelectorAll('.thumb').forEach(el => el.onclick = () => { cIndex = +el.dataset.i; loadCarousel(true); });
-}
-
-// MEJORADO: El scroll se mueve automáticamente para enfocar el video seleccionado de la lista de 150
-function markActive(){ 
-  document.querySelectorAll('#thumbs .thumb').forEach((el, i) => {
-    const isActive = i === cIndex;
-    el.classList.toggle('active', isActive);
-    if (isActive) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-    }
-  }); 
-}
-
-function updateCTitle(){ 
-  try { document.getElementById('cTitle').textContent = cPlayer.getVideoData()?.title || ""; } catch(_) {} 
-}
-function prevC(){ 
-  cIndex = (cIndex - 1 + CAROUSEL_IDS.length) % CAROUSEL_IDS.length; 
-  loadCarousel(true); 
-}
-function nextC(){ 
-  cIndex = (cIndex + 1) % CAROUSEL_IDS.length; 
-  loadCarousel(true); 
-}
-
-function createCarousel(){
-  if (!(window.YT && window.YT.Player)) return;
-  cPlayer = new YT.Player('ytMain',{
-    videoId: CAROUSEL_IDS[cIndex],
-    playerVars: { rel: 0, modestbranding: 1, playsinline: 1, controls: 1 },
-    events: {
-      onReady: () => { updateCTitle(); },
-      onStateChange: e => {
-        if (e.data === YT.PlayerState.PLAYING) pauseAllExcept('yt');
-        if (e.data === YT.PlayerState.ENDED) {
-          if (cRandom) {
-            cIndex = Math.floor(Math.random() * CAROUSEL_IDS.length);
-            loadCarousel(true);
-          } else {
-            nextC();
-          }
-        }
-        if (e.data === YT.PlayerState.PLAYING || e.data === YT.PlayerState.CUED) updateCTitle();
-      }
-    }
-  });
-  window._ytCarousel = cPlayer;
-
-  buildThumbs();
-  document.getElementById('cPrev').onclick = prevC;
-  document.getElementById('cNext').onclick = nextC;
-
-  document.getElementById('cRandom').onclick = () => {
-    cRandom = !cRandom;
-    document.getElementById('cRandom').textContent = cRandom ? "🔀 Random ON" : "🔀 Random OFF";
-  };
-  document.getElementById('cToggle').onclick = () => {
-    const s = cPlayer.getPlayerState?.();
-    if (s === YT.PlayerState.PLAYING) cPlayer.pauseVideo();
-    else { pauseAllExcept('yt'); cPlayer.playVideo(); }
-  };
-  
-  const fsBtn = document.getElementById('cFs'), shell = document.getElementById('carouselShell');
-  fsBtn.onclick = () => { if (document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.(); };
-}
-
-function loadCarousel(play){ 
-  cPlayer.loadVideoById(CAROUSEL_IDS[cIndex]); 
-  markActive(); 
-  updateCTitle(); 
-  if (!play) cPlayer.pauseVideo?.(); 
-}
-
-
-/* ========== Boot YouTube API (promo + carrusel) ========== */
-(function bootYT(){
-  let started = false;
-  function start(){ if (started) return; started = true; createPromo(); createCarousel(); }
-  if (window.YT && window.YT.Player) start();
-  const prev = window.onYouTubeIframeAPIReady;
-  window.onYouTubeIframeAPIReady = function(){ if (typeof prev === 'function') prev(); start(); };
-})();
-</script>
-<script>
-
-/* ========== RELOJ DIGITAL ========== */
-
-function actualizarReloj() {
-
-  const ahora = new Date();
-
-  const hora = ahora.toLocaleTimeString("es-PR", {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit"
-  });
-
-  const fecha = ahora.toLocaleDateString("es-PR", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric"
-  });
-
-  const reloj = document.getElementById("reloj");
-
-  if (reloj) {
-    reloj.innerHTML =
-      🕒 ${hora}<small>${fecha}</small>;
   }
-}
 
-setInterval(actualizarReloj, 1000);
+  // Escuchadores de Eventos Faders de Volumen y Crossfader
+  document.getElementById('volA').addEventListener('input', (e) => {
+    document.getElementById('txtVolA').innerText = Math.round(e.target.value * 100) + "%";
+    updateMixerMixes();
+  });
 
-actualizarReloj();
+  document.getElementById('volB').addEventListener('input', (e) => {
+    document.getElementById('txtVolB').innerText = Math.round(e.target.value * 100) + "%";
+    updateMixerMixes();
+  });
 
+  document.getElementById('crossfader').addEventListener('input', updateMixerMixes);
+
+  // Manipulación del Pitch (BPM / Velocidad) en Tiempo Real
+  document.getElementById('pitchA').addEventListener('input', (e) => {
+    const percent = parseFloat(e.target.value);
+    document.getElementById('txtPitchA').innerText = (percent >= 0 ? "+" : "") + percent.toFixed(1) + "%";
+    // Convierte el porcentaje de pitch a factor multiplicador de velocidad
+    audA.playbackRate = 1 + (percent / 100);
+  });
+
+  document.getElementById('pitchB').addEventListener('input', (e) => {
+    const percent = parseFloat(e.target.value);
+    document.getElementById('txtPitchB').innerText = (percent >= 0 ? "+" : "") + percent.toFixed(1) + "%";
+    audB.playbackRate = 1 + (percent / 100);
+  });
+
+  // Enrutamiento Dinámico del Rack de Ecualización Maestro
+  document.getElementById('eqHi').addEventListener('input', (e) => { if (engineReady) filterHi.gain.value = e.target.value; });
+  document.getElementById('eqMid').addEventListener('input', (e) => { if (engineReady) filterMid.gain.value = e.target.value; });
+  document.getElementById('eqLow').addEventListener('input', (e) => { if (engineReady) filterLow.gain.value = e.target.value; });
 </script>
 </body>
 </html>
