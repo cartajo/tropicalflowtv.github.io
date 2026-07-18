@@ -3,24 +3,24 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Pro DJ Mixer Live Studio</title>
+<title>Ultra Pro DJ Mixing Studio</title>
 <style>
   :root {
-    --bg-main: #0a0b0d;
-    --panel-bg: #14171c;
+    --bg-main: #060709;
+    --panel-bg: #101216;
     --neon-cyan: #00f0ff;
     --neon-magenta: #ff007f;
     --neon-green: #39ff14;
-    --text-main: #e2e8f0;
-    --text-dim: #64748b;
-    --gold: #f59e0b;
+    --text-main: #f1f5f9;
+    --text-dim: #475569;
+    --gold: #eab308;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     background-color: var(--bg-main);
     color: var(--text-main);
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: system-ui, -apple-system, sans-serif;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -28,320 +28,101 @@
     min-height: 100vh;
   }
 
-  header {
-    text-align: center;
-    margin-bottom: 25px;
-    width: 100%;
-    max-width: 1200px;
-  }
-
+  header { text-align: center; margin-bottom: 20px; width: 100%; max-width: 1200px; }
   header h1 {
-    font-size: 2.2rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 3px;
+    font-size: 2.4rem; font-weight: 900; text-transform: uppercase; letter-spacing: 4px;
     background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 30px rgba(0, 240, 255, 0.2);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   }
-
-  header p {
-    color: var(--text-dim);
-    font-size: 0.9rem;
-    margin-top: 5px;
-    letter-spacing: 1px;
-  }
+  header p { color: var(--text-dim); font-size: 0.85rem; margin-top: 4px; letter-spacing: 1px; }
 
   .studio-container {
-    width: 100%;
-    max-width: 1200px;
-    background: var(--panel-bg);
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    padding: 25px;
+    width: 100%; max-width: 1200px; background: var(--panel-bg); border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.03); box-shadow: 0 25px 60px #000; padding: 20px;
   }
 
-  /* Mixer Grid Principal */
-  .mixer-interface {
-    display: grid;
-    grid-template-columns: 1fr 240px 1fr;
-    gap: 20px;
-  }
-
-  @media (max-width: 900px) {
-    .mixer-interface { grid-template-columns: 1fr; }
-    .center-rack { order: 3; }
-  }
-
-  /* Estilos de los Decks (Platos) */
+  /* Grid Principal de la Interfaz */
+  .mixer-interface { display: grid; grid-template-columns: 1fr 280px 1fr; gap: 20px; }
+  @media (max-width: 950px) { .mixer-interface { grid-template-columns: 1fr; } .center-rack { order: 3; } }
+</style>
+<style>
+  /* ─── ESTILOS DE LOS DECKS ─── */
   .dj-deck {
-    background: #1a1e24;
-    border-radius: 16px;
-    padding: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.03);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
+    background: #15181f; border-radius: 16px; padding: 18px; border: 1px solid rgba(255,255,255,0.02);
+    display: flex; flex-direction: column; align-items: center; position: relative;
   }
-
   .deck-a { border-bottom: 4px solid var(--neon-cyan); }
   .deck-b { border-bottom: 4px solid var(--neon-magenta); }
-
-  .deck-header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-  }
-
-  .deck-badge {
-    font-size: 0.8rem;
-    font-weight: 900;
-    padding: 4px 10px;
-    border-radius: 6px;
-    background: #000;
-  }
-  .deck-a .deck-badge { color: var(--neon-cyan); border: 1px solid rgba(0,240,255,0.3); }
-  .deck-b .deck-badge { color: var(--neon-magenta); border: 1px solid rgba(255,0,127,0.3); }
-
-  .track-title {
-    font-size: 0.85rem;
-    color: var(--text-main);
-    font-weight: 600;
-    max-width: 180px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  /* File Input Estilizado */
-  .file-uploader {
-    width: 100%;
-    margin-bottom: 15px;
-  }
-  .file-uploader input[type="file"] { display: none; }
-  .file-label {
-    display: block;
-    text-align: center;
-    padding: 10px;
-    background: #242932;
-    border: 1px dashed rgba(255,255,255,0.1);
-    border-radius: 8px;
-    font-size: 0.8rem;
-    cursor: pointer;
-    color: var(--text-dim);
-    transition: all 0.2s;
-  }
-  .file-label:hover {
-    color: #fff;
-    border-color: rgba(255,255,255,0.3);
-  }
-
-  /* El Plato Giratorio */
-  .jog-wheel {
-    width: 170px;
-    height: 170px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #2d323f 12%, #11141a 13%, #11141a 35%, #181b22 36%, #050608 70%);
-    border: 6px solid #282d37;
-    position: relative;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5), inset 0 0 15px #000;
-    cursor: grab;
-  }
-  .jog-wheel:active { cursor: grabbing; }
+  .deck-header { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .deck-badge { font-size: 0.75rem; font-weight: 900; padding: 3px 8px; border-radius: 5px; background: #000; }
+  .deck-a .deck-badge { color: var(--neon-cyan); border: 1px solid rgba(0,240,255,0.2); }
+  .deck-b .deck-badge { color: var(--neon-magenta); border: 1px solid rgba(255,0,127,0.2); }
+  .track-title { font-size: 0.8rem; color: var(--text-main); font-weight: 600; max-width: 160px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   
-  .jog-center {
-    position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 45px; height: 45px;
-    border-radius: 50%;
-    border: 3px solid #000;
-    background: #14171c;
+  /* PANTALLAS DIGITALES Y CONTADORES */
+  .display-panel {
+    width: 100%; background: #090a0d; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);
+    padding: 8px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;
   }
-  .deck-a .jog-center { box-shadow: 0 0 15px rgba(0,240,255,0.4); border-color: var(--neon-cyan); }
-  .deck-b .jog-center { box-shadow: 0 0 15px rgba(255,0,127,0.4); border-color: var(--neon-magenta); }
+  .time-counter { font-family: monospace; font-size: 1.2rem; font-weight: bold; color: var(--neon-green); text-shadow: 0 0 10px rgba(57,255,20,0.3); }
+  .wave-display { width: 100%; height: 50px; background: #000; border-radius: 6px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.02); display: block; }
 
-  .jog-marker {
-    position: absolute; top: 6px; left: 50%;
-    transform: translateX(-50%);
-    width: 4px; height: 25px;
-    background: #fff; border-radius: 2px;
-    transform-origin: bottom center;
-  }
-
-  .spinning { animation: jogSpin 3s linear infinite; }
+  /* CARGADOR DE ARCHIVOS Y JOG WHEEL */
+  .file-uploader { width: 100%; margin-bottom: 12px; }
+  .file-uploader input[type="file"] { display: none; }
+  .file-label { display: block; text-align: center; padding: 8px; background: #1e222b; border: 1px dashed rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.75rem; cursor: pointer; color: var(--text-dim); }
+  .file-label:hover { color: #fff; border-color: rgba(255,255,255,0.2); }
+  .jog-wheel { width: 150px; height: 150px; border-radius: 50%; background: radial-gradient(circle, #232733 12%, #0b0d10 13%, #0b0d10 35%, #13161c 36%, #030405 70%); border: 5px solid #222630; position: relative; box-shadow: 0 8px 20px rgba(0,0,0,0.5); }
+  .jog-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; border-radius: 50%; border: 2px solid #000; background: #101216; }
+  .deck-a .jog-center { box-shadow: 0 0 12px rgba(0,240,255,0.3); border-color: var(--neon-cyan); }
+  .deck-b .jog-center { box-shadow: 0 0 12px rgba(255,0,127,0.3); border-color: var(--neon-magenta); }
+  .jog-marker { position: absolute; top: 5px; left: 50%; transform: translateX(-50%); width: 4px; height: 20px; background: #fff; border-radius: 2px; transform-origin: bottom center; }
+  .spinning { animation: jogSpin 2.5s linear infinite; }
   @keyframes jogSpin { 100% { transform: rotate(360deg); } }
 
-  /* Controles Inferiores del Deck */
-  .deck-controls-row {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 15px;
-    gap: 10px;
-  }
-
-  .action-btn {
-    flex: 1;
-    padding: 12px;
-    border: 0;
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.2s;
-    background: #242932;
-    color: var(--text-main);
-  }
-  .btn-play { background: #1e293b; color: var(--neon-green); border: 1px solid rgba(57,255,20,0.2); }
-  .btn-play:hover { background: var(--neon-green); color: #000; box-shadow: 0 0 15px rgba(57,255,20,0.4); }
-  .btn-cue { background: #1e293b; color: var(--gold); border: 1px solid rgba(245,158,11,0.2); }
-  .btn-cue:hover { background: var(--gold); color: #000; box-shadow: 0 0 15px rgba(245,158,11,0.4); }
-
-  /* Deslizadores del Deck (Pitch / Fader Lateral) */
-  .deck-sliders {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 15px;
-  }
-</style>
-</head>
-<style>
-  .slider-unit {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    width: 100%;
-  }
-
-  .slider-unit label {
-    font-size: 0.75rem;
-    color: var(--text-dim);
-    display: flex;
-    justify-content: space-between;
-    font-weight: 600;
-    text-transform: uppercase;
-  }
-
-  .slider-unit input[type="range"] {
-    width: 100%;
-    height: 6px;
-    background: #11141a;
-    border-radius: 4px;
-    outline: none;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-  }
-
+  /* CONTROLES E INTERFAZ DEL MEZCLADOR CENTRAL */
+  .deck-controls-row { width: 100%; display: flex; gap: 8px; margin-top: 15px; }
+  .action-btn { flex: 1; padding: 10px; border: 0; border-radius: 6px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; cursor: pointer; background: #1e222b; color: var(--text-main); }
+  .btn-play { background: #162031; color: var(--neon-green); border: 1px solid rgba(57,255,20,0.1); }
+  .btn-play:hover { background: var(--neon-green); color: #000; box-shadow: 0 0 12px rgba(57,255,20,0.3); }
+  .btn-cue { background: #162031; color: var(--gold); border: 1px solid rgba(234,179,8,0.1); }
+  .btn-cue:hover { background: var(--gold); color: #000; box-shadow: 0 0 12px rgba(234,179,8,0.3); }
+  .deck-sliders { width: 100%; display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+  .slider-unit { display: flex; flex-direction: column; gap: 3px; width: 100%; }
+  .slider-unit label { font-size: 0.7rem; color: var(--text-dim); display: flex; justify-content: space-between; font-weight: 600; text-transform: uppercase; }
+  .slider-unit input[type="range"] { width: 100%; height: 5px; background: #000; border-radius: 3px; outline: none; cursor: pointer; appearance: none; -webkit-appearance: none; }
   .deck-a input[type="range"] { accent-color: var(--neon-cyan); }
   .deck-b input[type="range"] { accent-color: var(--neon-magenta); }
+  .center-rack { background: #0b0d10; border-radius: 16px; padding: 15px; display: flex; flex-direction: column; align-items: center; border: 1px solid rgba(255, 255, 255, 0.01); }
+  .mixer-brand { font-size: 0.75rem; font-weight: 900; letter-spacing: 2px; color: var(--text-dim); margin-bottom: 12px; text-transform: uppercase; }
+  .eq-section { width: 100%; display: flex; flex-direction: column; gap: 12px; padding: 5px 0; }
+  .knob-unit { display: flex; flex-direction: column; align-items: center; gap: 4px; width: 100%; }
+  .knob-unit label { font-size: 0.65rem; color: var(--text-dim); font-weight: 700; letter-spacing: 1px; }
+  .knob-unit input[type="range"] { width: 85%; accent-color: var(--gold); cursor: pointer; }
 
-  /* Rack del Mezclador Central */
-  .center-rack {
-    background: #111317;
-    border-radius: 16px;
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid rgba(255, 255, 255, 0.02);
-    box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
-  }
-
-  .mixer-brand {
-    font-size: 0.75rem;
-    font-weight: 900;
-    letter-spacing: 2px;
-    color: var(--text-dim);
-    margin-bottom: 15px;
-    text-align: center;
-    text-transform: uppercase;
-  }
-
-  .eq-section {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    padding: 10px 0;
-  }
-
-  .knob-unit {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    width: 100%;
-  }
-
-  .knob-unit label {
-    font-size: 0.7rem;
-    color: var(--text-dim);
-    font-weight: 700;
-    letter-spacing: 1px;
-  }
-
-  .knob-unit input[type="range"] {
-    width: 85%;
-    accent-color: var(--gold);
-    cursor: pointer;
-  }
-
-  .crossfader-section {
-    width: 100%;
-    margin-top: auto;
-    padding-top: 20px;
-    border-top: 1px solid rgba(255,255,255,0.05);
-    text-align: center;
-  }
-
-  .crossfader-section label {
-    font-size: 0.7rem;
-    color: var(--text-dim);
-    font-weight: 800;
-    letter-spacing: 1.5px;
-    display: block;
-    margin-bottom: 6px;
-  }
-
-  .crossfader-slider {
-    width: 100%;
-    height: 8px;
-    background: #000;
-    border-radius: 4px;
-    outline: none;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    accent-color: var(--gold);
-    border: 1px solid rgba(255,255,255,0.05);
-  }
-
-  .fader-labels {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.65rem;
-    color: var(--text-dim);
-    margin-top: 4px;
-    font-weight: 700;
-  }
+  /* SAMPLER FX (PADS DE EFECTOS) */
+  .sampler-panel { width: 100%; margin-top: 15px; padding: 10px 5px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; gap: 8px; align-items: center; }
+  .sampler-title { font-size: 0.65rem; font-weight: 800; color: var(--text-dim); letter-spacing: 1.5px; text-transform: uppercase; }
+  .sampler-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%; }
+  .fx-pad { padding: 10px 5px; background: #14171c; border: 1px solid rgba(255,255,255,0.03); border-radius: 6px; font-size: 0.68rem; font-weight: 800; color: #fff; cursor: pointer; text-transform: uppercase; text-align: center; transition: all 0.15s ease; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); }
+  .fx-pad:active { transform: scale(0.95); }
+  .fx-pad.cyan { border-bottom: 3px solid var(--neon-cyan); }
+  .fx-pad.cyan:hover { background: rgba(0, 240, 255, 0.15); box-shadow: 0 0 10px rgba(0, 240, 255, 0.3); }
+  .fx-pad.magenta { border-bottom: 3px solid var(--neon-magenta); }
+  .fx-pad.magenta:hover { background: rgba(255, 0, 127, 0.15); box-shadow: 0 0 10px rgba(255, 0, 127, 0.3); }
+  .crossfader-section { width: 100%; margin-top: auto; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; }
+  .crossfader-section label { font-size: 0.65rem; color: var(--text-dim); font-weight: 800; letter-spacing: 1.5px; display: block; margin-bottom: 5px; text-transform: uppercase; }
+  .crossfader-slider { width: 100%; height: 8px; background: #000; border-radius: 4px; outline: none; cursor: pointer; appearance: none; -webkit-appearance: none; accent-color: var(--gold); border: 1px solid rgba(255,255,255,0.05); }
+  .fader-labels { display: flex; justify-content: space-between; font-size: 0.6rem; color: var(--text-dim); margin-top: 4px; font-weight: 700; }
 </style>
+<!-- API de YouTube Iframe -->
+<script src="https://youtube.com"></script>
 </head>
 <body>
 
 <header>
-  <h1>Pro DJ Mixer</h1>
-  <p>Live Mixing Studio — Virtual Core Engine</p>
+  <h1>Ultra Pro DJ Studio</h1>
+  <p>Pro Core Audio Engine & FX Analizer</p>
 </header>
 
 <div class="studio-container">
@@ -351,11 +132,20 @@
     <div class="dj-deck deck-a">
       <div class="deck-header">
         <span class="deck-badge">DECK A</span>
-        <div class="track-title" id="titleA">No Track Loaded</div>
+        <div class="track-title" id="titleA">Ningún track cargado</div>
       </div>
       
+      <!-- Pantalla Digital y Contador A -->
+      <div class="display-panel">
+        <div class="time-counter" id="timeA">00:00</div>
+        <div style="font-size: 0.65rem; color: var(--text-dim); font-weight: 800;">TIME ELAPSED</div>
+      </div>
+
+      <!-- Pantalla Analizadora de Onda A -->
+      <canvas class="wave-display" id="canvasA"></canvas>
+      
       <div class="file-uploader">
-        <label for="fileA" class="file-label" id="labelFileA">Cargar canción</label>
+        <label for="fileA" class="file-label" id="labelFileA">Seleccionar canción</label>
         <input type="file" id="fileA" accept="audio/*">
       </div>
 
@@ -371,7 +161,7 @@
 
       <div class="deck-sliders">
         <div class="slider-unit">
-          <label>Volumen <span id="txtVolA">100%</span></label>
+          <label>Volumen A <span id="txtVolA">100%</span></label>
           <input type="range" id="volA" min="0" max="1" step="0.01" value="1">
         </div>
         <div class="slider-unit">
@@ -381,7 +171,7 @@
       </div>
     </div>
 
-    <!-- CENTRAL MIXER RACK -->
+    <!-- MEZCLADOR CENTRAL -->
     <div class="center-rack">
       <div class="mixer-brand">Master Control</div>
       
@@ -400,6 +190,17 @@
         </div>
       </div>
 
+      <!-- PANEL CENTRAL SAMPLER FX (4 PADS) -->
+      <div class="sampler-panel">
+        <div class="sampler-title">FX Sampler Pads</div>
+        <div class="sampler-grid">
+          <div class="fx-pad cyan" id="fxBocina">📣 Bocina</div>
+          <div class="fx-pad cyan" id="fxScratch">💿 Scratch</div>
+          <div class="fx-pad magenta" id="fxLaser">⚡ Láser</div>
+          <div class="fx-pad magenta" id="fxSirena">🚨 Sirena</div>
+        </div>
+      </div>
+
       <div class="crossfader-section">
         <label>Crossfader</label>
         <input type="range" id="crossfader" class="crossfader-slider" min="-1" max="1" step="0.02" value="0">
@@ -415,11 +216,20 @@
     <div class="dj-deck deck-b">
       <div class="deck-header">
         <span class="deck-badge">DECK B</span>
-        <div class="track-title" id="titleB">No Track Loaded</div>
+        <div class="track-title" id="titleB">Ningún track cargado</div>
       </div>
       
+      <!-- Pantalla Digital y Contador B -->
+      <div class="display-panel">
+        <div class="time-counter" id="timeB">00:00</div>
+        <div style="font-size: 0.65rem; color: var(--text-dim); font-weight: 800;">TIME ELAPSED</div>
+      </div>
+
+      <!-- Pantalla Analizadora de Onda B -->
+      <canvas class="wave-display" id="canvasB"></canvas>
+      
       <div class="file-uploader">
-        <label for="fileB" class="file-label" id="labelFileB">Cargar canción</label>
+        <label for="fileB" class="file-label" id="labelFileB">Seleccionar canción</label>
         <input type="file" id="fileB" accept="audio/*">
       </div>
 
@@ -435,7 +245,7 @@
 
       <div class="deck-sliders">
         <div class="slider-unit">
-          <label>Volumen <span id="txtVolB">100%</span></label>
+          <label>Volumen B <span id="txtVolB">100%</span></label>
           <input type="range" id="volB" min="0" max="1" step="0.01" value="1">
         </div>
         <div class="slider-unit">
@@ -447,161 +257,215 @@
 
   </div>
 </div>
-<!-- Elementos de Audio Nativos Ocultos -->
+<!-- Elementos de reproducción nativos en segundo plano -->
 <audio id="audioA" loop crossorigin="anonymous"></audio>
 <audio id="audioB" loop crossorigin="anonymous"></audio>
 
 <script>
-  // Obtención de elementos de audio
   const audA = document.getElementById('audioA');
   const audB = document.getElementById('audioB');
   
-  // Variables del Motor Web Audio API
   let audioCtx = null;
   let srcA, srcB, gainA, gainB, crossGainA, crossGainB;
   let filterHi, filterMid, filterLow;
+  let analyserA, analyserB;
   let engineReady = false;
 
-  // Inicialización Segura del Entorno de Audio Profesional
+  // Activación forzada de la tarjeta de sonido por evento del usuario
   function initAudioEngine() {
     if (engineReady) return;
     try {
       audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       
-      // Nodos de origen multimedia
       srcA = audioCtx.createMediaElementSource(audA);
       srcB = audioCtx.createMediaElementSource(audB);
       
-      // Nodos de volumen independiente por canal
-      gainA = audioCtx.createGain();
-      gainB = audioCtx.createGain();
+      gainA = audioCtx.createGain(); gainB = audioCtx.createGain();
+      crossGainA = audioCtx.createGain(); crossGainB = audioCtx.createGain();
       
-      // Nodos de volumen asignados al Crossfader central
-      crossGainA = audioCtx.createGain();
-      crossGainB = audioCtx.createGain();
+      // Analizadores FFT rápidos para renderizado de ondas gráficas
+      analyserA = audioCtx.createAnalyser(); analyserA.fftSize = 64;
+      analyserB = audioCtx.createAnalyser(); analyserB.fftSize = 64;
       
-      // Filtros del Ecualizador Isolator (3 bandas)
       filterHi = audioCtx.createBiquadFilter();  filterHi.type = "highshelf";  filterHi.frequency.value = 4000;
       filterMid = audioCtx.createBiquadFilter(); filterMid.type = "peaking";    filterMid.frequency.value = 1200; filterMid.Q.value = 1.0;
       filterLow = audioCtx.createBiquadFilter(); filterLow.type = "lowshelf";   filterLow.frequency.value = 250;
 
-      // Enrutamiento físico: Fuentes -> Volumen -> Crossfader -> Ecualizador -> Bocinas
-      srcA.connect(gainA).connect(crossGainA).connect(filterLow);
-      srcB.connect(gainB).connect(crossGainB).connect(filterLow);
+      // Puentes de enrutamiento: Orígenes -> Volumen -> Crossfader -> Filtros -> Salida Máster
+      srcA.connect(gainA).connect(crossGainA).connect(analyserA).connect(filterLow);
+      srcB.connect(gainB).connect(crossGainB).connect(analyserB).connect(filterLow);
       
       filterLow.connect(filterMid).connect(filterHi).connect(audioCtx.destination);
       
       engineReady = true;
-    } catch(e) {
-      console.log("Esperando acción del usuario para activar hardware de audio.");
-    }
+      renderWaves();
+    } catch(e) { console.log("Permiso de hardware de audio denegado."); }
   }
 
-  // Carga Dinámica de Archivos MP3/WAV (Deck A)
+  // Lectura e inyección de pistas de música locales
   document.getElementById('fileA').addEventListener('change', function(e) {
     if (this.files.length > 0) {
-      const file = this.files[0];
-      document.getElementById('titleA').innerText = file.name;
+      document.getElementById('titleA').innerText = this.files[0].name;
       document.getElementById('labelFileA').innerText = "Cambiar canción";
-      audA.src = URL.createObjectURL(file);
-      audA.load();
+      audA.src = URL.createObjectURL(this.files[0]); audA.load();
     }
   });
 
-  // Carga Dinámica de Archivos MP3/WAV (Deck B)
   document.getElementById('fileB').addEventListener('change', function(e) {
     if (this.files.length > 0) {
-      const file = this.files[0];
-      document.getElementById('titleB').innerText = file.name;
+      document.getElementById('titleB').innerText = this.files[0].name;
       document.getElementById('labelFileB').innerText = "Cambiar canción";
-      audB.src = URL.createObjectURL(file);
-      audB.load();
+      audB.src = URL.createObjectURL(this.files[0]); audB.load();
     }
   });
 
-  // Disparadores de Reproducción Deck A
+  // Gatillos Deck A
   document.getElementById('playA').addEventListener('click', () => {
-    initAudioEngine();
-    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-    
-    audA.play().then(() => {
-      document.getElementById('wheelA').classList.add('spinning');
-      updateMixerMixes();
-    }).catch(() => alert("Por favor, carga un archivo de música en el DECK A primero."));
+    initAudioEngine(); if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    audA.play().then(() => { document.getElementById('wheelA').classList.add('spinning'); updateMixerMixes(); })
+    .catch(() => alert("Por favor, selecciona primero una canción para el DECK A"));
   });
+  document.getElementById('cueA').addEventListener('click', () => { audA.pause(); document.getElementById('wheelA').classList.remove('spinning'); });
 
-  document.getElementById('cueA').addEventListener('click', () => {
-    audA.pause();
-    document.getElementById('wheelA').classList.remove('spinning');
-  });
-
-  // Disparadores de Reproducción Deck B
+  // Gatillos Deck B
   document.getElementById('playB').addEventListener('click', () => {
-    initAudioEngine();
-    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-    
-    audB.play().then(() => {
-      document.getElementById('wheelB').classList.add('spinning');
-      updateMixerMixes();
-    }).catch(() => alert("Por favor, carga un archivo de música en el DECK B primero."));
+    initAudioEngine(); if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    audB.play().then(() => { document.getElementById('wheelB').classList.add('spinning'); updateMixerMixes(); })
+    .catch(() => alert("Por favor, selecciona primero una canción para el DECK B"));
   });
+  document.getElementById('cueB').addEventListener('click', () => { audB.pause(); document.getElementById('wheelB').classList.remove('spinning'); });
 
-  document.getElementById('cueB').addEventListener('click', () => {
-    audB.pause();
-    document.getElementById('wheelB').classList.remove('spinning');
-  });
-
-  // Cálculo de Atenuación de Canales y Crossfader Pro DJ
+  // Cálculos matemáticos del Crossfader y volúmenes lineales
   function updateMixerMixes() {
     if (!engineReady) return;
-    
-    const vA = parseFloat(document.getElementById('volA').value);
-    const vB = parseFloat(document.getElementById('volB').value);
-    gainA.gain.value = vA;
-    gainB.gain.value = vB;
+    gainA.gain.value = parseFloat(document.getElementById('volA').value);
+    gainB.gain.value = parseFloat(document.getElementById('volB').value);
 
     const crossVal = parseFloat(document.getElementById('crossfader').value);
-    // Algoritmo de corte lineal limpio
-    if (crossVal <= 0) {
-      crossGainA.gain.value = 1;
-      crossGainB.gain.value = 1 + crossVal; // Incrementa el volumen del canal B al centrarse
-    } else {
-      crossGainA.gain.value = 1 - crossVal; // Atenúa el canal A al moverse a la derecha
-      crossGainB.gain.value = 1;
-    }
+    if (crossVal <= 0) { crossGainA.gain.value = 1; crossGainB.gain.value = 1 + crossVal; } 
+    else { crossGainA.gain.value = 1 - crossVal; crossGainB.gain.value = 1; }
   }
 
-  // Escuchadores de Eventos Faders de Volumen y Crossfader
-  document.getElementById('volA').addEventListener('input', (e) => {
-    document.getElementById('txtVolA').innerText = Math.round(e.target.value * 100) + "%";
-    updateMixerMixes();
-  });
-
-  document.getElementById('volB').addEventListener('input', (e) => {
-    document.getElementById('txtVolB').innerText = Math.round(e.target.value * 100) + "%";
-    updateMixerMixes();
-  });
-
+  document.getElementById('volA').addEventListener('input', (e) => { document.getElementById('txtVolA').innerText = Math.round(e.target.value * 100) + "%"; updateMixerMixes(); });
+  document.getElementById('volB').addEventListener('input', (e) => { document.getElementById('txtVolB').innerText = Math.round(e.target.value * 100) + "%"; updateMixerMixes(); });
   document.getElementById('crossfader').addEventListener('input', updateMixerMixes);
 
-  // Manipulación del Pitch (BPM / Velocidad) en Tiempo Real
+  // Manipuladores de Pitch (Tempo de pista / Sincronización de BPM)
   document.getElementById('pitchA').addEventListener('input', (e) => {
     const percent = parseFloat(e.target.value);
     document.getElementById('txtPitchA').innerText = (percent >= 0 ? "+" : "") + percent.toFixed(1) + "%";
-    // Convierte el porcentaje de pitch a factor multiplicador de velocidad
     audA.playbackRate = 1 + (percent / 100);
   });
-
   document.getElementById('pitchB').addEventListener('input', (e) => {
     const percent = parseFloat(e.target.value);
     document.getElementById('txtPitchB').innerText = (percent >= 0 ? "+" : "") + percent.toFixed(1) + "%";
     audB.playbackRate = 1 + (percent / 100);
   });
 
-  // Enrutamiento Dinámico del Rack de Ecualización Maestro
+  // Escuchadores del Ecualizador Isolator de 3 bandas
   document.getElementById('eqHi').addEventListener('input', (e) => { if (engineReady) filterHi.gain.value = e.target.value; });
   document.getElementById('eqMid').addEventListener('input', (e) => { if (engineReady) filterMid.gain.value = e.target.value; });
   document.getElementById('eqLow').addEventListener('input', (e) => { if (engineReady) filterLow.gain.value = e.target.value; });
+
+  // CONTADOR DE SEGUNDOS DIGITAL (MINUTOS Y SEGUNDOS)
+  function updateCounters() {
+    const formatTime = (secs) => {
+      if (isNaN(secs)) return "00:00";
+      const m = String(Math.floor(secs / 60)).padStart(2, '0');
+      const s = String(Math.floor(secs % 60)).padStart(2, '0');
+      return `${m}:${s}`;
+    };
+    document.getElementById('timeA').innerText = formatTime(audA.currentTime);
+    document.getElementById('timeB').innerText = formatTime(audB.currentTime);
+    requestAnimationFrame(updateCounters);
+  }
+  requestAnimationFrame(updateCounters);
+
+  // RENDERIZADOR GRÁFICO DE LAS ONDAS DIGITALES (CANVAS LED)
+  function renderWaves() {
+    const canvasA = document.getElementById('canvasA'), ctxA = canvasA.getContext('2d');
+    const canvasB = document.getElementById('canvasB'), ctxB = canvasB.getContext('2d');
+    const bufferLengthA = analyserA.frequencyBinCount, dataArrayA = new Uint8Array(bufferLengthA);
+    const bufferLengthB = analyserB.frequencyBinCount, dataArrayB = new Uint8Array(bufferLengthB);
+
+    function draw() {
+      requestAnimationFrame(draw);
+      analyserA.getByteFrequencyData(dataArrayA);
+      analyserB.getByteFrequencyData(dataArrayB);
+
+      // Renderizado Deck A (Cyan)
+      ctxA.fillStyle = '#000'; ctxA.fillRect(0, 0, canvasA.width, canvasA.height);
+      let barWidth = (canvasA.width / bufferLengthA) * 1.5, barHeight, x = 0;
+      for (let i = 0; i < bufferLengthA; i++) {
+        barHeight = dataArrayA[i] / 4; ctxA.fillStyle = `hsl(185, 100%, ${Math.min(barHeight + 30, 70)}%)`;
+        ctxA.fillRect(x, canvasA.height - barHeight, barWidth - 1, barHeight); x += barWidth;
+      }
+
+      // Renderizado Deck B (Magenta)
+      ctxB.fillStyle = '#000'; ctxB.fillRect(0, 0, canvasB.width, canvasB.height);
+      x = 0;
+      for (let i = 0; i < bufferLengthB; i++) {
+        barHeight = dataArrayB[i] / 4; ctxB.fillStyle = `hsl(330, 100%, ${Math.min(barHeight + 30, 70)}%)`;
+        ctxB.fillRect(x, canvasB.height - barHeight, barWidth - 1, barHeight); x += barWidth;
+      }
+    }
+    draw();
+  }
+
+  // SINTETIZADOR DE AUDIO MATEMÁTICO (SAMPLER FX)
+  function playFX(type) {
+    initAudioEngine();
+    if (!audioCtx) return;
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+
+    const osc = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    osc.connect(gainNode).connect(audioCtx.destination);
+    const now = audioCtx.currentTime;
+
+    if (type === 'bocina') {
+      osc.type = 'sawtooth'; osc.frequency.setValueAtTime(400, now);
+      gainNode.gain.setValueAtTime(0.3, now);
+      for(let i = 0.1; i < 0.6; i += 0.15) {
+        osc.frequency.setValueAtTime(380, now + i);
+        gainNode.gain.setValueAtTime(0.25, now + i);
+        osc.frequency.setValueAtTime(420, now + i + 0.05);
+      }
+      gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
+      osc.start(now); osc.stop(now + 0.8);
+    } 
+    else if (type === 'scratch') {
+      osc.type = 'triangle'; osc.frequency.setValueAtTime(150, now);
+      osc.frequency.exponentialRampToValueAtTime(800, now + 0.1);
+      osc.frequency.exponentialRampToValueAtTime(200, now + 0.2);
+      osc.frequency.exponentialRampToValueAtTime(600, now + 0.3);
+      gainNode.gain.setValueAtTime(0.4, now);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+      osc.start(now); osc.stop(now + 0.35);
+    } 
+    else if (type === 'laser') {
+      osc.type = 'sawtooth'; osc.frequency.setValueAtTime(1800, now);
+      osc.frequency.exponentialRampToValueAtTime(80, now + 0.5);
+      gainNode.gain.setValueAtTime(0.2, now);
+      gainNode.gain.linearRampToValueAtTime(0.001, now + 0.5);
+      osc.start(now); osc.stop(now + 0.5);
+        } 
+    else if (type === 'sirena') {
+      osc.type = 'sine'; osc.frequency.setValueAtTime(600, now);
+      osc.frequency.linearRampToValueAtTime(900, now + 0.25);
+      osc.frequency.linearRampToValueAtTime(600, now + 0.5);
+      osc.frequency.linearRampToValueAtTime(900, now + 0.75);
+      gainNode.gain.setValueAtTime(0.25, now);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, now + 1.0);
+      osc.start(now); osc.stop(now + 1.0);
+    }
+  }
+
+  // Enlaces de eventos para el Sampler FX central
+  document.getElementById('fxBocina').addEventListener('click', () => playFX('bocina'));
+  document.getElementById('fxScratch').addEventListener('click', () => playFX('scratch'));
+  document.getElementById('fxLaser').addEventListener('click', () => playFX('laser'));
+  document.getElementById('fxSirena').addEventListener('click', () => playFX('sirena'));
 </script>
 </body>
 </html>
