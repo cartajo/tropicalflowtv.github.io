@@ -583,7 +583,12 @@ function createPromo(){
   if (!(window.YT && window.YT.Player)) return;
   promoPlayer = new YT.Player('promoPlayer',{
     videoId: PROMO_IDS[promoIndex],
-    playerVars: { rel: 0, modestbranding: 1, playsinline: 1, controls: 1 },
+    playerVars: {
+  rel: 0,
+  modestbranding: 1,
+  playsinline: 0,
+  controls: 1
+}
     events: {
       onReady: e => { 
         try { e.target.unMute(); e.target.playVideo(); } catch(_) {} 
