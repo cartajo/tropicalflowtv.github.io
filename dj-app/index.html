@@ -140,6 +140,9 @@
   <p>Pro Core Audio Engine, Advanced FX Sampler & Dual Wave Live Analyzer</p>
 </header>
 
+      <!-- CONTENEDOR GRID OBLIGATORIO: Fuerza la alineación horizontal de los tres bloques -->
+  <div class="mixer-interface">
+
     <!-- DECK A -->
     <div class="dj-deck deck-a">
       <div class="deck-header">
@@ -241,7 +244,8 @@
         </div>
       </div>
     </div>
-    <!-- DECK B -->
+
+       <!-- DECK B -->
     <div class="dj-deck deck-b">
       <div class="deck-header">
         <span class="deck-badge">DECK B</span>
@@ -290,8 +294,8 @@
       </div>
     </div>
 
-  </div>
-</div>
+  </div> <!-- Cierre obligatorio de mixer-interface -->
+</div> <!-- Cierre obligatorio de studio-container -->
 
 <!-- Elementos de reproducción nativos ocultos -->
 <audio id="audioA" loop crossorigin="anonymous"></audio>
@@ -338,7 +342,7 @@
     }
   }
 
-  // Lectura de archivos locales indexada de forma segura (Arreglado)
+  // Lectura de archivos locales corregida
   document.getElementById('fileA').addEventListener('change', function(e) {
     if (this.files.length > 0) {
       document.getElementById('titleA').innerText = this.files[0].name;
@@ -356,6 +360,7 @@
       audB.load();
     }
   });
+
   // Gatillos Deck A
   document.getElementById('playA').addEventListener('click', () => {
     initAudioEngine(); 
