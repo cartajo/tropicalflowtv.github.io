@@ -34,6 +34,17 @@
   margin-top:12px;
   display:inline-block;
   padding:10px 20px;
+  border:2px solid #00e0ff;
+  border-radius:15px;
+  background:rgba(0,0,0,.45);
+  color:#00e0ff;
+  font-size:26px;
+  font-weight:bold;
+}
+  #reloj{
+  margin-top:12px;
+  display:inline-block;
+  padding:10px 20px;
   border:2px solid var(--accent);
   border-radius:15px;
   background:rgba(0,0,0,.45);
@@ -712,5 +723,18 @@ function loadCarousel(play){
   window.onYouTubeIframeAPIReady = function(){ if (typeof prev === 'function') prev(); start(); };
 })();
 </script>
+<script>
+function actualizarReloj() {
+
+  const ahora = new Date();
+
+  document.getElementById("reloj").innerHTML =
+    ahora.toLocaleTimeString();
+}
+
+setInterval(actualizarReloj, 1000);
+
+actualizarReloj();
+</script>  
 </body>
 </html>
