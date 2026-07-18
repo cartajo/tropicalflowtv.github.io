@@ -3,27 +3,33 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Ultra Pro DJ Mixing Studio V2</title>
+<title>Tropical Flow Radio Tv - Mixing Studio</title>
 <meta name="description" content="Pro Core Audio Engine, Advanced FX Sampler & Dual Wave Live Analyzer.">
 
 <style>
   :root {
-    --bg-app: #030712;
-    --bg-panel: #0b0f19;
-    --bg-subpanel: #070a12;
-    --neon-cyan: #00f0ff;
-    --neon-magenta: #ff007f;
-    --neon-green: #39ff14;
-    --neon-red: #ff3333;
-    --gold: #f59e0b;
-    --text-main: #f8fafc;
-    --text-dim: #475569;
-    --border-glow: rgba(255, 255, 255, 0.05);
-  }
+  --bg-app: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?fit=crop&w=1920&q=80');
+
+  --bg-panel: rgba(11, 15, 25, 0.92);
+  --bg-subpanel: #070a12;
+  --neon-cyan: #00f0ff;
+  --neon-magenta: #ff007f;
+  --neon-green: #39ff14;
+  --neon-red: #ff3333;
+  --gold: #f59e0b;
+  --text-main: #f8fafc;
+  --text-dim: #64748b;
+  --border-glow: rgba(255, 255, 255, 0.08);
+}
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    background-color: var(--bg-app);
+    /* Configuración del fondo de playa tropical con difuminado elegante */
+    background-image: var(--bg-app);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
     color: var(--text-main);
     font-family: system-ui, -apple-system, sans-serif;
     padding: 15px;
@@ -32,24 +38,81 @@
     align-items: center;
     min-height: 100vh;
     overflow-x: hidden;
+    backdrop-filter: blur(4px); /* Suaviza el fondo para que los textos de la app se lean perfecto */
+    -webkit-backdrop-filter: blur(4px);
   }
 
-  /* TOP BAR DEL PRO ESTUDIO */
+  /* BARRA SUPERIOR RETOCADA */
   .top-bar {
     width: 100%; max-width: 1400px; display: flex; justify-content: space-between;
     align-items: center; background: var(--bg-panel); padding: 10px 20px;
     border-radius: 8px; border: 1px solid var(--border-glow); margin-bottom: 15px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
   }
   .top-bar h1 {
-    font-size: 1.5rem; font-weight: 900; text-transform: uppercase; letter-spacing: 3px;
-    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    font-size: 1.1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;
+    color: #94a3b8;
   }
   .nav-btn { background: #131a2a; border: 1px solid #23314f; color: #fff; padding: 6px 12px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; cursor: pointer; text-transform: uppercase; }
 
-  /* CONTENEDORES MAESTROS DE REJILLA */
+  /* NUEVO: BRANDING CENTRAL TROPICAL FLOW RADIO TV */
+  .tropical-brand-center {
+    text-align: center;
+    margin: 10px 0 25px 0;
+    padding: 15px;
+    width: 100%;
+    max-width: 600px;
+  }
+  .tropical-brand-center h2 {
+    font-size: 2.8rem;
+    font-weight: 950;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    line-height: 1.1;
+    /* Degradado de color caribeño brillante */
+    background: linear-gradient(135deg, #fff 0%, var(--gold) 50%, var(--neon-cyan) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    /* Efecto de resplandor neón estilo cartel de televisión */
+    filter: drop-shadow(0 2px 8px rgba(0, 240, 255, 0.6)) drop-shadow(0 4px 20px rgba(245, 158, 11, 0.4));
+  }
+  .tropical-brand-center p {
+    color: var(--neon-green);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-top: 6px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  }
+
+  /* CONTENEDORES MAESTROS */
   .studio-container { width: 100%; max-width: 1400px; display: flex; flex-direction: column; gap: 15px; }
   .mixer-interface { display: grid; grid-template-columns: 1fr 340px 1fr; gap: 15px; }
+
+  @media (max-width: 1100px) {
+    .mixer-interface { grid-template-columns: 1fr; }
+    .center-rack { order: 3; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <button class="nav-btn">☰ Menu</button>
+  <h1>Live Broadcast Studio</h1>
+  <button class="nav-btn">ON AIR •</button>
+</div>
+
+<!-- LETRERO CENTRAL ADICIONADO -->
+<div class="tropical-brand-center">
+  <h2>TROPICAL flow<br><span style="font-size: 2rem; background: linear-gradient(90deg, var(--neon-magenta), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Radio Tv</span></h2>
+  <p>La evolución del Caribe</p>
+</div>
+
+<div class="studio-container">
+  <div class="mixer-interface">
+
 
   @media (max-width: 1100px) {
     .mixer-interface { grid-template-columns: 1fr; }
