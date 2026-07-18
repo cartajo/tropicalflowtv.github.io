@@ -3,31 +3,73 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Tropical Flow TV 📺 Radio - VIP & DJ Mixer</title>
+<title>Tropical Flow TV 📺 Radio - VIP</title>
+<meta name="description" content="Tropical Flow TV Radio — Salsa, Merengue, Bachata y Reggaetón 24/7.">
+
 <style>
   :root{
     --accent:#00e0ff; --accent2:#2dd4bf; --warn:#fbbf24;
     --glass:rgba(0,0,0,.62); --panel:rgba(255,255,255,.08);
     --card:rgba(0,0,0,.60); --maxw:1100px;
   }
-  *{box-sizing:border-box} html,body{margin:0}
+  *{box-sizing:border-box}
+  html,body{margin:0}
   body{
-    color:#fff; font-family:system-ui,-apple-system,sans-serif;
-    background: linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.80)), url("https://unsplash.com") center/cover fixed no-repeat;
+    color:#fff;
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,Helvetica,sans-serif;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.80)),
+      url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop")
+      center/cover fixed no-repeat;
   }
-  .bg-mark{ position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.06; display:flex; align-items:center; justify-content:center; font-weight:900; text-transform:uppercase; font-size:clamp(38px,10vw,120px); }
+  .bg-mark{
+    position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.06;
+    display:flex; align-items:center; justify-content:center;
+    font-weight:900; letter-spacing:.08em; text-transform:uppercase;
+    font-size:clamp(38px,10vw,120px);
+  }
   header, footer{ position:relative; z-index:2; text-align:center; padding:14px; background:rgba(0,0,0,.5) }
   h1{ margin:0; font-size:clamp(22px,3.4vw,36px) }
-  #reloj{ margin-top:12px; display:inline-block; padding:10px 20px; border:2px solid var(--accent); border-radius:15px; background:rgba(0,0,0,.45); box-shadow:0 0 15px rgba(0,224,255,.5); color:var(--accent); font-size:26px; font-weight:900; text-align:center; letter-spacing:2px; }
-  #reloj small{ display:block; margin-top:5px; font-size:14px; color:#fff; }
-  .social{ max-width:var(--maxw); margin:0 auto; display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
-  .social a{ text-decoration:none; color:#fff; padding:.55rem .9rem; border-radius:10px; font-weight:800; background:#444; display:inline-flex; align-items:center; gap:.5rem; border:1px solid rgba(255,255,255,.15); }
-  .whatsapp{ background:#25d366 } .youtube{ background:#FF0000 } .facebook{ background:#3b5998 } .paypal{ background:#0070ba } .athmovil{ background:#6f42c1 }
+#reloj{
+  margin-top:12px;
+  display:inline-block;
+  padding:10px 20px;
+  border:2px solid var(--accent);
+  border-radius:15px;
+  background:rgba(0,0,0,.45);
+  box-shadow:0 0 15px rgba(0,224,255,.5);
+  color:var(--accent);
+  font-size:26px;
+  font-weight:900;
+  text-align:center;
+  letter-spacing:2px;
+}
+
+#reloj small{
+  display:block;
+  margin-top:5px;
+  font-size:14px;
+  color:#fff;
+}
+  .social{
+    max-width:var(--maxw);
+    margin:0 auto;
+    display:flex; flex-wrap:wrap; gap:10px; justify-content:center;
+  }
+  .social a{
+    text-decoration:none; color:#fff; padding:.55rem .9rem; border-radius:10px; font-weight:800;
+    background:#444; display:inline-flex; align-items:center; gap:.5rem; border:1px solid rgba(255,255,255,.15);
+  }
+  .whatsapp{ background:#25d366 } .youtube{ background:#FF0000 }
+  .facebook{ background:#3b5998 } .paypal{ background:#0070ba } .athmovil{ background:#6f42c1 }
+
   .wrap{ position:relative; z-index:1; max-width:var(--maxw); margin:16px auto; padding:16px; background:var(--glass); border-radius:16px }
   section{ margin:18px 0; padding:16px; background:var(--panel); border-radius:14px }
   h2{ margin:0 0 12px; text-align:center }
+
   .btn{background:var(--accent);color:#000;border:0;border-radius:12px;font-weight:800;padding:10px 14px;cursor:pointer}
-  .btn.alt{background:var(--accent2)} .btn.warn{background:var(--warn);color:#000}
+  .btn.alt{background:var(--accent2)}
+  .btn.warn{background:var(--warn);color:#000}
   .controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}
 
   /* ─── RADIO ─── */
@@ -37,134 +79,62 @@
   #radioFrame{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
   #radioMini{display:flex;gap:10px;justify-content:center;align-items:center}
   .hint{color:#bbb;font-size:.9rem;text-align:center;margin-top:8px}
+  @media (max-width:900px){ #radioViewport .viewport{ padding-top:56% } }
+  @media (max-width:700px){ #radioViewport .viewport{ padding-top:62% } }
+  @media (max-width:540px){ #radioViewport .viewport{ padding-top:68% } }
 
-  /* ─── DJ MIXER SYSTEM ─── */
-  .mixer-grid { display: grid; grid-template-columns: 1fr 180px 1fr; gap: 15px; background: rgba(10,10,10,0.9); padding: 15px; border-radius: 12px; border: 1px solid var(--accent); }
-  @media(max-width:768px){ .mixer-grid{ grid-template-columns: 1fr; } }
-  .deck { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; text-align: center; }
-  .vinyl { width: 120px; height: 120px; background: radial-gradient(circle, #333 10%, #111 35%, #000 70%); border-radius: 50%; margin: 10px auto; border: 3px solid #555; position: relative; }
-  .vinyl-mark { position: absolute; top: 5px; left: 58px; width: 4px; height: 20px; background: #fff; }
-  .spinning { animation: rotatePlate 2s linear infinite; }
-  @keyframes rotatePlate { 100% { transform: rotate(360deg); } }
-  .mixer-center { display: flex; flex-direction: column; justify-content: center; gap: 10px; background: #111; padding: 10px; border-radius: 8px; }
-  .fader-box { display: flex; flex-direction: column; font-size: 11px; margin-bottom: 5px; }
-  .fader-box input { width: 100%; accent-color: var(--accent); }
+  /* ─── PLAYLIST ─── */
+  audio{width:100%;max-width:720px;margin:8px auto;display:block;border-radius:12px}
+  .plist{list-style:none;margin:10px auto 0;max-width:900px;padding:0;max-height:340px;overflow:auto}
+  .plist li{padding:8px 10px;border-radius:10px;cursor:pointer}
+  .plist li.active{background:rgba(0,191,255,.28)}
+  .status{margin-top:8px;color:#7CFC00;text-align:center}
+  .status.warn{color:#ffd166}
+  .plist::-webkit-scrollbar{width:10px}
+  .plist::-webkit-scrollbar-track{background:rgba(255,255,255,.08);border-radius:10px}
+  .plist::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--accent),#00bcd4);border-radius:10px}
+  .plist{scrollbar-width:thin;scrollbar-color:#00bcd4 rgba(255,255,255,.08)}
 
   /* ─── VIDEO ─── */
-  .ratio16x9 { position: relative; width: 100%; padding-top: 56.25%; height: 0; }
-  .fill { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-  #carouselShell{position:relative;width:100%;padding-top:56.25%;border-radius:14px;overflow:hidden;background:#000;}
-  #ytMain{position:absolute;top:0;left:0;width:100%;height:100%}
-  .thumbStrip{max-width:100%;margin:10px auto 0;padding:10px;display:flex;gap:12px;overflow-x:auto;}
-  .thumb{position:relative;flex:0 0 auto;width:160px;border-radius:12px;overflow:hidden;cursor:pointer}
-  .thumb img{display:block;width:100%;filter:brightness(.8);}
-  .thumb.active{outline:3px solid var(--accent);}
-  .playOverlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.2)}
-  .playBtn{width:40px;height:40px;border-radius:50%;background:rgba(0,0,0,.6);border:2px solid #fff;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%)}
-  .playBtn:before{content:"";border-left:14px solid #fff;border-top:8px solid transparent;border-bottom:8px solid transparent;position:absolute;top:13px;left:15px}
-</style>
-<script src="https://youtube.com"></script>
-</head>
-<body>
-<div class="bg-mark">Tropical Flow RadioTV</div>
+    /* ─── CORRECCIÓN DEFINITIVA PARA PANTALLA COMPLETA ─── */
+  .ratio16x9 {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25% !important; /* Fuerza la proporción de cine 16:9 */
+    height: 0 !important;
+  }
+  .fill {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important; /* Fuerza a YouTube a estirarse completo */
+  }
+  /* Esto evita que el iframe interno de YouTube se auto-recorte */
+  #promoPlayer, #ytMain, #promoPlayer iframe, #ytMain iframe {
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+  }
 
-<header>
-  <h1>🌴 Tropical Flow TV 📺 Radio – VIP</h1>
-  <div id="reloj"></div>
-</header>
 
-<div class="top-social">
-  <div class="social">
-    <a class="whatsapp" href="https://wa.me" target="_blank">WhatsApp</a>
-    <a class="youtube"  href="https://youtube.com" target="_blank">YouTube</a>
-    <a class="facebook" href="https://facebook.com" target="_blank">Facebook</a>
-    <a class="paypal"   href="https://paypal.com" target="_blank">🎧 Donar PayPal</a>
-    <a class="athmovil" href="https://athmovil.com" target="_blank">Donar ATH Móvil</a>
-  </div>
-</div>
-
-<div class="wrap">
-
-  <!-- ============= RADIO ============= -->
-  <section id="radio">
-    <h2>🎧 Tropical Flow TV Radio</h2>
-    <div id="radioCard">
-      <div id="radioMini">
-        <button id="openPlayer" class="btn alt">▶️ Abrir player</button>
-        <button id="openTab" class="btn warn">🌐 Pestaña Nueva</button>
-      </div>
-      <div id="radioViewport"><div class="viewport"><iframe id="radioFrame" title="Radio" src="about:blank" allow="autoplay"></iframe></div></div>
-      <p class="hint">Si no carga el reproductor, presiona "Abrir player".</p>
-    </div>
-  </section>
-
-  <!-- ============= DJ MIXER VIRTUAL PRO ============= -->
-  <section id="djMixer">
-    <h2>🎛️ Tropical Flow DJ Mixer Live</h2>
-    <div class="mixer-grid">
-      <!-- DECK A -->
-      <div class="deck">
-        <div style="font-weight:bold;color:var(--accent)">DECK A</div>
-        <input type="file" id="fileA" accept="audio/*" style="width:100%;margin:5px 0;font-size:11px;">
-        <div class="vinyl" id="plateA"><div class="vinyl-mark"></div></div>
-        <div class="controls">
-          <button class="btn" id="playA">▶ Play</button>
-          <button class="btn warn" id="cueA">⏸ Cue</button>
-        </div>
-        <div class="fader-box" style="margin-top:10px;">
-          <label>Volumen A: <span id="lblVolA">100%</span></label>
-          <input type="range" id="volA" min="0" max="1" step="0.01" value="1">
-        </div>
-        <div class="fader-box">
-          <label>Pitch: <span id="lblPitchA">1.0x</span></label>
-          <input type="range" id="pitchA" min="0.8" max="1.2" step="0.01" value="1">
-        </div>
-      </div>
-
-      <!-- CENTRAL MIXER -->
-      <div class="mixer-center">
-        <div style="text-align:center;font-size:12px;font-weight:bold;color:var(--warn)">MASTER EQ</div>
-        <div class="fader-box"><label>HI</label><input type="range" id="eqHi" min="-20" max="20" value="0"></div>
-        <div class="fader-box"><label>MID</label><input type="range" id="eqMid" min="-20" max="20" value="0"></div>
-        <div class="fader-box"><label>LOW</label><input type="range" id="eqLow" min="-20" max="20" value="0"></div>
-        <div class="fader-box" style="margin-top:15px;text-align:center;">
-          <label>CROSSFADER</label>
-          <input type="range" id="crossfader" min="-1" max="1" step="0.02" value="0">
-        </div>
-      </div>
-
-      <!-- DECK B -->
-      <div class="deck">
-        <div style="font-weight:bold;color:var(--accent)">DECK B</div>
-        <input type="file" id="fileB" accept="audio/*" style="width:100%;margin:5px 0;font-size:11px;">
-        <div class="vinyl" id="plateB"><div class="vinyl-mark"></div></div>
-        <div class="controls">
-          <button class="btn" id="playB">▶ Play</button>
-          <button class="btn warn" id="cueB">⏸ Cue</button>
-        </div>
-        <div class="fader-box" style="margin-top:10px;">
-          <label>Volumen B: <span id="lblVolB">100%</span></label>
-          <input type="range" id="volB" min="0" max="1" step="0.01" value="1">
-        </div>
-        <div class="fader-box">
-          <label>Pitch: <span id="lblPitchB">1.0x</span></label>
-          <input type="range" id="pitchB" min="0.8" max="1.2" step="0.01" value="1">
-        </div>
-      </div>
-    </div>
-  </section>
-
-  /* ─── VIDEO / CAROUSEL ─── */
-  .ratio16x9 { position: relative; width: 100%; padding-top: 56.25% !important; height: 0 !important; }
-  .fill { position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; }
+  /* CARRUSEL VIDEO FULL WIDTH */
   #carouselShell{position:relative;width:100%;padding-top:56.25%;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)}
   #ytMain{position:absolute;top:0;left:0;width:100%;height:100%}
   .thumbStrip{max-width:100%;margin:10px auto 0;padding:10px;display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory}
+  
+  /* CORREGIDO: Añadido position: relative obligatorio para centrar elementos internos */
   .thumb{position:relative;flex:0 0 auto;width:220px;border-radius:12px;overflow:hidden;scroll-snap-align:start;box-shadow:0 8px 22px rgba(0,0,0,.35);cursor:pointer}
   .thumb img{display:block;width:100%;filter:brightness(.9);transition:transform .18s ease, filter .18s ease}
   .thumb:hover img{transform:scale(1.03);filter:brightness(1)}
   .thumb.active{outline:3px solid var(--accent);outline-offset:-3px}
+  
+  /* CORREGIDO: Ajustado el overlay para centrado absoluto total */
   .playOverlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(transparent,rgba(0,0,0,.32));z-index:2}
+  
+  /* CORREGIDO: El botón ahora se auto-posiciona de forma exacta en el centro */
   .playBtn{width:54px;height:54px;border-radius:50%;background:rgba(0,0,0,.66);border:2px solid rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%)}
   .playBtn:before{content:"";border-left:18px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px}
 </style>
