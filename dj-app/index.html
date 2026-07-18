@@ -109,7 +109,7 @@
   .knob-unit label { font-size: 0.65rem; color: var(--text-dim); font-weight: 700; letter-spacing: 1px; }
   .knob-unit input[type="range"] { width: 85%; accent-color: var(--gold); cursor: pointer; }
 
-  /* REESTRUCTURACIÓN PARA 10 PADS DEL SAMPLER FX EXTENDIDO */
+  /* SAMPLER FX EXTENDIDO */
   .sampler-panel { width: 100%; margin-top: 15px; padding: 10px 5px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; gap: 8px; align-items: center; }
   .sampler-title { font-size: 0.65rem; font-weight: 800; color: var(--text-dim); letter-spacing: 1.5px; text-transform: uppercase; display: flex; width: 100%; justify-content: space-between; }
   .sampler-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; width: 100%; }
@@ -171,8 +171,8 @@
       </div>
 
       <div class="deck-controls-row">
-        <button class="action-btn btn-play" id="playA">▶️ Play</button>
-        <button class="action-btn btn-cue" id="cueA">⏸️ Cue</button>
+        <button class="action-btn btn-play" id="playA">▶ Play</button>
+        <button class="action-btn btn-cue" id="cueA">⏸ Cue</button>
       </div>
 
       <div class="deck-sliders">
@@ -212,7 +212,6 @@
           <span>FX Sampler 10-Pads</span>
           <span style="color:var(--gold)" id="txtVolFX">Vol: 70%</span>
         </div>
-        <!-- NUEVO: Slider de control de volumen para Sampler FX -->
         <div class="slider-unit" style="margin-bottom: 8px;">
           <input type="range" id="volFX" min="0" max="1" step="0.01" value="0.7" style="accent-color:var(--gold);">
         </div>
@@ -273,8 +272,8 @@
       </div>
 
       <div class="deck-controls-row">
-        <button class="action-btn btn-play" id="playB">▶️ Play</button>
-        <button class="action-btn btn-cue" id="cueB">⏸️ Cue</button>
+        <button class="action-btn btn-play" id="playB">▶ Play</button>
+        <button class="action-btn btn-cue" id="cueB">⏸ Cue</button>
       </div>
 
       <div class="deck-sliders">
@@ -337,7 +336,7 @@
     }
   }
 
-  // Lectura segura para inyección de música local
+  // REPARADO: Se reincorporó el índice [0] para leer canciones correctamente del FileList
   document.getElementById('fileA').addEventListener('change', function(e) {
     if (this.files.length > 0) {
       document.getElementById('titleA').innerText = this.files[0].name;
@@ -421,7 +420,7 @@
       if (isNaN(secs) || secs < 0) return "00:00";
       const m = String(Math.floor(secs / 60)).padStart(2, '0');
       const s = String(Math.floor(secs % 60)).padStart(2, '0');
-      return ${m}:${s};
+      return `${m}:${s}`;
     };
 
     document.getElementById('timeA').innerText = formatTime(audA.currentTime);
@@ -451,14 +450,14 @@
       ctxA.fillStyle = '#000'; ctxA.fillRect(0, 0, canvasA.width, canvasA.height);
       let barWidth = (canvasA.width / bufferLengthA) * 1.5, barHeight, x = 0;
       for (let i = 0; i < bufferLengthA; i++) {
-        barHeight = dataArrayA[i] / 4; ctxA.fillStyle = hsl(185, 100%, ${Math.min(barHeight + 30, 70)}%);
+        barHeight = dataArrayA[i] / 4; ctxA.fillStyle = `hsl(185, 100%, ${Math.min(barHeight + 30, 70)}%)`;
         ctxA.fillRect(x, canvasA.height - barHeight, barWidth - 1, barHeight); x += barWidth;
       }
 
       ctxB.fillStyle = '#000'; ctxB.fillRect(0, 0, canvasB.width, canvasB.height);
       x = 0;
       for (let i = 0; i < bufferLengthB; i++) {
-        barHeight = dataArrayB[i] / 4; ctxB.fillStyle = hsl(330, 100%, ${Math.min(barHeight + 30, 70)}%);
+        barHeight = dataArrayB[i] / 4; ctxB.fillStyle = `hsl(330, 100%, ${Math.min(barHeight + 30, 70)}%)`;
         ctxB.fillRect(x, canvasB.height - barHeight, barWidth - 1, barHeight); x += barWidth;
       }
     }
@@ -597,3 +596,5 @@
 </script>
 </body>
 </html>
+
+
