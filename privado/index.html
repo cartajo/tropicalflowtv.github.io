@@ -105,6 +105,15 @@
     width:140px;
 }
 
+#contadorDJ{
+    margin-top:12px;
+    text-align:center;
+    color:#00e0ff;
+    font-size:18px;
+    font-weight:bold;
+    text-shadow:0 0 10px #00e0ff;
+}
+
 @keyframes spin{
     from{
         transform:rotate(0deg);
@@ -113,7 +122,7 @@
     to{
         transform:rotate(360deg);
     }
-} 
+}
   .social{
     max-width:var(--maxw);
     margin:0 auto;
@@ -231,8 +240,8 @@
           <div class="slider-box">
               <span>🎚️ Crossfader</span>
               <input type="range" min="0" max="100" value="50">
-          </div>
-
+           </div>          
+ <div id="contadorDJ">00:00 / 00:00</div>
       </div>
 
       <div class="deck">
@@ -860,5 +869,28 @@ function toggleVinyl(btn){
 }
 
 </script>  
+ const contadorDJ = document.getElementById("contadorDJ");
+const player = document.getElementById("plAudio");
+
+function tiempo(segundos){
+
+    if (!segundos) return "00:00";
+
+    const minutos = Math.floor(segundos / 60);
+    const segundosRestantes = Math.floor(segundos % 60);
+
+    return `${String(minutos).padStart(2,"0")}:${String(segundosRestantes).padStart(2,"0")}`;
+}
+
+player.addEventListener("timeupdate", () => {
+
+    const restante = player.duration - player.currentTime;
+
+    contadorDJ.textContent =
+        tiempo(player.currentTime) +
+        " ⏳ " +
+        tiempo(restante);
+
+}); 
 </body>
 </html>
