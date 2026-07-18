@@ -8,19 +8,18 @@
 
 <style>
   :root {
-  --bg-app: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?fit=crop&w=1920&q=80');
-
-  --bg-panel: rgba(11, 15, 25, 0.92);
-  --bg-subpanel: #070a12;
-  --neon-cyan: #00f0ff;
-  --neon-magenta: #ff007f;
-  --neon-green: #39ff14;
-  --neon-red: #ff3333;
-  --gold: #f59e0b;
-  --text-main: #f8fafc;
-  --text-dim: #64748b;
-  --border-glow: rgba(255, 255, 255, 0.08);
-}
+    --bg-app: url('https://unsplash.com');
+    --bg-panel: rgba(11, 15, 25, 0.92);
+    --bg-subpanel: #070a12;
+    --neon-cyan: #00f0ff;
+    --neon-magenta: #ff007f;
+    --neon-green: #39ff14;
+    --neon-red: #ff3333;
+    --gold: #f59e0b;
+    --text-main: #f8fafc;
+    --text-dim: #64748b;
+    --border-glow: rgba(255, 255, 255, 0.08);
+  }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
   
@@ -136,7 +135,7 @@
   .pad-btn { padding: 4px 8px; background: #131a2a; border: 1px solid #23314f; color: #94a3b8; font-size: 0.65rem; font-weight: 700; border-radius: 3px; cursor: pointer; text-transform: uppercase; min-width: 32px; text-align: center; }
   .pad-btn:hover { background: #1e2942; color: #fff; }
   .pad-btn.active-mode { background: #1e2942; color: var(--neon-cyan); border-color: var(--neon-cyan); }
-  .pad-btn.sync-mode { color: var(--neon-magenta); border-color: var(--neon-magenta); }
+  .pad-btn.sync-mode { background: #1e2942; color: var(--neon-magenta); border-color: var(--neon-magenta); }
 
   /* ZONA CENTRAL DEL DECK (JOG WHEEL + SLIDERS) */
   .deck-center-row { width: 100%; display: flex; justify-content: space-between; align-items: center; margin: 10px 0; gap: 15px; }
@@ -296,7 +295,6 @@
         </div>
       </div>
 
-      <!-- CORRECCIÓN: Contenedor cerrado correctamente y input enlazado -->
       <div class="file-uploader">
         <label for="fileA" class="file-label" id="labelFileA">Seleccionar canción A</label>
         <input type="file" id="fileA" accept="audio/*">
@@ -373,16 +371,6 @@
         </div>
       </div>
     </div>
-
-        <label>Crossfader</label>
-        <input type="range" id="crossfader" class="cf-slider-input" min="-1" max="1" step="0.02" value="0">
-        <div class="cf-labels">
-          <span>CH A</span>
-          <span>CENTER</span>
-          <span>CH B</span>
-        </div>
-      </div>
-    </div>
     <!-- DECK B (COLUMNA DERECHA) -->
     <div class="dj-deck deck-b">
       <div class="deck-header">
@@ -441,7 +429,7 @@
       </div>
 
       <div class="file-uploader">
-        <label for="fileB" class="file-label" id="labelFileB">Seleccionar canción</label>
+        <label for="fileB" class="file-label" id="labelFileB">Seleccionar canción B</label>
         <input type="file" id="fileB" accept="audio/*">
       </div>
 
@@ -453,7 +441,6 @@
 
   </div> <!-- mixer-interface -->
 
-  <!-- SECCIÓN INFERIOR: PLAYLIST & LIBRARY -->
   <div class="bottom-library-section">
     <div class="lib-panel">
       <div class="lib-header">
@@ -499,7 +486,6 @@
 
 </div> <!-- studio-container -->
 
-<!-- Elementos de audio nativos en segundo plano -->
 <audio id="audioA" loop crossorigin="anonymous"></audio>
 <audio id="audioB" loop crossorigin="anonymous"></audio>
 
@@ -512,9 +498,6 @@
   let filterHi, filterMid, filterLow;
   let analyserA, analyserB;
   let engineReady = false;
-  // Inicialización y Configuración de Nodos de Audio Profesional
-   // Inicialización y Configuración de Nodos de Audio Profesional
-   // Inicialización y Configuración de Nodos de Audio Profesional
   async function initAudioEngine() {
     if (engineReady) {
       if (audioCtx && audioCtx.state === 'suspended') { await audioCtx.resume(); }
@@ -555,7 +538,7 @@
     }
   }
 
-  // CORRECCIÓN SEGURA: Lectura de archivos por índice array [0]
+  // CARGA COMPLETA REPARADA CON ÍNDICES DE ARRAYS SEGUROS [0]
   document.getElementById('fileA').addEventListener('change', function(e) {
     if (this.files && this.files.length > 0) {
       document.getElementById('titleA').innerText = this.files[0].name;
@@ -574,7 +557,6 @@
     }
   });
 
-  // Disparadores de los Decks con Desbloqueo asíncrono de Seguridad
   document.getElementById('playA').addEventListener('click', async () => {
     await initAudioEngine(); 
     if (audioCtx && audioCtx.state === 'suspended') { await audioCtx.resume(); }
@@ -594,9 +576,54 @@
     }).catch(() => alert("Selecciona una canción para el DECK B"));
   });
   document.getElementById('cueB').addEventListener('click', () => { audB.pause(); document.getElementById('wheelB').classList.remove('spinning'); });
+  function updateMixerMixes() {
+    if (!engineReady || !gainA || !gainB || !crossGainA || !crossGainB) return;
+    gainA.gain.value = parseFloat(document.getElementById('volA').value);
+    gainB.gain.value = parseFloat(document.getElementById('volB').value);
+    const crossVal = parseFloat(document.getElementById('crossfader').value);
+    if (crossVal <= 0) { 
+      crossGainA.gain.value = 1; 
+      crossGainB.gain.value = 1 + crossVal; 
+    } else { 
+      crossGainA.gain.value = 1 - crossVal; 
+      crossGainB.gain.value = 1; 
+    }
+  }
 
+  document.getElementById('volA').addEventListener('input', (e) => { document.getElementById('txtVolA').innerText = Math.round(e.target.value * 100) + "%"; updateMixerMixes(); });
+  document.getElementById('volB').addEventListener('input', (e) => { document.getElementById('txtVolB').innerText = Math.round(e.target.value * 100) + "%"; updateMixerMixes(); });
+  document.getElementById('crossfader').addEventListener('input', updateMixerMixes);
+  document.getElementById('volFX').addEventListener('input', (e) => { document.getElementById('txtVolFX').innerText = "VOL: " + Math.round(e.target.value * 100) + "%"; });
 
-  // Renderizador de Ondas Canvas y Animación de VuMeters LED
+  document.getElementById('pitchA').addEventListener('input', (e) => {
+    const percent = parseFloat(e.target.value);
+    document.getElementById('txtPitchA').innerText = (percent >= 0 ? "+" : "") + percent.toFixed(1) + "%";
+    audA.playbackRate = 1 + (percent / 100);
+  });
+  document.getElementById('pitchB').addEventListener('input', (e) => {
+    const percent = parseFloat(e.target.value);
+    document.getElementById('txtPitchB').innerText = (percent >= 0 ? "+" : "") + percent.toFixed(1) + "%";
+    audB.playbackRate = 1 + (percent / 100);
+  });
+
+  document.getElementById('eqHi').addEventListener('input', (e) => { if (engineReady && filterHi) filterHi.gain.value = e.target.value; });
+  document.getElementById('eqMid').addEventListener('input', (e) => { if (engineReady && filterMid) filterMid.gain.value = e.target.value; });
+  document.getElementById('eqLow').addEventListener('input', (e) => { if (engineReady && filterLow) filterLow.gain.value = e.target.value; });
+
+  function updateCounters() {
+    const formatTime = (secs) => {
+      if (isNaN(secs) || secs < 0) return "00:00";
+      const m = String(Math.floor(secs / 60)).padStart(2, '0');
+      const s = String(Math.floor(secs % 60)).padStart(2, '0');
+      return `${m}:${s}`;
+    };
+    document.getElementById('timeA').innerText = formatTime(audA.currentTime);
+    document.getElementById('remainA').innerText = "-" + formatTime(audA.duration - audA.currentTime);
+    document.getElementById('timeB').innerText = formatTime(audB.currentTime);
+    document.getElementById('remainB').innerText = "-" + formatTime(audB.duration - audB.currentTime);
+    requestAnimationFrame(updateCounters);
+  }
+  requestAnimationFrame(updateCounters);
   function renderWavesAndVus() {
     const canvasA = document.getElementById('canvasA'), ctxA = canvasA.getContext('2d');
     const canvasB = document.getElementById('canvasB'), ctxB = canvasB.getContext('2d');
@@ -615,7 +642,7 @@
       let totalVolA = 0;
       for (let i = 0; i < bufferLengthA; i++) {
         barHeight = dataArrayA[i] / 4; totalVolA += dataArrayA[i];
-        ctxA.fillStyle = hsl(185, 100%, ${Math.min(barHeight + 30, 70)}%);
+        ctxA.fillStyle = `hsl(185, 100%, ${Math.min(barHeight + 30, 70)}%)`;
         ctxA.fillRect(x, canvasA.height - barHeight, barWidth - 1, barHeight); x += barWidth;
       }
 
@@ -623,7 +650,7 @@
       x = 0; let totalVolB = 0;
       for (let i = 0; i < bufferLengthB; i++) {
         barHeight = dataArrayB[i] / 4; totalVolB += dataArrayB[i];
-        ctxB.fillStyle = hsl(330, 100%, ${Math.min(barHeight + 30, 70)}%);
+        ctxB.fillStyle = `hsl(330, 100%, ${Math.min(barHeight + 30, 70)}%)`;
         ctxB.fillRect(x, canvasB.height - barHeight, barWidth - 1, barHeight); x += barWidth;
       }
 
@@ -638,7 +665,7 @@
     }
     draw();
   }
-  // Modulador Completo Sampler FX de 10 Botones
+
   function playFX(type) {
     initAudioEngine(); 
     if (!audioCtx) return;
@@ -740,7 +767,6 @@
     }
   }
 
-  // Escuchadores del panel Sampler FX 10-Pads
   document.getElementById('fxBocina').addEventListener('click', () => playFX('bocina'));
   document.getElementById('fxScratch').addEventListener('click', () => playFX('scratch'));
   document.getElementById('fxLaser').addEventListener('click', () => playFX('laser'));
