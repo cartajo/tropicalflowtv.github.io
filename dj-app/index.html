@@ -502,6 +502,7 @@
   let analyserA, analyserB;
   let engineReady = false;
   // Inicialización y Configuración de Nodos de Audio Profesional
+   // Inicialización y Configuración de Nodos de Audio Profesional
   async function initAudioEngine() {
     if (engineReady) {
       if (audioCtx && audioCtx.state === 'suspended') { await audioCtx.resume(); }
@@ -542,7 +543,7 @@
     }
   }
 
-  // Carga e Inyección de Archivos Binarios a los Reproductores
+  // SOLUCIÓN DEFINITIVA: Carga de música corregida con índice [0]
   document.getElementById('fileA').addEventListener('change', function(e) {
     if (this.files.length > 0) {
       document.getElementById('titleA').innerText = this.files[0].name;
@@ -581,6 +582,7 @@
     }).catch(() => alert("Selecciona una canción para el DECK B"));
   });
   document.getElementById('cueB').addEventListener('click', () => { audB.pause(); document.getElementById('wheelB').classList.remove('spinning'); });
+
   // Renderizador de Ondas Canvas y Animación de VuMeters LED
   function renderWavesAndVus() {
     const canvasA = document.getElementById('canvasA'), ctxA = canvasA.getContext('2d');
