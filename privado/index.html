@@ -51,78 +51,6 @@
   font-size:14px;
   color:#fff;
 }
- .dj-console{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:25px;
-    flex-wrap:wrap;
-    margin:20px auto;
-    padding:20px;
-    background:rgba(0,0,0,.35);
-    border-radius:20px;
-}
-
-.deck{
-    text-align:center;
-}
-
-.vinyl{
-    width:120px;
-    height:120px;
-    border-radius:50%;
-    border:4px solid #00e0ff;
-
-    animation:spin 4s linear infinite;
-    animation-play-state: paused;
-}
-
-.dj-btn{
-    margin-top:10px;
-    padding:8px 16px;
-    border:none;
-    border-radius:10px;
-    background:#00e0ff;
-    color:black;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-.mixer{
-    display:flex;
-    flex-direction:column;
-    gap:15px;
-    padding:15px;
-    background:rgba(255,255,255,.08);
-    border-radius:15px;
-}
-
-.slider-box{
-    text-align:center;
-}
-
-.slider-box input{
-    width:140px;
-}
-
-#contadorDJ{
-    margin-top:12px;
-    text-align:center;
-    color:#00e0ff;
-    font-size:18px;
-    font-weight:bold;
-    text-shadow:0 0 10px #00e0ff;
-}
-
-@keyframes spin{
-    from{
-        transform:rotate(0deg);
-    }
-
-    to{
-        transform:rotate(360deg);
-    }
-}
   .social{
     max-width:var(--maxw);
     margin:0 auto;
@@ -221,37 +149,6 @@
   <h1>🌴 Tropical Flow TV 📺 Radio – VIP</h1>
 
   <div id="reloj"></div>
-
-  <div class="dj-console">
-
-      <div class="deck">
-          <div class="vinyl"></div>
-          <h3>🎵 Deck A</h3>
-          <button class="dj-btn" onclick="toggleVinyl(this)">▶ Play</button>
-      </div>
-
-      <div class="mixer">
-
-          <div class="slider-box">
-              <span>🔊 Volumen</span>
-              <input type="range" min="0" max="100" value="70">
-          </div>
-
-          <div class="slider-box">
-              <span>🎚️ Crossfader</span>
-              <input type="range" min="0" max="100" value="50">
-           </div>          
- <div id="contadorDJ">00:00 / 00:00</div>
-      </div>
-
-      <div class="deck">
-          <div class="vinyl"></div>
-          <h3>🎵 Deck B</h3>
-          <button class="dj-btn">▶ Play</button>
-      </div>
-
-  </div>
-
 </header>
 
 <!-- 🔼 Barra social arriba -->
@@ -272,7 +169,7 @@
     <h2>🎧 Tropical Flow TV Radio</h2>
     <div id="radioCard">
       <div id="radioMini">
-        <button id="openPlayer" class="btn alt">▶ Abrir player</button>
+        <button id="openPlayer" class="btn alt">▶️ Abrir player</button>
         <button id="openTab" class="btn warn">🌐 Abrir en pestaña</button>
       </div>
       <div id="radioViewport">
@@ -295,9 +192,9 @@
     <h2>🎶 Playlist VIP 1</h2>
     <audio id="plAudio" controls preload="metadata">Tu navegador no soporta audio HTML5.</audio>
     <div class="controls">
-      <button id="plPrev" class="btn">⏮ Anterior</button>
-      <button id="plToggle" class="btn alt">▶ / ⏸</button>
-      <button id="plNext" class="btn">⏭ Siguiente</button>
+      <button id="plPrev" class="btn">⏮️ Anterior</button>
+      <button id="plToggle" class="btn alt">▶️ / ⏸️</button>
+      <button id="plNext" class="btn">⏭️ Siguiente</button>
       <button id="plRandom" class="btn warn">🔀 Random OFF</button>
     </div>
     <ul id="plList" class="plist"></ul>
@@ -306,15 +203,15 @@
 
   <!-- ============= 3) CARRUSEL ( VIDEOS) ============= -->
   <section id="videos">
-    <h2>🎞 Videos Recientes</h2>
+    <h2>🎞️ Videos Recientes</h2>
     <!-- NUEVO: 16:9 para llenar sin franjas -->
     <div id="carouselShell" class="ratio16x9" style="max-width:1100px;margin:0 auto;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)">
       <div id="ytMain" class="fill"></div>
     </div>
     <div class="controls">
-      <button id="cPrev" class="btn">⏮ Anterior</button>
-      <button id="cToggle" class="btn alt">▶ / ⏸</button>
-      <button id="cNext" class="btn">⏭ Siguiente</button>
+      <button id="cPrev" class="btn">⏮️ Anterior</button>
+      <button id="cToggle" class="btn alt">▶️ / ⏸️</button>
+      <button id="cNext" class="btn">⏭️ Siguiente</button>
       <button id="cRandom" class="btn warn">🔀 Random OFF</button>
       <button id="cFs" class="btn warn">⤢ Pantalla completa</button>
     </div>
@@ -334,9 +231,9 @@
    
     <!-- CONTROLES ADAPTADOS -->
     <div class="controls" style="margin-top:15px">
-      <button id="promoPrev" class="btn">⏮ Anterior</button>
-      <button id="promoToggle" class="btn alt">▶ / ⏸</button>
-      <button id="promoNext" class="btn">⏭ Siguiente</button>
+      <button id="promoPrev" class="btn">⏮️ Anterior</button>
+      <button id="promoToggle" class="btn alt">▶️ / ⏸️</button>
+      <button id="promoNext" class="btn">⏭️ Siguiente</button>
       <button id="promoRandom" class="btn warn">🔀 Random OFF</button>
       <button id="promoFs" class="btn warn">⤢ Pantalla completa</button>
     </div>
@@ -428,7 +325,7 @@ function pauseAllExcept(kind){
     list.innerHTML="";
     TRACKS.forEach((t,idx)=>{
       const li=document.createElement('li');
-      li.textContent = (idx===i?"▶ ":"")+t.title;
+      li.textContent = (idx===i?"▶️ ":"")+t.title;
       li.className = idx===i ? "active" : "";
       li.onclick = ()=>{ i=idx; load(true); };
       list.appendChild(li);
@@ -460,7 +357,7 @@ function pauseAllExcept(kind){
     }
   });
   audio.addEventListener('play',  ()=> pauseAllExcept('playlist'));
-  audio.addEventListener('error', ()=> msg("⚠ No se pudo cargar: "+decodeURIComponent(TRACKS[i].src), true));
+  audio.addEventListener('error', ()=> msg("⚠️ No se pudo cargar: "+decodeURIComponent(TRACKS[i].src), true));
 
   render(); load(false);
 })();
@@ -834,7 +731,7 @@ function actualizarReloj() {
 
   if (reloj) {
     reloj.innerHTML =
-      `🕒 ${hora}<small>${fecha}</small>`;
+      🕒 ${hora}<small>${fecha}</small>;
   }
 }
 
@@ -843,54 +740,5 @@ setInterval(actualizarReloj, 1000);
 actualizarReloj();
 
 </script>
-<script>
-
-function toggleVinyl(btn){
-
-    const plato = btn.parentElement.querySelector(".vinyl");
-
-    if (btn.textContent === "▶ Play") {
-
-        plato.style.animationPlayState = "running";
-
-        btn.textContent = "⏸ Pause";
-
-        document.getElementById("plAudio").play();
-
-    } else {
-
-        plato.style.animationPlayState = "paused";
-
-        btn.textContent = "▶ Play";
-
-        document.getElementById("plAudio").pause();
-
-    }
-}
-
-</script>  
- const contadorDJ = document.getElementById("contadorDJ");
-const player = document.getElementById("plAudio");
-
-function tiempo(segundos){
-
-    if (!segundos) return "00:00";
-
-    const minutos = Math.floor(segundos / 60);
-    const segundosRestantes = Math.floor(segundos % 60);
-
-    return `${String(minutos).padStart(2,"0")}:${String(segundosRestantes).padStart(2,"0")}`;
-}
-
-player.addEventListener("timeupdate", () => {
-
-    const restante = player.duration - player.currentTime;
-
-    contadorDJ.textContent =
-        tiempo(player.currentTime) +
-        " ⏳ " +
-        tiempo(restante);
-
-}); 
 </body>
 </html>
