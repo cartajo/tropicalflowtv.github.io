@@ -8,20 +8,20 @@
 
 <style>
   :root {
-    --bg-main: #050608;
-    --panel-bg: #0f1115;
+    --bg-main: radial-gradient(circle at center, #0f131a 0%, #050608 100%); /* FONDO MEJORADO: Degradado azul noche */
+    --panel-bg: #141822; /* PANEL MEJORADO: Más claro para resaltar del fondo */
     --neon-cyan: #00f0ff;
     --neon-magenta: #ff007f;
     --neon-green: #39ff14;
     --neon-red: #ff3333;
     --text-main: #f8fafc;
-    --text-dim: #475569;
+    --text-dim: #64748b;
     --gold: #f59e0b;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    background-color: var(--bg-main);
+    background: var(--bg-main);
     color: var(--text-main);
     font-family: system-ui, -apple-system, sans-serif;
     padding: 20px;
@@ -36,12 +36,14 @@
     font-size: 2.5rem; font-weight: 900; text-transform: uppercase; letter-spacing: 4px;
     background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    text-shadow: 0 4px 12px rgba(0,0,0,0.5);
   }
   header p { color: var(--text-dim); font-size: 0.85rem; margin-top: 4px; letter-spacing: 1px; }
 
   .studio-container {
     width: 100%; max-width: 1250px; background: var(--panel-bg); border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.03); box-shadow: 0 25px 60px #000; padding: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.08); /* BORDE RESALTADO: Separa la app del fondo */
+    box-shadow: 0 30px 70px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05); padding: 20px;
   }
 
   /* Grid Principal de la Interfaz */
@@ -51,82 +53,84 @@
 <style>
   /* ─── ESTILOS DE LOS DECKS ─── */
   .dj-deck {
-    background: #13161c; border-radius: 16px; padding: 18px; border: 1px solid rgba(255,255,255,0.02);
+    background: #1a1f2c; border-radius: 16px; padding: 18px; 
+    border: 1px solid rgba(255,255,255,0.06); /* BORDE INTERNO: Mayor definición de platos */
     display: flex; flex-direction: column; align-items: center; position: relative;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
   }
-  .deck-a { border-bottom: 4px solid var(--neon-cyan); }
-  .deck-b { border-bottom: 4px solid var(--neon-magenta); }
+  .deck-a { border-bottom: 4px solid var(--neon-cyan); box-shadow: 0 0 20px rgba(0,240,255,0.05); }
+  .deck-b { border-bottom: 4px solid var(--neon-magenta); box-shadow: 0 0 20px rgba(255,0,127,0.05); }
   .deck-header { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-  .deck-badge { font-size: 0.75rem; font-weight: 900; padding: 3px 8px; border-radius: 5px; background: #000; }
-  .deck-a .deck-badge { color: var(--neon-cyan); border: 1px solid rgba(0,240,255,0.2); }
-  .deck-b .deck-badge { color: var(--neon-magenta); border: 1px solid rgba(255,0,127,0.2); }
+  .deck-badge { font-size: 0.75rem; font-weight: 900; padding: 3px 8px; border-radius: 5px; background: #0b0d13; }
+  .deck-a .deck-badge { color: var(--neon-cyan); border: 1px solid rgba(0,240,255,0.3); }
+  .deck-b .deck-badge { color: var(--neon-magenta); border: 1px solid rgba(255,0,127,0.3); }
   .track-title { font-size: 0.8rem; color: var(--text-main); font-weight: 600; max-width: 160px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   
   /* PANTALLAS DIGITALES CON DOBLE CONTADOR */
   .display-panel {
-    width: 100%; background: #07080a; border-radius: 8px; border: 1px solid rgba(255,255,255,0.04);
+    width: 100%; background: #07080a; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08);
     padding: 10px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+    box-shadow: inset 0 2px 10px rgba(0,0,0,0.9);
   }
   .time-group { display: flex; flex-direction: column; gap: 2px; }
   .time-label { font-size: 0.6rem; color: var(--text-dim); font-weight: 800; letter-spacing: 0.5px; }
-  .time-counter { font-family: monospace; font-size: 1.15rem; font-weight: bold; color: var(--neon-green); text-shadow: 0 0 8px rgba(57,255,20,0.2); }
-  .time-counter.countdown { color: var(--neon-red); text-shadow: 0 0 8px rgba(255,51,53,0.2); }
+  .time-counter { font-family: monospace; font-size: 1.15rem; font-weight: bold; color: var(--neon-green); text-shadow: 0 0 8px rgba(57,255,20,0.3); }
+  .time-counter.countdown { color: var(--neon-red); text-shadow: 0 0 8px rgba(255,51,53,0.3); }
   
-  .wave-display { width: 100%; height: 52px; background: #000; border-radius: 6px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.02); display: block; }
+  .wave-display { width: 100%; height: 52px; background: #010204; border-radius: 6px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05); display: block; }
 
   /* CARGADOR Y PLATO GIRA-DISCOS */
   .file-uploader { width: 100%; margin-bottom: 12px; }
   .file-uploader input[type="file"] { display: none; }
-  .file-label { display: block; text-align: center; padding: 8px; background: #1c1f26; border: 1px dashed rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.75rem; cursor: pointer; color: var(--text-dim); }
-  .file-label:hover { color: #fff; border-color: rgba(255,255,255,0.2); }
-  .jog-wheel { width: 145px; height: 150px; border-radius: 50%; background: radial-gradient(circle, #212530 12%, #0a0b0d 13%, #0a0b0d 35%, #12151b 36%, #020304 70%); border: 5px solid #20242e; position: relative; box-shadow: 0 8px 20px rgba(0,0,0,0.5); }
-  .jog-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 38px; height: 38px; border-radius: 50%; border: 2px solid #000; background: #0f1115; }
-  .deck-a .jog-center { box-shadow: 0 0 12px rgba(0,240,255,0.3); border-color: var(--neon-cyan); }
-  .deck-b .jog-center { box-shadow: 0 0 12px rgba(255,0,127,0.3); border-color: var(--neon-magenta); }
+  .file-label { display: block; text-align: center; padding: 8px; background: #232a3a; border: 1px dashed rgba(255,255,255,0.2); border-radius: 6px; font-size: 0.75rem; cursor: pointer; color: #94a3b8; font-weight: 600; }
+  .file-label:hover { color: #fff; border-color: #fff; background: #2c354a; }
+  .jog-wheel { width: 145px; height: 150px; border-radius: 50%; background: radial-gradient(circle, #2a3244 12%, #0e1117 13%, #0e1117 35%, #181d28 36%, #040507 70%); border: 5px solid #2e374a; position: relative; box-shadow: 0 8px 25px rgba(0,0,0,0.6); }
+  .jog-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 38px; height: 38px; border-radius: 50%; border: 2px solid #000; background: #141822; }
+  .deck-a .jog-center { box-shadow: 0 0 12px rgba(0,240,255,0.4); border-color: var(--neon-cyan); }
+  .deck-b .jog-center { box-shadow: 0 0 12px rgba(255,0,127,0.4); border-color: var(--neon-magenta); }
   .jog-marker { position: absolute; top: 5px; left: 50%; transform: translateX(-50%); width: 4px; height: 20px; background: #fff; border-radius: 2px; transform-origin: bottom center; }
   .spinning { animation: jogSpin 2.5s linear infinite; }
   @keyframes jogSpin { 100% { transform: rotate(360deg); } }
 
   /* CONTROLES E INTERFAZ DEL MEZCLADOR CENTRAL */
   .deck-controls-row { width: 100%; display: flex; gap: 8px; margin-top: 15px; }
-  .action-btn { flex: 1; padding: 10px; border: 0; border-radius: 6px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; cursor: pointer; background: #1c1f26; color: var(--text-main); }
-  .btn-play { background: #141c2b; color: var(--neon-green); border: 1px solid rgba(57,255,20,0.1); }
-  .btn-play:hover { background: var(--neon-green); color: #000; box-shadow: 0 0 12px rgba(57,255,20,0.3); }
-  .btn-cue { background: #141c2b; color: var(--gold); border: 1px solid rgba(234,179,8,0.1); }
-  .btn-cue:hover { background: var(--gold); color: #000; box-shadow: 0 0 12px rgba(234,179,8,0.3); }
+  .action-btn { flex: 1; padding: 10px; border: 0; border-radius: 6px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; cursor: pointer; background: #232a3a; color: var(--text-main); border: 1px solid rgba(255,255,255,0.05); }
+  .btn-play { background: #1a2636; color: var(--neon-green); border: 1px solid rgba(57,255,20,0.2); }
+  .btn-play:hover { background: var(--neon-green); color: #000; box-shadow: 0 0 15px rgba(57,255,20,0.4); }
+  .btn-cue { background: #2b241a; color: var(--gold); border: 1px solid rgba(234,179,8,0.2); }
+  .btn-cue:hover { background: var(--gold); color: #000; box-shadow: 0 0 15px rgba(234,179,8,0.4); }
   .deck-sliders { width: 100%; display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
   .slider-unit { display: flex; flex-direction: column; gap: 3px; width: 100%; }
-  .slider-unit label { font-size: 0.7rem; color: var(--text-dim); display: flex; justify-content: space-between; font-weight: 600; text-transform: uppercase; }
-  .slider-unit input[type="range"] { width: 100%; height: 5px; background: #000; border-radius: 3px; outline: none; cursor: pointer; appearance: none; -webkit-appearance: none; }
+  .slider-unit label { font-size: 0.7rem; color: #94a3b8; display: flex; justify-content: space-between; font-weight: 600; text-transform: uppercase; }
+  .slider-unit input[type="range"] { width: 100%; height: 6px; background: #090b0e; border-radius: 3px; outline: none; cursor: pointer; appearance: none; -webkit-appearance: none; border: 1px solid rgba(255,255,255,0.05); }
   .deck-a input[type="range"] { accent-color: var(--neon-cyan); }
   .deck-b input[type="range"] { accent-color: var(--neon-magenta); }
   
-  .center-rack { background: #090a0d; border-radius: 16px; padding: 15px; display: flex; flex-direction: column; align-items: center; border: 1px solid rgba(255, 255, 255, 0.01); }
-  .mixer-brand { font-size: 0.75rem; font-weight: 900; letter-spacing: 2px; color: var(--text-dim); margin-bottom: 12px; text-transform: uppercase; }
+  .center-rack { background: #0e1117; border-radius: 16px; padding: 15px; display: flex; flex-direction: column; align-items: center; border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
+  .mixer-brand { font-size: 0.75rem; font-weight: 900; letter-spacing: 2px; color: #94a3b8; margin-bottom: 12px; text-transform: uppercase; text-shadow: 0 1px 2px #000; }
   .eq-section { width: 100%; display: flex; flex-direction: column; gap: 12px; padding: 5px 0; }
   .knob-unit { display: flex; flex-direction: column; align-items: center; gap: 4px; width: 100%; }
-  .knob-unit label { font-size: 0.65rem; color: var(--text-dim); font-weight: 700; letter-spacing: 1px; }
+  .knob-unit label { font-size: 0.65rem; color: #94a3b8; font-weight: 700; letter-spacing: 1px; }
   .knob-unit input[type="range"] { width: 85%; accent-color: var(--gold); cursor: pointer; }
 
   /* SAMPLER FX EXTENDIDO */
-  .sampler-panel { width: 100%; margin-top: 15px; padding: 10px 5px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; gap: 8px; align-items: center; }
-  .sampler-title { font-size: 0.65rem; font-weight: 800; color: var(--text-dim); letter-spacing: 1.5px; text-transform: uppercase; display: flex; width: 100%; justify-content: space-between; }
+  .sampler-panel { width: 100%; margin-top: 15px; padding: 10px 5px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; gap: 8px; align-items: center; }
+  .sampler-title { font-size: 0.65rem; font-weight: 800; color: #94a3b8; letter-spacing: 1.5px; text-transform: uppercase; display: flex; width: 100%; justify-content: space-between; }
   .sampler-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; width: 100%; }
-  .fx-pad { padding: 8px 4px; background: #12141a; border: 1px solid rgba(255,255,255,0.02); border-radius: 5px; font-size: 0.65rem; font-weight: 800; color: #fff; cursor: pointer; text-transform: uppercase; text-align: center; transition: all 0.1s ease; box-shadow: inset 0 1px 0 rgba(255,255,255,0.04); }
+  .fx-pad { padding: 8px 4px; background: #1a1f2c; border: 1px solid rgba(255,255,255,0.05); border-radius: 5px; font-size: 0.65rem; font-weight: 800; color: #fff; cursor: pointer; text-transform: uppercase; text-align: center; transition: all 0.1s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.3); }
   .fx-pad:active { transform: scale(0.94); }
   .fx-pad.cyan { border-bottom: 3px solid var(--neon-cyan); }
-  .fx-pad.cyan:hover { background: rgba(0, 240, 255, 0.12); box-shadow: 0 0 8px rgba(0, 240, 255, 0.25); }
+  .fx-pad.cyan:hover { background: rgba(0, 240, 255, 0.15); box-shadow: 0 0 8px rgba(0, 240, 255, 0.3); }
   .fx-pad.magenta { border-bottom: 3px solid var(--neon-magenta); }
-  .fx-pad.magenta:hover { background: rgba(255, 0, 127, 0.12); box-shadow: 0 0 8px rgba(255, 0, 127, 0.25); }
+  .fx-pad.magenta:hover { background: rgba(255, 0, 127, 0.15); box-shadow: 0 0 8px rgba(255, 0, 127, 0.3); }
   .fx-pad.gold { border-bottom: 3px solid var(--gold); }
-  .fx-pad.gold:hover { background: rgba(245, 158, 11, 0.12); box-shadow: 0 0 8px rgba(245, 158, 11, 0.25); }
+  .fx-pad.gold:hover { background: rgba(245, 158, 11, 0.15); box-shadow: 0 0 8px rgba(245, 158, 11, 0.3); }
 
   /* CROSSFADER */
   .crossfader-section { width: 100%; margin-top: 20px; display: flex; flex-direction: column; gap: 5px; }
-  .crossfader-section label { font-size: 0.65rem; color: var(--text-dim); font-weight: 800; text-transform: uppercase; text-align: center; letter-spacing: 1px; }
-  .crossfader-slider { width: 100%; height: 6px; background: #000; border-radius: 3px; accent-color: var(--text-main); outline: none; cursor: pointer; appearance: none; -webkit-appearance: none; }
-  .fader-labels { display: flex; justify-content: space-between; font-size: 0.55rem; color: var(--text-dim); font-weight: 700; margin-top: 2px; }
+  .crossfader-section label { font-size: 0.65rem; color: #94a3b8; font-weight: 800; text-transform: uppercase; text-align: center; letter-spacing: 1px; }
+  .crossfader-slider { width: 100%; height: 8px; background: #090b0e; border-radius: 4px; accent-color: var(--text-main); outline: none; cursor: pointer; appearance: none; -webkit-appearance: none; border: 1px solid rgba(255,255,255,0.08); }
+  .fader-labels { display: flex; justify-content: space-between; font-size: 0.55rem; color: #64748b; font-weight: 700; margin-top: 2px; }
 </style>
 </head>
 <body>
@@ -136,8 +140,11 @@
   <p>Pro Core Audio Engine, Advanced FX Sampler & Dual Wave Live Analyzer</p>
 </header>
 
-<div class="studio-container">
-  <div class="mixer-interface">
+---
+
+## 💾 PARTE 2 DE 5: Bloque Visual del DECK A y Controles del Mezclador Central
+
+```html
     <!-- DECK A -->
     <div class="dj-deck deck-a">
       <div class="deck-header">
@@ -336,7 +343,7 @@
     }
   }
 
-  // REPARADO: Se reincorporó el índice [0] para leer canciones correctamente del FileList
+  // Lectura de archivos locales indexada de forma segura (Arreglado)
   document.getElementById('fileA').addEventListener('change', function(e) {
     if (this.files.length > 0) {
       document.getElementById('titleA').innerText = this.files[0].name;
@@ -553,7 +560,7 @@
     else if (type === 'aplauso') {
       osc.type = 'triangle'; osc.frequency.setValueAtTime(280, now); 
       gainNode.gain.setValueAtTime(0.3 * userFXVolume, now);
-      for(let i = 0.05; i < 0.5; i += 0.05) { 
+      for(let i = 0; i < 0.5; i += 0.05) { 
         gainNode.gain.setValueAtTime(0.3 * userFXVolume, now + i); 
         gainNode.gain.setValueAtTime(0.01 * userFXVolume, now + i + 0.02); 
       }
