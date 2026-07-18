@@ -390,6 +390,7 @@
 
   </div> <!-- Cierre obligatorio de mixer-interface -->
   <!-- ESTILOS ADICIONALES PARA LA SECCIÓN DE LIBRERÍA INFERIOR -->
+   <!-- ESTILOS ADICIONALES PARA LA SECCIÓN DE LIBRERÍA INFERIOR -->
   <style>
     .bottom-library-section { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; width: 100%; }
     .lib-panel { background: var(--bg-panel); border-radius: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.03); height: 210px; display: flex; flex-direction: column; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
@@ -457,6 +458,7 @@
 <!-- Elementos de audio nativos en segundo plano -->
 <audio id="audioA" loop crossorigin="anonymous"></audio>
 <audio id="audioB" loop crossorigin="anonymous"></audio>
+
 <script>
   const audA = document.getElementById('audioA');
   const audB = document.getElementById('audioB');
@@ -495,11 +497,11 @@
       engineReady = true;
       renderWavesAndVus();
     } catch(e) { 
-      console.log("Hardware de audio esperando interacción inicial del usuario."); 
+      console.log("Hardware de audio esperando interacción inicial."); 
     }
   }
 
-  // Carga e Inyección de Archivos con Índices Seguros Corregidos
+  // SOLUCIÓN A DISCOS DUROS LOCALES: Mapeo exacto del FileList usando indexación cero [0]
   document.getElementById('fileA').addEventListener('change', function(e) {
     if (this.files.length > 0) {
       document.getElementById('titleA').innerText = this.files[0].name;
@@ -517,6 +519,7 @@
       audB.load();
     }
   });
+
 
   // Disparadores de los Decks con Desbloqueo de Audio
   document.getElementById('playA').addEventListener('click', () => {
