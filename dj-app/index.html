@@ -8,9 +8,9 @@
 
 <style>
   :root {
-    /* FONDO REPARADO: Se añade un color oscuro de respaldo por si falla la imagen externa */
-    --bg-app: #030712 url('https://unsplash.com');
-    --bg-panel: rgba(11, 15, 25, 0.94); /* Mantiene los platos oscuros para que resalten */
+    /* IMAGEN DE FONDO: Paisaje de playa tropical de alta calidad */
+    --bg-app: url('https://unsplash.com');
+    --bg-panel: rgba(11, 15, 25, 0.92); /* Ligeramente transparente para ver la playa de fondo */
     --bg-subpanel: #070a12;
     --neon-cyan: #00f0ff;
     --neon-magenta: #ff007f;
@@ -24,8 +24,8 @@
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    /* Configuración corregida para el fondo de playa tropical */
-    background: var(--bg-app);
+    /* Configuración del fondo de playa tropical con difuminado elegante */
+    background-image: var(--bg-app);
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -38,7 +38,7 @@
     align-items: center;
     min-height: 100vh;
     overflow-x: hidden;
-    backdrop-filter: blur(4px); /* Difumina las palmeras para no cansar la vista */
+    backdrop-filter: blur(4px); /* Suaviza el fondo para que los textos de la app se lean perfecto */
     -webkit-backdrop-filter: blur(4px);
   }
 
@@ -55,7 +55,7 @@
   }
   .nav-btn { background: #131a2a; border: 1px solid #23314f; color: #fff; padding: 6px 12px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; cursor: pointer; text-transform: uppercase; }
 
-  /* BRANDING CENTRAL TROPICAL FLOW RADIO TV */
+  /* NUEVO: BRANDING CENTRAL TROPICAL FLOW RADIO TV */
   .tropical-brand-center {
     text-align: center;
     margin: 10px 0 25px 0;
@@ -69,9 +69,11 @@
     text-transform: uppercase;
     letter-spacing: 5px;
     line-height: 1.1;
+    /* Degradado de color caribeño brillante */
     background: linear-gradient(135deg, #fff 0%, var(--gold) 50%, var(--neon-cyan) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    /* Efecto de resplandor neón estilo cartel de televisión */
     filter: drop-shadow(0 2px 8px rgba(0, 240, 255, 0.6)) drop-shadow(0 4px 20px rgba(245, 158, 11, 0.4));
   }
   .tropical-brand-center p {
@@ -86,8 +88,7 @@
 
   /* CONTENEDORES MAESTROS */
   .studio-container { width: 100%; max-width: 1400px; display: flex; flex-direction: column; gap: 15px; }
-  .mixer-interface { display: grid; grid-template-columns: 1fr 340px 1fr; gap: 15px; }
-
+  .mixer-interface { display: grid; grid-template-columns: 1fr 340px
   @media (max-width: 1100px) {
     .mixer-interface { grid-template-columns: 1fr; }
     .center-rack { order: 3; }
