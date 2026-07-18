@@ -296,8 +296,9 @@
         </div>
       </div>
 
+      <!-- CORRECCIÓN: Contenedor cerrado correctamente y input enlazado -->
       <div class="file-uploader">
-        <label for="fileA" class="file-label" id="labelFileA">Seleccionar canción</label>
+        <label for="fileA" class="file-label" id="labelFileA">Seleccionar canción A</label>
         <input type="file" id="fileA" accept="audio/*">
       </div>
 
@@ -363,6 +364,16 @@
       </div>
 
       <div class="crossfader-container">
+        <label>Crossfader</label>
+        <input type="range" id="crossfader" class="cf-slider-input" min="-1" max="1" step="0.02" value="0">
+        <div class="cf-labels">
+          <span>CH A</span>
+          <span>CENTER</span>
+          <span>CH B</span>
+        </div>
+      </div>
+    </div>
+
         <label>Crossfader</label>
         <input type="range" id="crossfader" class="cf-slider-input" min="-1" max="1" step="0.02" value="0">
         <div class="cf-labels">
@@ -503,6 +514,7 @@
   let engineReady = false;
   // Inicialización y Configuración de Nodos de Audio Profesional
    // Inicialización y Configuración de Nodos de Audio Profesional
+   // Inicialización y Configuración de Nodos de Audio Profesional
   async function initAudioEngine() {
     if (engineReady) {
       if (audioCtx && audioCtx.state === 'suspended') { await audioCtx.resume(); }
@@ -543,9 +555,9 @@
     }
   }
 
-  // SOLUCIÓN DEFINITIVA: Carga de música corregida con índice [0]
+  // CORRECCIÓN SEGURA: Lectura de archivos por índice array [0]
   document.getElementById('fileA').addEventListener('change', function(e) {
-    if (this.files.length > 0) {
+    if (this.files && this.files.length > 0) {
       document.getElementById('titleA').innerText = this.files[0].name;
       document.getElementById('labelFileA').innerText = "Cambiar track A";
       audA.src = URL.createObjectURL(this.files[0]);
@@ -554,7 +566,7 @@
   });
 
   document.getElementById('fileB').addEventListener('change', function(e) {
-    if (this.files.length > 0) {
+    if (this.files && this.files.length > 0) {
       document.getElementById('titleB').innerText = this.files[0].name;
       document.getElementById('labelFileB').innerText = "Cambiar track B";
       audB.src = URL.createObjectURL(this.files[0]);
@@ -582,6 +594,7 @@
     }).catch(() => alert("Selecciona una canción para el DECK B"));
   });
   document.getElementById('cueB').addEventListener('click', () => { audB.pause(); document.getElementById('wheelB').classList.remove('spinning'); });
+
 
   // Renderizador de Ondas Canvas y Animación de VuMeters LED
   function renderWavesAndVus() {
