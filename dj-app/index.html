@@ -134,7 +134,47 @@
 
 <div class="studio-container">
   <div class="mixer-interface">
-    
+  /* CONTINUACIÓN DE ESTILOS CSS: MEZCLADOR CENTRAL */
+  .center-rack {
+    background: var(--bg-panel); border-radius: 12px; padding: 15px;
+    display: flex; flex-direction: column; align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.03); box-shadow: 0 15px 35px rgba(0,0,0,0.7);
+  }
+  .mixer-title-sec { font-size: 0.75rem; font-weight: 800; color: #94a3b8; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; text-shadow: 0 1px 2px #000; }
+  
+  /* DISEÑO CONTROLES ECUALIZACIÓN HORIZONTAL */
+  .eq-row-container { width: 100%; display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px; }
+  .h-knob-unit { display: flex; flex-direction: column; width: 100%; gap: 2px; }
+  .h-knob-unit label { font-size: 0.6rem; color: var(--text-dim); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; }
+  .h-slider-raw { width: 100%; height: 5px; background: #000; border-radius: 3px; outline: none; cursor: pointer; appearance: none; -webkit-appearance: none; accent-color: var(--gold); }
+
+  /* COMPONENTE VU METER DUAL ESTILO LED */
+  .vumeter-wrapper { display: flex; gap: 15px; background: #04060a; padding: 8px 15px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.03); margin-bottom: 15px; justify-content: center; width: 100%; }
+  .vumeter-channel { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .vumeter-label { font-size: 0.55rem; color: var(--text-dim); font-weight: 900; }
+  .vumeter-bar-bg { width: 8px; height: 75px; background: #11141e; position: relative; border-radius: 2px; overflow: hidden; display: flex; flex-direction: column-reverse; }
+  .vumeter-fill { width: 100%; height: 0%; transition: height 0.05s ease; background: linear-gradient(to top, var(--neon-green) 0%, var(--neon-green) 75%, var(--neon-red) 100%); }
+
+  /* SECCIÓN FX SAMPLER AVANZADO */
+  .sampler-panel { width: 100%; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; gap: 8px; }
+  .sampler-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; width: 100%; }
+  .fx-pad { padding: 8px 2px; background: #131a2a; border: 1px solid #23314f; border-radius: 4px; font-size: 0.52rem; font-weight: 800; color: #fff; cursor: pointer; text-transform: uppercase; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 3px; box-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+  .fx-pad span { font-size: 0.7rem; }
+  .fx-pad:active { transform: scale(0.95); }
+  .fx-pad.cyan { border-bottom: 2px solid var(--neon-cyan); }
+  .fx-pad.cyan:hover { background: rgba(0, 240, 255, 0.1); }
+  .fx-pad.magenta { border-bottom: 2px solid var(--neon-magenta); }
+  .fx-pad.magenta:hover { background: rgba(255, 0, 127, 0.1); }
+  .fx-pad.gold { border-bottom: 2px solid var(--gold); }
+  .fx-pad.gold:hover { background: rgba(245, 158, 11, 0.1); }
+
+  /* CROSSFADER PROFESIONAL */
+  .crossfader-container { width: 100%; margin-top: 15px; display: flex; flex-direction: column; gap: 4px; }
+  .crossfader-container label { font-size: 0.55rem; color: var(--text-dim); font-weight: 800; text-transform: uppercase; text-align: center; }
+  .cf-slider-input { width: 100%; height: 6px; background: #000; border-radius: 3px; accent-color: #f8fafc; outline: none; cursor: pointer; appearance: none; -webkit-appearance: none; }
+  .cf-labels { display: flex; justify-content: space-between; font-size: 0.5rem; color: var(--text-dim); font-weight: 700; }
+</style>
+
     <!-- DECK A -->
     <div class="dj-deck deck-a">
       <div class="deck-header">
@@ -202,66 +242,21 @@
         <button class="btn-action cue-btn" id="cueA">⏸ Cue</button>
       </div>
     </div>
-  /* CONTINUACIÓN DE ESTILOS CSS: MEZCLADOR CENTRAL */
-  .center-rack {
-    background: var(--bg-panel); border-radius: 12px; padding: 15px;
-    display: flex; flex-direction: column; align-items: center;
-    border: 1px solid rgba(255, 255, 255, 0.03); box-shadow: 0 15px 35px rgba(0,0,0,0.7);
-  }
-  .mixer-title-sec { font-size: 0.75rem; font-weight: 800; color: #94a3b8; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; text-shadow: 0 1px 2px #000; }
-  
-  /* DISEÑO CONTROLES ECUALIZACIÓN HORIZONTAL */
-  .eq-row-container { width: 100%; display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px; }
-  .h-knob-unit { display: flex; flex-direction: column; width: 100%; gap: 2px; }
-  .h-knob-unit label { font-size: 0.6rem; color: var(--text-dim); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; }
-  .h-slider-raw { width: 100%; height: 5px; background: #000; border-radius: 3px; outline: none; cursor: pointer; appearance: none; -webkit-appearance: none; accent-color: var(--gold); }
-
-  /* COMPONENTE VU METER DUAL ESTILO LED */
-  .vumeter-wrapper { display: flex; gap: 15px; background: #04060a; padding: 8px 15px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.03); margin-bottom: 15px; justify-content: center; width: 100%; }
-  .vumeter-channel { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-  .vumeter-label { font-size: 0.55rem; color: var(--text-dim); font-weight: 900; }
-  .vumeter-bar-bg { width: 8px; height: 75px; background: #11141e; position: relative; border-radius: 2px; overflow: hidden; display: flex; flex-direction: column-reverse; }
-  .vumeter-fill { width: 100%; height: 0%; transition: height 0.05s ease; background: linear-gradient(to top, var(--neon-green) 0%, var(--neon-green) 75%, var(--neon-red) 100%); }
-
-  /* SECCIÓN FX SAMPLER AVANZADO */
-  .sampler-panel { width: 100%; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; gap: 8px; }
-  .sampler-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; width: 100%; }
-  .fx-pad { padding: 8px 2px; background: #131a2a; border: 1px solid #23314f; border-radius: 4px; font-size: 0.52rem; font-weight: 800; color: #fff; cursor: pointer; text-transform: uppercase; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 3px; box-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-  .fx-pad span { font-size: 0.7rem; }
-  .fx-pad:active { transform: scale(0.95); }
-  .fx-pad.cyan { border-bottom: 2px solid var(--neon-cyan); }
-  .fx-pad.cyan:hover { background: rgba(0, 240, 255, 0.1); }
-  .fx-pad.magenta { border-bottom: 2px solid var(--neon-magenta); }
-  .fx-pad.magenta:hover { background: rgba(255, 0, 127, 0.1); }
-  .fx-pad.gold { border-bottom: 2px solid var(--gold); }
-  .fx-pad.gold:hover { background: rgba(245, 158, 11, 0.1); }
-
-  /* CROSSFADER PROFESIONAL */
-  .crossfader-container { width: 100%; margin-top: 15px; display: flex; flex-direction: column; gap: 4px; }
-  .crossfader-container label { font-size: 0.55rem; color: var(--text-dim); font-weight: 800; text-transform: uppercase; text-align: center; }
-  .cf-slider-input { width: 100%; height: 6px; background: #000; border-radius: 3px; accent-color: #f8fafc; outline: none; cursor: pointer; appearance: none; -webkit-appearance: none; }
-  .cf-labels { display: flex; justify-content: space-between; font-size: 0.5rem; color: var(--text-dim); font-weight: 700; }
-</style>
-</head>
-<body>
-
-<!-- (ESTRUCTURA PREVIA CONTENIDA EN PARTES 1 Y 2) -->
-
     <!-- MEZCLADOR CENTRAL -->
     <div class="center-rack">
       <div class="mixer-title-sec">Master Control</div>
       
       <!-- Ecualizadores de Frecuencia -->
-      <div class="eq-row-container">
-        <div class="h-knob-unit">
+      <div class="eq-section" style="width: 100%;">
+        <div class="knob-unit">
           <label>HI (Agudos)</label>
           <input type="range" id="eqHi" class="h-slider-raw" min="-24" max="12" step="1" value="0">
         </div>
-        <div class="h-knob-unit">
+        <div class="knob-unit">
           <label>MID (Medios)</label>
           <input type="range" id="eqMid" class="h-slider-raw" min="-24" max="12" step="1" value="0">
         </div>
-        <div class="h-knob-unit">
+        <div class="knob-unit">
           <label>LOW (Graves)</label>
           <input type="range" id="eqLow" class="h-slider-raw" min="-24" max="12" step="1" value="0">
         </div>
@@ -357,7 +352,7 @@
       <div class="deck-center-row">
         <div class="pitch-container">
           <span class="v-slider-label">Pitch</span>
-          <input type="range" id="pitchB" class="vertical-slider" min="-10" max="10" step="0.1" value="0" style="direction: rlt; writing-mode: vertical-lr;">
+          <input type="range" id="pitchB" class="vertical-slider" min="-10" max="10" step="0.1" value="0" style="direction: rtl; writing-mode: vertical-lr;">
           <span class="v-slider-val" id="txtPitchB">0.0%</span>
         </div>
 
@@ -368,7 +363,7 @@
 
         <div class="vol-container">
           <span class="v-slider-label">Volume</span>
-          <input type="range" id="volB" class="vertical-slider" min="0" max="1" step="0.01" value="1" style="direction: rlt; writing-mode: vertical-lr;">
+          <input type="range" id="volB" class="vertical-slider" min="0" max="1" step="0.01" value="1" style="direction: rtl; writing-mode: vertical-lr;">
           <span class="v-slider-val" id="txtVolB">100%</span>
         </div>
       </div>
@@ -384,19 +379,18 @@
       </div>
     </div>
 
-  </div> <!-- Cierre de mixer-interface -->
-
+  </div> <!-- Cierre obligatorio de mixer-interface -->
   <!-- ESTILOS ADICIONALES PARA LA SECCIÓN DE LIBRERÍA INFERIOR -->
   <style>
-    .bottom-library-section { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 5px; }
-    .lib-panel { background: var(--bg-panel); border-radius: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.03); height: 210px; display: flex; flex-direction: column; }
+    .bottom-library-section { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; width: 100%; }
+    .lib-panel { background: var(--bg-panel); border-radius: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.03); height: 210px; display: flex; flex-direction: column; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
     .lib-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; }
     .lib-title { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--neon-cyan); display: flex; align-items: center; gap: 5px; }
     .lib-panel.right-side .lib-title { color: var(--neon-magenta); }
-    .lib-search { background: #060911; border: 1px solid #1e293b; color: #fff; padding: 3px 8px; border-radius: 4px; font-size: 0.65rem; width: 140px; }
+    .lib-search { background: #060911; border: 1px solid #1e293b; color: #fff; padding: 3px 8px; border-radius: 4px; font-size: 0.65rem; width: 140px; outline: none; }
     .table-wrapper { flex-grow: 1; overflow-y: auto; }
     .track-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.65rem; }
-    .track-table th { padding: 4px 6px; color: var(--text-dim); text-transform: uppercase; font-weight: 800; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .track-table th { padding: 4px 6px; color: var(--text-dim); text-transform: uppercase; font-weight: 800; border-bottom: 1px solid rgba(255,255,255,0.05); position: sticky; top: 0; background: var(--bg-panel); }
     .track-table td { padding: 5px 6px; color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.02); cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px; }
     .track-table tr:hover td { color: #fff; background: rgba(255,255,255,0.02); }
     .track-table tr.playing-track td { color: var(--neon-green); font-weight: 700; }
@@ -454,6 +448,7 @@
 <!-- Elementos de audio nativos en segundo plano -->
 <audio id="audioA" loop crossorigin="anonymous"></audio>
 <audio id="audioB" loop crossorigin="anonymous"></audio>
+
 <script>
   const audA = document.getElementById('audioA');
   const audB = document.getElementById('audioB');
@@ -464,7 +459,7 @@
   let analyserA, analyserB;
   let engineReady = false;
 
-  // Inicialización y Configuración de Nodos de Audio
+  // Inicialización y Configuración de Nodos de Audio Profesional
   function initAudioEngine() {
     if (engineReady) return;
     try {
@@ -483,7 +478,7 @@
       filterMid = audioCtx.createBiquadFilter(); filterMid.type = "peaking";    filterMid.frequency.value = 1200; filterMid.Q.value = 1.0;
       filterLow = audioCtx.createBiquadFilter(); filterLow.type = "lowshelf";   filterLow.frequency.value = 250;
 
-      // Enrutamiento modular de canales
+      // Conexión modular en árbol
       srcA.connect(gainA).connect(crossGainA).connect(analyserA).connect(filterLow);
       srcB.connect(gainB).connect(crossGainB).connect(analyserB).connect(filterLow);
       
@@ -496,7 +491,7 @@
     }
   }
 
-  // Carga Segura de Tracks Locales
+  // Carga e Inyección de Archivos con Índices Seguros Corregidos
   document.getElementById('fileA').addEventListener('change', function(e) {
     if (this.files.length > 0) {
       document.getElementById('titleA').innerText = this.files[0].name;
@@ -514,318 +509,7 @@
       audB.load();
     }
   });
-
-  // Gatillos Operacionales Decks
-  document.getElementById('playA').addEventListener('click', () => {
-    initAudioEngine(); 
-    if (audioCtx && audioCtx.state === 'suspended') { audioCtx.resume(); }
-    audA.play().then(() => { 
-      document.getElementById('wheelA').classList.add('spinning'); 
-      updateMixerMixes(); 
-    }).catch(() => alert("Selecciona una canción para el DECK A"));
-  });
-  document.getElementById('cueA').addEventListener('click', () => { audA.pause(); document.getElementById('wheelA').classList.remove('spinning'); });
-
-  document.getElementById('playB').addEventListener('click', () => {
-    initAudioEngine(); 
-    if (audioCtx && audioCtx.state === 'suspended') { audioCtx.resume(); }
-    audB.play().then(() => { 
-      document.getElementById('wheelB').classList.add('spinning'); 
-      updateMixerMixes(); 
-    }).catch(() => alert("Selecciona una canción para el DECK B"));
-  });
-  document.getElementById('cueB').addEventListener('click', () => { audB.pause(); document.getElementById('wheelB').classList.remove('spinning'); });
-
-  // Controladores de Faders y Ganancias Matemáticas
-  function updateMixerMixes() {
-    if (!engineReady) return;
-    gainA.gain.value = parseFloat(document.getElementById('volA').value);
-    gainB.gain.value = parseFloat(document.getElementById('volB').value);
-    const crossVal = parseFloat(document.getElementById('crossfader').value);
-    if (crossVal <= 0) { crossGainA.gain.value = 1; crossGainB.gain.value = 1 + crossVal; } 
-    else { crossGainA.gain.value = 1 - crossVal; crossGainB.gain.value = 1; }
-  }
-
-  document.getElementById('volA').addEventListener('input', (e) => { document.getElementById('txtVolA').innerText = Math.round(e.target.value * 100) + "%"; updateMixerMixes(); });
-  document.getElementById('volB').addEventListener('input', (e) => { document.getElementById('txtVolB').innerText = Math.round(e.target.value * 100) + "%"; updateMixerMixes(); });
-  document.getElementById('crossfader').addEventListener('input', updateMixerMixes);
-  document.getElementById('volFX').addEventListener('input', (e) => { document.getElementById('txtVolFX').innerText = "VOL: " + Math.round(e.target.value * 100) + "%"; });
-
-  // Pitch y Cambios de Velocidad Temporal
-  document.getElementById('pitchA').addEventListener('input', (e) => {
-    const percent = parseFloat(e.target.value);
-    document.getElementById('txtPitchA').innerText = (percent >= 0 ? "+" : "") + percent.toFixed(1) + "%";
-    audA.playbackRate = 1 + (percent / 100);
-  });
-  document.getElementById('pitchB').addEventListener('input', (e) => {
-    const percent = parseFloat(e.target.value);
-    document.getElementById('txtPitchB').innerText = (percent >= 0 ? "+" : "") + percent.toFixed(1) + "%";
-    audB.playbackRate = 1 + (percent / 100);
-  });
-
-  // Perillas Ecualizadoras
-  document.getElementById('eqHi').addEventListener('input', (e) => { if (engineReady) filterHi.gain.value = e.target.value; });
-  document.getElementById('eqMid').addEventListener('input', (e) => { if (engineReady) filterMid.gain.value = e.target.value; });
-  document.getElementById('eqLow').addEventListener('input', (e) => { if (engineReady) filterLow.gain.value = e.target.value; });
-
-  // Sistema de Doble Reloj Sincronizado
-  function updateCounters() {
-    const formatTime = (secs) => {
-      if (isNaN(secs) || secs < 0) return "00:00";
-      const m = String(Math.floor(secs / 60)).padStart(2, '0');
-      const s = String(Math.floor(secs % 60)).padStart(2, '0');
-      return `${m}:${s}`;
-    };
-    document.getElementById('timeA').innerText = formatTime(audA.currentTime);
-    document.getElementById('remainA').innerText = "-" + formatTime(audA.duration - audA.currentTime);
-    document.getElementById('timeB').innerText = formatTime(audB.currentTime);
-    document.getElementById('remainB').innerText = "-" + formatTime(audB.duration - audB.currentTime);
-    requestAnimationFrame(updateCounters);
-  }
-  requestAnimationFrame(updateCounters);
-
-  // Renderizador de Ondas Canvas y Animación Automatizada de VuMeters LED
-  function renderWavesAndVus() {
-    const canvasA = document.getElementById('canvasA'), ctxA = canvasA.getContext('2d');
-    const canvasB = document.getElementById('canvasB'), ctxB = canvasB.getContext('2d');
-    const bufferLengthA = analyserA.frequencyBinCount, dataArrayA = new Uint8Array(bufferLengthA);
-    const bufferLengthB = analyserB.frequencyBinCount, dataArrayB = new Uint8Array(bufferLengthB);
-
-    function draw() {
-      requestAnimationFrame(draw);
-      analyserA.getByteFrequencyData(dataArrayA);
-      analyserB.getByteFrequencyData(dataArrayB);
-
-      // Dibujo Ondas Deck A
-      ctxA.fillStyle = '#000'; ctxA.fillRect(0, 0, canvasA.width, canvasA.height);
-      let barWidth = (canvasA.width / bufferLengthA) * 1.5, barHeight, x = 0;
-      let totalVolA = 0;
-      for (let i = 0; i < bufferLengthA; i++) {
-        barHeight = dataArrayA[i] / 4; totalVolA += dataArrayA[i];
-        ctxA.fillStyle = `hsl(185, 100%, ${Math.min(barHeight + 30, 70)}%)`;
-        ctxA.fillRect(x, canvasA.height - barHeight, barWidth - 1, barHeight); x += barWidth;
-      }
-
-      // Dibujo Ondas Deck B
-      ctxB.fillStyle = '#000'; ctxB.fillRect(0, 0, canvasB.width, canvasB.height);
-      x = 0; let totalVolB = 0;
-      for (let i = 0; i < bufferLengthB; i++) {
-        barHeight = dataArrayB[i] / 4; totalVolB += dataArrayB[i];
-        ctxB.fillStyle = `hsl(330, 100%, ${Math.min(barHeight + 30, 70)}%)`;
-        ctxB.fillRect(x, canvasB.height - barHeight, barWidth - 1, barHeight); x += barWidth;
-      }
-
-      // Automatización Física de Altura VuMeters LED en base al espectro conectado
-      if (engineReady) {
-        let avgA = (totalVolA / bufferLengthA) * (crossGainA.gain.value * gainA.gain.value);
-        let avgB = (totalVolB / bufferLengthB) * (crossGainB.gain.value * gainB.gain.value);
-        let pctA = Math.min((avgA / 180) * 100, 100);
-        let pctB = Math.min((avgB / 180) * 100, 100);
-        document.getElementById('vuLeft').style.height = pctA + '%';
-        document.getElementById('vuRight').style.height = pctB + '%';
-      }
-    }
-    draw();
-  }
-
-  // Modulador Sampler FX enlazado al Fader Maestro
-  function playFX(type) {
-    initAudioEngine(); 
-    if (!audioCtx) return;
-    if (audioCtx.state === 'suspended') { audioCtx.resume(); }
-
-    const osc = audioCtx.createOscillator();
-    const gainNode = audioCtx.createGain();
-    
-    if (engineReady && filterLow) { osc.connect(gainNode).connect(filterLow); } 
-    else { osc.connect(gainNode).connect(audioCtx.destination); }
-    
-    const now = audioCtx.currentTime;
-    const userFXVolume = parseFloat(document.getElementById('volFX').value);
-    gainNode.gain.setValueAtTime(0.01 * userFXVolume, now);
-
-    if (type === 'bocina') {
-      osc.type = 'sawtooth'; osc.frequency.setValueAtTime(420, now); 
-      gainNode.gain.linearRampToValueAtTime(0.35 * userFXVolume, now + 0.02);
-      for(let i = 0.08; i < 0.7; i += 0.12) { osc.frequency.setValueAtTime(390, now + i); osc.frequency.setValueAtTime(440, now + i + 0.04); }
-      gainNode.gain.setValueAtTime(0.35 * userFXVolume, now + 0.7); gainNode.gain.linearRampToValueAtTime(0.01 * userFXVolume, now + 0.9); 
-      osc.start(now); osc.stop(now + 0.9);
-    } 
-    else if (type === 'scratch') {
-<script>
-  const audA = document.getElementById('audioA');
-  const audB = document.getElementById('audioB');
-  
-  let audioCtx = null;
-  let srcA, srcB, gainA, gainB, crossGainA, crossGainB;
-  let filterHi, filterMid, filterLow;
-  let analyserA, analyserB;
-  let engineReady = false;
-
-  // Inicialización y Configuración de Nodos de Audio
-  function initAudioEngine() {
-    if (engineReady) return;
-    try {
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      
-      srcA = audioCtx.createMediaElementSource(audA);
-      srcB = audioCtx.createMediaElementSource(audB);
-      
-      gainA = audioCtx.createGain(); gainB = audioCtx.createGain();
-      crossGainA = audioCtx.createGain(); crossGainB = audioCtx.createGain();
-      
-      analyserA = audioCtx.createAnalyser(); analyserA.fftSize = 64;
-      analyserB = audioCtx.createAnalyser(); analyserB.fftSize = 64;
-      
-      filterHi = audioCtx.createBiquadFilter();  filterHi.type = "highshelf";  filterHi.frequency.value = 4000;
-      filterMid = audioCtx.createBiquadFilter(); filterMid.type = "peaking";    filterMid.frequency.value = 1200; filterMid.Q.value = 1.0;
-      filterLow = audioCtx.createBiquadFilter(); filterLow.type = "lowshelf";   filterLow.frequency.value = 250;
-
-      // Enrutamiento modular de canales
-      srcA.connect(gainA).connect(crossGainA).connect(analyserA).connect(filterLow);
-      srcB.connect(gainB).connect(crossGainB).connect(analyserB).connect(filterLow);
-      
-      filterLow.connect(filterMid).connect(filterHi).connect(audioCtx.destination);
-      
-      engineReady = true;
-      renderWavesAndVus();
-    } catch(e) { 
-      console.log("Hardware de audio esperando interacción inicial."); 
-    }
-  }
-
-  // Carga Segura de Tracks Locales
-  document.getElementById('fileA').addEventListener('change', function(e) {
-    if (this.files.length > 0) {
-      document.getElementById('titleA').innerText = this.files[0].name;
-      document.getElementById('labelFileA').innerText = "Cambiar track A";
-      audA.src = URL.createObjectURL(this.files[0]);
-      audA.load();
-    }
-  });
-
-  document.getElementById('fileB').addEventListener('change', function(e) {
-    if (this.files.length > 0) {
-      document.getElementById('titleB').innerText = this.files[0].name;
-      document.getElementById('labelFileB').innerText = "Cambiar track B";
-      audB.src = URL.createObjectURL(this.files[0]);
-      audB.load();
-    }
-  });
-
-  // Gatillos Operacionales Decks
-  document.getElementById('playA').addEventListener('click', () => {
-    initAudioEngine(); 
-    if (audioCtx && audioCtx.state === 'suspended') { audioCtx.resume(); }
-    audA.play().then(() => { 
-      document.getElementById('wheelA').classList.add('spinning'); 
-      updateMixerMixes(); 
-    }).catch(() => alert("Selecciona una canción para el DECK A"));
-  });
-  document.getElementById('cueA').addEventListener('click', () => { audA.pause(); document.getElementById('wheelA').classList.remove('spinning'); });
-
-  document.getElementById('playB').addEventListener('click', () => {
-    initAudioEngine(); 
-    if (audioCtx && audioCtx.state === 'suspended') { audioCtx.resume(); }
-    audB.play().then(() => { 
-      document.getElementById('wheelB').classList.add('spinning'); 
-      updateMixerMixes(); 
-    }).catch(() => alert("Selecciona una canción para el DECK B"));
-  });
-  document.getElementById('cueB').addEventListener('click', () => { audB.pause(); document.getElementById('wheelB').classList.remove('spinning'); });
-
-  // Controladores de Faders y Ganancias Matemáticas
-  function updateMixerMixes() {
-    if (!engineReady) return;
-    gainA.gain.value = parseFloat(document.getElementById('volA').value);
-    gainB.gain.value = parseFloat(document.getElementById('volB').value);
-    const crossVal = parseFloat(document.getElementById('crossfader').value);
-    if (crossVal <= 0) { crossGainA.gain.value = 1; crossGainB.gain.value = 1 + crossVal; } 
-    else { crossGainA.gain.value = 1 - crossVal; crossGainB.gain.value = 1; }
-  }
-
-  document.getElementById('volA').addEventListener('input', (e) => { document.getElementById('txtVolA').innerText = Math.round(e.target.value * 100) + "%"; updateMixerMixes(); });
-  document.getElementById('volB').addEventListener('input', (e) => { document.getElementById('txtVolB').innerText = Math.round(e.target.value * 100) + "%"; updateMixerMixes(); });
-  document.getElementById('crossfader').addEventListener('input', updateMixerMixes);
-  document.getElementById('volFX').addEventListener('input', (e) => { document.getElementById('txtVolFX').innerText = "VOL: " + Math.round(e.target.value * 100) + "%"; });
-
-  // Pitch y Cambios de Velocidad Temporal
-  document.getElementById('pitchA').addEventListener('input', (e) => {
-    const percent = parseFloat(e.target.value);
-    document.getElementById('txtPitchA').innerText = (percent >= 0 ? "+" : "") + percent.toFixed(1) + "%";
-    audA.playbackRate = 1 + (percent / 100);
-  });
-  document.getElementById('pitchB').addEventListener('input', (e) => {
-    const percent = parseFloat(e.target.value);
-    document.getElementById('txtPitchB').innerText = (percent >= 0 ? "+" : "") + percent.toFixed(1) + "%";
-    audB.playbackRate = 1 + (percent / 100);
-  });
-
-  // Perillas Ecualizadoras
-  document.getElementById('eqHi').addEventListener('input', (e) => { if (engineReady) filterHi.gain.value = e.target.value; });
-  document.getElementById('eqMid').addEventListener('input', (e) => { if (engineReady) filterMid.gain.value = e.target.value; });
-  document.getElementById('eqLow').addEventListener('input', (e) => { if (engineReady) filterLow.gain.value = e.target.value; });
-
-  // Sistema de Doble Reloj Sincronizado
-  function updateCounters() {
-    const formatTime = (secs) => {
-      if (isNaN(secs) || secs < 0) return "00:00";
-      const m = String(Math.floor(secs / 60)).padStart(2, '0');
-      const s = String(Math.floor(secs % 60)).padStart(2, '0');
-      return `${m}:${s}`;
-    };
-    document.getElementById('timeA').innerText = formatTime(audA.currentTime);
-    document.getElementById('remainA').innerText = "-" + formatTime(audA.duration - audA.currentTime);
-    document.getElementById('timeB').innerText = formatTime(audB.currentTime);
-    document.getElementById('remainB').innerText = "-" + formatTime(audB.duration - audB.currentTime);
-    requestAnimationFrame(updateCounters);
-  }
-  requestAnimationFrame(updateCounters);
-  // Renderizador de Ondas Canvas y Animación Automatizada de VuMeters LED
-  function renderWavesAndVus() {
-    const canvasA = document.getElementById('canvasA'), ctxA = canvasA.getContext('2d');
-    const canvasB = document.getElementById('canvasB'), ctxB = canvasB.getContext('2d');
-    const bufferLengthA = analyserA.frequencyBinCount, dataArrayA = new Uint8Array(bufferLengthA);
-    const bufferLengthB = analyserB.frequencyBinCount, dataArrayB = new Uint8Array(bufferLengthB);
-
-    function draw() {
-      requestAnimationFrame(draw);
-      analyserA.getByteFrequencyData(dataArrayA);
-      analyserB.getByteFrequencyData(dataArrayB);
-
-      // Dibujo Ondas Deck A
-      ctxA.fillStyle = '#000'; ctxA.fillRect(0, 0, canvasA.width, canvasA.height);
-      let barWidth = (canvasA.width / bufferLengthA) * 1.5, barHeight, x = 0;
-      let totalVolA = 0;
-      for (let i = 0; i < bufferLengthA; i++) {
-        barHeight = dataArrayA[i] / 4; totalVolA += dataArrayA[i];
-        ctxA.fillStyle = `hsl(185, 100%, ${Math.min(barHeight + 30, 70)}%)`;
-        ctxA.fillRect(x, canvasA.height - barHeight, barWidth - 1, barHeight); x += barWidth;
-      }
-
-      // Dibujo Ondas Deck B
-      ctxB.fillStyle = '#000'; ctxB.fillRect(0, 0, canvasB.width, canvasB.height);
-      x = 0; let totalVolB = 0;
-      for (let i = 0; i < bufferLengthB; i++) {
-        barHeight = dataArrayB[i] / 4; totalVolB += dataArrayB[i];
-        ctxB.fillStyle = `hsl(330, 100%, ${Math.min(barHeight + 30, 70)}%)`;
-        ctxB.fillRect(x, canvasB.height - barHeight, barWidth - 1, barHeight); x += barWidth;
-      }
-
-      // Automatización Física de Altura VuMeters LED
-      if (engineReady) {
-        let avgA = (totalVolA / bufferLengthA) * (crossGainA.gain.value * gainA.gain.value);
-        let avgB = (totalVolB / bufferLengthB) * (crossGainB.gain.value * gainB.gain.value);
-        let pctA = Math.min((avgA / 180) * 100, 100);
-        let pctB = Math.min((avgB / 180) * 100, 100);
-        document.getElementById('vuLeft').style.height = pctA + '%';
-        document.getElementById('vuRight').style.height = pctB + '%';
-      }
-    }
-    draw();
-  }
-
-  // Modulador Sampler FX Completo Línea por Línea
+  // Modulador Completo Sampler FX Expandido (Estructura Base de Síntesis)
   function playFX(type) {
     initAudioEngine(); 
     if (!audioCtx) return;
@@ -896,34 +580,42 @@
       osc.start(now); osc.stop(now + 1.2);
     }
     else if (type === 'aplauso') {
-      osc.type = 'triangle'; osc.frequency.setValueAtTime(280, now); 
+      osc.type = 'triangle'; 
+      osc.frequency.setValueAtTime(280, now); 
       gainNode.gain.setValueAtTime(0.3 * userFXVolume, now);
       for(let i = 0; i < 0.5; i += 0.05) { 
         gainNode.gain.setValueAtTime(0.3 * userFXVolume, now + i); 
         gainNode.gain.setValueAtTime(0.01 * userFXVolume, now + i + 0.02); 
       }
-      osc.start(now); osc.stop(now + 0.5);
+      osc.start(now); 
+      osc.stop(now + 0.5);
     }
     else if (type === 'campana') {
-      osc.type = 'sine'; osc.frequency.setValueAtTime(880, now); 
+      osc.type = 'sine'; 
+      osc.frequency.setValueAtTime(880, now); 
       osc.frequency.setValueAtTime(1200, now);
       gainNode.gain.setValueAtTime(0.35 * userFXVolume, now); 
       gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.4); 
-      osc.start(now); osc.stop(now + 0.4);
+      osc.start(now); 
+      osc.stop(now + 0.4);
     }
     else if (type === 'dembow') {
-      osc.type = 'sine'; osc.frequency.setValueAtTime(150, now); 
+      osc.type = 'sine'; 
+      osc.frequency.setValueAtTime(150, now); 
       osc.frequency.exponentialRampToValueAtTime(40, now + 0.12);
       gainNode.gain.setValueAtTime(0.65 * userFXVolume, now); 
       gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.15); 
-      osc.start(now); osc.stop(now + 0.15);
+      osc.start(now); 
+      osc.stop(now + 0.15);
     }
     else if (type === 'subbass') {
-      osc.type = 'sine'; osc.frequency.setValueAtTime(90, now); 
+      osc.type = 'sine'; 
+      osc.frequency.setValueAtTime(90, now); 
       osc.frequency.linearRampToValueAtTime(25, now + 1.5);
       gainNode.gain.setValueAtTime(0.6 * userFXVolume, now); 
       gainNode.gain.exponentialRampToValueAtTime(0.001, now + 1.5); 
-      osc.start(now); osc.stop(now + 1.5);
+      osc.start(now); 
+      osc.stop(now + 1.5);
     }
   }
 
@@ -941,5 +633,3 @@
 </script>
 </body>
 </html>
-
-
