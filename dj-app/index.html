@@ -115,92 +115,6 @@
     .bpm-value { font-size: 0.9rem; }
   }
   /* ESTILOS DE LOS PLATOS (DECKS) EXTENDIDOS */
-  .dj-deck {
-    background: var(--bg-panel); border-radius: 12px; padding: 15px;
-    border: 1px solid rgba(255,255,255,0.03); display: flex; flex-direction: column;
-    position: relative; box-shadow: 0 15px 35px rgba(0,0,0,0.7);
-    transition: box-shadow 0.05s ease, border-color 0.05s ease;
-  }
-  .deck-a { border-top: 3px solid var(--neon-cyan); }
-  .deck-b { border-top: 3px solid var(--neon-magenta); }
-
-  /* Animación física de parpadeo neón para el bajo */
-  .deck-a.glow-pulse { box-shadow: 0 0 25px rgba(0, 240, 255, 0.4), inset 0 0 10px rgba(0, 240, 255, 0.2); }
-  .deck-b.glow-pulse { box-shadow: 0 0 25px rgba(255, 0, 127, 0.4), inset 0 0 10px rgba(255, 0, 127, 0.2); }
-
-  .deck-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; width: 100%; }
-  .deck-info-meta { display: flex; flex-direction: column; gap: 2px; }
-  .deck-badge { font-size: 0.7rem; font-weight: 900; padding: 2px 6px; border-radius: 4px; background: #000; width: max-content; }
-  .deck-a .deck-badge { color: var(--neon-cyan); border: 1px solid rgba(0,240,255,0.2); }
-  .deck-b .deck-badge { color: var(--neon-magenta); border: 1px solid rgba(255,0,127,0.2); }
-  
-  .track-title { font-size: 0.9rem; color: #fff; font-weight: 700; max-width: 220px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 4px; }
-  .bpm-counter { text-align: right; }
-  .bpm-label { font-size: 0.55rem; color: var(--text-dim); font-weight: 800; }
-  .bpm-value { font-family: monospace; font-size: 1.1rem; font-weight: 900; color: var(--neon-green); }
-
-  /* DISPLAY CONTADORES */
-  .display-panel {
-    width: 100%; background: #04060a; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05);
-    padding: 8px 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;
-  }
-  .time-group { display: flex; flex-direction: column; }
-  .time-label { font-size: 0.55rem; color: var(--text-dim); font-weight: 800; letter-spacing: 0.5px; }
-  .time-counter { font-family: monospace; font-size: 1.2rem; font-weight: bold; color: var(--neon-green); }
-  .time-counter.countdown { color: var(--neon-red); }
-
-  /* Onda interactiva con puntero de clic para adelantar/retroceder */
-  .wave-display { width: 100%; height: 45px; background: #000; border-radius: 4px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.02); cursor: pointer; }
-
-  /* FILA DE CONTROLES CUE / LOOP / SYNC */
-  .performance-row { width: 100%; display: flex; gap: 4px; margin-bottom: 10px; justify-content: space-between; align-items: center; }
-  .perf-label { font-size: 0.55rem; color: var(--text-dim); font-weight: 800; text-transform: uppercase; white-space: nowrap; }
-  .perf-grid { display: flex; gap: 4px; flex-grow: 1; justify-content: flex-end; }
-  .pad-btn { padding: 4px 8px; background: #131a2a; border: 1px solid #23314f; color: #94a3b8; font-size: 0.65rem; font-weight: 700; border-radius: 3px; cursor: pointer; text-transform: uppercase; min-width: 32px; text-align: center; }
-  .pad-btn:hover { background: #1e2942; color: #fff; }
-  .pad-btn.active-mode { background: #1e2942; color: var(--neon-cyan); border-color: var(--neon-cyan); }
-  .pad-btn.sync-mode { background: #1e2942; color: var(--neon-magenta); border-color: var(--neon-magenta); }
-
-  /* ZONA CENTRAL DEL DECK (JOG WHEEL + SLIDERS) */
-  .deck-center-row { width: 100%; display: flex; justify-content: space-between; align-items: center; margin: 10px 0; gap: 15px; }
-  .pitch-container, .vol-container { display: flex; flex-direction: column; align-items: center; gap: 5px; width: 45px; }
-  .v-slider-label { font-size: 0.55rem; color: var(--text-dim); font-weight: 800; text-transform: uppercase; }
-  .v-slider-val { font-family: monospace; font-size: 0.65rem; color: #94a3b8; }
-  
-  /* CONTROLES DESLIZANTES VERTICALES ESTÁNDAR */
-  input[type="range"].vertical-slider { writing-mode: vertical-lr; direction: rtl; width: 12px; height: 120px; background: #000; cursor: pointer; outline: none; }
-
-  /* JOG WHEEL PROFESIONAL */
-  .jog-wheel { width: 135px; height: 135px; border-radius: 50%; background: radial-gradient(circle, #1a2233 12%, #07090e 13%, #07090e 35%, #111622 36%, #020305 70%); border: 4px solid #1f293d; position: relative; box-shadow: 0 8px 20px rgba(0,0,0,0.6); }
-  .jog-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 34px; height: 34px; border-radius: 50%; border: 2px solid #0 black; background: #0b0f19; }
-  .deck-a .jog-center { box-shadow: 0 0 15px rgba(0,240,255,0.4); border-color: var(--neon-cyan); }
-  .deck-b .jog-center { box-shadow: 0 0 15px rgba(255,0,127,0.4); border-color: var(--neon-magenta); }
-  .jog-marker { position: absolute; top: 4px; left: 50%; transform: translateX(-50%); width: 4px; height: 16px; background: #fff; border-radius: 1px; transform-origin: bottom center; }
-  .spinning { animation: jogSpin 2.5s linear infinite; }
-  @keyframes jogSpin { 100% { transform: rotate(360deg); } }
-
-  /* BOTONES DE DISPARO PRINCIPAL */
-  .main-controls { width: 100%; display: flex; gap: 5px; margin-top: 5px; }
-  .btn-action { flex: 1; padding: 8px; border: 0; border-radius: 4px; font-weight: 800; font-size: 0.7rem; text-transform: uppercase; cursor: pointer; color: #fff; background: #131a2a; border: 1px solid #23314f; transition: all 0.2s ease; }
-  .btn-action.play-a:hover { background: #002c30; color: var(--neon-cyan); border-color: var(--neon-cyan); }
-  .btn-action.play-b:hover { background: #33001a; color: var(--neon-magenta); border-color: var(--neon-magenta); }
-  .btn-action.cue-btn:hover { background: #2b1b00; color: var(--gold); border-color: var(--gold); }
-  
-  .file-uploader { width: 100%; margin-bottom: 4px; }
-  .file-uploader input[type="file"] { display: none; }
-  .file-label { display: block; text-align: center; padding: 6px; background: #131a2a; border: 1px dashed #23314f; border-radius: 4px; font-size: 0.65rem; cursor: pointer; color: #94a3b8; font-weight: bold; }
-  .file-label:hover { color: #fff; border-color: var(--text-main); }
-
-  @media (max-width: 1100px) {
-    .dj-deck { padding: 8px; border-radius: 8px; }
-    .deck-center-row { gap: 4px; margin: 5px 0; }
-    input[type="range"].vertical-slider { height: 90px; width: 10px; }
-    .btn-action { padding: 6px 4px; font-size: 0.6rem; }
-    .pad-btn { padding: 3px 4px; min-width: 24px; font-size: 0.55rem; }
-    .perf-label { font-size: 0.5rem; }
-    .display-panel { padding: 4px 6px; margin-bottom: 5px; }
-  }
-  /* ESTILOS CSS DEL MEZCLADOR CENTRAL */
     /* ESTILOS CSS DEL MEZCLADOR CENTRAL */
   .center-rack {
     background: var(--bg-panel); border-radius: 12px; padding: 15px;
@@ -242,37 +156,38 @@
   .btn-talkover { width: 100%; padding: 8px; background: #131a2a; border: 1px solid var(--neon-cyan); border-radius: 4px; color: var(--neon-cyan); font-weight: 900; font-size: 0.7rem; text-transform: uppercase; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 0 10px rgba(0, 240, 255, 0.2); }
   .btn-talkover.active-mode { background: var(--neon-cyan); color: #000; box-shadow: 0 0 15px var(--neon-cyan); }
 
-  /* SOLUCIÓN AL SCROLL DE LAS TABLAS INTERACTIVAS */
+  /* COMPONENTE DE BARRA DE DESPLAZAMIENTO FORZADO */
   .bottom-library-section { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; width: 100%; }
-  .lib-panel { background: var(--bg-panel); border-radius: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.03); height: 230px; display: flex; flex-direction: column; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+  .lib-panel { background: var(--bg-panel); border-radius: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.03); height: 230px; display: flex; flex-direction: column; box-shadow: 0 10px 25px rgba(0,0,0,0.5); transition: border-color 0.2s ease; }
+  
+  /* Zona de soltado activa (Brilla al arrastrar música) */
+  .lib-panel.drag-over { border: 1px dashed var(--neon-green); background: rgba(57, 255, 20, 0.02); }
+  
   .lib-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; gap: 10px; }
   .lib-title { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--neon-cyan); display: flex; align-items: center; gap: 5px; }
   .lib-panel.right-side .lib-title { color: var(--neon-magenta); }
   .lib-search { background: #060911; border: 1px solid #1e293b; color: #fff; padding: 3px 8px; border-radius: 4px; font-size: 0.65rem; width: 120px; outline: none; }
   
-  /* Contenedores con scroll vertical estricto */
-  .table-wrapper { flex-grow: 1; overflow-y: auto; max-height: 160px; padding-right: 2px; }
+  /* Forzado estricto del scroll de la tabla */
+  .table-wrapper { flex-grow: 1; overflow-y: scroll !important; max-height: 145px !important; display: block; }
   
-  /* Personalización de la barra de scroll neón */
-  .table-wrapper::-webkit-scrollbar { width: 5px; }
-  .table-wrapper::-webkit-scrollbar-track { background: #04060a; }
-  .table-wrapper::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-  .table-wrapper:hover::-webkit-scrollbar-thumb { background: var(--neon-cyan); }
+  /* Diseño neón de la barra */
+  .table-wrapper::-webkit-scrollbar { width: 6px !important; display: block !important; }
+  .table-wrapper::-webkit-scrollbar-track { background: #04060a !important; }
+  .table-wrapper::-webkit-scrollbar-thumb { background: var(--neon-cyan) !important; border-radius: 4px !important; }
 
   .track-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.65rem; table-layout: fixed; }
   .track-table th { padding: 4px 6px; color: var(--text-dim); text-transform: uppercase; font-weight: 800; border-bottom: 1px solid rgba(255,255,255,0.05); position: sticky; top: 0; background: #0b0f19; z-index: 10; }
   .track-table td { padding: 6px; color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.02); cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .track-table tr:hover td { color: #fff; background: rgba(255,255,255,0.04); }
-  .track-table tr.selected-row td { color: var(--neon-green); font-weight: bold; background: rgba(57, 255, 20, 0.05); }
 
-  /* Estilo del botón para subir música del disco duro */
   .btn-import-local { background: #101726; border: 1px dashed #2c3e50; color: #39ff14; padding: 2px 8px; border-radius: 4px; font-size: 0.58rem; font-weight: bold; cursor: pointer; text-transform: uppercase; }
   .btn-import-local:hover { background: #1a243d; border-color: #39ff14; }
 
   @media (max-width: 1100px) {
     .bottom-library-section { grid-template-columns: 1fr; gap: 10px; }
     .lib-panel { height: 210px; }
-    .table-wrapper { max-height: 130px; }
+    .table-wrapper { max-height: 120px !important; }
   }
 </style>
 </head>
@@ -283,6 +198,7 @@
   <h1>Ultra Pro DJ Mixing Studio V2</h1>
   <button class="nav-btn">ON AIR •</button>
 </div>
+
 
 <!-- Letrero central verificado anti-duplicados caché -->
 <!-- Letrero central verificado anti-duplicados caché -->
@@ -439,6 +355,7 @@
     <!-- DECK B (COLUMNA DERECHA) -->
        <!-- DECK B (COLUMNA DERECHA) -->
         <!-- DECK B (COLUMNA DERECHA) -->
+        <!-- DECK B (COLUMNA DERECHA) -->
     <div class="dj-deck deck-b" id="deckContainerB">
       <div class="deck-header">
         <div class="deck-info-meta">
@@ -510,9 +427,9 @@
 
   </div> <!-- mixer-interface -->
 
-  <!-- SECCIÓN DE PLAYLIST CON SCROLL E IMPORTADOR COMPLETO -->
+  <!-- CONTENEDORES CON SISTEMA DRAG AND DROP REAL PARA SUBCANCIONES -->
   <div class="bottom-library-section">
-    <div class="lib-panel">
+    <div class="lib-panel" id="dropZonePlaylist">
       <div class="lib-header">
         <div class="lib-title">🎵 Playlist Active</div>
         <button class="btn-import-local" onclick="document.getElementById('globalDiskUploader').click()">📂 Importar MP3 Local</button>
@@ -524,17 +441,17 @@
             <tr><th style="width:50%;">Track Name</th><th style="width:25%;">Artist</th><th style="width:13%;">Time</th><th style="width:12%;">BPM</th></tr>
           </thead>
           <tbody>
-            <tr data-url=""><td>Flaco Mío</td><td>Joe Antonio</td><td>03:45</td><td>92.5</td></tr>
-            <tr data-url=""><td>Bajo el Cielo de Cartagena</td><td>Shalysa</td><td>03:52</td><td>93.0</td></tr>
-            <tr data-url=""><td>Calmo tu sed 2</td><td>Joe Antonio</td><td>03:20</td><td>90.0</td></tr>
-            <tr data-url=""><td>Aquí Estoy Bebe</td><td>Joe Antonio</td><td>03:15</td><td>91.0</td></tr>
-            <tr data-url=""><td>Eres Mi Hombre</td><td>Joe Antonio</td><td>03:40</td><td>92.0</td></tr>
+            <tr><td>Flaco Mío</td><td>Joe Antonio</td><td>03:45</td><td>92.5</td></tr>
+            <tr><td>Bajo el Cielo de Cartagena</td><td>Shalysa</td><td>03:52</td><td>93.0</td></tr>
+            <tr><td>Calmo tu sed 2</td><td>Joe Antonio</td><td>03:20</td><td>90.0</td></tr>
+            <tr><td>Aquí Estoy Bebe</td><td>Joe Antonio</td><td>03:15</td><td>91.0</td></tr>
+            <tr><td>Eres Mi Hombre</td><td>Joe Antonio</td><td>03:40</td><td>92.0</td></tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <div class="lib-panel right-side">
+    <div class="lib-panel right-side" id="dropZoneLibrary">
       <div class="lib-header">
         <div class="lib-title">📂 Media Library</div>
         <input type="search" class="lib-search" placeholder="Buscar canción...">
@@ -545,11 +462,11 @@
             <tr><th style="width:50%;">Title</th><th style="width:25%;">Artist</th><th style="width:13%;">Time</th><th style="width:12%;">BPM</th></tr>
           </thead>
           <tbody>
-            <tr data-url=""><td>Amor de Otro Planeta</td><td>Joe Antonio</td><td>03:48</td><td>93.0</td></tr>
-            <tr data-url=""><td>Tu y Yo</td><td>Joe Antonio</td><td>03:30</td><td>91.5</td></tr>
-            <tr data-url=""><td>Solo Contigo</td><td>Joe Antonio</td><td>03:27</td><td>90.0</td></tr>
-            <tr data-url=""><td>No Me Dejes</td><td>Joe Antonio</td><td>03:41</td><td>94.0</td></tr>
-            <tr data-url=""><td>Por Ti</td><td>Joe Antonio</td><td>03:17</td><td>90.0</td></tr>
+            <tr><td>Amor de Otro Planeta</td><td>Joe Antonio</td><td>03:48</td><td>93.0</td></tr>
+            <tr><td>Tu y Yo</td><td>Joe Antonio</td><td>03:30</td><td>91.5</td></tr>
+            <tr><td>Solo Contigo</td><td>Joe Antonio</td><td>03:27</td><td>90.0</td></tr>
+            <tr><td>No Me Dejes</td><td>Joe Antonio</td><td>03:41</td><td>94.0</td></tr>
+            <tr><td>Por Ti</td><td>Joe Antonio</td><td>03:17</td><td>90.0</td></tr>
           </tbody>
         </table>
       </div>
@@ -577,13 +494,11 @@
   
   let talkoverGainA, talkoverGainB;
   
-  // Memoria virtual interna para almacenar archivos MP3 locales cargados por el usuario
   let trackBlobMap = {};
 
 
   // Inicialización y Configuración de Nodos de Audio Profesional
-    // Inicialización y Configuración de Nodos de Audio Profesional
-    // Inicialización y Configuración de Nodos de Audio Profesional
+     // Inicialización y Configuración de Nodos de Audio Profesional
   async function initAudioEngine() {
     if (engineReady) {
       if (audioCtx && audioCtx.state === 'suspended') { await audioCtx.resume(); }
@@ -626,13 +541,13 @@
       renderWavesAndVus();
       setupTimeSkippers();
       setupInteractiveWaves();
-      setupTableInteractions(); // Inicia la escucha de clics en las canciones
+      setupTableInteractions(); // Arranca los clics e importadores del disco duro
     } catch(e) { 
       console.error("Hardware de audio esperando interacción inicial:", e); 
     }
   }
 
-  // Carga Manual Independiente desde Botón de Decks
+  // Selectores independientes de botones en decks
   document.getElementById('fileA').addEventListener('change', function(e) {
     if (this.files && this.files.length > 0) {
       document.getElementById('titleA').innerText = this.files[0].name;
@@ -651,75 +566,76 @@
     }
   });
 
-  // SISTEMA DE CARGA POR DOBLE CLIC E IMPORTADOR DESDE EL DISCO DURO LOCAL REAL
+  // GESTOR DEFINITIVO: Procesa el doble clic y el arrastre real (Drag and Drop)
   function setupTableInteractions() {
-    const handleRowDblClick = (row) => {
-      const trackName = row.cells[0].innerText;
-      const targetDeck = prompt(`¿Cargar "${trackName}" en cuál Deck?\nEscribe "A" o "B":`, "A");
-      
-      if (!targetDeck) return;
-      const deckChoice = targetDeck.toUpperCase().trim();
-      
-      // Busca si el audio proviene del disco duro o si es un adorno
-      const audioSource = trackBlobMap[trackName] || null;
+    const playlistZone = document.getElementById('dropZonePlaylist');
+    const libraryZone = document.getElementById('dropZoneLibrary');
 
-      if (deckChoice === 'A') {
-        document.getElementById('titleA').innerText = trackName;
-        if (audioSource) { audA.src = audioSource; audA.load(); }
-        else { alert(`"${trackName}" es un track de demostración. Para escuchar audio real, usa el botón "Importar MP3 Local".`); }
-      } else if (deckChoice === 'B') {
-        document.getElementById('titleB').innerText = trackName;
-        if (audioSource) { audB.src = audioSource; audB.load(); }
-        else { alert(`"${trackName}" es un track de demostración. Para escuchar audio real, usa el botón "Importar MP3 Local".`); }
-      } else {
-        alert("Opción inválida. Debes ingresar 'A' o 'B'.");
+    // Procesa e inyecta los archivos binarios de audio a la memoria virtual
+    const processImportedFiles = (files, targetTableId) => {
+      const tbody = document.querySelector(`#${targetTableId} tbody`);
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        if (!file.type.startsWith('audio/')) continue; // Filtra que solo entren canciones
+        
+        const objectURL = URL.createObjectURL(file);
+        trackBlobMap[file.name] = objectURL;
+
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `<td>${file.name}</td><td>Disco Local</td><td>--:--</td><td>0.0</td>`;
+        tbody.insertBefore(newRow, tbody.firstChild); // Lo pone al principio de la lista
       }
     };
 
-    // Añade la escucha a todas las filas actuales y futuras
-    document.querySelectorAll('.track-table tbody').forEach(tbody => {
-      tbody.addEventListener('dblclick', (e) => {
-        const row = e.target.closest('tr');
-        if (row && row.parentNode.tagName === 'TBODY') { handleRowDblClick(row); }
+    // --- ACTIVACIÓN COMPONENTE DRAG AND DROP (ARRASTRAR) ---
+    [playlistZone, libraryZone].forEach(zone => {
+      zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('drag-over'); });
+      zone.addEventListener('dragleave', () => { zone.classList.remove('drag-over'); });
+      zone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        zone.classList.remove('drag-over');
+        if (e.dataTransfer.files.length > 0) {
+          const targetTable = zone.id === 'dropZonePlaylist' ? 'playlistTable' : 'libraryTable';
+          processImportedFiles(e.dataTransfer.files, targetTable);
+        }
       });
     });
 
-    // Inyección de canciones reales cargadas desde el disco duro
-    document.getElementById('globalDiskUploader').addEventListener('change', function(e) {
-      if (this.files.length > 0) {
-        const tbody = document.querySelector('#playlistTable tbody');
-        for (let i = 0; i < this.files.length; i++) {
-          const file = this.files[i];
-          const objectURL = URL.createObjectURL(file);
-          
-          // Guarda el binario enlazado a su nombre
-          trackBlobMap[file.name] = objectURL;
+    // Carga archivos mediante el botón de examinar
+    document.getElementById('globalDiskUploader').addEventListener('change', function() {
+      if (this.files.length > 0) { processImportedFiles(this.files, 'playlistTable'); }
+    });
 
-          // Crea la nueva fila con barra de scroll automática
-          const newRow = document.createElement('tr');
-          newRow.innerHTML = `<td>${file.name}</td><td>Local Disk</td><td>--:--</td><td>0.0</td>`;
-          tbody.appendChild(newRow);
+    // Carga de decks al dar Doble Clic en cualquier fila
+    document.querySelectorAll('.track-table tbody').forEach(tbody => {
+      tbody.addEventListener('dblclick', (e) => {
+        const row = e.target.closest('tr');
+        if (!row) return;
+        
+        const trackName = row.cells[0].innerText;
+        const targetDeck = prompt(`¿Cargar "${trackName}"?\nEscribe "A" o "B":`, "A");
+        if (!targetDeck) return;
+        
+        const choice = targetDeck.toUpperCase().trim();
+        const blobSource = trackBlobMap[trackName] || null;
+
+        if (choice === 'A') {
+          document.getElementById('titleA').innerText = trackName;
+          if (blobSource) { audA.src = blobSource; audA.load(); }
+          else { alert("Este es un track de demostración. Importa tus MP3 reales usando el botón o arrastrándolos a la tabla."); }
+        } else if (choice === 'B') {
+          document.getElementById('titleB').innerText = trackName;
+          if (blobSource) { audB.src = blobSource; audB.load(); }
+          else { alert("Este es un track de demostración. Importa tus MP3 reales usando el botón o arrastrándolos a la tabla."); }
         }
-        alert(`¡Se han importado ${this.files.length} canciones con éxito! Hazles doble clic para cargarlas en los platos.`);
-      }
+      });
     });
   }
 
   function setupInteractiveWaves() {
-    const canvasA = document.getElementById('canvasA');
-    const canvasB = document.getElementById('canvasB');
-
-    canvasA.addEventListener('click', function(e) {
-      if (!audA.duration) return;
-      const rect = canvasA.getBoundingClientRect();
-      audA.currentTime = ((e.clientX - rect.left) / rect.width) * audA.duration;
-    });
-
-    canvasB.addEventListener('click', function(e) {
-      if (!audB.duration) return;
-      const rect = canvasB.getBoundingClientRect();
-      audB.currentTime = ((e.clientX - rect.left) / rect.width) * audB.duration;
-    });
+    const canvasA = document.getElementById('canvasA'), canvasB = document.getElementById('canvasB');
+    canvasA.addEventListener('click', function(e) { if (audA.duration) audA.currentTime = ((e.clientX - canvasA.getBoundingClientRect().left) / canvasA.offsetWidth) * audA.duration; });
+    canvasB.addEventListener('click', function(e) { if (audB.duration) audB.currentTime = ((e.clientX - canvasB.getBoundingClientRect().left) / canvasB.offsetWidth) * audB.duration; });
   }
 
   function setupTimeSkippers() {
@@ -729,19 +645,11 @@
     document.getElementById('skipRevB').addEventListener('click', () => { if (audB.duration) audB.currentTime = Math.max(audB.currentTime - 10, 0); });
   }
 
-  document.getElementById('playA').addEventListener('click', async () => {
-    await initAudioEngine(); 
-    if (audioCtx && audioCtx.state === 'suspended') { await audioCtx.resume(); }
-    audA.play().then(() => { document.getElementById('wheelA').classList.add('spinning'); updateMixerMixes(); }).catch(() => alert("Carga una canción real usando doble clic o el botón Seleccionar Canción A"));
-  });
-  document.getElementById('cueA').addEventListener('click', () => { triggerVinylBrake(audA, 'wheelA'); });
+  document.getElementById('playA').addEventListener('click', async () => { await initAudioEngine(); if (audioCtx.state === 'suspended') await audioCtx.resume(); audA.play().then(() => document.getElementById('wheelA').classList.add('spinning')).catch(() => alert("Por favor haz doble clic en una canción importada para cargarla en el Deck A")); });
+  document.getElementById('cueA').addEventListener('click', () => triggerVinylBrake(audA, 'wheelA'));
+  document.getElementById('playB').addEventListener('click', async () => { await initAudioEngine(); if (audioCtx.state === 'suspended') await audioCtx.resume(); audB.play().then(() => document.getElementById('wheelB').classList.add('spinning')).catch(() => alert("Por favor haz doble clic en una canción importada para cargarla en el Deck B")); });
+  document.getElementById('cueB').addEventListener('click', () => triggerVinylBrake(audB, 'wheelB'));
 
-  document.getElementById('playB').addEventListener('click', async () => {
-    await initAudioEngine(); 
-    if (audioCtx && audioCtx.state === 'suspended') { await audioCtx.resume(); }
-    audB.play().then(() => { document.getElementById('wheelB').classList.add('spinning'); updateMixerMixes(); }).catch(() => alert("Carga una canción real usando doble clic o el botón Seleccionar Canción B"));
-  });
-  document.getElementById('cueB').addEventListener('click', () => { triggerVinylBrake(audB, 'wheelB'); });
 
   // Lógica de encendido y apagado físico del Auto DJ
   document.getElementById('btnAutoDJ').addEventListener('click', function() {
