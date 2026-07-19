@@ -40,7 +40,7 @@
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
   }
-  .top-bar {
+    .top-bar {
     width: 100%; max-width: 1400px; display: flex; justify-content: space-between;
     align-items: center; background: var(--bg-panel); padding: 10px 20px;
     border-radius: 8px; border: 1px solid var(--border-glow); margin-bottom: 15px;
@@ -58,13 +58,13 @@
     font-weight: 700; cursor: pointer; text-transform: uppercase; 
   }
 
-  /* Branding central verificado con clase única anti-duplicados */
   .brand-header-master {
     text-align: center;
     margin: 10px 0 25px 0;
     padding: 15px;
     width: 100%;
     max-width: 600px;
+    transition: transform 0.05s ease;
   }
   
   .brand-header-master h2 {
@@ -91,6 +91,25 @@
   }
 
   .studio-container { width: 100%; max-width: 1400px; display: flex; flex-direction: column; gap: 15px; }
+  .mixer-interface { display: grid; grid-template-columns: 1fr 340px 1fr; gap: 15px; width: 100%; }
+
+  @media (max-width: 1100px) {
+    .mixer-interface { 
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas: 
+        "deckA deckB"
+        "master master";
+    }
+    .deck-a { grid-area: deckA; }
+    .deck-b { grid-area: deckB; }
+    .center-rack { grid-area: master; }
+    
+    .jog-wheel { width: 90px !important; height: 90px !important; }
+    .track-title { max-width: 100px; font-size: 0.75rem; }
+    .time-counter { font-size: 0.95rem; }
+    .bpm-value { font-size: 0.9rem; }
+  }
+
   
   /* REJILLA DESKTOP: Tres columnas fijas en paralelo */
   .mixer-interface { display: grid; grid-template-columns: 1fr 340px 1fr; gap: 15px; width: 100%; }
@@ -553,6 +572,7 @@
   let autoDJActive = false;
   let autoDJTransitioning = false;
   // Inicialización y Configuración de Nodos de Audio Profesional
+    // Inicialización y Configuración de Nodos de Audio Profesional
   async function initAudioEngine() {
     if (engineReady) {
       if (audioCtx && audioCtx.state === 'suspended') { await audioCtx.resume(); }
@@ -588,12 +608,13 @@
 
       engineReady = true;
       renderWavesAndVus();
+      setupInteractiveWaves(); // Activa los clics en las ondas
     } catch(e) { 
       console.error("Hardware de audio esperando interacción inicial:", e); 
     }
   }
 
-  // CARGA COMPLETA REPARADA CON ÍNDICES DE ARRAYS SEGUROS [0]
+  // CARGA COMPLETA REPARADA CON ÍNDICES DE ARRAYS SEGUROS
   document.getElementById('fileA').addEventListener('change', function(e) {
     if (this.files && this.files.length > 0) {
       document.getElementById('titleA').innerText = this.files[0].name;
@@ -611,6 +632,28 @@
       audB.load();
     }
   });
+
+  // NUEVO: Función para adelantar o retroceder haciendo clic en las ondas
+  function setupInteractiveWaves() {
+    const canvasA = document.getElementById('canvasA');
+    const canvasB = document.getElementById('canvasB');
+
+    canvasA.addEventListener('click', function(e) {
+      if (!audA.duration) return;
+      const rect = canvasA.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const percentage = clickX / rect.width;
+      audA.currentTime = percentage * audA.duration;
+    });
+
+    canvasB.addEventListener('click', function(e) {
+      if (!audB.duration) return;
+      const rect = canvasB.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const percentage = clickX / rect.width;
+      audB.currentTime = percentage * audB.duration;
+    });
+  }
 
   // Disparadores de los Decks con Desbloqueo asíncrono de Seguridad
   document.getElementById('playA').addEventListener('click', async () => {
@@ -632,6 +675,7 @@
     }).catch(() => alert("Selecciona una canción para el DECK B"));
   });
   document.getElementById('cueB').addEventListener('click', () => { audB.pause(); document.getElementById('wheelB').classList.remove('spinning'); });
+
   // Lógica de encendido y apagado físico del Auto DJ
   document.getElementById('btnAutoDJ').addEventListener('click', function() {
     autoDJActive = !autoDJActive;
