@@ -797,7 +797,7 @@
       if (isNaN(secs) || secs < 0) return "00:00";
       const m = String(Math.floor(secs / 60)).padStart(2, '0');
       const s = String(Math.floor(secs % 60)).padStart(2, '0');
-      return ${m}:${s};
+      return `${m}:${s}`;
     };
 
     const remainA = audA.duration - audA.currentTime;
@@ -842,7 +842,7 @@
       let totalVolA = 0;
       for (let i = 0; i < bufferLengthA; i++) {
         barHeight = dataArrayA[i] / 4; totalVolA += dataArrayA[i];
-        ctxA.fillStyle = hsl(185, 100%, ${Math.min(barHeight + 30, 70)}%);
+        ctxA.fillStyle = `hsl(185, 100%, ${Math.min(barHeight + 30, 70)}%)`;
         ctxA.fillRect(x, canvasA.height - barHeight, barWidth - 1, barHeight); x += barWidth;
       }
 
@@ -851,7 +851,7 @@
       x = 0; let totalVolB = 0;
       for (let i = 0; i < bufferLengthB; i++) {
         barHeight = dataArrayB[i] / 4; totalVolB += dataArrayB[i];
-        ctxB.fillStyle = hsl(330, 100%, ${Math.min(barHeight + 30, 70)}%);
+        ctxB.fillStyle = `hsl(330, 100%, ${Math.min(barHeight + 30, 70)}%)`;
         ctxB.fillRect(x, canvasB.height - barHeight, barWidth - 1, barHeight); x += barWidth;
       }
 
@@ -873,7 +873,7 @@
         // Si hay un golpe fuerte de bajo, hace vibrar el logo y pulsa las carcasas
         if (maxBass > 140) {
           const scale = 1 + (maxBass - 140) / 600;
-          brandHeader.style.transform = scale(${scale});
+          brandHeader.style.transform = `scale(${scale})`;
           if (bassEnergyA > 140) document.getElementById('deckContainerA').classList.add('glow-pulse');
           if (bassEnergyB > 140) document.getElementById('deckContainerB').classList.add('glow-pulse');
         } else {
