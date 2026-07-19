@@ -201,6 +201,7 @@
     .display-panel { padding: 4px 6px; margin-bottom: 5px; }
   }
   /* ESTILOS CSS DEL MEZCLADOR CENTRAL */
+    /* ESTILOS CSS DEL MEZCLADOR CENTRAL */
   .center-rack {
     background: var(--bg-panel); border-radius: 12px; padding: 15px;
     display: flex; flex-direction: column; align-items: center;
@@ -218,11 +219,7 @@
   .vumeter-label { font-size: 0.55rem; color: var(--text-dim); font-weight: 900; }
   .vumeter-bar-bg { width: 8px; height: 75px; background: #11141e; position: relative; border-radius: 2px; overflow: hidden; display: flex; flex-direction: column-reverse; }
   
-  .vumeter-fill {
-    transition: height 0.05s ease; 
-    height: 0%;
-    background: linear-gradient(to top, var(--neon-green) 0%, var(--neon-green) 75%, var(--neon-red) 100%); 
-  }
+  .vumeter-fill { transition: height 0.05s ease; height: 0%; background: linear-gradient(to top, var(--neon-green) 0%, var(--neon-green) 75%, var(--neon-red) 100%); }
 
   .sampler-panel { width: 100%; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; gap: 8px; }
   .sampler-title { font-size: 0.55rem; font-weight: 800; text-transform: uppercase; display: flex; justify-content: space-between; width: 100%; color: var(--text-dim); }
@@ -231,47 +228,51 @@
   .fx-pad span { font-size: 0.7rem; }
   .fx-pad:active { transform: scale(0.95); }
   .fx-pad.cyan { border-bottom: 2px solid var(--neon-cyan); }
-  .fx-pad.cyan:hover { background: rgba(0, 240, 255, 0.1); }
   .fx-pad.magenta { border-bottom: 2px solid var(--neon-magenta); }
-  .fx-pad.magenta:hover { background: rgba(255, 0, 127, 0.1); }
   .fx-pad.gold { border-bottom: 2px solid var(--gold); }
-  .fx-pad.gold:hover { background: rgba(245, 158, 11, 0.1); }
 
   .crossfader-container { width: 100%; margin-top: 15px; display: flex; flex-direction: column; gap: 4px; }
   .crossfader-container label { font-size: 0.55rem; color: var(--text-dim); font-weight: 800; text-transform: uppercase; text-align: center; }
   input[type="range"].cf-slider-input { width: 100%; height: 6px; background: #000; border-radius: 3px; accent-color: #f8fafc; outline: none; cursor: pointer; appearance: none; -webkit-appearance: none; }
   .cf-labels { display: flex; justify-content: space-between; font-size: 0.5rem; color: var(--text-dim); font-weight: 700; }
 
-  /* ESTILO BOTÓN CONSOLA DE EFECTOS MÓVILES AVANZADOS */
   .autodj-container { width: 100%; margin-top: 12px; display: flex; flex-direction: column; gap: 6px; }
   .btn-autodj { width: 100%; padding: 8px; background: #131a2a; border: 1px solid var(--neon-green); border-radius: 4px; color: var(--neon-green); font-weight: 900; font-size: 0.7rem; text-transform: uppercase; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 0 10px rgba(57, 255, 20, 0.2); }
   .btn-autodj.active-mode { background: var(--neon-green); color: #000; box-shadow: 0 0 15px var(--neon-green); }
-  
   .btn-talkover { width: 100%; padding: 8px; background: #131a2a; border: 1px solid var(--neon-cyan); border-radius: 4px; color: var(--neon-cyan); font-weight: 900; font-size: 0.7rem; text-transform: uppercase; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 0 10px rgba(0, 240, 255, 0.2); }
   .btn-talkover.active-mode { background: var(--neon-cyan); color: #000; box-shadow: 0 0 15px var(--neon-cyan); }
 
-  /* LIBRERÍA INFERIOR DE PLAYLISTS */
+  /* SOLUCIÓN AL SCROLL DE LAS TABLAS INTERACTIVAS */
   .bottom-library-section { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; width: 100%; }
-  .lib-panel { background: var(--bg-panel); border-radius: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.03); height: 210px; display: flex; flex-direction: column; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
-  .lib-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; }
+  .lib-panel { background: var(--bg-panel); border-radius: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.03); height: 230px; display: flex; flex-direction: column; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+  .lib-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; gap: 10px; }
   .lib-title { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--neon-cyan); display: flex; align-items: center; gap: 5px; }
   .lib-panel.right-side .lib-title { color: var(--neon-magenta); }
-  .lib-search { background: #060911; border: 1px solid #1e293b; color: #fff; padding: 3px 8px; border-radius: 4px; font-size: 0.65rem; width: 140px; outline: none; }
-  .table-wrapper { flex-grow: 1; overflow-y: auto; }
-  .track-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.65rem; }
-  .track-table th { padding: 4px 6px; color: var(--text-dim); text-transform: uppercase; font-weight: 800; border-bottom: 1px solid rgba(255,255,255,0.05); position: sticky; top: 0; background: var(--bg-panel); }
-  .track-table td { padding: 5px 6px; color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.02); cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px; }
-  .track-table tr:hover td { color: #fff; background: rgba(255,255,255,0.02); }
-  .track-table tr.playing-track td { color: var(--neon-green); font-weight: 700; }
+  .lib-search { background: #060911; border: 1px solid #1e293b; color: #fff; padding: 3px 8px; border-radius: 4px; font-size: 0.65rem; width: 120px; outline: none; }
+  
+  /* Contenedores con scroll vertical estricto */
+  .table-wrapper { flex-grow: 1; overflow-y: auto; max-height: 160px; padding-right: 2px; }
+  
+  /* Personalización de la barra de scroll neón */
+  .table-wrapper::-webkit-scrollbar { width: 5px; }
+  .table-wrapper::-webkit-scrollbar-track { background: #04060a; }
+  .table-wrapper::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+  .table-wrapper:hover::-webkit-scrollbar-thumb { background: var(--neon-cyan); }
+
+  .track-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.65rem; table-layout: fixed; }
+  .track-table th { padding: 4px 6px; color: var(--text-dim); text-transform: uppercase; font-weight: 800; border-bottom: 1px solid rgba(255,255,255,0.05); position: sticky; top: 0; background: #0b0f19; z-index: 10; }
+  .track-table td { padding: 6px; color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.02); cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .track-table tr:hover td { color: #fff; background: rgba(255,255,255,0.04); }
+  .track-table tr.selected-row td { color: var(--neon-green); font-weight: bold; background: rgba(57, 255, 20, 0.05); }
+
+  /* Estilo del botón para subir música del disco duro */
+  .btn-import-local { background: #101726; border: 1px dashed #2c3e50; color: #39ff14; padding: 2px 8px; border-radius: 4px; font-size: 0.58rem; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+  .btn-import-local:hover { background: #1a243d; border-color: #39ff14; }
 
   @media (max-width: 1100px) {
     .bottom-library-section { grid-template-columns: 1fr; gap: 10px; }
-    .lib-panel { height: 160px; }
-    .sampler-grid { grid-template-columns: repeat(5, 1fr); gap: 2px; }
-    .fx-pad { padding: 4px 1px; font-size: 0.45rem; }
-    .fx-pad span { font-size: 0.55rem; }
-    .vumeter-bar-bg { height: 50px; }
-    .crossfader-container { margin-top: 5px; }
+    .lib-panel { height: 210px; }
+    .table-wrapper { max-height: 130px; }
   }
 </style>
 </head>
@@ -282,6 +283,7 @@
   <h1>Ultra Pro DJ Mixing Studio V2</h1>
   <button class="nav-btn">ON AIR •</button>
 </div>
+
 <!-- Letrero central verificado anti-duplicados caché -->
 <!-- Letrero central verificado anti-duplicados caché -->
 <div class="brand-header-master">
