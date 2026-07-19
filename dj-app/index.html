@@ -435,6 +435,7 @@
     </div>
 
     <!-- DECK B (COLUMNA DERECHA) -->
+       <!-- DECK B (COLUMNA DERECHA) -->
     <div class="dj-deck deck-b" id="deckContainerB">
       <div class="deck-header">
         <div class="deck-info-meta">
@@ -496,9 +497,12 @@
         <input type="file" id="fileB" accept="audio/*">
       </div>
 
+      <!-- BOTONES MAESTROS REORGANIZADOS DEL DECK B CON ADELANTO/RETROCESO -->
       <div class="main-controls">
+        <button class="btn-action cue-btn" id="skipRevB">⏪ -10s</button>
         <button class="btn-action play-b" id="playB">▶️ Play</button>
         <button class="btn-action cue-btn" id="cueB">⏸️ Cue</button>
+        <button class="btn-action cue-btn" id="skipFwdB">⏩ +10s</button>
       </div>
     </div>
 
@@ -559,17 +563,17 @@
   let audioCtx = null;
   let srcA, srcB, gainA, gainB, crossGainA, crossGainB;
   let filterHi, filterMid, filterLow;
-  let analyserA, analyserB;
+  let beautyAnalyserA, beautyAnalyserB; // Cambiados nombres internos para prevenir caché vieja
   let engineReady = false;
 
-  // Variables de control de los nuevos sistemas inteligentes
   let autoDJActive = false;
   let autoDJTransitioning = false;
   let talkoverActive = false;
   
-  // Nodos específicos agregados para el sistema de Talkover por canal
   let talkoverGainA, talkoverGainB;
+
   // Inicialización y Configuración de Nodos de Audio Profesional
+    // Inicialización y Configuración de Nodos de Audio Profesional
   async function initAudioEngine() {
     if (engineReady) {
       if (audioCtx && audioCtx.state === 'suspended') { await audioCtx.resume(); }
@@ -586,7 +590,6 @@
       crossGainA = audioCtx.createGain(); 
       crossGainB = audioCtx.createGain();
       
-      // Nuevos nodos atenuadores dedicados para el Talkover de locución
       talkoverGainA = audioCtx.createGain();
       talkoverGainB = audioCtx.createGain();
       talkoverGainA.gain.value = 1.0;
@@ -601,7 +604,6 @@
 
       const masterMixer = audioCtx.createGain();
 
-      // Enrutamiento modular limpio incluyendo el canal de Talkover de radio
       srcA.connect(gainA).connect(crossGainA).connect(talkoverGainA).connect(analyserA).connect(masterMixer);
       srcB.connect(gainB).connect(crossGainB).connect(talkoverGainB).connect(analyserB).connect(masterMixer);
       
@@ -612,13 +614,13 @@
 
       engineReady = true;
       renderWavesAndVus();
-      setupInteractiveWaves(); // Enlaza los clics táctiles para avanzar tracks
+      setupTimeSkippers(); // Enlaza y da vida a los nuevos botones de tiempo
     } catch(e) { 
       console.error("Hardware de audio esperando interacción inicial:", e); 
     }
   }
 
-  // CARGA COMPLETA REPARADA: Transfiere archivos usando índices de arrays fijos
+  // CARGA COMPLETA REPARADA CON ÍNDICES DE ARRAYS SEGUROS
   document.getElementById('fileA').addEventListener('change', function(e) {
     if (this.files && this.files.length > 0) {
       document.getElementById('titleA').innerText = this.files[0].name;
@@ -630,32 +632,29 @@
 
   document.getElementById('fileB').addEventListener('change', function(e) {
     if (this.files && this.files.length > 0) {
-      document.getElementById('titleB').innerText = this.files.name;
+      document.getElementById('titleB').innerText = this.files[0].name;
       document.getElementById('labelFileB').innerText = "Cambiar track B";
       audB.src = URL.createObjectURL(this.files[0]);
       audB.load();
     }
   });
 
-  // SOLUCIÓN ADELANTAR/RETROCEDER: Salta el tiempo exacto al hacer clic en las ondas
-  function setupInteractiveWaves() {
-    const canvasA = document.getElementById('canvasA');
-    const canvasB = document.getElementById('canvasB');
-
-    canvasA.addEventListener('click', function(e) {
-      if (!audA.duration) return;
-      const rect = canvasA.getBoundingClientRect();
-      const clickX = e.clientX - rect.left;
-      const percentage = clickX / rect.width;
-      audA.currentTime = percentage * audA.duration;
+  // NUEVO LOGIC COMPONENT: Controla el salto instantáneo de los tracks (+10s / -10s)
+  function setupTimeSkippers() {
+    // Deck A
+    document.getElementById('skipFwdA').addEventListener('click', () => {
+      if (audA.duration) audA.currentTime = Math.min(audA.currentTime + 10, audA.duration);
+    });
+    document.getElementById('skipRevA').addEventListener('click', () => {
+      if (audA.duration) audA.currentTime = Math.max(audA.currentTime - 10, 0);
     });
 
-    canvasB.addEventListener('click', function(e) {
-      if (!audB.duration) return;
-      const rect = canvasB.getBoundingClientRect();
-      const clickX = e.clientX - rect.left;
-      const percentage = clickX / rect.width;
-      audB.currentTime = percentage * audB.duration;
+    // Deck B
+    document.getElementById('skipFwdB').addEventListener('click', () => {
+      if (audB.duration) audB.currentTime = Math.min(audB.currentTime + 10, audB.duration);
+    });
+    document.getElementById('skipRevB').addEventListener('click', () => {
+      if (audB.duration) audB.currentTime = Math.max(audB.currentTime - 10, 0);
     });
   }
 
@@ -679,6 +678,7 @@
     }).catch(() => alert("Selecciona una canción para el DECK B"));
   });
   document.getElementById('cueB').addEventListener('click', () => { triggerVinylBrake(audB, 'wheelB'); });
+
   // Lógica de encendido y apagado físico del Auto DJ
   document.getElementById('btnAutoDJ').addEventListener('click', function() {
     autoDJActive = !autoDJActive;
