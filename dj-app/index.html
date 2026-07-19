@@ -39,8 +39,9 @@
     overflow-x: hidden;
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
+    transition: background-color 0.1s ease;
   }
-    .top-bar {
+  .top-bar {
     width: 100%; max-width: 1400px; display: flex; justify-content: space-between;
     align-items: center; background: var(--bg-panel); padding: 10px 20px;
     border-radius: 8px; border: 1px solid var(--border-glow); margin-bottom: 15px;
@@ -58,6 +59,7 @@
     font-weight: 700; cursor: pointer; text-transform: uppercase; 
   }
 
+  /* Branding único central libre de duplicación de caché */
   .brand-header-master {
     text-align: center;
     margin: 10px 0 25px 0;
@@ -91,30 +93,11 @@
   }
 
   .studio-container { width: 100%; max-width: 1400px; display: flex; flex-direction: column; gap: 15px; }
-  .mixer-interface { display: grid; grid-template-columns: 1fr 340px 1fr; gap: 15px; width: 100%; }
-
-  @media (max-width: 1100px) {
-    .mixer-interface { 
-      grid-template-columns: 1fr 1fr;
-      grid-template-areas: 
-        "deckA deckB"
-        "master master";
-    }
-    .deck-a { grid-area: deckA; }
-    .deck-b { grid-area: deckB; }
-    .center-rack { grid-area: master; }
-    
-    .jog-wheel { width: 90px !important; height: 90px !important; }
-    .track-title { max-width: 100px; font-size: 0.75rem; }
-    .time-counter { font-size: 0.95rem; }
-    .bpm-value { font-size: 0.9rem; }
-  }
-
   
-  /* REJILLA DESKTOP: Tres columnas fijas en paralelo */
+  /* REJILLA DESKTOP: 3 columnas paralelas fijas */
   .mixer-interface { display: grid; grid-template-columns: 1fr 340px 1fr; gap: 15px; width: 100%; }
 
-  /* REJILLA MÓVIL CELULARES: Forza los dos platos arriba en paralelo y el mezclador abajo */
+  /* REJILLA MÓVIL: Forzado responsivo seguro */
   @media (max-width: 1100px) {
     .mixer-interface { 
       grid-template-columns: 1fr 1fr;
@@ -126,7 +109,6 @@
     .deck-b { grid-area: deckB; }
     .center-rack { grid-area: master; }
     
-    /* Adaptaciones proporcionales para pantallas táctiles pequeñas */
     .jog-wheel { width: 90px !important; height: 90px !important; }
     .track-title { max-width: 100px; font-size: 0.75rem; }
     .time-counter { font-size: 0.95rem; }
@@ -137,9 +119,14 @@
     background: var(--bg-panel); border-radius: 12px; padding: 15px;
     border: 1px solid rgba(255,255,255,0.03); display: flex; flex-direction: column;
     position: relative; box-shadow: 0 15px 35px rgba(0,0,0,0.7);
+    transition: box-shadow 0.05s ease, border-color 0.05s ease;
   }
   .deck-a { border-top: 3px solid var(--neon-cyan); }
   .deck-b { border-top: 3px solid var(--neon-magenta); }
+
+  /* Animación física de parpadeo neón para el bajo */
+  .deck-a.glow-pulse { box-shadow: 0 0 25px rgba(0, 240, 255, 0.4), inset 0 0 10px rgba(0, 240, 255, 0.2); }
+  .deck-b.glow-pulse { box-shadow: 0 0 25px rgba(255, 0, 127, 0.4), inset 0 0 10px rgba(255, 0, 127, 0.2); }
 
   .deck-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; width: 100%; }
   .deck-info-meta { display: flex; flex-direction: column; gap: 2px; }
@@ -162,7 +149,8 @@
   .time-counter { font-family: monospace; font-size: 1.2rem; font-weight: bold; color: var(--neon-green); }
   .time-counter.countdown { color: var(--neon-red); }
 
-  .wave-display { width: 100%; height: 45px; background: #000; border-radius: 4px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.02); }
+  /* Onda interactiva con puntero de clic para adelantar/retroceder */
+  .wave-display { width: 100%; height: 45px; background: #000; border-radius: 4px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.02); cursor: pointer; }
 
   /* FILA DE CONTROLES CUE / LOOP / SYNC */
   .performance-row { width: 100%; display: flex; gap: 4px; margin-bottom: 10px; justify-content: space-between; align-items: center; }
@@ -184,7 +172,7 @@
 
   /* JOG WHEEL PROFESIONAL */
   .jog-wheel { width: 135px; height: 135px; border-radius: 50%; background: radial-gradient(circle, #1a2233 12%, #07090e 13%, #07090e 35%, #111622 36%, #020305 70%); border: 4px solid #1f293d; position: relative; box-shadow: 0 8px 20px rgba(0,0,0,0.6); }
-  .jog-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 34px; height: 34px; border-radius: 50%; border: 2px solid #000; background: #0b0f19; }
+  .jog-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 34px; height: 34px; border-radius: 50%; border: 2px solid #0 black; background: #0b0f19; }
   .deck-a .jog-center { box-shadow: 0 0 15px rgba(0,240,255,0.4); border-color: var(--neon-cyan); }
   .deck-b .jog-center { box-shadow: 0 0 15px rgba(255,0,127,0.4); border-color: var(--neon-magenta); }
   .jog-marker { position: absolute; top: 4px; left: 50%; transform: translateX(-50%); width: 4px; height: 16px; background: #fff; border-radius: 1px; transform-origin: bottom center; }
@@ -203,7 +191,6 @@
   .file-label { display: block; text-align: center; padding: 6px; background: #131a2a; border: 1px dashed #23314f; border-radius: 4px; font-size: 0.65rem; cursor: pointer; color: #94a3b8; font-weight: bold; }
   .file-label:hover { color: #fff; border-color: var(--text-main); }
 
-  /* COMPATIBILIDAD INTERNA ADICIONAL PARA PANTALLAS MÓVILES */
   @media (max-width: 1100px) {
     .dj-deck { padding: 8px; border-radius: 8px; }
     .deck-center-row { gap: 4px; margin: 5px 0; }
@@ -255,10 +242,13 @@
   input[type="range"].cf-slider-input { width: 100%; height: 6px; background: #000; border-radius: 3px; accent-color: #f8fafc; outline: none; cursor: pointer; appearance: none; -webkit-appearance: none; }
   .cf-labels { display: flex; justify-content: space-between; font-size: 0.5rem; color: var(--text-dim); font-weight: 700; }
 
-  /* NUEVO: ESTILO BOTÓN AUTO DJ NEÓN REPARADO */
-  .autodj-container { width: 100%; margin-top: 12px; display: flex; flex-direction: column; gap: 4px; }
+  /* ESTILO BOTÓN CONSOLA DE EFECTOS MÓVILES AVANZADOS */
+  .autodj-container { width: 100%; margin-top: 12px; display: flex; flex-direction: column; gap: 6px; }
   .btn-autodj { width: 100%; padding: 8px; background: #131a2a; border: 1px solid var(--neon-green); border-radius: 4px; color: var(--neon-green); font-weight: 900; font-size: 0.7rem; text-transform: uppercase; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 0 10px rgba(57, 255, 20, 0.2); }
   .btn-autodj.active-mode { background: var(--neon-green); color: #000; box-shadow: 0 0 15px var(--neon-green); }
+  
+  .btn-talkover { width: 100%; padding: 8px; background: #131a2a; border: 1px solid var(--neon-cyan); border-radius: 4px; color: var(--neon-cyan); font-weight: 900; font-size: 0.7rem; text-transform: uppercase; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 0 10px rgba(0, 240, 255, 0.2); }
+  .btn-talkover.active-mode { background: var(--neon-cyan); color: #000; box-shadow: 0 0 15px var(--neon-cyan); }
 
   /* LIBRERÍA INFERIOR DE PLAYLISTS */
   .bottom-library-section { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; width: 100%; }
@@ -274,7 +264,6 @@
   .track-table tr:hover td { color: #fff; background: rgba(255,255,255,0.02); }
   .track-table tr.playing-track td { color: var(--neon-green); font-weight: 700; }
 
-  /* ADAPTACIONES EXCLUSIVAS DEL CONTROL MASTER Y TABLAS EN MÓVILES */
   @media (max-width: 1100px) {
     .bottom-library-section { grid-template-columns: 1fr; gap: 10px; }
     .lib-panel { height: 160px; }
@@ -303,7 +292,7 @@
   <div class="mixer-interface">
     
     <!-- DECK A (COLUMNA IZQUIERDA) -->
-    <div class="dj-deck deck-a">
+    <div class="dj-deck deck-a" id="deckContainerA">
       <div class="deck-header">
         <div class="deck-info-meta">
           <span class="deck-badge">DECK A</span>
@@ -435,13 +424,14 @@
         </div>
       </div>
 
-      <!-- BOTÓN FÍSICO AUTO DJ INCORPORADO -->
+      <!-- CONTENEDOR FÍSICO DE EFECTOS MÓVILES AVANZADOS -->
       <div class="autodj-container">
         <button class="btn-autodj" id="btnAutoDJ">🤖 Activar Auto DJ</button>
+        <button class="btn-talkover" id="btnTalkover">🎤 Activar Talkover</button>
       </div>
     </div>
     <!-- DECK B (COLUMNA DERECHA) -->
-    <div class="dj-deck deck-b">
+    <div class="dj-deck deck-b" id="deckContainerB">
       <div class="deck-header">
         <div class="deck-info-meta">
           <span class="deck-badge">DECK B</span>
@@ -567,12 +557,15 @@
   let filterHi, filterMid, filterLow;
   let analyserA, analyserB;
   let engineReady = false;
-  
-  // Variables de control de estado del sistema automático
+
+  // Variables de control de los nuevos sistemas inteligentes
   let autoDJActive = false;
   let autoDJTransitioning = false;
+  let talkoverActive = false;
+  
+  // Nodos específicos agregados para el sistema de Talkover por canal
+  let talkoverGainA, talkoverGainB;
   // Inicialización y Configuración de Nodos de Audio Profesional
-    // Inicialización y Configuración de Nodos de Audio Profesional
   async function initAudioEngine() {
     if (engineReady) {
       if (audioCtx && audioCtx.state === 'suspended') { await audioCtx.resume(); }
@@ -589,6 +582,12 @@
       crossGainA = audioCtx.createGain(); 
       crossGainB = audioCtx.createGain();
       
+      // Nuevos nodos atenuadores dedicados para el Talkover de locución
+      talkoverGainA = audioCtx.createGain();
+      talkoverGainB = audioCtx.createGain();
+      talkoverGainA.gain.value = 1.0;
+      talkoverGainB.gain.value = 1.0;
+      
       analyserA = audioCtx.createAnalyser(); analyserA.fftSize = 64;
       analyserB = audioCtx.createAnalyser(); analyserB.fftSize = 64;
       
@@ -598,8 +597,9 @@
 
       const masterMixer = audioCtx.createGain();
 
-      srcA.connect(gainA).connect(crossGainA).connect(analyserA).connect(masterMixer);
-      srcB.connect(gainB).connect(crossGainB).connect(analyserB).connect(masterMixer);
+      // Enrutamiento modular limpio incluyendo el canal de Talkover de radio
+      srcA.connect(gainA).connect(crossGainA).connect(talkoverGainA).connect(analyserA).connect(masterMixer);
+      srcB.connect(gainB).connect(crossGainB).connect(talkoverGainB).connect(analyserB).connect(masterMixer);
       
       masterMixer.connect(filterLow);
       filterLow.connect(filterMid).connect(filterHi).connect(audioCtx.destination);
@@ -608,13 +608,13 @@
 
       engineReady = true;
       renderWavesAndVus();
-      setupInteractiveWaves(); // Activa los clics en las ondas
+      setupInteractiveWaves(); // Enlaza los clics táctiles para avanzar tracks
     } catch(e) { 
       console.error("Hardware de audio esperando interacción inicial:", e); 
     }
   }
 
-  // CARGA COMPLETA REPARADA CON ÍNDICES DE ARRAYS SEGUROS
+  // CARGA COMPLETA REPARADA: Transfiere archivos usando índices de arrays fijos
   document.getElementById('fileA').addEventListener('change', function(e) {
     if (this.files && this.files.length > 0) {
       document.getElementById('titleA').innerText = this.files[0].name;
@@ -626,14 +626,14 @@
 
   document.getElementById('fileB').addEventListener('change', function(e) {
     if (this.files && this.files.length > 0) {
-      document.getElementById('titleB').innerText = this.files[0].name;
+      document.getElementById('titleB').innerText = this.files.name;
       document.getElementById('labelFileB').innerText = "Cambiar track B";
       audB.src = URL.createObjectURL(this.files[0]);
       audB.load();
     }
   });
 
-  // NUEVO: Función para adelantar o retroceder haciendo clic en las ondas
+  // SOLUCIÓN ADELANTAR/RETROCEDER: Salta el tiempo exacto al hacer clic en las ondas
   function setupInteractiveWaves() {
     const canvasA = document.getElementById('canvasA');
     const canvasB = document.getElementById('canvasB');
@@ -664,7 +664,7 @@
       updateMixerMixes(); 
     }).catch(() => alert("Selecciona una canción para el DECK A"));
   });
-  document.getElementById('cueA').addEventListener('click', () => { audA.pause(); document.getElementById('wheelA').classList.remove('spinning'); });
+  document.getElementById('cueA').addEventListener('click', () => { triggerVinylBrake(audA, 'wheelA'); });
 
   document.getElementById('playB').addEventListener('click', async () => {
     await initAudioEngine(); 
@@ -674,8 +674,7 @@
       updateMixerMixes(); 
     }).catch(() => alert("Selecciona una canción para el DECK B"));
   });
-  document.getElementById('cueB').addEventListener('click', () => { audB.pause(); document.getElementById('wheelB').classList.remove('spinning'); });
-
+  document.getElementById('cueB').addEventListener('click', () => { triggerVinylBrake(audB, 'wheelB'); });
   // Lógica de encendido y apagado físico del Auto DJ
   document.getElementById('btnAutoDJ').addEventListener('click', function() {
     autoDJActive = !autoDJActive;
@@ -683,13 +682,44 @@
     this.innerText = autoDJActive ? "🤖 Auto DJ Activo" : "🤖 Activar Auto DJ";
   });
 
-  // Función de mezcla automática cruzada paso a paso (Transición de 6 segundos)
+  // Lógica de encendido y apagado del Talkover de voz (Locución de Radio)
+  document.getElementById('btnTalkover').addEventListener('click', function() {
+    if (!engineReady) return;
+    talkoverActive = !talkoverActive;
+    this.classList.toggle('active-mode', talkoverActive);
+    this.innerText = talkoverActive ? "🎤 Talkover Activo (-85%)" : "🎤 Activar Talkover";
+    
+    // Baja el volumen de la música al 15% de inmediato para dejar pasar la voz
+    const targetVolume = talkoverActive ? 0.15 : 1.0;
+    talkoverGainA.gain.setTargetAtTime(targetVolume, audioCtx.currentTime, 0.2);
+    talkoverGainB.gain.setTargetAtTime(targetVolume, audioCtx.currentTime, 0.2);
+  });
+
+  // FUNCIÓN EFECTO VINYL BRAKE: Desacelera la velocidad del plato simulando un tocadiscos real
+  function triggerVinylBrake(audioElement, wheelId) {
+    if (audioElement.paused) return;
+    let currentRate = audioElement.playbackRate;
+    
+    const brakeInterval = setInterval(() => {
+      currentRate -= 0.08; // Reduce la velocidad de forma progresiva
+      if (currentRate <= 0.05) {
+        clearInterval(brakeInterval);
+        audioElement.pause();
+        audioElement.playbackRate = 1.0; // Restablece la velocidad para el próximo play
+        document.getElementById(wheelId).classList.remove('spinning');
+      } else {
+        audioElement.playbackRate = currentRate;
+      }
+    }, 30);
+  }
+
+  // Transición automatizada del Crossfader del Auto DJ (Duración: 6 segundos) [5.2]
   function triggerAutoDJCrossfade(targetToPlay) {
     if (autoDJTransitioning) return;
     autoDJTransitioning = true;
     
     const cfInput = document.getElementById('crossfader');
-    let step = 0;
+    let step = parseFloat(cfInput.value);
     
     if (targetToPlay === 'B') {
       audB.play().then(() => { document.getElementById('wheelB').classList.add('spinning'); });
@@ -703,7 +733,7 @@
           document.getElementById('wheelA').classList.remove('spinning');
           autoDJTransitioning = false;
         }
-      }, 200);
+      }, 120);
     } else {
       audA.play().then(() => { document.getElementById('wheelA').classList.add('spinning'); });
       const interval = setInterval(() => {
@@ -716,7 +746,7 @@
           document.getElementById('wheelB').classList.remove('spinning');
           autoDJTransitioning = false;
         }
-      }, 200);
+      }, 120);
     }
   }
 
@@ -740,7 +770,7 @@
   document.getElementById('crossfader').addEventListener('input', updateMixerMixes);
   document.getElementById('volFX').addEventListener('input', (e) => { document.getElementById('txtVolFX').innerText = "VOL: " + Math.round(e.target.value * 100) + "%"; });
 
-  // Pitch y Modulación de Velocidad
+  // Pitch y Modulación del Tempo (Velocidad)
   document.getElementById('pitchA').addEventListener('input', (e) => {
     const percent = parseFloat(e.target.value);
     document.getElementById('txtPitchA').innerText = (percent >= 0 ? "+" : "") + percent.toFixed(1) + "%";
@@ -752,12 +782,12 @@
     audB.playbackRate = 1 + (percent / 100);
   });
 
-  // Perillas de Ecualización
+  // Perillas Ecualizadoras de Frecuencia
   document.getElementById('eqHi').addEventListener('input', (e) => { if (engineReady && filterHi) filterHi.gain.value = e.target.value; });
   document.getElementById('eqMid').addEventListener('input', (e) => { if (engineReady && filterMid) filterMid.gain.value = e.target.value; });
   document.getElementById('eqLow').addEventListener('input', (e) => { if (engineReady && filterLow) filterLow.gain.value = e.target.value; });
 
-  // Reloj de Tiempos + Monitor de Automatización Auto DJ [5.2]
+  // Sistema de Doble Reloj Sincronizado + Detector de Auto DJ [5.2]
   function updateCounters() {
     const formatTime = (secs) => {
       if (isNaN(secs) || secs < 0) return "00:00";
@@ -774,7 +804,7 @@
     document.getElementById('timeB').innerText = formatTime(audB.currentTime);
     document.getElementById('remainB').innerText = "-" + formatTime(remainB);
 
-    // MÓDULO INTELIGENTE: Si el Auto DJ está encendido, mezcla a falta de 10 segundos [5.2]
+    // Si el Auto DJ está encendido y la canción le quedan 10 segundos, activa la transición cruzada [5.2]
     if (autoDJActive && !autoDJTransitioning) {
       if (!audA.paused && remainA > 0 && remainA <= 10) {
         triggerAutoDJCrossfade('B');
@@ -786,11 +816,14 @@
     requestAnimationFrame(updateCounters);
   }
   requestAnimationFrame(updateCounters);
+  // Sistema de Dibujo Visual Dinámico con Iluminación Rítmica Reactiva al Bajo
   function renderWavesAndVus() {
     const canvasA = document.getElementById('canvasA'), ctxA = canvasA.getContext('2d');
     const canvasB = document.getElementById('canvasB'), ctxB = canvasB.getContext('2d');
     const bufferLengthA = analyserA.frequencyBinCount, dataArrayA = new Uint8Array(bufferLengthA);
     const bufferLengthB = analyserB.frequencyBinCount, dataArrayB = new Uint8Array(bufferLengthB);
+    
+    const brandHeader = document.querySelector('.brand-header-master');
 
     function draw() {
       requestAnimationFrame(draw);
@@ -799,6 +832,7 @@
       analyserA.getByteFrequencyData(dataArrayA);
       analyserB.getByteFrequencyData(dataArrayB);
 
+      // Deck A - Render de Ondas
       ctxA.fillStyle = '#000'; ctxA.fillRect(0, 0, canvasA.width, canvasA.height);
       let barWidth = (canvasA.width / bufferLengthA) * 1.5, barHeight, x = 0;
       let totalVolA = 0;
@@ -808,6 +842,7 @@
         ctxA.fillRect(x, canvasA.height - barHeight, barWidth - 1, barHeight); x += barWidth;
       }
 
+      // Deck B - Render de Ondas
       ctxB.fillStyle = '#000'; ctxB.fillRect(0, 0, canvasB.width, canvasB.height);
       x = 0; let totalVolB = 0;
       for (let i = 0; i < bufferLengthB; i++) {
@@ -821,13 +856,33 @@
         let avgB = (totalVolB / bufferLengthB) * (crossGainB.gain.value * gainB.gain.value);
         let pctA = Math.min((avgA / 180) * 100, 100);
         let pctB = Math.min((avgB / 180) * 100, 100);
+        
+        // Mueve los leds físicos de los vúmeters
         document.getElementById('vuLeft').style.height = pctA + '%';
         document.getElementById('vuRight').style.height = pctB + '%';
+
+        // ILUMINACIÓN RÍTMICA: Captura las frecuencias del bajo (primeras barras del espectro)
+        const bassEnergyA = dataArrayA[0] || 0;
+        const bassEnergyB = dataArrayB[0] || 0;
+        const maxBass = Math.max(bassEnergyA, bassEnergyB);
+
+        // Si hay un golpe fuerte de bajo, hace vibrar el logo y pulsa las carcasas
+        if (maxBass > 140) {
+          const scale = 1 + (maxBass - 140) / 600;
+          brandHeader.style.transform = `scale(${scale})`;
+          if (bassEnergyA > 140) document.getElementById('deckContainerA').classList.add('glow-pulse');
+          if (bassEnergyB > 140) document.getElementById('deckContainerB').classList.add('glow-pulse');
+        } else {
+          brandHeader.style.transform = 'scale(1)';
+          document.getElementById('deckContainerA').classList.remove('glow-pulse');
+          document.getElementById('deckContainerB').classList.remove('glow-pulse');
+        }
       }
     }
     draw();
   }
 
+  // Modulador Completo Sampler FX de 10 Pads
   function playFX(type) {
     initAudioEngine(); 
     if (!audioCtx) return;
@@ -881,14 +936,8 @@
       osc.start(now); osc.stop(now + 0.9);
     }
     else if (type === 'corte') {
-      if(audA.playbackRate > 0 && !audA.paused) {
-        let r = audA.playbackRate; 
-        const iv = setInterval(() => { r -= 0.1; if(r <= 0.1){ clearInterval(iv); audA.pause(); audA.playbackRate = 1; document.getElementById('wheelA').classList.remove('spinning'); } else { audA.playbackRate = r; } }, 40);
-      }
-      if(audB.playbackRate > 0 && !audB.paused) {
-        let r = audB.playbackRate; 
-        const iv = setInterval(() => { r -= 0.1; if(r <= 0.1){ clearInterval(iv); audB.pause(); audB.playbackRate = 1; document.getElementById('wheelB').classList.remove('spinning'); } else { audB.playbackRate = r; } }, 40);
-      }
+      if(!audA.paused) triggerVinylBrake(audA, 'wheelA');
+      if(!audB.paused) triggerVinylBrake(audB, 'wheelB');
     }
     else if (type === 'explosion') {
       osc.type = 'sawtooth'; osc.frequency.setValueAtTime(120, now); 
@@ -929,6 +978,7 @@
     }
   }
 
+  // Escuchadores del panel Sampler FX 10-Pads
   document.getElementById('fxBocina').addEventListener('click', () => playFX('bocina'));
   document.getElementById('fxScratch').addEventListener('click', () => playFX('scratch'));
   document.getElementById('fxLaser').addEventListener('click', () => playFX('laser'));
