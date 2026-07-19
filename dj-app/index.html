@@ -436,6 +436,7 @@
 
     <!-- DECK B (COLUMNA DERECHA) -->
        <!-- DECK B (COLUMNA DERECHA) -->
+        <!-- DECK B (COLUMNA DERECHA) -->
     <div class="dj-deck deck-b" id="deckContainerB">
       <div class="deck-header">
         <div class="deck-info-meta">
@@ -497,7 +498,6 @@
         <input type="file" id="fileB" accept="audio/*">
       </div>
 
-      <!-- BOTONES MAESTROS REORGANIZADOS DEL DECK B CON ADELANTO/RETROCESO -->
       <div class="main-controls">
         <button class="btn-action cue-btn" id="skipRevB">⏪ -10s</button>
         <button class="btn-action play-b" id="playB">▶️ Play</button>
@@ -508,22 +508,25 @@
 
   </div> <!-- mixer-interface -->
 
+  <!-- SECCIÓN DE PLAYLIST CON SCROLL E IMPORTADOR COMPLETO -->
   <div class="bottom-library-section">
     <div class="lib-panel">
       <div class="lib-header">
         <div class="lib-title">🎵 Playlist Active</div>
+        <button class="btn-import-local" onclick="document.getElementById('globalDiskUploader').click()">📂 Importar MP3 Local</button>
+        <input type="file" id="globalDiskUploader" accept="audio/*" multiple style="display:none;">
       </div>
       <div class="table-wrapper">
-        <table class="track-table">
+        <table class="track-table" id="playlistTable">
           <thead>
-            <tr><th>Track Name</th><th>Artist</th><th>Time</th><th>BPM</th></tr>
+            <tr><th style="width:50%;">Track Name</th><th style="width:25%;">Artist</th><th style="width:13%;">Time</th><th style="width:12%;">BPM</th></tr>
           </thead>
           <tbody>
-            <tr class="playing-track"><td>Flaco Mío</td><td>Joe Antonio</td><td>03:45</td><td>92.5</td></tr>
-            <tr><td>Bajo el Cielo de Cartagena</td><td>Shalysa</td><td>03:52</td><td>93.0</td></tr>
-            <tr><td>Calmo tu sed 2</td><td>Joe Antonio</td><td>03:20</td><td>90.0</td></tr>
-            <tr><td>Aquí Estoy Bebe</td><td>Joe Antonio</td><td>03:15</td><td>91.0</td></tr>
-            <tr><td>Eres Mi Hombre</td><td>Joe Antonio</td><td>03:40</td><td>92.0</td></tr>
+            <tr data-url=""><td>Flaco Mío</td><td>Joe Antonio</td><td>03:45</td><td>92.5</td></tr>
+            <tr data-url=""><td>Bajo el Cielo de Cartagena</td><td>Shalysa</td><td>03:52</td><td>93.0</td></tr>
+            <tr data-url=""><td>Calmo tu sed 2</td><td>Joe Antonio</td><td>03:20</td><td>90.0</td></tr>
+            <tr data-url=""><td>Aquí Estoy Bebe</td><td>Joe Antonio</td><td>03:15</td><td>91.0</td></tr>
+            <tr data-url=""><td>Eres Mi Hombre</td><td>Joe Antonio</td><td>03:40</td><td>92.0</td></tr>
           </tbody>
         </table>
       </div>
@@ -535,16 +538,16 @@
         <input type="search" class="lib-search" placeholder="Buscar canción...">
       </div>
       <div class="table-wrapper">
-        <table class="track-table">
+        <table class="track-table" id="libraryTable">
           <thead>
-            <tr><th>Title</th><th>Artist</th><th>Time</th><th>BPM</th></tr>
+            <tr><th style="width:50%;">Title</th><th style="width:25%;">Artist</th><th style="width:13%;">Time</th><th style="width:12%;">BPM</th></tr>
           </thead>
           <tbody>
-            <tr><td>Amor de Otro Planeta</td><td>Joe Antonio</td><td>03:48</td><td>93.0</td></tr>
-            <tr><td>Tu y Yo</td><td>Joe Antonio</td><td>03:30</td><td>91.5</td></tr>
-            <tr><td>Solo Contigo</td><td>Joe Antonio</td><td>03:27</td><td>90.0</td></tr>
-            <tr><td>No Me Dejes</td><td>Joe Antonio</td><td>03:41</td><td>94.0</td></tr>
-            <tr><td>Por Ti</td><td>Joe Antonio</td><td>03:17</td><td>90.0</td></tr>
+            <tr data-url=""><td>Amor de Otro Planeta</td><td>Joe Antonio</td><td>03:48</td><td>93.0</td></tr>
+            <tr data-url=""><td>Tu y Yo</td><td>Joe Antonio</td><td>03:30</td><td>91.5</td></tr>
+            <tr data-url=""><td>Solo Contigo</td><td>Joe Antonio</td><td>03:27</td><td>90.0</td></tr>
+            <tr data-url=""><td>No Me Dejes</td><td>Joe Antonio</td><td>03:41</td><td>94.0</td></tr>
+            <tr data-url=""><td>Por Ti</td><td>Joe Antonio</td><td>03:17</td><td>90.0</td></tr>
           </tbody>
         </table>
       </div>
@@ -563,7 +566,7 @@
   let audioCtx = null;
   let srcA, srcB, gainA, gainB, crossGainA, crossGainB;
   let filterHi, filterMid, filterLow;
-  let beautyAnalyserA, beautyAnalyserB; // Cambiados nombres internos para prevenir caché vieja
+  let analyserA, analyserB;
   let engineReady = false;
 
   let autoDJActive = false;
@@ -571,8 +574,13 @@
   let talkoverActive = false;
   
   let talkoverGainA, talkoverGainB;
+  
+  // Memoria virtual interna para almacenar archivos MP3 locales cargados por el usuario
+  let trackBlobMap = {};
+
 
   // Inicialización y Configuración de Nodos de Audio Profesional
+    // Inicialización y Configuración de Nodos de Audio Profesional
     // Inicialización y Configuración de Nodos de Audio Profesional
   async function initAudioEngine() {
     if (engineReady) {
@@ -614,13 +622,15 @@
 
       engineReady = true;
       renderWavesAndVus();
-      setupTimeSkippers(); // Enlaza y da vida a los nuevos botones de tiempo
+      setupTimeSkippers();
+      setupInteractiveWaves();
+      setupTableInteractions(); // Inicia la escucha de clics en las canciones
     } catch(e) { 
       console.error("Hardware de audio esperando interacción inicial:", e); 
     }
   }
 
-  // CARGA COMPLETA REPARADA CON ÍNDICES DE ARRAYS SEGUROS
+  // Carga Manual Independiente desde Botón de Decks
   document.getElementById('fileA').addEventListener('change', function(e) {
     if (this.files && this.files.length > 0) {
       document.getElementById('titleA').innerText = this.files[0].name;
@@ -639,43 +649,95 @@
     }
   });
 
-  // NUEVO LOGIC COMPONENT: Controla el salto instantáneo de los tracks (+10s / -10s)
-  function setupTimeSkippers() {
-    // Deck A
-    document.getElementById('skipFwdA').addEventListener('click', () => {
-      if (audA.duration) audA.currentTime = Math.min(audA.currentTime + 10, audA.duration);
-    });
-    document.getElementById('skipRevA').addEventListener('click', () => {
-      if (audA.duration) audA.currentTime = Math.max(audA.currentTime - 10, 0);
+  // SISTEMA DE CARGA POR DOBLE CLIC E IMPORTADOR DESDE EL DISCO DURO LOCAL REAL
+  function setupTableInteractions() {
+    const handleRowDblClick = (row) => {
+      const trackName = row.cells[0].innerText;
+      const targetDeck = prompt(`¿Cargar "${trackName}" en cuál Deck?\nEscribe "A" o "B":`, "A");
+      
+      if (!targetDeck) return;
+      const deckChoice = targetDeck.toUpperCase().trim();
+      
+      // Busca si el audio proviene del disco duro o si es un adorno
+      const audioSource = trackBlobMap[trackName] || null;
+
+      if (deckChoice === 'A') {
+        document.getElementById('titleA').innerText = trackName;
+        if (audioSource) { audA.src = audioSource; audA.load(); }
+        else { alert(`"${trackName}" es un track de demostración. Para escuchar audio real, usa el botón "Importar MP3 Local".`); }
+      } else if (deckChoice === 'B') {
+        document.getElementById('titleB').innerText = trackName;
+        if (audioSource) { audB.src = audioSource; audB.load(); }
+        else { alert(`"${trackName}" es un track de demostración. Para escuchar audio real, usa el botón "Importar MP3 Local".`); }
+      } else {
+        alert("Opción inválida. Debes ingresar 'A' o 'B'.");
+      }
+    };
+
+    // Añade la escucha a todas las filas actuales y futuras
+    document.querySelectorAll('.track-table tbody').forEach(tbody => {
+      tbody.addEventListener('dblclick', (e) => {
+        const row = e.target.closest('tr');
+        if (row && row.parentNode.tagName === 'TBODY') { handleRowDblClick(row); }
+      });
     });
 
-    // Deck B
-    document.getElementById('skipFwdB').addEventListener('click', () => {
-      if (audB.duration) audB.currentTime = Math.min(audB.currentTime + 10, audB.duration);
-    });
-    document.getElementById('skipRevB').addEventListener('click', () => {
-      if (audB.duration) audB.currentTime = Math.max(audB.currentTime - 10, 0);
+    // Inyección de canciones reales cargadas desde el disco duro
+    document.getElementById('globalDiskUploader').addEventListener('change', function(e) {
+      if (this.files.length > 0) {
+        const tbody = document.querySelector('#playlistTable tbody');
+        for (let i = 0; i < this.files.length; i++) {
+          const file = this.files[i];
+          const objectURL = URL.createObjectURL(file);
+          
+          // Guarda el binario enlazado a su nombre
+          trackBlobMap[file.name] = objectURL;
+
+          // Crea la nueva fila con barra de scroll automática
+          const newRow = document.createElement('tr');
+          newRow.innerHTML = `<td>${file.name}</td><td>Local Disk</td><td>--:--</td><td>0.0</td>`;
+          tbody.appendChild(newRow);
+        }
+        alert(`¡Se han importado ${this.files.length} canciones con éxito! Hazles doble clic para cargarlas en los platos.`);
+      }
     });
   }
 
-  // Disparadores de los Decks con Desbloqueo asíncrono de Seguridad
+  function setupInteractiveWaves() {
+    const canvasA = document.getElementById('canvasA');
+    const canvasB = document.getElementById('canvasB');
+
+    canvasA.addEventListener('click', function(e) {
+      if (!audA.duration) return;
+      const rect = canvasA.getBoundingClientRect();
+      audA.currentTime = ((e.clientX - rect.left) / rect.width) * audA.duration;
+    });
+
+    canvasB.addEventListener('click', function(e) {
+      if (!audB.duration) return;
+      const rect = canvasB.getBoundingClientRect();
+      audB.currentTime = ((e.clientX - rect.left) / rect.width) * audB.duration;
+    });
+  }
+
+  function setupTimeSkippers() {
+    document.getElementById('skipFwdA').addEventListener('click', () => { if (audA.duration) audA.currentTime = Math.min(audA.currentTime + 10, audA.duration); });
+    document.getElementById('skipRevA').addEventListener('click', () => { if (audA.duration) audA.currentTime = Math.max(audA.currentTime - 10, 0); });
+    document.getElementById('skipFwdB').addEventListener('click', () => { if (audB.duration) audB.currentTime = Math.min(audB.currentTime + 10, audB.duration); });
+    document.getElementById('skipRevB').addEventListener('click', () => { if (audB.duration) audB.currentTime = Math.max(audB.currentTime - 10, 0); });
+  }
+
   document.getElementById('playA').addEventListener('click', async () => {
     await initAudioEngine(); 
     if (audioCtx && audioCtx.state === 'suspended') { await audioCtx.resume(); }
-    audA.play().then(() => { 
-      document.getElementById('wheelA').classList.add('spinning'); 
-      updateMixerMixes(); 
-    }).catch(() => alert("Selecciona una canción para el DECK A"));
+    audA.play().then(() => { document.getElementById('wheelA').classList.add('spinning'); updateMixerMixes(); }).catch(() => alert("Carga una canción real usando doble clic o el botón Seleccionar Canción A"));
   });
   document.getElementById('cueA').addEventListener('click', () => { triggerVinylBrake(audA, 'wheelA'); });
 
   document.getElementById('playB').addEventListener('click', async () => {
     await initAudioEngine(); 
     if (audioCtx && audioCtx.state === 'suspended') { await audioCtx.resume(); }
-    audB.play().then(() => { 
-      document.getElementById('wheelB').classList.add('spinning'); 
-      updateMixerMixes(); 
-    }).catch(() => alert("Selecciona una canción para el DECK B"));
+    audB.play().then(() => { document.getElementById('wheelB').classList.add('spinning'); updateMixerMixes(); }).catch(() => alert("Carga una canción real usando doble clic o el botón Seleccionar Canción B"));
   });
   document.getElementById('cueB').addEventListener('click', () => { triggerVinylBrake(audB, 'wheelB'); });
 
