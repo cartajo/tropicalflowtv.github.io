@@ -41,7 +41,7 @@
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
   }
-  .top-bar {
+    .top-bar {
     width: 100%; max-width: 1400px; display: flex; justify-content: space-between;
     align-items: center; background: var(--bg-panel); padding: 10px 20px;
     border-radius: 8px; border: 1px solid var(--border-glow); margin-bottom: 15px;
@@ -91,12 +91,37 @@
   }
 
   .studio-container { width: 100%; max-width: 1400px; display: flex; flex-direction: column; gap: 15px; }
+  
+  /* DISEÑO MAESTRO EN COMPUTADORAS (Inalterable y seguro) */
+  .mixer-interface { display: grid; grid-template-columns: 1fr 340px 1fr; gap: 15px; width: 100%; }
+
+  /* ADAPTACIÓN EXCLUSIVA PARA CELULARES (No daña la versión de escritorio) */
+  @media (max-width: 1100px) {
+    .mixer-interface { 
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas: 
+        "deckA deckB"
+        "master master";
+    }
+    .deck-a { grid-area: deckA; }
+    .deck-b { grid-area: deckB; }
+    .center-rack { grid-area: master; }
+    
+    /* Escalado responsivo de componentes internos en móviles */
+    .jog-wheel { width: 90px !important; height: 90px !important; }
+    .track-title { max-width: 100px; font-size: 0.75rem; }
+    .time-counter { font-size: 0.95rem; }
+    .bpm-value { font-size: 0.9rem; }
+  }
+
+  .studio-container { width: 100%; max-width: 1400px; display: flex; flex-direction: column; gap: 15px; }
   .mixer-interface { display: grid; grid-template-columns: 1fr 340px 1fr; gap: 15px; width: 100%; }
 
   @media (max-width: 1100px) {
     .mixer-interface { grid-template-columns: 1fr; }
     .center-rack { order: 3; }
   }
+  /* ESTILOS DE LOS PLATOS (DECKS) EXTENDIDOS */
   /* ESTILOS DE LOS PLATOS (DECKS) EXTENDIDOS */
   .dj-deck {
     background: var(--bg-panel); border-radius: 12px; padding: 15px;
@@ -167,6 +192,67 @@
   .file-uploader input[type="file"] { display: none; }
   .file-label { display: block; text-align: center; padding: 6px; background: #131a2a; border: 1px dashed #23314f; border-radius: 4px; font-size: 0.65rem; cursor: pointer; color: #94a3b8; font-weight: bold; }
   .file-label:hover { color: #fff; border-color: var(--text-main); }
+
+  /* COMPATIBILIDAD INTERNA ADICIONAL PARA PANTALLAS MÓVILES */
+  @media (max-width: 1100px) {
+    .dj-deck { padding: 8px; border-radius: 8px; }
+    .deck-center-row { gap: 4px; margin: 5px 0; }
+    input[type="range"].vertical-slider { height: 90px; width: 10px; }
+    .btn-action { padding: 6px 4px; font-size: 0.6rem; }
+    .pad-btn { padding: 3px 4px; min-width: 24px; font-size: 0.55rem; }
+    .perf-label { font-size: 0.5rem; }
+    .display-panel { padding: 4px 6px; margin-bottom: 5px; }
+  }
+
+    width: 100%; background: #04060a; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05);
+    padding: 8px 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;
+  }
+  .time-group { display: flex; flex-direction: column; }
+  .time-label { font-size: 0.55rem; color: var(--text-dim); font-weight: 800; letter-spacing: 0.5px; }
+  .time-counter { font-family: monospace; font-size: 1.2rem; font-weight: bold; color: var(--neon-green); }
+  .time-counter.countdown { color: var(--neon-red); }
+
+  .wave-display { width: 100%; height: 45px; background: #000; border-radius: 4px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.02); }
+
+  /* FILA DE CONTROLES CUE / LOOP / SYNC */
+  .performance-row { width: 100%; display: flex; gap: 4px; margin-bottom: 10px; justify-content: space-between; align-items: center; }
+  .perf-label { font-size: 0.55rem; color: var(--text-dim); font-weight: 800; text-transform: uppercase; white-space: nowrap; }
+  .perf-grid { display: flex; gap: 4px; flex-grow: 1; justify-content: flex-end; }
+  .pad-btn { padding: 4px 8px; background: #131a2a; border: 1px solid #23314f; color: #94a3b8; font-size: 0.65rem; font-weight: 700; border-radius: 3px; cursor: pointer; text-transform: uppercase; min-width: 32px; text-align: center; }
+  .pad-btn:hover { background: #1e2942; color: #fff; }
+  .pad-btn.active-mode { background: #1e2942; color: var(--neon-cyan); border-color: var(--neon-cyan); }
+  .pad-btn.sync-mode { background: #1e2942; color: var(--neon-magenta); border-color: var(--neon-magenta); }
+
+  /* ZONA CENTRAL DEL DECK (JOG WHEEL + SLIDERS) */
+  .deck-center-row { width: 100%; display: flex; justify-content: space-between; align-items: center; margin: 10px 0; gap: 15px; }
+  .pitch-container, .vol-container { display: flex; flex-direction: column; align-items: center; gap: 5px; width: 45px; }
+  .v-slider-label { font-size: 0.55rem; color: var(--text-dim); font-weight: 800; text-transform: uppercase; }
+  .v-slider-val { font-family: monospace; font-size: 0.65rem; color: #94a3b8; }
+  
+  /* CONTROLES DESLIZANTES VERTICALES ESTÁNDAR */
+  input[type="range"].vertical-slider { writing-mode: vertical-lr; direction: rtl; width: 12px; height: 120px; background: #000; cursor: pointer; outline: none; }
+
+  /* JOG WHEEL PROFESIONAL */
+  .jog-wheel { width: 135px; height: 135px; border-radius: 50%; background: radial-gradient(circle, #1a2233 12%, #07090e 13%, #07090e 35%, #111622 36%, #020305 70%); border: 4px solid #1f293d; position: relative; box-shadow: 0 8px 20px rgba(0,0,0,0.6); }
+  .jog-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 34px; height: 34px; border-radius: 50%; border: 2px solid #000; background: #0b0f19; }
+  .deck-a .jog-center { box-shadow: 0 0 15px rgba(0,240,255,0.4); border-color: var(--neon-cyan); }
+  .deck-b .jog-center { box-shadow: 0 0 15px rgba(255,0,127,0.4); border-color: var(--neon-magenta); }
+  .jog-marker { position: absolute; top: 4px; left: 50%; transform: translateX(-50%); width: 4px; height: 16px; background: #fff; border-radius: 1px; transform-origin: bottom center; }
+  .spinning { animation: jogSpin 2.5s linear infinite; }
+  @keyframes jogSpin { 100% { transform: rotate(360deg); } }
+
+  /* BOTONES DE DISPARO PRINCIPAL */
+  .main-controls { width: 100%; display: flex; gap: 5px; margin-top: 5px; }
+  .btn-action { flex: 1; padding: 8px; border: 0; border-radius: 4px; font-weight: 800; font-size: 0.7rem; text-transform: uppercase; cursor: pointer; color: #fff; background: #131a2a; border: 1px solid #23314f; transition: all 0.2s ease; }
+  .btn-action.play-a:hover { background: #002c30; color: var(--neon-cyan); border-color: var(--neon-cyan); }
+  .btn-action.play-b:hover { background: #33001a; color: var(--neon-magenta); border-color: var(--neon-magenta); }
+  .btn-action.cue-btn:hover { background: #2b1b00; color: var(--gold); border-color: var(--gold); }
+  
+  .file-uploader { width: 100%; margin-bottom: 4px; }
+  .file-uploader input[type="file"] { display: none; }
+  .file-label { display: block; text-align: center; padding: 6px; background: #131a2a; border: 1px dashed #23314f; border-radius: 4px; font-size: 0.65rem; cursor: pointer; color: #94a3b8; font-weight: bold; }
+  .file-label:hover { color: #fff; border-color: var(--text-main); }
+  /* ESTILOS CSS DEL MEZCLADOR CENTRAL */
   /* ESTILOS CSS DEL MEZCLADOR CENTRAL */
   .center-rack {
     background: var(--bg-panel); border-radius: 12px; padding: 15px;
@@ -209,7 +295,7 @@
   input[type="range"].cf-slider-input { width: 100%; height: 6px; background: #000; border-radius: 3px; accent-color: #f8fafc; outline: none; cursor: pointer; appearance: none; -webkit-appearance: none; }
   .cf-labels { display: flex; justify-content: space-between; font-size: 0.5rem; color: var(--text-dim); font-weight: 700; }
 
-  /* LIBRERÍA INFERIOR */
+  /* LIBRERÍA INFERIOR DE PLAYLISTS */
   .bottom-library-section { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; width: 100%; }
   .lib-panel { background: var(--bg-panel); border-radius: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.03); height: 210px; display: flex; flex-direction: column; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
   .lib-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; }
@@ -222,6 +308,17 @@
   .track-table td { padding: 5px 6px; color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.02); cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px; }
   .track-table tr:hover td { color: #fff; background: rgba(255,255,255,0.02); }
   .track-table tr.playing-track td { color: var(--neon-green); font-weight: 700; }
+
+  /* ADAPTACIONES EXCLUSIVAS DEL CONTROL MASTER Y TABLAS EN MÓVILES */
+  @media (max-width: 1100px) {
+    .bottom-library-section { grid-template-columns: 1fr; gap: 10px; }
+    .lib-panel { height: 160px; }
+    .sampler-grid { grid-template-columns: repeat(5, 1fr); gap: 2px; }
+    .fx-pad { padding: 4px 1px; font-size: 0.45rem; }
+    .fx-pad span { font-size: 0.55rem; }
+    .vumeter-bar-bg { height: 50px; }
+    .crossfader-container { margin-top: 5px; }
+  }
 </style>
 </head>
 <body>
@@ -233,6 +330,10 @@
 </div>
 
 <div class="tropical-brand-center">
+  <h2>TROPICAL flow<br><span style="font-size: 2rem; background: linear-gradient(90deg, var(--neon-magenta), var(--gold)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Radio Tv</span></h2>
+  <p>La evolución del Caribe</p>
+</div>
+
   <h2>TROPICAL flow<br><span style="font-size: 2rem; background: linear-gradient(90deg, var(--neon-magenta), var(--gold)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Radio Tv</span></h2>
   <p>La evolución del Caribe</p>
 </div>
@@ -248,7 +349,7 @@
         </div>
         <div class="bpm-counter">
           <div class="bpm-label">BPM</div>
-          <div class="bpm-value">92.50</div>
+          <div class="bpm-value" id="bpmValA">92.50</div>
         </div>
       </div>
       
@@ -372,7 +473,9 @@
         </div>
       </div>
     </div>
+
     <!-- DECK B (COLUMNA DERECHA) -->
+        <!-- DECK B (COLUMNA DERECHA) -->
     <div class="dj-deck deck-b">
       <div class="deck-header">
         <div class="deck-info-meta">
@@ -499,6 +602,7 @@
   let filterHi, filterMid, filterLow;
   let analyserA, analyserB;
   let engineReady = false;
+
   async function initAudioEngine() {
     if (engineReady) {
       if (audioCtx && audioCtx.state === 'suspended') { await audioCtx.resume(); }
