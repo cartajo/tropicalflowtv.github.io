@@ -283,6 +283,7 @@
   <button class="nav-btn">ON AIR •</button>
 </div>
 <!-- Letrero central verificado anti-duplicados caché -->
+<!-- Letrero central verificado anti-duplicados caché -->
 <div class="brand-header-master">
   <h2>TROPICAL flow<br><span style="font-size: 2rem; background: linear-gradient(90deg, var(--neon-magenta), var(--gold)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Radio Tv</span></h2>
   <p>La evolución del Caribe</p>
@@ -353,9 +354,12 @@
         <input type="file" id="fileA" accept="audio/*">
       </div>
 
+      <!-- BOTONES MAESTROS REORGANIZADOS CON ADELANTO/RETROCESO -->
       <div class="main-controls">
+        <button class="btn-action cue-btn" id="skipRevA">⏪ -10s</button>
         <button class="btn-action play-a" id="playA">▶️ Play</button>
         <button class="btn-action cue-btn" id="cueA">⏸️ Cue</button>
+        <button class="btn-action cue-btn" id="skipFwdA">⏩ +10s</button>
       </div>
     </div>
 
@@ -424,12 +428,12 @@
         </div>
       </div>
 
-      <!-- CONTENEDOR FÍSICO DE EFECTOS MÓVILES AVANZADOS -->
       <div class="autodj-container">
         <button class="btn-autodj" id="btnAutoDJ">🤖 Activar Auto DJ</button>
         <button class="btn-talkover" id="btnTalkover">🎤 Activar Talkover</button>
       </div>
     </div>
+
     <!-- DECK B (COLUMNA DERECHA) -->
     <div class="dj-deck deck-b" id="deckContainerB">
       <div class="deck-header">
