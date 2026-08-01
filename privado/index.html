@@ -66,33 +66,6 @@
   .wrap{ position:relative; z-index:1; max-width:var(--maxw); margin:16px auto; padding:16px; background:var(--glass); border-radius:16px }
   section{ margin:18px 0; padding:16px; background:var(--panel); border-radius:14px }
   h2{ margin:0 0 12px; text-align:center }
-  .btn{background:var(--accent);color:#000;border:0;border-radius:12px;font-weight:800;padding:10px 14px;cursor:pointer}
-  .btn.alt{background:var(--accent2)}
-  .btn.warn{background:var(--warn);color:#000}
-  .controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}
-
-  /* ─── RADIO ─── */
-  #radioCard{position:relative;max-width:950px;margin:0 auto;padding:14px;border-radius:14px;background:var(--card);backdrop-filter:blur(4px)}
-  #radioViewport{position:relative;display:none;border-radius:14px;overflow:hidden;background:#000}
-  #radioViewport .viewport{position:relative;width:100%;padding-top:52%}
-  #radioFrame{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
-  #radioMini{display:flex;gap:10px;justify-content:center;align-items:center}
-  .hint{color:#bbb;font-size:.9rem;text-align:center;margin-top:8px}
-  @media (max-width:900px){ #radioViewport .viewport{ padding-top:56% } }
-  @media (max-width:700px){ #radioViewport .viewport{ padding-top:62% } }
-  @media (max-width:540px){ #radioViewport .viewport{ padding-top:68% } }
-
-  /* ─── PLAYLIST ─── */
-  audio{width:100%;max-width:720px;margin:8px auto;display:block;border-radius:12px}
-  .plist{list-style:none;margin:10px auto 0;max-width:900px;padding:0;max-height:340px;overflow:auto}
-  .plist li{padding:8px 10px;border-radius:10px;cursor:pointer}
-  .plist li.active{background:rgba(0,191,255,.28)}
-  .status{margin-top:8px;color:#7CFC00;text-align:center}
-  .status.warn{color:#ffd166}
-  .plist::-webkit-scrollbar{width:10px}
-  .plist::-webkit-scrollbar-track{background:rgba(255,255,255,.08);border-radius:10px}
-  .plist::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--accent),#00bcd4);border-radius:10px}
-  .plist{scrollbar-width:thin;scrollbar-color:#00bcd4 rgba(255,255,255,.08)}
   /* ─── VIDEO ─── */
     /* ─── CORRECCIÓN DEFINITIVA PARA PANTALLA COMPLETA ─── */
   .ratio16x9 {
@@ -138,6 +111,49 @@
 
 <!-- API YouTube -->
 <script src="https://youtube.com"></script>
+</head>
+  /* ─── VIDEO ─── */
+    /* ─── CORRECCIÓN DEFINITIVA PARA PANTALLA COMPLETA ─── */
+  .ratio16x9 {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25% !important; /* Fuerza la proporción de cine 16:9 */
+    height: 0 !important;
+  }
+  .fill {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important; /* Fuerza a YouTube a estirarse completo */
+  }
+  /* Esto evita que el iframe interno de YouTube se auto-recorte */
+  #promoPlayer, #ytMain, #promoPlayer iframe, #ytMain iframe {
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+  }
+
+  /* CARRUSEL VIDEO FULL WIDTH */
+  #carouselShell{position:relative;width:100%;padding-top:56.25%;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.35)}
+  #ytMain{position:absolute;top:0;left:0;width:100%;height:100%}
+  .thumbStrip{max-width:100%;margin:10px auto 0;padding:10px;display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory}
+  
+  /* CORREGIDO: Añadido position: relative obligatorio para centrar elementos internos */
+  .thumb{position:relative;flex:0 0 auto;width:220px;border-radius:12px;overflow:hidden;scroll-snap-align:start;box-shadow:0 8px 22px rgba(0,0,0,.35);cursor:pointer}
+  .thumb img{display:block;width:100%;filter:brightness(.9);transition:transform .18s ease, filter .18s ease}
+  .thumb:hover img{transform:scale(1.03);filter:brightness(1)}
+  .thumb.active{outline:3px solid var(--accent);outline-offset:-3px}
+  
+  /* CORREGIDO: Ajustado el overlay para centrado absoluto total */
+  .playOverlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(transparent,rgba(0,0,0,.32));z-index:2}
+  
+  /* CORREGIDO: El botón ahora se auto-posiciona de forma exacta en el centro */
+  .playBtn{width:54px;height:54px;border-radius:50%;background:rgba(0,0,0,.66);border:2px solid rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%)}
+  .playBtn:before{content:"";border-left:18px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px}
+</style>
 </head>
 <body>
 <div class="bg-mark">Tropical Flow RadioTV</div>
@@ -365,7 +381,7 @@ const CAROUSEL_IDS = [
   "mTSm_5sOFvQ","WjR7mf0S6wQ","KB0Egwr3BkY","jeUo8mLQbGg","c1EwHvbPv0o","JqfDYSLP1Co","7gS7-_9PBxM","yVBHbPsHIjk",
   "OrRPR0AdPV4","Tf2o36-T2XY","AEj6xbGy64c","idpPD42Nh7I","Q1EyMFTPZrs","8GZfyUKXugQ","hW2mAMEx8mo","2ZXs_FrB7co",
   "D5y4xpKdux4","1Z_lmKtf6RY","J1Dz86UCL_M","c5NA5EBpOw4","40XaVZBfXmc","9CZ9cYu-yCk","c1j1QbnEvFA","nddBuDbhlkQ",
-  "W4Gbz8DhDKs","yHHX8bsht1w","tYYa-djM5j8","l8wTJMbCsQ8","OixrDR8sVhc","HtTzLFKInTM","FVYjdghFIfo","VBdLpH8R3Y8",
+  "W4Gbz8DhDKs","yHHX8bsht1w","tYYa-djM5j8","l8wTJMbCsQ8","OixrDR8sVhc","HtTzLFInTM","FVYjdghFIfo","VBdLpH8R3Y8",
   "2r7CnIp9oLI","-vj-a-e0Rf4","34eiZ9Hd-fA","pjrhSRCIZDk","mKjKgaOWQn8","YHQJkK9NpE0","nGsT-sqaQNg","o40JNCThI8M",
   "rWhjBlsXhVw","mrXKNFXHEqo","7tE_xKxat9c","u9b83ujltH8","TZMCYoWntqY","U1drf9cCHHk","qVzECaje5CE","Bsmz-VxXpyY",
   "FG1Va_rL6W0","PCDYOTWQ9uc","doD3StRKwKA","iLuKRoUi4Lc","PKolClrUVSQ","xH_qmGwHIhY","OPmAxqBfR3E","BnhZkrNclVw",
@@ -423,9 +439,9 @@ function createPromo(){
   fsBtn.onclick = () => { if (document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.(); };
 }
 function updatePromoTitle(){ try { document.getElementById('promoTitle').textContent = promoPlayer.getVideoData()?.title || ""; } catch(_) {} }
-...
-... (Truncated for brevity in final message turn, fully merged into code compilation setup context)
-<script>
+function promoPrev(){ promoIndex = (promoIndex - 1 + PROMO_IDS.length) % PROMO_IDS.length; promoPlayer.loadVideoById(PROMO_IDS[promoIndex]); updatePromoTitle(); }
+function promoNext(){ promoIndex = (promoIndex + 1) % PROMO_IDS.length; promoPlayer.loadVideoById(PROMO_IDS[promoIndex]); updatePromoTitle(); }
+
 /* ========== CARRUSEL PRINCIPAL DE VIDEOS (YT) ========== */
 let cIndex = 0, cPlayer = null, cRandom = false;
 
@@ -457,10 +473,10 @@ function createCarousel(){
       onReady: () => { updateCTitle(); },
       onStateChange: e => {
         if (e.data === YT.PlayerState.PLAYING) pauseAllExcept('yt');
-        if (e.data === YT.jsapi?.PlayerState?.ENDED || e.data === 0) {
+        if (e.data === YT.PlayerState.ENDED) {
           if (cRandom) { cIndex = Math.floor(Math.random() * CAROUSEL_IDS.length); loadCarousel(true); } else { nextC(); }
         }
-        if (e.data === 1 || e.data === 5) updateCTitle();
+        if (e.data === YT.PlayerState.PLAYING || e.data === YT.PlayerState.CUED) updateCTitle();
       }
     }
   });
@@ -472,22 +488,30 @@ function createCarousel(){
     cRandom = !cRandom; document.getElementById('cRandom').textContent = cRandom ? "🔀 Random ON" : "🔀 Random OFF";
   };
   document.getElementById('cToggle').onclick = () => {
-    const s = cPlayer.getPlayerState?.(); if (s === 1) cPlayer.pauseVideo(); else { pauseAllExcept('yt'); cPlayer.playVideo(); }
+    const s = cPlayer.getPlayerState?.(); if (s === YT.PlayerState.PLAYING) cPlayer.pauseVideo(); else { pauseAllExcept('yt'); cPlayer.playVideo(); }
   };
   const fsBtn = document.getElementById('cFs'), shell = document.getElementById('carouselShell');
   fsBtn.onclick = () => { if (document.fullscreenElement) document.exitFullscreen?.(); else shell?.requestFullscreen?.(); };
 }
 function loadCarousel(play){ cPlayer.loadVideoById(CAROUSEL_IDS[cIndex]); markActive(); updateCTitle(); if (!play) cPlayer.pauseVideo?.(); }
 
-function promoPrev(){ promoIndex = (promoIndex - 1 + PROMO_IDS.length) % PROMO_IDS.length; promoPlayer.loadVideoById(PROMO_IDS[promoIndex]); updatePromoTitle(); }
-function promoNext(){ promoIndex = (promoIndex + 1) % PROMO_IDS.length; promoPlayer.loadVideoById(PROMO_IDS[promoIndex]); updatePromoTitle(); }
-
+// BOOT INYECTOR ASÍNCRONO SEGURO DE YOUTUBE API
 (function bootYT(){
   let started = false;
   function start(){ if (started) return; started = true; createPromo(); createCarousel(); }
-  if (window.YT && window.YT.Player) start();
-  const prev = window.onYouTubeIframeAPIReady;
-  window.onYouTubeIframeAPIReady = function(){ if (typeof prev === 'function') prev(); start(); };
+  
+  // Definir la función global antes de inyectar el script
+  window.onYouTubeIframeAPIReady = function(){ start(); };
+
+  // Crear e inyectar la etiqueta script al final de la carga del DOM
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  if (firstScriptTag) {
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  } else {
+    document.head.appendChild(tag);
+  }
 })();
 
 /* ========== RELOJ DIGITAL CORREGIDO ========== */
