@@ -2172,38 +2172,91 @@ function createCarousel() {
            ERROR DE YOUTUBE
            ================================================= */
 
-        onError: function (e) {
+      onError: function (e) {
 
-          console.warn(
-            "Tropical Flow TV — error YouTube:",
-            e.data
-          );
+  const idActual = getCurrentCarouselId();
+
+  let descripcion = "";
+
+  switch (e.data) {
+
+    case 2:
+      descripcion = "ID de video inválido";
+      break;
+
+    case 5:
+      descripcion = "Error del reproductor HTML5";
+      break;
+
+    case 100:
+      descripcion = "Video eliminado o privado";
+      break;
+
+    case 101:
+      descripcion = "El propietario no permite reproducción incrustada";
+      break;
+
+    case 150:
+      descripcion = "No permite reproducción incrustada";
+      break;
+
+    case 153:
+      descripcion = "YouTube no recibió correctamente la identificación de la página";
+      break;
+
+    default:
+      descripcion = "Error desconocido de YouTube";
+  }
 
 
-          /*
-             Código 2
-             ID inválido.
+  console.log(
+    "========================================"
+  );
 
-             Código 5
-             Error del reproductor.
+  console.log(
+    "🌴 TROPICAL FLOW TV — DIAGNÓSTICO"
+  );
 
-             Código 100
-             Video eliminado / privado /
-             no disponible.
+  console.log(
+    "Video ID:",
+    idActual
+  );
 
-             Código 101
-             El propietario no permite
-             reproducción incrustada.
+  console.log(
+    "Código YouTube:",
+    e.data
+  );
 
-             Código 150
-             Igual que 101 en muchos casos.
-          */
+  console.log(
+    "Descripción:",
+    descripcion
+  );
 
-          skipUnavailableCarousel(
-            e.data
-          );
+  console.log(
+    "========================================"
+  );
 
-        }
+
+  showCarouselNotice(
+    "🔎 DIAGNÓSTICO DEL VIDEO",
+    "ID: " +
+    (idActual || "desconocido") +
+    " | Código: " +
+    e.data +
+    " | " +
+    descripcion
+  );
+
+
+  setTimeout(function () {
+
+    skipUnavailableCarousel(
+      e.data
+    );
+
+  }, 1800);
+
+}
 
       }
 
